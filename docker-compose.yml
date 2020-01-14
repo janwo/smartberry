@@ -36,7 +36,7 @@ services:
     image: traefik:latest
     ports:
       - "80:80"
-    command: ['--providers.docker', '--entryPoints.web.address=:80', '--providers.docker.exposedbydefault=false', '--providers.docker.network=raspberrypi_overlay']
+    command: ['--providers.docker', '--providers.docker.endpoint=unix:///var/run/balena.sock', '--entryPoints.web.address=:80', '--providers.docker.exposedbydefault=false', '--providers.docker.network=raspberrypi_overlay']
     networks:
       - raspberrypi_overlay
     restart: unless-stopped
@@ -108,6 +108,7 @@ services:
     environment:
       WATCHTOWER_SCHEDULE: 0 0 4 ? * 6
       WATCHTOWER_CLEANUP: 'true'
+      DOCKER_HOST: unix:///var/run/balena.sock
 
   bluetooth-beacon:
     image: dominikth/rpi-docker-ibeacon:latest
