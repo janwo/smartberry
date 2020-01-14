@@ -1,3 +1,0 @@
-FROM openhab/openhab:latest
-
-COPY ./volume_files/openhab-startup-scripts/ /etc/cont-init.d

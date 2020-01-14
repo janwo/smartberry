@@ -38,7 +38,7 @@ services:
       - "80:80"
     command: ['--providers.docker', '--entryPoints.web.address=:80', '--providers.docker.exposedbydefault=false', '--providers.docker.network=raspberrypi_overlay']
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/balena.sock:/var/run/docker.sock
     networks:
       - raspberrypi_overlay
     restart: unless-stopped
@@ -106,7 +106,7 @@ services:
       - raspberrypi_overlay
     restart: unless-stopped
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/balena.sock:/var/run/docker.sock
     environment:
       WATCHTOWER_SCHEDULE: 0 0 4 ? * 6
       WATCHTOWER_CLEANUP: 'true'
