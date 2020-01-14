@@ -49,7 +49,7 @@ services:
       - raspberrypi_overlay
     restart: unless-stopped
     expose:
-      - "80"
+      - "8080"
     devices:
       - "/dev/ttyACM0:/dev/ttyACM0"
     volumes:
