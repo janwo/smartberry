@@ -68,8 +68,8 @@ services:
       traefik.http.routers.traefik-router.entrypoints: web
       traefik.http.services.openhab-service.loadbalancer.server.port: 8080
     environment:
-      OHC_UUID: $AUTH_OPENHAB_UUID
-      OHC_SECRET: $AUTH_OPENHAB_SECRET
+      - OHC_UUID=${AUTH_OPENHAB_UUID}
+      - OHC_SECRET=${AUTH_OPENHAB_SECRET}
 
   influxdb:
     image: influxdb:latest
@@ -79,14 +79,14 @@ services:
     volumes:
       - influxdb:/var/lib/influxdb
     environment:
-      INFLUXDB_DB: openhab
-      INFLUXDB_USER: openhab
-      INFLUXDB_USER_PASSWORD: $AUTH_INFLUXDB_PASSWORD
-      INFLUXDB_LOG_LEVEL: error
-      INFLUXDB_DATA_QUERY_LOG_ENABLED: 'true'
-      INFLUXDB_REPORTING_DISABLED: 'false'
-      INFLUXDB_HTTP_LOG_ENABLED: 'false'
-      INFLUXDB_META_LOGGING_ENABLED: 'false'
+      - INFLUXDB_DB=openhab
+      - INFLUXDB_USER=openhab
+      - INFLUXDB_USER_PASSWORD=${AUTH_INFLUXDB_PASSWORD}
+      - INFLUXDB_LOG_LEVEL=error
+      - INFLUXDB_DATA_QUERY_LOG_ENABLED=true
+      - INFLUXDB_REPORTING_DISABLED=false
+      - INFLUXDB_HTTP_LOG_ENABLED=false
+      - INFLUXDB_META_LOGGING_ENABLED=false
 
   grafana:
     image: grafana/grafana:latest
@@ -98,8 +98,8 @@ services:
     volumes:
       - grafana:/var/lib/grafana
     environment:
-      GF_SECURITY_ADMIN_USER: openhab
-      GF_SECURITY_ADMIN_PASSWORD: $AUTH_GRAFANA_PASSWORD
+      - GF_SECURITY_ADMIN_USER=openhab
+      - GF_SECURITY_ADMIN_PASSWORD=${AUTH_GRAFANA_PASSWORD}
 
   watchtower:
     image: containrrr/watchtower
