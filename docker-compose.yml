@@ -36,7 +36,8 @@ services:
     image: traefik:latest
     ports:
       - "80:80"
-    command: ['--api.dashboard=true', '--providers.docker', '--providers.docker.endpoint=unix:///var/run/balena.sock', '--entryPoints.web.address=:80', '--providers.docker.exposedbydefault=false', '--providers.docker.network=raspberrypi_overlay']
+      - "8080:8080"
+    command: ['--api.insecure=true', '--api.dashboard=true', '--providers.docker', '--providers.docker.endpoint=unix:///var/run/balena.sock', '--entryPoints.web.address=:80', '--providers.docker.exposedbydefault=false', '--providers.docker.network=raspberrypi_overlay']
     networks:
       - raspberrypi_overlay
     restart: unless-stopped
