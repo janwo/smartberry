@@ -99,7 +99,7 @@ services:
       GF_SECURITY_ADMIN_PASSWORD: kamLHugö3HZtj4W9Q
 
   watchtower:
-    image: watchtower
+    image: containrrr/watchtower
     networks:
       - raspberrypi_overlay
     restart: unless-stopped
