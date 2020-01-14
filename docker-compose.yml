@@ -112,8 +112,7 @@ services:
 
   bluetooth-beacon:
     image: dominikth/rpi-docker-ibeacon:latest
-    networks:
-      - host
+    network_mode: host
     restart: unless-stopped
     environment:
       UUID: 88BCBF76-F2B4-4BB0-A982-906C16121FF7
