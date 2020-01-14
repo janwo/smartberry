@@ -59,14 +59,14 @@ services:
       traefik.backend: openhab
       traefik.docker.network: raspberrypi_overlay
       traefik.enable: true
-      traefik.http.middlewares.openhab-auth.basicauth.users: ${USER_OPENHAB_WEB}
+      traefik.http.middlewares.openhab-auth.basicauth.users: "openhab:${AUTH_OPENHAB_PASSWORD}"
       traefik.http.routers.openhab-router.middlewares: openhab-auth
       traefik.http.routers.openhab-router.rule: Host(`raspberrypi`)
       traefik.http.routers.traefik-router.entrypoints: web
       traefik.http.services.openhab-service.loadbalancer.server.port: 8080
     environment:
-      OHC_UUID: b727a0c6-c2a3-4932-942f-6b814646f355
-      OHC_SECRET: ug3HZtjsfkusj324hfbilo8qrweizfhiuwksjfhniquk2jwhaf
+      OHC_UUID: "${AUTH_OPENHAB_UUID}"
+      OHC_SECRET: "${AUTH_OPENHAB_SECRET}"
 
   influxdb:
     image: influxdb:latest
@@ -78,7 +78,7 @@ services:
     environment:
       INFLUXDB_DB: openhab
       INFLUXDB_USER: openhab
-      INFLUXDB_USER_PASSWORD: sfuodi8isjuosj
+      INFLUXDB_USER_PASSWORD: "${AUTH_INFLUXDB_PASSWORD}"
       INFLUXDB_LOG_LEVEL: error
       INFLUXDB_DATA_QUERY_LOG_ENABLED: 'true'
       INFLUXDB_REPORTING_DISABLED: 'false'
@@ -95,8 +95,8 @@ services:
     volumes:
       - grafana:/var/lib/grafana
     environment:
-      GF_SECURITY_ADMIN_USER: grafana
-      GF_SECURITY_ADMIN_PASSWORD: kamLHugö3HZtj4W9Q
+      GF_SECURITY_ADMIN_USER: openhab
+      GF_SECURITY_ADMIN_PASSWORD: "${AUTH_GRAFANA_PASSWORD}"
 
   watchtower:
     image: containrrr/watchtower
