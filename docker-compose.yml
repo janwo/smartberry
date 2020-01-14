@@ -48,8 +48,7 @@ services:
     networks:
       - raspberrypi_overlay
     restart: unless-stopped
-    expose:
-      - "80:80"
+    expose: 80
     devices:
       - "/dev/ttyACM0:/dev/ttyACM0"
     volumes:
