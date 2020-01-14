@@ -3,6 +3,7 @@ volumes:
   openhab-addons:
   openhab-conf:
   openhab-userdata:
+  openhab-startup-scripts:
   influxdb:
   grafana:
 
@@ -20,7 +21,7 @@ services:
     volumes:
       - openhab-addons:/mount/openhab-addons
       - openhab-conf:/mount/openhab-conf
-      - ./openhab/volumes/startup-scripts:/mount/openhab-startup-scripts
+      - openhab-startup-scripts:/mount/openhab-startup-scripts
       - openhab-userdata:/mount/openhab-userdata
       - grafana:/mount/grafana
       - influxdb:/mount/influxdb
@@ -43,7 +44,7 @@ services:
     restart: unless-stopped
 
   openhab:
-    image: openhab/openhab:latest
+    build: ./openhab
     networks:
       - raspberrypi_overlay
     restart: unless-stopped
@@ -52,7 +53,7 @@ services:
     volumes:
       - openhab-addons:/openhab/addons
       - openhab-conf:/openhab/conf
-      - ./openhab:/etc/cont-init.d
+      - openhab-startup-scripts:/etc/cont-init.d
       - openhab-userdata:/openhab/userdata
       - /etc/localtime:/etc/localtime
       - /etc/timezone:/etc/timezone
