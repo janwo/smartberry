@@ -1,5 +1,4 @@
 FROM traefik:latest
 COPY ./traefik.toml /etc/traefik/traefik.toml
 COPY ./pre-traefik.sh /usr/bin/pre-traefik.sh
-ENV AUTH_TRAEFIK_PASSWORD
 ENTRYPOINT ["/sbin/tini", "--", "/usr/bin/pre-traefik.sh"] #TODO
