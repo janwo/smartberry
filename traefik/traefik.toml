@@ -10,16 +10,18 @@
   insecure = true
   dashboard = true
 
-[providers.docker]
-  endpoint = "unix:///var/run/balena.sock"
-  exposedByDefault = false
-  network = "raspberrypi_overlay"
+[providers]
+  [providers.docker]
+    endpoint = "unix:///var/run/balena.sock"
+    exposedByDefault = false
+    network = "raspberrypi_overlay"
 
+[http.services.openhab-service]
+  [http.services.openhab-service.loadbalancer.server]
+    port = 8080
 
-
-# traefik.backend: openhab
-# traefik.enable: true
-# traefik.http.routers.openhab-router.middlewares: openhab-auth
-# traefik.http.routers.openhab-router.rule: PathPrefix(`/`)
-# traefik.http.routers.traefik-router.entrypoints: web
-# traefik.http.services.openhab-service.loadbalancer.server.port: 8080
+[http.middlewares]
+  [http.middlewares.openhab-auth.basicAuth]
+  users = [
+    "openhab:AUTH_OPENHAB_PASSWORD"
+  ]
