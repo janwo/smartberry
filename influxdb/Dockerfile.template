@@ -1,4 +1,4 @@
 FROM influxdb:latest
 COPY ./pre-influxdb.sh /pre-influxdb.sh
-RUN /bin/sh -c 'chmod +x /pre-influxdb.sh'
+RUN /bin/bash -c 'chmod +x /pre-influxdb.sh'
 ENTRYPOINT ["/pre-influxdb.sh"]
