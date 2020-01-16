@@ -3,5 +3,6 @@ RUN apk add --update --no-cache openssl
 COPY ./pre-traefik.sh /pre-traefik.sh
 RUN chmod +x /pre-traefik.sh
 COPY ./traefik.toml /etc/traefik/traefik.toml
+COPY ./dynamic-conf.toml /etc/traefik/dynamic-conf.toml
 ENTRYPOINT ["/pre-traefik.sh"]
 CMD ["traefik"]

@@ -20,3 +20,5 @@ if [ ! -f $filename ]
 then
     cp /tmp/openhab/userdata/config/org/openhab/addons.config.template /openhab/userdata/config/org/openhab/addons.config
 fi
+
+rm -r /tmp/openhab

@@ -1,0 +1,5 @@
+[http.middlewares]
+  [http.middlewares.openhab-auth.basicAuth]
+    users = [
+      "openhab:AUTH_OPENHAB_PASSWORD"
+    ]

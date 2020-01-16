@@ -16,8 +16,5 @@
     exposedByDefault = false
     network = "raspberrypi_overlay"
 
-[http.middlewares]
-  [http.middlewares.openhab-auth.basicAuth]
-    users = [
-      "openhab:AUTH_OPENHAB_PASSWORD"
-    ]
+  [providers.file]
+    filename = "/etc/traefik/dynamic-conf.toml"
