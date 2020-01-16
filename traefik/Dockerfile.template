@@ -1,6 +1,5 @@
 FROM traefik:latest
-RUN apk add --update openssl && rm -rf /var/cache/apk/*
-COPY ./traefik.toml /etc/traefik/traefik.toml
 COPY ./pre-traefik.sh /pre-traefik.sh
 RUN /bin/sh -c 'chmod +x /pre-traefik.sh'
+COPY ./traefik.toml /etc/traefik/traefik.toml
 ENTRYPOINT ["/pre-traefik.sh"]
