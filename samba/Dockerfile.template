@@ -1,3 +1,3 @@
-FROM dperson/samba:latest
+FROM dperson/samba:armhf
 COPY ./pre-samba.sh /usr/bin/pre-samba.sh
 ENTRYPOINT ["/sbin/tini", "--", "/usr/bin/pre-samba.sh"]
