@@ -1,4 +1,4 @@
 FROM dperson/samba:armhf
 COPY ./pre-samba.sh /usr/bin/pre-samba.sh
 RUN /bin/bash -c 'chmod +x /usr/bin/pre-samba.sh'
-ENTRYPOINT ["/sbin/tini", "--", "/usr/bin/pre-samba.sh"]
+ENTRYPOINT ["/usr/bin/pre-samba.sh"]
