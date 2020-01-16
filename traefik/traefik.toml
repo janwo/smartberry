@@ -17,9 +17,9 @@
 
 
 
-traefik.backend: openhab
-traefik.enable: true
-traefik.http.routers.openhab-router.middlewares: openhab-auth
-      traefik.http.routers.openhab-router.rule: PathPrefix(`/`)
-      traefik.http.routers.traefik-router.entrypoints: web
-      traefik.http.services.openhab-service.loadbalancer.server.port: 8080
+# traefik.backend: openhab
+# traefik.enable: true
+# traefik.http.routers.openhab-router.middlewares: openhab-auth
+# traefik.http.routers.openhab-router.rule: PathPrefix(`/`)
+# traefik.http.routers.traefik-router.entrypoints: web
+# traefik.http.services.openhab-service.loadbalancer.server.port: 8080
