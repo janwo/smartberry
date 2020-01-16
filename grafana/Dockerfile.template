@@ -1,3 +1,4 @@
 FROM grafana/grafana:latest
-COPY ./pre-grafana.sh /pre-grafana.sh
-ENTRYPOINT ["/pre-grafana.sh"]
+COPY ./pre-grafana.sh /usr/local/bin/pre-grafana.sh
+RUN /bin/bash -c 'chmod +x /usr/local/bin/pre-grafana.sh'
+ENTRYPOINT ["/usr/local/bin/pre-grafana.sh"]
