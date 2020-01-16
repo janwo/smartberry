@@ -16,12 +16,8 @@
     exposedByDefault = false
     network = "raspberrypi_overlay"
 
-[http.services.openhab-service]
-  [http.services.openhab-service.loadbalancer.server]
-    port = 8080
-
 [http.middlewares]
   [http.middlewares.openhab-auth.basicAuth]
-  users = [
-    "openhab:AUTH_OPENHAB_PASSWORD"
-  ]
+    users = [
+      "openhab:AUTH_OPENHAB_PASSWORD"
+    ]
