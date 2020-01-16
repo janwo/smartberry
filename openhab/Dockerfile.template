@@ -1,8 +1,9 @@
 FROM openhab/openhab:latest
-COPY ./volume-files/openhab-startup-scripts/ /etc/cont-init.d/
+COPY ./mounts/etc/cont-init.d/ /etc/cont-init.d/
+COPY ./mounts/tmp/openhab/ /tmp/openhab/
 LABEL traefik.enable=true \
       traefik.backend="openhab" \
-      traefik.http.routers.openhab-router.middlewares="openhab-auth" \
+      traefik.http.routers.openhab-router.middlewares="openhab-auth@file" \
       traefik.http.routers.openhab-router.rule="PathPrefix(`/`)" \
       traefik.http.routers.traefik-router.entrypoints="web" \
       traefik.http.services.openhab-service.loadbalancer.server.port=8080
