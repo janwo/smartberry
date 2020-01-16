@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/sh
 if [ ! -z ${AUTH_OPENHAB_UUID} ]
 then
     mkdir -p /openhab/userdata
