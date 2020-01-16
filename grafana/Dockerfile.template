@@ -1,6 +1,6 @@
 FROM grafana/grafana:latest
 COPY ./pre-grafana.sh /pre-grafana.sh
 USER root
-RUN /bin/bash -c 'chmod +x /pre-grafana.sh'
+RUN chmod +x /pre-grafana.sh
 USER grafana
 ENTRYPOINT ["/pre-grafana.sh"]
