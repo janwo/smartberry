@@ -1,0 +1,25 @@
+[global]
+  checkNewVersion = false
+  sendAnonymousUsage = false
+
+[entryPoints]
+  [entryPoints.web]
+    address = ":80"
+
+[api]
+  insecure = true
+  dashboard = true
+
+[providers.docker]
+  endpoint = "unix:///var/run/balena.sock"
+  exposedByDefault = false
+  network = "raspberrypi_overlay"
+
+
+
+traefik.backend: openhab
+traefik.enable: true
+traefik.http.routers.openhab-router.middlewares: openhab-auth
+      traefik.http.routers.openhab-router.rule: PathPrefix(`/`)
+      traefik.http.routers.traefik-router.entrypoints: web
+      traefik.http.services.openhab-service.loadbalancer.server.port: 8080

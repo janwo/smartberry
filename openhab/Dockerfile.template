@@ -1,3 +1,4 @@
 FROM openhab/openhab:latest
-
 COPY ./volume-files/openhab-startup-scripts/ /etc/cont-init.d/
+ENV AUTH_OPENHAB_UUID
+ENV AUTH_OPENHAB_SECRET

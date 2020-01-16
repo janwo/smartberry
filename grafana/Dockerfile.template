@@ -1,0 +1,4 @@
+FROM grafana/grafana:latest
+COPY ./pre-grafana.sh /pre-grafana.sh
+ENV AUTH_GRAFANA_PASSWORD
+ENTRYPOINT ["/pre-grafana.sh"]

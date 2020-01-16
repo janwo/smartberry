@@ -1,0 +1,4 @@
+FROM influxdb:latest
+COPY ./pre-influxdb.sh /pre-influxdb.sh
+ENV AUTH_INFLUXDB_PASSWORD
+ENTRYPOINT ["/pre-influxdb.sh"]
