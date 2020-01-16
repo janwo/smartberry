@@ -1,8 +1,8 @@
 FROM openhab/openhab:latest
-LABEL traefik.enable: true \
+COPY ./volume-files/openhab-startup-scripts/ /etc/cont-init.d/
+LABEL traefik.enable=true \
       traefik.backend="openhab" \
       traefik.http.routers.openhab-router.middlewares="openhab-auth" \
       traefik.http.routers.openhab-router.rule="PathPrefix(`/`)" \
       traefik.http.routers.traefik-router.entrypoints="web" \
       traefik.http.services.openhab-service.loadbalancer.server.port=8080
-COPY ./volume-files/openhab-startup-scripts/ /etc/cont-init.d/
