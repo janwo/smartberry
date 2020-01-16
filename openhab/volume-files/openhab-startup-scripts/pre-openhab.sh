@@ -10,4 +10,4 @@ then
     echo ${AUTH_OPENHAB_SECRET} > /openhab/userdata/openhabcloud/secret
 fi
 
-cat > /openhab/userdata/etc/host.key << ${AUTH_DEVICE_HOSTKEY}
+echo ${AUTH_DEVICE_HOSTKEY} > /openhab/userdata/etc/host.key
