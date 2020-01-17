@@ -25,4 +25,4 @@ find /openhab/conf/rules -type f ! -name 'customrule-*.rules' ! -name 'readme.tx
 find /openhab/conf/transform -type f ! -name 'customtransform-*.map' ! -name 'readme.txt' -delete
 
 # Overwrite files including conf-folder
-find /tmp/openhab -type f -exec cp --parents {} /openhab \;
+cp -R /tmp/openhab/* /openhab
