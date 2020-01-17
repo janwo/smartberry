@@ -1,0 +1,4 @@
+FROM busybox
+COPY ./create-swap.sh /usr/bin/create-swap.sh
+ENV SWAPSIZE=512 SWAPFILE=/var/lib/swap.img
+CMD ["/usr/bin/create-swap.sh"]

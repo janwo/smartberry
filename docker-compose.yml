@@ -109,3 +109,9 @@ services:
       UUID: 88BCBF76-F2B4-4BB0-A982-906C16121FF7
       MINOR: 0
       MAJOR: 0
+
+  bluetooth-beacon:
+    build: ./swap
+    restart: unless-stopped
+    environment:
+      SWAPSIZE: 1024
