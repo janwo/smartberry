@@ -1,5 +1,0 @@
-FROM alpine:latest
-COPY ./run.sh /run.sh
-ENV SWAPSIZE=512 SWAPFILE=/data/swapfile
-VOLUME /data
-CMD ["/run.sh"]
