@@ -3,8 +3,8 @@ volumes:
   openhab-addons:
   openhab-conf:
   openhab-userdata:
-  influxdb:
-  grafana:
+  #influxdb:
+  #grafana:
 
 networks:
   raspberrypi_overlay:
