@@ -1,9 +1,5 @@
 FROM alpine:latest
-RUN apk update && \
-    apk add openssh && \
-    rm -rf /var/cache/apk/*
-ADD run.sh /
-RUN chmod +x /run.sh
-ENV SWAPPINESS 10 SWAP_SIZE_IN_GB **None**
-VOLUME /user
-CMD ["/run.sh"]
+COPY make-swap /usr/bin/make-swap
+ENV SWAPSIZE=512 SWAPFILE=/swapfile
+VOLUME /swapfile
+CMD ["/usr/bin/make-swap"]

@@ -115,6 +115,6 @@ services:
     build: ./swap
     restart: unless-stopped
     volumes:
-      - swap:/user
+      - swap:/swapfile
     environment:
-      SWAP_SIZE: 1024
+      SWAPSIZE: 1024
