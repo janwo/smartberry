@@ -113,5 +113,7 @@ services:
   swap:
     build: ./swap
     restart: unless-stopped
+    network_mode: host
+    privileged: true
     environment:
       SWAPSIZE: 1024
