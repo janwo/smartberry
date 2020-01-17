@@ -1,4 +1,9 @@
-FROM busybox:latest
-COPY ./create-swap.sh /usr/bin/create-swap.sh
-ENV SWAPSIZE=512 SWAPFILE=/var/lib/swap.img
-CMD ["/usr/bin/create-swap.sh"]
+FROM alpine:latest
+RUN apk update && \
+    apk add openssh && \
+    rm -rf /var/cache/apk/*
+ADD run.sh /
+RUN chmod +x /run.sh
+ENV SWAPPINESS 10 SWAP_SIZE_IN_GB **None**
+VOLUME /user
+CMD ["/run.sh"]

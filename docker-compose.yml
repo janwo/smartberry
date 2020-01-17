@@ -5,6 +5,7 @@ volumes:
   openhab-userdata:
   influxdb:
   grafana:
+  swap:
 
 networks:
   raspberrypi_overlay:
@@ -113,7 +114,7 @@ services:
   swap:
     build: ./swap
     restart: unless-stopped
-    network_mode: host
-    privileged: true
+    volumes:
+      - swap:/user
     environment:
-      SWAPSIZE: 1024
+      SWAP_SIZE: 1024
