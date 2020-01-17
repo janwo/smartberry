@@ -1,0 +1,8 @@
+Group gTimedOutletManagement                 "Zeituhr-Steckdosen-Management"    <poweroutlet>          (gHome)
+Group gTimedOutletManagement_Switchable      "Zeituhr-Steckdosen"               <poweroutlet>          (gTimedOutletManagement)
+Group gTimedOutletManagement_LastActivation  "Letztes Einschalten"              <time>                 (gTimedOutletManagement, gPersistence_SaveState)
+Group gTimedOutletManagement_ActiveDuration  "Einschaltdauer [%d min]"          <time>                 (gTimedOutletManagement, gPersistence_SaveState)
+
+Switch      TimedOutlet1                    "Zeituhr-Steckdose 1"                                                               <poweroutlet>       (gPower, gTimedOutletManagement_Switchable) ["Outlet"]
+Number      TimedOutlet1_ActiveDuration     "Einschaltdauer von Zeituhr-Steckdose 1 [%d min]"                                   <time>              (gTimedOutletManagement_ActiveDuration, gPersistence_SaveState)
+DateTime    TimedOutlet1_LastActivation     "Letztes Einschalten von Zeituhr-Steckdose 1: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"      <time>              (gTimedOutletManagement_LastActivation)

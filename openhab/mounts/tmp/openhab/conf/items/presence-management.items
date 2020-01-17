@@ -1,0 +1,20 @@
+Number     PresenceManagement                     "Anwesenheit"                                                            <motion>    (gPresenceManagement, gPersistence_TrackState, gPersistence_SaveState) // 1=Anwesend, 0=Kurz abwesend, 2=Lange abwesend
+DateTime   PresenceManagement_LastPresence        "Letzte Anwesenheit (Gesamt): [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"           <time>      (gPresenceManagement_LastPresence)
+Number     PresenceManagement_Simulation          "Anwesenheit bei Dunkelheit simulieren"                                  <light>     (gPresenceManagement, gPersistence_SaveState) //2=Wenn lange abwesend, 0=Wenn kurz abwesend, 3=Aus
+Number     PresenceManagement_HoursUntilAwayShort "Stunden bis kurze Abwesenheit [%d h]"                                   <motion>    (gPresenceManagement, gPersistence_SaveState)
+Number     PresenceManagement_HoursUntilAwayLong  "Stunden bis lange Abwesenheit [%d h]"                                   <motion>    (gPresenceManagement, gPersistence_SaveState)
+
+Group                       gPresenceManagement                                       <motion>    (gHome)
+Group                       gPresenceManagement_PresenceTrigger                       <motion>    (gPresenceManagement)
+Group                       gPresenceManagement_LastPresence  "Letzte Anwesenheiten"  <time>      (gPresenceManagement, gPersistence_TrackState, gPersistence_SaveState)
+Group:Switch:OR(ON, OFF)    gPresenceManagement_SimulationItem                        <motion>    (gPresenceManagement)
+
+DateTime GF_LivingRoom_PresenceManagement_LastPresence     "Letzte Anwesenheit in Wohnzimmer: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"            <time>              (gPresenceManagement_LastPresence)
+DateTime GF_Kitchen_PresenceManagement_LastPresence        "Letzte Anwesenheit in Küche: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"                 <time>              (gPresenceManagement_LastPresence)
+DateTime GF_StorageRoom_PresenceManagement_LastPresence    "Letzte Anwesenheit in Abstellraum: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"           <time>              (gPresenceManagement_LastPresence)
+DateTime GF_Corridor_PresenceManagement_LastPresence       "Letzte Anwesenheit in Flur: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"                  <time>              (gPresenceManagement_LastPresence)
+DateTime FF_Wardrobe_PresenceManagement_LastPresence       "Letzte Anwesenheit in Garderobe: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"             <time>              (gPresenceManagement_LastPresence)
+DateTime FF_Bedroom_PresenceManagement_LastPresence        "Letzte Anwesenheit in Schlafzimmer: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"          <time>              (gPresenceManagement_LastPresence)
+DateTime FF_Stairs_PresenceManagement_LastPresence         "Letzte Anwesenheit in Treppe: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"                <time>              (gPresenceManagement_LastPresence)
+DateTime FF_Bathroom_PresenceManagement_LastPresence       "Letzte Anwesenheit in Badezimmer: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"            <time>              (gPresenceManagement_LastPresence)
+DateTime FF_Office_PresenceManagement_LastPresence         "Letzte Anwesenheit in Büro: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"                  <time>              (gPresenceManagement_LastPresence)

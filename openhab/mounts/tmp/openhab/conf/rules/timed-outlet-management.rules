@@ -1,0 +1,34 @@
+rule "Keep last timed outlet activation updated"
+when
+  Member of gTimedOutletManagement_Switchable changed to ON
+then
+	val first = gTimedOutletManagement_LastActivation.members.findFirst[f|f.name.startsWith(triggeringItem.name)];
+  if(first !== null) {
+    first.sendCommand(now.toString)
+  } else {
+    logWarn("timed-outlet-management.rules", "gTimedOutletManagement_LastActivation not found for outlet " + triggeringItem.name);
+  }
+end
+
+rule "Manage elapsed outlets"
+when
+  	Time cron "0 * * ? * * *" or
+    Member of gTimedOutletManagement_ActiveDuration received update
+then
+
+gTimedOutletManagement_Switchable.members.filter[l|l.state == ON].forEach[s|
+	val activation = gTimedOutletManagement_LastActivation.members.findFirst[f|f.name.startsWith(s.name)]
+	val duration = gTimedOutletManagement_ActiveDuration.members.findFirst[f|f.name.startsWith(s.name)]
+
+  if(activation === null || duration === null) {
+    logWarn("timed-outlet-management.rules", "gTimedOutletManagement_LastActivation or gTimedOutletManagement_ActiveDuration not found for outlet " + s.name);
+    return
+  }
+
+  val activationState = activation.state as DateTimeType
+  val durationState = duration.state as DecimalType
+  if(now.minusMinutes(durationState.intValue).isAfter(activationState.zonedDateTime.toInstant().toEpochMilli)) {
+    s.sendCommand(OFF)
+  }
+]
+end

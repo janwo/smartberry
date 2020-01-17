@@ -1,0 +1,143 @@
+rule "Set SpecialStateManagement to off on triggered DefaultStateTrigger."
+when
+	Member of gSpecialStateManagement_DefaultStateTrigger received update ON
+then
+	if(SpecialStateManagement.state != 0 && now.minusHours((SpecialStateManagement_HoursUntilTriggersActivated.state as DecimalType).intValue).isAfter((SpecialStateManagement_LastActivation.state as DateTimeType).zonedDateTime.toInstant().toEpochMilli)) {
+		SpecialStateManagement.postUpdate(0)
+	}
+end
+
+rule "Change scene."
+when
+	Member of gSpecialStateManagement_Scenes changed
+then
+	val store = newArrayList
+	if(SpecialStateManagement_ScenesStore.state !== NULL) {
+		val splits = SpecialStateManagement_ScenesStore.state.toString.split(",")
+		for (var i = 0; i < splits.size(); i++) {
+			store.add(splits.get(i))
+		}
+	}
+
+	val pattern = triggeringItem.name + ".scene" + triggeringItem.state + "="
+	var timestamp = null as String
+
+	val first = store.findFirst[i|i.startsWith(pattern)]
+	if(first !== null) {
+		timestamp = transform('REGEX', 's/^[^=]+=([^=]+)$/$1/g', first)
+	}
+
+	if(timestamp !== null) {
+		val room = transform("REGEX", "s/^([^_]+_[^_]+).*$/$1/g", triggeringItem.name)
+		val finalTimestamp = timestamp
+		gSpecialStateManagement_SceneMembers.members.filter[i|i.name.startsWith(room)].forEach[GenericItem i|
+			val historicState = i.historicState(parse(finalTimestamp))
+			if(historicState !== null) {
+				if (i instanceof NumberItem) {
+					i.sendCommand(historicState.state as Number)
+				} else if(i instanceof ColorItem) {
+					i.sendCommand(new HSBType(historicState.state.toString))
+				} else if (i instanceof DimmerItem){
+					i.sendCommand(new PercentType(historicState.state.toString))
+				} else {
+					i.sendCommand(historicState.state as OnOffType)
+				}
+			}
+		]
+	} else {
+		logInfo("special-state-management.rules", "No states saved for scene " + triggeringItem.name + ", yet.")
+	}
+end
+
+rule "Store current scene."
+when
+	Member of gSpecialStateManagement_StoreSceneTriggers received update ON
+then
+	val room = transform("REGEX", "s/^([^_]+_[^_]+).*$/$1/g", triggeringItem.name)
+	val firstScene = gSpecialStateManagement_Scenes.members.findFirst[i|i.name.startsWith(room)]
+	if(firstScene !== null) {
+		val store = newArrayList
+		if(SpecialStateManagement_ScenesStore.state !== NULL) {
+			val dataItem = SpecialStateManagement_ScenesStore.state.toString.split(",")
+			for (var i = 0; i < dataItem.size(); i++) {
+				val keyvalues = dataItem.get(i).split("=")
+
+				if(keyvalues.size() > 1) {
+					val currentRoom = transform("REGEX", "s/^([^_]+_[^_]+).*$/$1/g", keyvalues.get(0))
+					val currentFirstScene= gSpecialStateManagement_Scenes.members.findFirst[j|j.name.startsWith(currentRoom)]
+
+					if(currentFirstScene === null) {
+						logInfo("special-state-management.rules", "No item of group SpecialStateManagement_Scenes found for room " + currentRoom + ". Removed it from SpecialStateManagement_ScenesStore.")
+					} else {
+						store.add(dataItem.get(i))
+					}
+				}
+			}
+		}
+
+		var match = false
+		val pattern = firstScene.name + ".scene" + firstScene.state + "="
+		for (var i = 0; i < store.size(); i++) {
+			if(store.get(i).startsWith(pattern)) {
+				match = true
+				store.set(i, pattern + now.toString)
+			}
+		}
+
+		if(!match) {
+			store.add(pattern + now.toString)
+		}
+
+		val update = store.reduce[ i1, i2 | i1 + "," + i2 ]
+		SpecialStateManagement_ScenesStore.postUpdate(if(update === null) "" else update)
+		triggeringItem.postUpdate(OFF)
+	} else {
+		logInfo("special-state-management.rules", "No item of group SpecialStateManagement_Scenes found for room " + room + ".")
+	}
+end
+
+rule "Set activation when SpecialStateManagement changes."
+when
+	Item SpecialStateManagement received update
+then
+	SpecialStateManagement_LastActivation.postUpdate(now.toString)
+end
+
+rule "Turn off light and reset scenes when SpecialStateManagement was set to sleep."
+when
+	Item SpecialStateManagement received update 1
+then
+	gSpecialStateManagement_Scenes.members.forEach[i|i.sendCommand(0)]
+	gLightManagement_LightSwitchable_IgnoreWhenSleep.members.forEach[l|l.sendCommand(OFF)]
+end
+
+rule "Forward SpecialStateManagement_SelectStateHelpers to SpecialStateManagement"
+when
+	Member of gSpecialStateManagement_SelectStateHelpers received update
+then
+	var state = Integer::parseInt(transform("REGEX", "s/^.*?(\\d+)$/$1/g", triggeringItem.name))
+	if(triggeringItem.state == OFF) {
+		state = (SpecialStateManagement.previousState().state as Number).intValue
+		logDebug("loggerName", " " + state)
+	}
+
+	SpecialStateManagement.postUpdate(state)
+end
+
+rule "Forward SpecialStateManagement_SelectSceneHelpers to relevant member of gSpecialStateManagement_Scenes"
+when
+	Member of gSpecialStateManagement_SelectSceneHelpers received update
+then
+	val room = transform("REGEX", "s/^([^_]+_[^_]+).*$/$1/g", triggeringItem.name)
+	val first = gSpecialStateManagement_Scenes.members.findFirst[i|i.name.startsWith(room)]
+	if(first !== null) {
+		var state = Integer::parseInt(transform("REGEX", "s/^.*?(\\d+)$/$1/g", triggeringItem.name)) as Number
+		if(triggeringItem.state == OFF) {
+			state = first.previousState().state as DecimalType
+		}
+
+		first.postUpdate(state)
+	} else {
+		logInfo("special-state-management.rules", "No item of group SpecialStateManagement_Scenes found for room " + room + ".")
+	}
+end

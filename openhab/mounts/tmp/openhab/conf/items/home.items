@@ -1,0 +1,139 @@
+// LivingRoom
+Switch  GF_LivingRoom_Power                 "Steckdose in Wohnzimmer"                                       <poweroutlet>       (gGF_LivingRoom, gPower, gLightManagement_LightSwitchable, gPresenceManagement_SimulationItem, gSpecialStateManagement_SceneMembers) ["Outlet"]
+Switch  GF_LivingRoom_Light1_Power	        "Betonlampe in Wohnzimmer"                                      <light>             (gGF_LivingRoom, gLight, gPresenceManagement_SimulationItem)
+Color   GF_LivingRoom_Light1_Color          "Betonlampe in Wohnzimmer"                                      <colorpicker>       (gGF_LivingRoom, gLight, gLightManagement_LightSwitchable, gSpecialStateManagement_SceneMembers) ["Lighting"]
+Dimmer  GF_LivingRoom_Light1_Brightness     "Betonlampe in Wohnzimmer"                                      <qualityofservice>  (gGF_LivingRoom, gLight)
+Switch  GF_LivingRoom_Light2_Power          "Stehlampe in Wohnzimmer"                                       <light>             (gGF_LivingRoom, gLight, gPresenceManagement_SimulationItem)
+Color	GF_LivingRoom_Light2_Color          "Stehlampe in Wohnzimmer"                                       <colorpicker>       (gGF_LivingRoom, gLight, gLightManagement_LightSwitchable, gSpecialStateManagement_SceneMembers) ["Lighting"]
+Dimmer  GF_LivingRoom_Light2_Brightness     "Stehlampe in Wohnzimmer"                                       <qualityofservice>  (gGF_LivingRoom, gLight)
+Switch  GF_LivingRoom_Light3_Power          "Fensterlampe in Wohnzimmer"                                    <light>             (gGF_LivingRoom, gLight, gPresenceManagement_SimulationItem)
+Color   GF_LivingRoom_Light3_Color          "Fensterlampe in Wohnzimmer"                                    <colorpicker>       (gGF_LivingRoom, gLight, gLightManagement_LightSwitchable, gSpecialStateManagement_SceneMembers) ["Lighting"]
+Dimmer  GF_LivingRoom_Light3_Brightness     "Fensterlampe in Wohnzimmer"                                    <qualityofservice>  (gGF_LivingRoom, gLight)
+Switch  GF_LivingRoom_Sensor_Motion         "Bewegungsmelder in Wohnzimmer"                                 <motion>            (gSensor_Motion, gPresenceManagement_PresenceTrigger)
+Number  GF_LivingRoom_Sensor_Luminance      "Leuchtkraft in Wohnzimmer [%d %%]"                             <blinds>            (gGF_LivingRoom, gSensor_Luminance)
+Number  GF_LivingRoom_Sensor_Battery        "Sensor in Wohnzimmer [%d %%]"                                  <battery>           (gBattery)
+Contact GF_LivingRoom_Window                "Fensterkontakt in Wohnzimmer [MAP(de.map):%s]"                 <window>            (gGF_LivingRoom, gSensor_Contact, gPresenceManagement_PresenceTrigger, gSecurity_AssaultTrigger, gHeatingManagement_ContactSwitchable)
+Number  GF_LivingRoom_Window_Battery        "Fensterkontakt in Wohnzimmer [%d %%]"                          <battery>           (gBattery)
+
+Group   gGF_LivingRoom_Heater               "Heizung in Wohnzimmer"                                         <radiator>          (gHeatingManagement_Thermostat, gGF_LivingRoom) [ "Thermostat" ]
+Dimmer  GF_LivingRoom_Heater_Valve          "Heizung in Wohnzimmer: Ventilöffnung [%d %%]"                  <radiator>          (gGF_LivingRoom_Heater, gPersistence_TrackState)
+Number  GF_LivingRoom_Sensor_Humidity       "Luftfeuchtigkeit in Wohnzimmer [%d %%]"                        <humidity>          (gGF_LivingRoom_Heater, gGF_LivingRoom, gSensor_Humidity) ["CurrentHumidity"]
+Number  GF_LivingRoom_Sensor_Temperature    "Temperatur in Wohnzimmer [%.1f °C]"                            <temperature>       (gGF_LivingRoom_Heater, gSensor_Temperature) ["CurrentTemperature"]
+Number  GF_LivingRoom_Heater_Battery        "Heizung in Wohnzimmer [%d %%]"                                 <battery>           (gGF_LivingRoom_Heater, gBattery)
+Number  GF_LivingRoom_Heater_Temperature    "Heizung in Wohnzimmer: Normale Zieltemperatur [%.1f °C]"       <radiator>          (gGF_LivingRoom_Heater, gHeatingManagement_Thermostat_DefaultTemperature) [ "TargetTemperature" ]
+Number  GF_LivingRoom_Heater_Mode           "Heizung in Wohnzimmer: Modus"                                  <radiator>          (gGF_LivingRoom_Heater, gHeatingManagement_Thermostat_Mode) [ "HeatingCoolingMode" ]
+Number  GF_LivingRoom_Heater_EcoTemperature "Heizung in Wohnzimmer: Eco-Zieltemperatur [%.1f °C]"           <radiator>          (gGF_LivingRoom_Heater, gHeatingManagement_Thermostat_EcoTemperature)
+
+// Kitchen
+Contact GF_Kitchen_Window             "Fensterkontakt in Küche [MAP(de.map):%s]"        <window>           (gGF_Kitchen, gPresenceManagement_PresenceTrigger, gSensor_Contact, gSecurity_AssaultTrigger)
+Number  GF_Kitchen_Window_Battery     "Fensterkontakt in Küche [%d %%]"                 <battery>          (gBattery)
+Switch  GF_Kitchen_Light1_Power	      "Kaffeelampe in Küche"                            <light>            (gGF_Kitchen, gLight, gPresenceManagement_SimulationItem)
+Dimmer  GF_Kitchen_Light1_Brightness  "Kaffeelampe in Küche "                           <qualityofservice> (gGF_Kitchen, gLight, gLightManagement_LightSwitchable) ["Lighting"]
+Switch  GF_Kitchen_Light2_Power	      "Mikrowellenlampe in Küche"                       <light>            (gGF_Kitchen, gLight, gPresenceManagement_SimulationItem)
+Dimmer  GF_Kitchen_Light2_Brightness  "Mikrowellenlampe in Küche"                       <qualityofservice> (gGF_Kitchen, gLight, gLightManagement_LightSwitchable) ["Lighting"]
+Switch  GF_Kitchen_Sensor_Motion      "Bewegungsmelder in Küche"                        <motion>           (gSensor_Motion, gPresenceManagement_PresenceTrigger)
+Number  GF_Kitchen_Sensor_Luminance   "Leuchtkraft in Küche [%d %%]"                    <blinds>           (gGF_Kitchen, gSensor_Luminance)
+Number  GF_Kitchen_Sensor_Humidity    "Luftfeuchtigkeit in Küche [%d %%]"               <humidity>         (gGF_Kitchen, gSensor_Humidity) ["CurrentHumidity"]
+Number  GF_Kitchen_Sensor_Battery     "Sensor in Küche [%d %%]"                         <battery>          (gBattery)
+
+Group   gGF_Kitchen_Heater            "Heizung in Küche"                                <radiator>         (gHeatingManagement_Thermostat, gGF_Kitchen) [ "Thermostat" ]
+Number  GF_Kitchen_Sensor_Temperature "Temperatur in Küche [%.1f °C]"                   <temperature>      (gGF_Kitchen_Heater, gSensor_Temperature) ["CurrentTemperature"]
+
+// Greenhouse
+Switch  GF_Greenhouse_Power           "Steckdose in Küche (Blumenkasten)"               <poweroutlet>      (gGF_Greenhouse, gPower, gLightManagement_LightSwitchable) ["Outlet"]
+
+// Bathroom
+Switch  FF_Bathroom_Power             "Steckdose in Badezimmer"                         <poweroutlet>      (gFF_Bathroom, gPower, gLightManagement_LightSwitchable, gPresenceManagement_SimulationItem) ["Outlet"]
+Switch  FF_Bathroom_Sensor_Motion     "Bewegungsmelder in Badezimmer"                   <motion>           (gSensor_Motion, gPresenceManagement_PresenceTrigger)
+
+// Office
+Switch  FF_Office_Power               "Steckdose in Büro"                               <poweroutlet>      (gFF_Office, gPower, gLightManagement_LightSwitchable, gPresenceManagement_SimulationItem) ["Outlet"]
+Switch  FF_Office_Sensor_Motion       "Bewegungsmelder in Büro"                         <motion>           (gSensor_Motion, gPresenceManagement_PresenceTrigger)
+Number  FF_Office_Sensor_Battery      "Sensor in Büro [%d %%]"                          <battery>          (gBattery)
+Number  FF_Office_Sensor_Humidity     "Luftfeuchtigkeit in Büro [%d %%]"                <humidity>         (gFF_Office, gSensor_Humidity) ["CurrentHumidity"]
+Number  FF_Office_Sensor_Luminance    "Leuchtkraft in Büro [%d %%]"                     <blinds>           (gFF_Office, gSensor_Luminance)
+
+Group   gFF_Office_Heater             "Heizung in Büro"                                 <radiator>         (gHeatingManagement_Thermostat, gFF_Office) [ "Thermostat" ]
+Number  FF_Office_Sensor_Temperature  "Temperatur in Büro [%.1f °C]"                    <temperature>      (gFF_Office_Heater, gSensor_Temperature) ["CurrentTemperature"]
+
+// Abstellraum
+Switch  GF_StorageRoom_Sensor_Motion       "Bewegungsmelder in Abstellraum"                  <motion>           (gSensor_Motion, gPresenceManagement_PresenceTrigger)
+Switch  GF_StorageRoom_Light1_Power	       "Lampe in Abstellraum"                            <light>            (gGF_StorageRoom, gLight)
+Dimmer  GF_StorageRoom_Light1_Brightness   "Lampe in Abstellraum"                            <qualityofservice> (gGF_StorageRoom, gLight, gLightManagement_LightSwitchable) ["Lighting"]
+Number  GF_StorageRoom_Sensor_Battery      "Sensor in Abstellraum [%d %%]"                   <battery>          (gBattery)
+Number  GF_StorageRoom_Sensor_Humidity     "Luftfeuchtigkeit in Abstellraum [%d %%]"         <humidity>         (gGF_StorageRoom, gSensor_Humidity) ["CurrentHumidity"]
+Number  GF_StorageRoom_Sensor_Luminance    "Leuchtkraft in Abstellraum [%d %%]"              <blinds>           (gGF_StorageRoom, gSensor_Luminance)
+
+Group   gGF_StorageRoom_Heater             "Heizung in Abstellraum"                          <radiator>         (gHeatingManagement_Thermostat, gGF_StorageRoom) [ "Thermostat" ]
+Number  GF_StorageRoom_Sensor_Temperature  "Temperatur in Abstellraum [%.1f °C]"             <temperature>      (gGF_StorageRoom_Heater, gSensor_Temperature) ["CurrentTemperature"]
+
+// Wardrobe
+Switch  FF_Wardrobe_Power               "Steckdose in Garderobe"                        <poweroutlet>      (gFF_Wardrobe, gPower, gLightManagement_LightSwitchable, gPresenceManagement_SimulationItem) ["Outlet"]
+Number  FF_Wardrobe_Sensor_Luminance    "Leuchtkraft in Garderobe [%d %%]"              <blinds>           (gFF_Wardrobe, gSensor_Luminance)
+Number  FF_Wardrobe_Sensor_Humidity     "Luftfeuchtigkeit in Garderobe [%d %%]"         <humidity>         (gFF_Wardrobe, gSensor_Humidity) ["CurrentHumidity"]
+Switch  FF_Wardrobe_Sensor_Motion       "Bewegungsmelder in Garderobe"                  <motion>           (gSensor_Motion, gPresenceManagement_PresenceTrigger)
+Number  FF_Wardrobe_Sensor_Battery      "Sensor in Garderobe [%d %%]"                   <battery>          (gBattery)
+
+Group   gFF_Wardrobe_Heater             "Heizung in Garderobe"                          <radiator>         (gHeatingManagement_Thermostat, gFF_Wardrobe) [ "Thermostat" ]
+Number  FF_Wardrobe_Sensor_Temperature  "Temperatur in Garderobe [%.1f °C]"             <temperature>      (gFF_Wardrobe_Heater, gSensor_Temperature) ["CurrentTemperature"]
+
+// Bedroom
+Switch  FF_Bedroom_Light1_Power	            "Stehlampe in Schlafzimmer"                                     <light>             (gFF_Bedroom, gLight, gPresenceManagement_SimulationItem)
+Dimmer  FF_Bedroom_Light1_Brightness        "Stehlampe in Schlafzimmer"                                     <qualityofservice>  (gFF_Bedroom, gLight, gLightManagement_LightSwitchable, gLightManagement_LightSwitchable_IgnoreWhenSleep ) ["Lighting"]
+Switch  FF_Bedroom_Light2_Power	            "Farblampe in Schlafzimmer"                                     <light>             (gFF_Bedroom, gLight, gPresenceManagement_SimulationItem)
+Color   FF_Bedroom_Light2_Color             "Farblampe in Schlafzimmer"                                     <colorpicker>       (gFF_Bedroom, gLight, gLightManagement_LightSwitchable, gLightManagement_LightSwitchable_IgnoreWhenSleep) ["Lighting"]
+Dimmer  FF_Bedroom_Light2_Brightness        "Farblampe in Schlafzimmer"                                     <qualityofservice>  (gFF_Bedroom, gLight)
+Switch  FF_Bedroom_Light3_Power	            "Farblampe in Schlafzimmer"                                     <light>             (gFF_Bedroom, gLight, gPresenceManagement_SimulationItem)
+Color   FF_Bedroom_Light3_Color             "Farblampe in Schlafzimmer"                                     <colorpicker>       (gFF_Bedroom, gLight, gLightManagement_LightSwitchable, gLightManagement_LightSwitchable_IgnoreWhenSleep) ["Lighting"]
+Dimmer  FF_Bedroom_Light3_Brightness        "Farblampe in Schlafzimmer"                                     <qualityofservice>  (gFF_Bedroom, gLight)
+Switch  FF_Bedroom_Sensor_Motion            "Bewegungsmelder in Schlafzimmer"                               <motion>            (gSensor_Motion, gPresenceManagement_PresenceTrigger)
+Number  FF_Bedroom_Sensor_Luminance         "Leuchtkraft in Schlafzimmer [%d %%]"                           <blinds>            (gFF_Bedroom, gSensor_Luminance)
+Number  FF_Bedroom_Sensor_Battery           "Sensor in Schlafzimmer [%d %%]"                                <battery>           (gBattery)
+
+Group   gFF_Bedroom_Heater                  "Heizung in Schlafzimmer"                                       <radiator>          (gHeatingManagement_Thermostat, gFF_Bedroom) [ "Thermostat" ]
+Number  FF_Bedroom_Sensor_Humidity          "Luftfeuchtigkeit in Schlafzimmer [%d %%]"                      <humidity>          (gFF_Bedroom_Heater, gFF_Bedroom, gSensor_Humidity) ["CurrentHumidity"]
+Number  FF_Bedroom_Sensor_Temperature       "Temperatur in Schlafzimmer [%.1f °C]"                          <temperature>       (gFF_Bedroom_Heater, gSensor_Temperature) ["CurrentTemperature"]
+Dimmer  FF_Bedroom_Heater_Valve             "Heizung in Schlafzimmer: Ventilöffnung [%d %%]"                <radiator>          (gFF_Bedroom_Heater, gPersistence_TrackState)
+Number  FF_Bedroom_Heater_Battery           "Heizung in Schlafzimmer [%d %%]"                               <battery>           (gFF_Bedroom_Heater, gBattery)
+Number  FF_Bedroom_Heater_Temperature       "Heizung in Schlafzimmer: Normale Zieltemperatur [%.1f °C]"     <radiator>          (gFF_Bedroom_Heater, gSensor_Temperature, gHeatingManagement_Thermostat_DefaultTemperature) [ "TargetTemperature" ]
+Number  FF_Bedroom_Heater_EcoTemperature    "Heizung in Schlafzimmer: Eco-Zieltemperatur [%.1f °C]"         <radiator>          (gFF_Bedroom_Heater, gSensor_Temperature, gHeatingManagement_Thermostat_EcoTemperature)
+Number  FF_Bedroom_Heater_Mode              "Heizung in Schlafzimmer: Modus"                                <radiator>          (gFF_Bedroom_Heater, gHeatingManagement_Thermostat_Mode) [ "HeatingCoolingMode" ]
+
+// Toilet
+Contact GF_Toilet_Window            "Fensterkontakt in Toilette [MAP(de.map):%s]"    <window>         (gGF_Toilet, gPresenceManagement_PresenceTrigger, gSensor_Contact, gSecurity_AssaultTrigger)
+Number  GF_Toilet_Window_Battery    "Fensterkontakt in Toilette [%d %%]"             <battery>        (gBattery)
+
+// Corridor
+Contact GF_Corridor_Window               "Fensterkontakt in Flur [MAP(de.map):%s]"   <window>           (gGF_Corridor, gSecurity_LockClosureTrigger, gPresenceManagement_PresenceTrigger, gSensor_Contact, gSecurity_AssaultTrigger)
+Number  GF_Corridor_Window_Battery       "Fensterkontakt in Flur [%d %%]"            <battery>          (gBattery)
+Switch  GF_Corridor_Sensor_Motion        "Bewegungsmelder in Flur"                   <motion>           (gSensor_Motion, gPresenceManagement_PresenceTrigger)
+Number  GF_Corridor_Sensor_Luminance     "Leuchtkraft in Flur [%d %%]"               <blinds>           (gGF_Corridor, gSensor_Luminance)
+Number  GF_Corridor_Sensor_Humidity      "Luftfeuchtigkeit in Flur [%d %%]"          <humidity>         (gGF_Corridor, gSensor_Humidity) ["CurrentHumidity"]
+Number  GF_Corridor_Sensor_Battery       "Sensor in Flur [%d %%]"                    <battery>          (gBattery)
+Switch  GF_Corridor_Lock_State           "Türschloss in Flur"                        <lock>             (gGF_Corridor, gSecurity_AssaultDisarmamer, gLock)
+Number  GF_Corridor_Lock_Battery         "Türschloss in Flur [%d %%]"                <battery>          (gGF_Corridor, gBattery)
+
+Group   gGF_Corridor_Heater              "Heizung in Flur"                           <radiator>         (gHeatingManagement_Thermostat, gGF_Corridor) [ "Thermostat" ]
+Number  GF_Corridor_Sensor_Temperature   "Temperatur in Flur [%.1f °C]"              <temperature>      (gGF_Corridor_Heater, gSensor_Temperature) ["CurrentTemperature"]
+
+// Treppe
+Switch  FF_Stairs_Power                "Steckdose in Treppe"                       <poweroutlet>      (gFF_Stairs, gPower, gLightManagement_LightSwitchable, gPresenceManagement_SimulationItem) ["Outlet"]
+Switch  FF_Stairs_Sensor_Motion        "Bewegungsmelder in Treppe"                 <motion>           (gSensor_Motion, gPresenceManagement_PresenceTrigger, gSpecialStateManagement_DefaultStateTrigger)
+Number  FF_Stairs_Sensor_Luminance     "Leuchtkraft in Treppe [%d %%]"             <blinds>           (gFF_Stairs, gSensor_Luminance)
+Number  FF_Stairs_Sensor_Humidity      "Luftfeuchtigkeit in Treppe [%d %%]"        <humidity>         (gFF_Stairs, gSensor_Humidity) ["CurrentHumidity"]
+Number  FF_Stairs_Sensor_Battery       "Sensor in Treppe [%d %%]"                  <battery>          (gBattery)
+
+Group   gFF_Stairs_Heater              "Heizung in Treppe"                         <radiator>         (gHeatingManagement_Thermostat, gFF_Stairs) [ "Thermostat" ]
+Number  FF_Stairs_Sensor_Temperature   "Temperatur in Treppe [%.1f °C]"            <temperature>      (gFF_Stairs_Heater, gSensor_Temperature) ["CurrentTemperature"]
+
+// Outside
+Switch   OS_Parking_Light1_Power	    "Lampe in Parkplatz"                            <light>             (gOS_Parking, gLight)
+Dimmer   OS_Parking_Light1_Brightness   "Lampe in Parkplatz"                            <qualityofservice>  (gOS_Parking, gLight, gLightManagement_LightSwitchable) ["Lighting"]
+Switch   OS_Backyard_Light1_Power	    "Weglampe in Hinterhof"                         <light>             (gOS_Backyard, gLight)
+Dimmer   OS_Backyard_Light1_Brightness  "Weglampe in Hinterhof"                         <qualityofservice>  (gOS_Backyard, gLight, gLightManagement_LightSwitchable) ["Lighting"]
+Switch   OS_Backyard_Light2_Power	    "Pavillonlampe in Hinterhof"                    <light>             (gOS_Backyard, gLight)
+Color    OS_Backyard_Light2_Color       "Pavillonlampe in Hinterhof"                    <colorpicker>       (gOS_Backyard, gLight, gLightManagement_LightSwitchable) ["Lighting"]
+Dimmer   OS_Backyard_Light2_Brightness  "Pavillonlampe in Hinterhof"                    <qualityofservice>  (gOS_Backyard, gLight)
+Switch   OS_Backyard_Light3_Power	    "Beetlampe in Hinterhof"                        <light>             (gOS_Backyard, gLight)
+Color    OS_Backyard_Light3_Color       "Beetlampe in Hinterhof"                        <colorpicker>       (gOS_Backyard, gLight, gLightManagement_LightSwitchable) ["Lighting"]
+Dimmer   OS_Backyard_Light3_Brightness  "Beetlampe in Hinterhof"                        <qualityofservice>  (gOS_Backyard, gLight)

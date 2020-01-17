@@ -1,0 +1,19 @@
+import org.eclipse.smarthome.model.script.ScriptServiceUtil
+
+rule "Offline notification"
+when
+	Time cron "0 0 12 * * ?"
+then
+	var offlineThingsNotifications = ScriptServiceUtil.getInstance.thingRegistry.getAll().filter[t| // Might change in 3.0
+		return t.getStatusInfo() !== null && !t.getStatusInfo().getStatus().toString().equals("ONLINE")
+	].map[t|
+		return t.getLabel() + " is " + t.getStatusInfo().getStatus()
+	]
+	if(offlineThingsNotifications.size() > 0) {
+		val notification = "Es wurden Geräte als nicht ONLINE erkannt:\n" + offlineThingsNotifications.reduce[ i1, i2 | i1 + "\n" + i2 ]
+		sendBroadcastNotification(notification)
+		logInfo("offline-notifications.rules", notification)
+	} else {
+		logInfo("offline-notifications.rules", "All things are ONLINE!")
+	}
+end

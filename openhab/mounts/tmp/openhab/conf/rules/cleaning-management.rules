@@ -1,0 +1,18 @@
+rule "Start or stop house cleaning"
+when
+  Item gCleaning_Vacuum_Clean received command
+then
+  val command = if(gCleaning_Vacuum_Clean.state == ON) 'clean' else 'dock'
+	gCleaning_Vacuum_CommandItem.members.forEach[v|v.sendCommand(command)]
+end
+
+rule "Manage state on manual house cleaning"
+when
+  Member of gCleaning_Vacuum_StateItem received update
+then
+  val anyBusy = gCleaning_Vacuum_StateItem.members.filter[s|s.state == "BUSY"].size > 0
+  val update = if(anyBusy) ON else OFF
+  if(gCleaning_Vacuum_Clean.state != update) {
+    gCleaning_Vacuum_Clean.postUpdate(update)
+  }
+end

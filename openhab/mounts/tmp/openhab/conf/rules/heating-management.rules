@@ -1,0 +1,42 @@
+rule "Set Heater when presence changes"
+when
+  Item PresenceManagement received update or
+  Item SpecialStateManagement received update or
+  Item HeatingManagement_Thermostat_ModeDefault changed or
+  Item HeatingManagement_Thermostat_ModeSleep changed or
+  Item HeatingManagement_Thermostat_ModeAwayShort changed or
+  Item HeatingManagement_Thermostat_ModeAwayLong changed
+then
+  var state = HeatingManagement_Thermostat_ModeDefault.state;
+
+  if(SpecialStateManagement.state == 1) {
+    state = HeatingManagement_Thermostat_ModeSleep.state // Special State: Sleep
+  }
+
+  if(SpecialStateManagement.state != 1 && PresenceManagement.state == 2) {
+    state = HeatingManagement_Thermostat_ModeAwayLong.state // Lang abwesend
+  } else if (PresenceManagement.state == 0) {
+    state = HeatingManagement_Thermostat_ModeAwayShort.state // Kurz abwesend
+  } else {
+    state = HeatingManagement_Thermostat_ModeDefault.state // Anwesend
+  }
+
+  val command = (state as DecimalType).intValue
+  gHeatingManagement_Thermostat_Mode.members.forEach[f|f.sendCommand(command)]
+end
+
+rule "Set Heater when windows open or closes"
+when
+  Member of gHeatingManagement_ContactSwitchable changed
+then
+  val room = transform("REGEX", "s/^([^_]+_[^_]+).*$/$1/g", triggeringItem.name)
+  if(triggeringItem.state == OPEN) {
+  	gHeatingManagement_Thermostat_Mode.members.filter[l|l.name.startsWith(room)].forEach[i|i.sendCommand(0)]
+  } else if (gSensor_Contact.members.findFirst[f|f.name.startsWith(room) && f.state == OPEN] === null) { // No remaining opened windows?
+  	gHeatingManagement_Thermostat_Mode.members.filter[l|l.name.startsWith(room)].forEach[l|l.sendCommand(1)]
+    /*
+      Change to normal temperature.
+      It does not respect any presence or special states for simplicity
+    */
+  }
+end

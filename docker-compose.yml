@@ -18,7 +18,6 @@ services:
     networks:
       - raspberrypi_overlay
     volumes:
-      - openhab-addons:/mount/openhab-addons
       - openhab-conf:/mount/openhab-conf
       - openhab-userdata:/mount/openhab-userdata
       - grafana:/mount/grafana

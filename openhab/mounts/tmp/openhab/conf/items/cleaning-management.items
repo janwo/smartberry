@@ -1,0 +1,14 @@
+Group  gCleaning                "Reinigung"                                                             <toilet>    (gHome)
+Switch gCleaning_Vacuum_Clean   "Hausreinigung"                                                         <lawnmower> (gHome, gCleaning) ["Scene"]
+Group  gCleaning_Vacuum_CommandItem                                                                     <lawnmower>
+Group  gCleaning_Vacuum_StateItem                                                                       <lawnmower>
+
+String FF_Vacuum_State          "Saugroboter: Status [MAP(cleaning-management_de.map):%s]"              <switch>    (gCleaning_Vacuum_StateItem, gCleaning)
+Switch FF_Vacuum_Docked         "Saugroboter: In Ladestation [MAP(cleaning-management_de.map):%s]"      <energy>    (gCleaning)
+String FF_Vacuum_Command                                                                                            (gCleaning_Vacuum_CommandItem, gCleaning)
+Number FF_Vacuum_Battery        "Saugroboter: Batteriestand [%.0f %%]"                                  <battery>   (gCleaning, gBattery)
+
+String GF_Vacuum_State          "Saugroboter: Status [MAP(cleaning-management_de.map):%s]"              <switch>    (gCleaning_Vacuum_StateItem, gCleaning)
+Switch GF_Vacuum_Docked         "Saugroboter: In Ladestation [MAP(cleaning-management_de.map):%s]"      <energy>    (gCleaning)
+String GF_Vacuum_Command                                                                                          (gCleaning_Vacuum_CommandItem, gCleaning)
+Number GF_Vacuum_Battery        "Saugroboter: Batteriestand [%.0f %%]"                                  <battery>   (gCleaning, gBattery)

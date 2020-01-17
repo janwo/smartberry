@@ -1,0 +1,6 @@
+Strategies {
+        default = everyUpdate
+}
+Items {
+        gPersistence_SaveState*: strategy = everyChange, restoreOnStartup
+}

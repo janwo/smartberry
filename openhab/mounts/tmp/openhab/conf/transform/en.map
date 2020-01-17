@@ -1,0 +1,6 @@
+CLOSED=closed
+OPEN=open
+ON=on
+OFF=off
+-=unknown
+NULL=unknown
