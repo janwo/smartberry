@@ -110,7 +110,7 @@ services:
       MINOR: 0
       MAJOR: 0
 
-  bluetooth-beacon:
+swap:
     build: ./swap
     restart: unless-stopped
     environment:
