@@ -1,5 +1,5 @@
 FROM alpine:latest
-COPY make-swap /usr/bin/make-swap
+COPY run.sh /run.sh
 ENV SWAPSIZE=512 SWAPFILE=/swapfile
 VOLUME /swapfile
-CMD ["/usr/bin/make-swap"]
+CMD ["/run.sh"]
