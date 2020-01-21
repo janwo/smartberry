@@ -26,3 +26,4 @@ find /openhab/conf/transform -type f ! -name 'customtransform-*.map' ! -name 're
 
 # Overwrite files including conf-folder
 rsync -ap /tmp/openhab/ /openhab
+chown openhab:openhab /openhab
