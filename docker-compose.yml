@@ -3,9 +3,8 @@ volumes:
   openhab-addons:
   openhab-conf:
   openhab-userdata:
-
-#influxdb:
-#grafana:
+  influxdb:
+  grafana:
 
 networks:
   raspberrypi_overlay:
@@ -21,8 +20,8 @@ services:
     volumes:
       - openhab-conf:/mount/openhab-conf
       - openhab-userdata:/mount/openhab-userdata
-      #- grafana:/mount/grafana
-      #- influxdb:/mount/influxdb
+      - grafana:/mount/grafana
+      - influxdb:/mount/influxdb
     restart: unless-stopped
     environment:
       AUTH_SAMBA_PASSWORD:
@@ -60,47 +59,47 @@ services:
       AUTH_OPENHAB_UUID:
       AUTH_OPENHAB_SECRET:
 
-  # influxdb:
-  #   build: ./influxdb
-  #   networks:
-  #     - raspberrypi_overlay
-  #   restart: unless-stopped
-  #   volumes:
-  #     - influxdb:/var/lib/influxdb
-  #   environment:
-  #     INFLUXDB_DB: openhab
-  #     INFLUXDB_USER: openhab
-  #     AUTH_INFLUXDB_PASSWORD:
-  #     INFLUXDB_LOG_LEVEL: error
-  #     INFLUXDB_DATA_QUERY_LOG_ENABLED: true
-  #     INFLUXDB_REPORTING_DISABLED: false
-  #     INFLUXDB_HTTP_LOG_ENABLED: false
-  #     INFLUXDB_META_LOGGING_ENABLED: false
+  influxdb:
+    build: ./influxdb
+    networks:
+      - raspberrypi_overlay
+    restart: unless-stopped
+    volumes:
+      - influxdb:/var/lib/influxdb
+    environment:
+      INFLUXDB_DB: openhab
+      INFLUXDB_USER: openhab
+      AUTH_INFLUXDB_PASSWORD:
+      INFLUXDB_LOG_LEVEL: error
+      INFLUXDB_DATA_QUERY_LOG_ENABLED: true
+      INFLUXDB_REPORTING_DISABLED: false
+      INFLUXDB_HTTP_LOG_ENABLED: false
+      INFLUXDB_META_LOGGING_ENABLED: false
 
-  # grafana:
-  #   build: ./grafana
-  #   networks:
-  #     - raspberrypi_overlay
-  #   restart: unless-stopped
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - grafana:/var/lib/grafana
-  #   environment:
-  #     GF_SECURITY_ADMIN_USER: openhab
-  #     AUTH_GRAFANA_PASSWORD:
+  grafana:
+    build: ./grafana
+    networks:
+      - raspberrypi_overlay
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana:/var/lib/grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: openhab
+      AUTH_GRAFANA_PASSWORD:
 
-  # watchtower:
-  #   image: containrrr/watchtower
-  #   networks:
-  #     - raspberrypi_overlay
-  #   restart: unless-stopped
-  #   labels:
-  #     io.balena.features.balena-socket: true
-  #   environment:
-  #     WATCHTOWER_SCHEDULE: 0 0 4 ? * 6
-  #     WATCHTOWER_CLEANUP: 'true'
-  #     DOCKER_HOST: unix:///var/run/balena.sock
+  watchtower:
+    image: containrrr/watchtower
+    networks:
+      - raspberrypi_overlay
+    restart: unless-stopped
+    labels:
+      io.balena.features.balena-socket: true
+    environment:
+      WATCHTOWER_SCHEDULE: 0 0 4 ? * 6
+      WATCHTOWER_CLEANUP: 'true'
+      DOCKER_HOST: unix:///var/run/balena.sock
 
   bluetooth-beacon:
     image: dominikth/rpi-docker-ibeacon:latest
