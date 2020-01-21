@@ -25,5 +25,5 @@ find /openhab/conf/rules -type f ! -name 'customrule-*.rules' ! -name 'readme.tx
 find /openhab/conf/transform -type f ! -name 'customtransform-*.map' ! -name 'readme.txt' -delete
 
 # Overwrite files including conf-folder
-rsync -ap /tmp/openhab/ /openhab
+rsync -a /tmp/openhab/ /openhab
 chown -R openhab:openhab /openhab
