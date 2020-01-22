@@ -18,16 +18,17 @@ services:
     networks:
       - raspberrypi_overlay
     volumes:
-      - openhab-conf:/mount/openhab-conf
-      - openhab-userdata:/mount/openhab-userdata
-      - grafana:/mount/grafana
-      - influxdb:/mount/influxdb
+      - openhab-conf:/mount/openhab-conf:z
+      - openhab-userdata:/mount/openhab-userdata:z
+      - grafana:/mount/grafana:z
+      - influxdb:/mount/influxdb:z
     restart: unless-stopped
     environment:
       AUTH_SAMBA_PASSWORD:
-      SHARE: raspberry-share;/mount;yes;no;no;all
+      SHARE: /raspberry-share;/mount;yes;no;no;all
       USERID: 0
       GROUPID: 0
+      PERMISSIONS: 'true'
 
   traefik:
     build: ./traefik
