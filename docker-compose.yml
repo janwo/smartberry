@@ -18,14 +18,16 @@ services:
     networks:
       - smartberry
     volumes:
-      - openhab-conf:/mount/openhab-conf:z
-      - openhab-userdata:/mount/openhab-userdata:z
-      - grafana:/mount/grafana:z
-      - influxdb:/mount/influxdb:z
+      - openhab-conf:/mount/openhab/conf
+      - openhab-userdata:/mount/openhab/userdata
+      - grafana:/mount/grafana
+      - influxdb:/mount/influxdb
     restart: unless-stopped
     environment:
       AUTH_SAMBA_PASSWORD:
-      SHARE: smartberry;/mount;yes;no;no;all
+      SHARE0: smartberry;/mount/openhab;yes;no;no;openhab
+      SHARE1: smartberry;/mount/grafana;yes;no;no;grafana
+      SHARE2: smartberry;/mount/influxdb;yes;no;no;influxdb
       USERID: 0
       GROUPID: 0
 
