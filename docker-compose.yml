@@ -28,8 +28,6 @@ services:
       SHARE0: smartberry;/mount/openhab;yes;no;no;openhab
       SHARE1: smartberry;/mount/grafana;yes;no;no;grafana
       SHARE2: smartberry;/mount/influxdb;yes;no;no;influxdb
-      USERID: 0
-      GROUPID: 0
 
   traefik:
     build: ./traefik
