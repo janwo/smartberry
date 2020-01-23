@@ -25,6 +25,7 @@ services:
       - grafana:/mount/grafana
       - influxdb:/mount/influxdb
     restart: unless-stopped
+    command: -u "user1;pass;1000" -u "user2;pass;1001"
     environment:
       AUTH_SAMBA_PASSWORD:
 
