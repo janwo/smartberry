@@ -7,8 +7,8 @@
     address = ":80"
 
 [api]
-  insecure = true
-  dashboard = true
+  insecure = false
+  dashboard = false
 
 [providers]
   [providers.docker]
