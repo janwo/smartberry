@@ -27,7 +27,9 @@ services:
     restart: unless-stopped
     environment:
       AUTH_SAMBA_PASSWORD:
-      SHARE: smartberry;/mount/openhab;yes;no;no;openhab
+      SHARE1: smartberry;/mount/openhab;yes;no;no;openhab
+      SHARE2: smartberry;/mount/grafana;yes;no;no;grafana
+      SHARE3: smartberry;/mount/influxdb;yes;no;no;influxdb
 
   traefik:
     build: ./traefik
