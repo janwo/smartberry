@@ -30,6 +30,9 @@ services:
       SHARE1: smartberry;/mount/openhab;yes;no;no;openhab
       SHARE2: smartberry;/mount/grafana;yes;no;no;grafana
       SHARE3: smartberry;/mount/influxdb;yes;no;no;influxdb
+      USER_2: influxdb;test
+      USER_1: openhab;test;9001;openhab;9001
+      USER_3: grafana;test;472;grafana;472
 
   traefik:
     build: ./traefik
