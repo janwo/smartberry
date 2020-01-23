@@ -25,9 +25,11 @@ services:
       - grafana:/mount/grafana
       - influxdb:/mount/influxdb
     restart: unless-stopped
-    command: -u "user1;pass;1000" -u "user2;pass;1001"
     environment:
       AUTH_SAMBA_PASSWORD:
+      SHARE1: smartberry;/mount/openhab;yes;no;no;openhab
+      SHARE2: smartberry;/mount/grafana;yes;no;no;grafana
+      SHARE3: smartberry;/mount/influxdb;yes;no;no;influxdb
 
   traefik:
     build: ./traefik
