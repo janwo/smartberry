@@ -1,3 +1,3 @@
 #!/bin/sh
-export USER="influxdb;test"
+export USER1="influxdb;test"
 exec /usr/bin/samba.sh "$@"
