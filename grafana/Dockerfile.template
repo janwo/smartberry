@@ -1,5 +1,6 @@
 FROM grafana/grafana:latest
 COPY ./pre-grafana.sh /pre-grafana.sh
+COPY ./datasources.yml /etc/grafana/provisioning/datasources.yml
 USER root
 RUN chmod +x /pre-grafana.sh
 USER grafana

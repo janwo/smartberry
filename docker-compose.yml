@@ -27,9 +27,9 @@ services:
     restart: unless-stopped
     environment:
       AUTH_SAMBA_PASSWORD:
-      SHARE1: smartberry;/mount/openhab;yes;no;no;openhab
-      SHARE2: smartberry;/mount/grafana;yes;no;no;grafana
-      SHARE3: smartberry;/mount/influxdb;yes;no;no;influxdb
+      SHARE1: openhab;/mount/openhab;yes;no;no;openhab
+      SHARE2: grafana;/mount/grafana;yes;no;no;grafana
+      SHARE3: influxdb;/mount/influxdb;yes;no;no;influxdb
 
   traefik:
     build: ./traefik
@@ -69,8 +69,8 @@ services:
     volumes:
       - influxdb:/var/lib/influxdb
     environment:
-      INFLUXDB_DB: openhab
-      INFLUXDB_USER: openhab
+      INFLUXDB_DB: smartberry
+      INFLUXDB_USER: influxdb
       AUTH_INFLUXDB_PASSWORD:
       INFLUXDB_LOG_LEVEL: error
       INFLUXDB_DATA_QUERY_LOG_ENABLED: true
@@ -88,7 +88,7 @@ services:
     volumes:
       - grafana:/var/lib/grafana
     environment:
-      GF_SECURITY_ADMIN_USER: openhab
+      GF_SECURITY_ADMIN_USER: grafana
       AUTH_GRAFANA_PASSWORD:
 
   watchtower:

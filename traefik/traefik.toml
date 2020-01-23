@@ -14,7 +14,7 @@
   [providers.docker]
     endpoint = "unix:///var/run/balena.sock"
     exposedByDefault = false
-    network = "raspberrypi_overlay"
+    network = "smartberry"
 
   [providers.file]
     filename = "/etc/traefik/dynamic-conf.toml"

@@ -1,0 +1,12 @@
+apiVersion: 1
+
+datasources:
+  - name: Smartberry
+    type: influxdb
+    access: proxy
+    database: smartberry
+    user: influxdb
+    password: DATASOURCE_INFLUXDB_USER_PASSWORD
+    url: http://influxdb:8086
+    jsonData:
+      httpMode: GET
