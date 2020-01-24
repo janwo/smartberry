@@ -1,4 +1,4 @@
-FROM openhab/openhab:latest
+FROM openhab/openhab:latest-alpine
 RUN apt-get update && apt-get install -y \
     rsync
 COPY ./mounts/etc/cont-init.d/ /etc/cont-init.d/
