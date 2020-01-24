@@ -11,9 +11,9 @@ ENV JYTHON_HOME="${JYTHON_HOME}" \
 
 RUN mkdir -p ${JYTHON_HOME} && \
     curl -L http://central.maven.org/maven2/org/python/jython-installer/${JYTHON_VERSION}/jython-installer-${JYTHON_VERSION}.jar -o /tmp/jython-installer.jar
-RUN java -jar /tmp/jython-installer.jar -s -d ${JYTHON_HOME}/ -t standard -e demo doc src && \
-    rm /tmp/jython-installer.jar && \
-    chmod -R o+w ${JYTHON_HOME}
+# RUN java -jar /tmp/jython-installer.jar -s -d ${JYTHON_HOME}/ -t standard -e demo doc src && \
+#    rm /tmp/jython-installer.jar && \
+#    chmod -R o+w ${JYTHON_HOME}
 
 COPY ./mounts/etc/cont-init.d/ /etc/cont-init.d/
 COPY ./mounts/tmp/openhab/ /tmp/openhab/
