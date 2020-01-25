@@ -15,6 +15,14 @@ RUN mkdir -p ${JYTHON_HOME} && \
     rm /tmp/jython-installer.jar && \
     chmod -R o+w ${JYTHON_HOME}
 
+RUN curl -L https://github.com/OH-Jython-Scripters/openhab2-jython/archive/master.zip /tmp/master.zip && \
+    unzip /tmp/master.zip && \
+    mv /tmp/openhab2-jython-master /tmp/jython && \
+    rm -R /tmp/jython/automation/lib/javascript && \
+    rm -R /tmp/jython/automation/lib/groovy && \
+    rm -R /tmp/jython/automation/jsr233/javascript && \
+    rm -R /tmp/jython/automation/jsr233/groovy
+
 COPY ./mounts/etc/cont-init.d/ /etc/cont-init.d/
 COPY ./mounts/tmp/openhab/ /tmp/openhab/
 LABEL traefik.enable=true \
