@@ -1,6 +1,6 @@
 export EXTRA_JAVA_OPTS="${EXTRA_JAVA_OPTS} ${JYTHON_JAVA_OPTS}"
 rsync -a /tmp/jython/automation ${OPENHAB_HOME}/conf
-cp /conf/automation/lib/python/configuration.py.example /conf/automation/lib/python/configuration.py
+cp ${OPENHAB_HOME}/conf/automation/lib/python/configuration.py.example ${OPENHAB_HOME}/conf/automation/lib/python/configuration.py
 find ${OPENHAB_HOME}/conf/automation/lib/python -name '*\$py.class' -delete
 
 ## Ensure we are running new rule engine addon - is there a better way?
