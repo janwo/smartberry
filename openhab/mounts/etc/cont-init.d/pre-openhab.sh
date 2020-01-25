@@ -15,7 +15,7 @@ fi
 echo ${AUTH_DEVICE_HOSTKEY} > ${OPENHAB_HOME}/userdata/etc/host.key
 
 # Set influxdb
-sed -i "s?AUTH_INFLUXDB_PASSWORD?${AUTH_INFLUXDB_PASSWORD}?g" /tmp/openhab/userdata/config/org/openhab/influxdb.config
+sed -i "s?AUTH_INFLUXDB_PASSWORD?${AUTH_INFLUXDB_PASSWORD}?g" /tmp/openhab/conf/services/influxdb.cfg
 
 # Remove non standard files within conf-folder
 find ${OPENHAB_HOME}/conf/sitemaps -type f ! -name 'customsitemap-*.sitemap' ! -name 'home.sitemap' ! -name 'readme.txt' -delete
