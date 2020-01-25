@@ -17,7 +17,7 @@ RUN mkdir -p ${JYTHON_HOME} && \
     chmod -R o+w ${JYTHON_HOME}
 
 RUN curl -L https://github.com/OH-Jython-Scripters/openhab2-jython/archive/master.zip -o /tmp/master.zip && \
-    unzip /tmp/master.zip && \
+    unzip /tmp/master.zip -d /tmp && \
     rm /tmp/master.zip && \
 #    mv /tmp/openhab-helper-libraries-master/Core /tmp/jython && \
 #    rm -rf /tmp/openhab-helper-libraries-master && \
