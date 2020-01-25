@@ -18,11 +18,9 @@ RUN mkdir -p ${JYTHON_HOME} && \
 
 RUN curl -L https://github.com/OH-Jython-Scripters/openhab2-jython/archive/master.zip -o /tmp/master.zip && \
     unzip /tmp/master.zip && \
-    rm /tmp/master.zip
-     RUN ls /tmp
-
-RUN    mv /tmp/openhab-helper-libraries-master/Core /tmp/jython
- RUN   rm -rf /tmp/openhab-helper-libraries-master && \
+    rm /tmp/master.zip && \
+#    mv /tmp/openhab-helper-libraries-master/Core /tmp/jython && \
+#    rm -rf /tmp/openhab-helper-libraries-master && \
     rm -rf /tmp/jython/automation/lib/javascript && \
     rm -rf /tmp/jython/automation/lib/groovy && \
     rm -rf /tmp/jython/automation/jsr233/javascript && \
