@@ -1,4 +1,5 @@
 export EXTRA_JAVA_OPTS="${EXTRA_JAVA_OPTS} ${JYTHON_JAVA_OPTS}"
+ls -al
 rsync -a /tmp/jython/automation ${OPENHAB_HOME}/conf
 cp /conf/automation/lib/python/configuration.py.example /conf/automation/lib/python/configuration.py
 find ${OPENHAB_HOME}/conf/automation/lib/python -name '*\$py.class' -delete
