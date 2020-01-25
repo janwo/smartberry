@@ -2,7 +2,8 @@ FROM openhab/openhab:latest-alpine
 RUN apk add --no-cache \
     rsync \
     curl \
-    unzip
+    unzip \
+    grep
 
 # Install Jython
 ARG JYTHON_HOME="/opt/jython"
