@@ -16,9 +16,9 @@ RUN mkdir -p ${JYTHON_HOME} && \
     rm /tmp/jython-installer.jar && \
     chmod -R o+w ${JYTHON_HOME}
 
-RUN curl -L https://github.com/OH-Jython-Scripters/openhab2-jython/archive/master.zip -o /tmp/master.zip && \
-    unzip /tmp/master.zip && \
-    rm /tmp/master.zip && \
+RUN curl -L https://github.com/OH-Jython-Scripters/openhab2-jython/archive/master.zip -o /tmp/master.zip
+RUN unzip /tmp/master.zip
+RUN   rm /tmp/master.zip && \
     mv /tmp/openhab2-jython-master /tmp/jython && \
     rm -R /tmp/jython/automation/lib/javascript && \
     rm -R /tmp/jython/automation/lib/groovy && \
