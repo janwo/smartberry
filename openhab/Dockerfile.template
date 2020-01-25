@@ -10,7 +10,7 @@ ENV JYTHON_HOME="${JYTHON_HOME}" \
     JYTHON_JAVA_OPTS="-Xbootclasspath/a:${JYTHON_HOME}/jython.jar -Dpython.home=${JYTHON_HOME} -Dpython.path=${JYTHON_HOME}/Lib:${OPENHAB_HOME}/conf/automation/lib/python"
 
 RUN mkdir -p ${JYTHON_HOME} && \
-    curl -L http://central.maven.org/maven2/org/python/jython-installer/${JYTHON_VERSION}/jython-installer-${JYTHON_VERSION}.jar -o /tmp/jython-installer.jar \
+    curl -L http://search.maven.org/remotecontent?filepath=org/python/jython-installer/${JYTHON_VERSION}/jython-installer-${JYTHON_VERSION}.jar -o /tmp/jython-installer.jar && \
     java -jar /tmp/jython-installer.jar -s -d ${JYTHON_HOME}/ -i ensurepip && \
     rm /tmp/jython-installer.jar && \
     chmod -R o+w ${JYTHON_HOME}
