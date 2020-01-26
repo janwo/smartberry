@@ -1,4 +1,4 @@
-FROM openhab/openhab:2.5.1-alpine
+FROM openhab/openhab:latest-alpine
 RUN apk add --no-cache \
     rsync \
     curl \
@@ -24,8 +24,8 @@ RUN curl -L https://github.com/OH-Jython-Scripters/openhab2-jython/archive/maste
     rm -rf /tmp/openhab-helper-libraries-master && \
     rm -rf /tmp/jython/automation/lib/javascript && \
     rm -rf /tmp/jython/automation/lib/groovy && \
-    rm -rf /tmp/jython/automation/jsr233/javascript && \
-    rm -rf /tmp/jython/automation/jsr233/groovy
+    rm -rf /tmp/jython/automation/jsr223/javascript && \
+    rm -rf /tmp/jython/automation/jsr223/groovy
 
 COPY ./mounts/etc/cont-init.d/ /etc/cont-init.d/
 COPY ./mounts/tmp/openhab/ /tmp/openhab/
