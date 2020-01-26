@@ -20,11 +20,13 @@ RUN curl -L https://github.com/OH-Jython-Scripters/openhab2-jython/archive/maste
     unzip /tmp/master.zip -d /tmp && \
     rm /tmp/master.zip && \
     mv /tmp/openhab-helper-libraries-master/Core /tmp/jython && \
+    mv /tmp/jython/automation/lib/python/configuration.py.example /tmp/jython/automation/lib/python/configuration.py && \
+    mv /tmp/jython/automation/lib/python/personal/__init__.py.example /tmp/jython/automation/lib/python/personal/__init__.py
     rm -rf /tmp/openhab-helper-libraries-master && \
     rm -rf /tmp/jython/automation/lib/javascript && \
     rm -rf /tmp/jython/automation/lib/groovy && \
     rm -rf /tmp/jython/automation/jsr223/javascript && \
-    rm -rf /tmp/jython/automation/jsr223/groovy
+    rm -rf /tmp/jython/automation/jsr223/groovy && \
 
 COPY ./mounts/etc/cont-init.d/ /etc/cont-init.d/
 COPY ./mounts/tmp/openhab/ /tmp/openhab/
