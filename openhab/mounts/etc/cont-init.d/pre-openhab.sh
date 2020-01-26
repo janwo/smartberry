@@ -20,7 +20,7 @@ sed -i "s?AUTH_INFLUXDB_PASSWORD?${AUTH_INFLUXDB_PASSWORD}?g" /tmp/openhab/conf/
 # Remove non standard files within conf-folder
 find ${OPENHAB_HOME}/conf/sitemaps -type f -name 'core-*.sitemap' -delete
 find ${OPENHAB_HOME}/conf/items -type f -name 'core-*.items' -delete
-find ${OPENHAB_HOME}/conf/scripts -type -name 'core-*' -delete
+find ${OPENHAB_HOME}/conf/scripts -type f -name 'core-*' -delete
 find ${OPENHAB_HOME}/conf/rules -type f -name 'core-*.rules' -delete
 find ${OPENHAB_HOME}/conf/transform -type f -name 'core-*.map' -delete
 
