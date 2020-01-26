@@ -1,5 +1,6 @@
 Group   gHome                          "Wohnung"
 
+/*
 // Floors
 Group   gGF                            "Erdgeschoss"                                   <groundfloor>      (gHome)
 Group   gFF                            "Obergeschoss"                                  <firstfloor>       (gHome)
@@ -19,3 +20,4 @@ Group   gFF_Office                     "Büro"                                  
 Group   gFF_Bathroom                   "Badezimmer"                                    <bath>             (gFF)
 Group   gOS_Parking                    "Parkplatz"                                     <keyring>          (gOS)
 Group   gOS_Backyard                   "Hinterhof"                                     <garden>           (gOS)
+*/

@@ -3,7 +3,7 @@ Number      LightManagement_SleepBrightness           "Lichtstärke im Schlafmod
 Number      LightManagement_DefaultDuration           "Standard Lichtdauer [%d min]"            <time>                  (gLightManagement, gPersistence_SaveState)
 Number      LightManagement_SleepDuration             "Lichtdauer im Schlafmodus [%d min]"      <time>                  (gLightManagement, gPersistence_SaveState)
 
-Number    LightManagement_LightState                            "Lichtstatus [MAP(light-management_de.map):%s]"     <sun>   (gLightManagement, gPersistence_TrackState, gPersistence_SaveState) // 0=Dunkel, 2=Hell, 1=Verdunkelt
+Number    LightManagement_LightState                            "Lichtstatus [MAP(core-light-management_de.map):%s]"     <sun>   (gLightManagement, gPersistence_TrackState, gPersistence_SaveState) // 0=Dunkel, 2=Hell, 1=Verdunkelt
 Number    LightManagement_LightState_LuminanceTreshold_Obscured "Lichtwert bis Verdunkelt [%d %%]"                  <line>  (gLightManagement, gPersistence_SaveState)
 Number    LightManagement_LightState_LuminanceTreshold_Dark     "Lichtwert bis Dunkel [%d %%]"                      <line>  (gLightManagement, gPersistence_SaveState)
 Number    LightManagement_LightState_LuminanceTreshold          "Aktueller Lichtwert [%d %%]"                       <line>  (gLightManagement, gPersistence_SaveState)

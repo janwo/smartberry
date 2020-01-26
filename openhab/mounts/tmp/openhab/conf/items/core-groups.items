@@ -1,4 +1,3 @@
-// Groups
 Group                            gSensor                 "Sensoren"                         <camera>           (gHome, gPersistence_TrackState, gPersistence_SaveState)
 Group:Switch:OR(ON, OFF)         gSensor_Motion          "Bewegungsmelder"                  <motion>           (gSensor)
 Group:Contact:OR(OPEN, CLOSED)   gSensor_Contact         "Fenster"                          <window>           (gSensor)

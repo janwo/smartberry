@@ -18,11 +18,11 @@ echo ${AUTH_DEVICE_HOSTKEY} > ${OPENHAB_HOME}/userdata/etc/host.key
 sed -i "s?AUTH_INFLUXDB_PASSWORD?${AUTH_INFLUXDB_PASSWORD}?g" /tmp/openhab/conf/services/influxdb.cfg
 
 # Remove non standard files within conf-folder
-find ${OPENHAB_HOME}/conf/sitemaps -type f ! -name 'customsitemap-*.sitemap' ! -name 'home.sitemap' ! -name 'readme.txt' -delete
-find ${OPENHAB_HOME}/conf/items -type f ! -name 'customitem-*.items' ! -name 'readme.txt' -delete
-find ${OPENHAB_HOME}/conf/scripts -type f ! -name 'customscript-*.py' ! -name 'readme.txt' -delete
-find ${OPENHAB_HOME}/conf/rules -type f ! -name 'customrule-*.rules' ! -name 'readme.txt' -delete
-find ${OPENHAB_HOME}/conf/transform -type f ! -name 'customtransform-*.map' ! -name 'readme.txt' -delete
+find ${OPENHAB_HOME}/conf/sitemaps -type f -name 'core-*.sitemap' -delete
+find ${OPENHAB_HOME}/conf/items -type f ! -name 'core-*.items' -delete
+find ${OPENHAB_HOME}/conf/scripts -type f -name 'core-*' -delete
+find ${OPENHAB_HOME}/conf/rules -type f ! -name 'core-*.rules' -delete
+find ${OPENHAB_HOME}/conf/transform -type f ! -name 'core-*.map' -delete
 
 # Overwrite files including conf-folder
 rsync -a /tmp/openhab/ ${OPENHAB_HOME}

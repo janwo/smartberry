@@ -2,7 +2,7 @@ Number          Security_OperationState_AwayShort   "Angrifferkennung bei kurzer
 Number          Security_OperationState_AwayLong    "Angrifferkennung bei langer Abwesenheit"                   <shield>   (gSecurity) // 0=Aus, 1=An, 2=An (Lautlos)
 Switch          Security_Sirene                     "Sirene"                                                    <siren>    (gSecurity)
 Number          Security_SireneAutoOff              "Sirene: Auto-Off (Minuten) [%d min]"                       <siren>    (gSecurity) // 0=Dauerhaft, 1-XXX Minuten
-Number          Security_OperationState             "Angrifferkennung [MAP(security-management_de.map):%s]"     <shield>   (gSecurity) // 0=Aus, 1=An, 2=An (Lautlos)
+Number          Security_OperationState             "Angrifferkennung [MAP(core-security-management_de.map):%s]"     <shield>   (gSecurity) // 0=Aus, 1=An, 2=An (Lautlos)
 DateTime        Security_AlarmTime                  "Letzter Angriff [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"           <siren>    (gSecurity)
 
 Group           gSecurity                           "Sicherheitssystem"                                 <alarm>     (gHome, gPersistence_SaveState, gPersistence_TrackState)
