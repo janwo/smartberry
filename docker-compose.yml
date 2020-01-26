@@ -27,7 +27,6 @@ services:
     restart: unless-stopped
     environment:
       AUTH_SAMBA_PASSWORD:
-      USERID: 9001
       GROUPID: 9001
       SHARE1: openhab;/mount/openhab;yes;no;no;openhab
       #SHARE2: grafana;/mount/grafana;yes;no;no;grafana
