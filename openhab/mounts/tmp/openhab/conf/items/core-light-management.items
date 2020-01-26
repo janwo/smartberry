@@ -20,58 +20,20 @@ Number      LightManagement_WelcomeLight_DarkMode              "Begrüßungslich
 Number      LightManagement_WelcomeLight_BrightMode            "Begrüßungslicht (Hell)"                         <keyring>               (gLightManagement, gPersistence_SaveState) // 1=An, 0=Aus
 Number      LightManagement_WelcomeLight_ObscuredMode          "Begrüßungslicht (Verdunkelt)"                   <keyring>               (gLightManagement, gPersistence_SaveState) // 1=An, 0=Aus
 
-/* LightManagement - Modes
+/**********************
+ * CREATE LIGHT MODES *
+ **********************
+
+LightManagement - Modes
     0=Aus
     1=An
     5=An (Standardmodus)
     2=Auto-An,
     3=Bei Abwesenheit (Standardmodus)
     4=Bei Anwesenheit (Standardmodus)
-*/
-Number      GF_LivingRoom_LightManagement_DarkMode             "Lichtmodus (Dunkel) in Wohnzimmer"      <moon>         (gLightManagement_DarkMode, gSpecialStateManagement_SceneMembers)
-Number      GF_LivingRoom_LightManagement_BrightMode           "Lichtmodus (Hell)  in Wohnzimmer"       <sun>          (gLightManagement_BrightMode, gSpecialStateManagement_SceneMembers)
-Number      GF_LivingRoom_LightManagement_ObscuredMode         "Lichtmodus (Verdunkelt) in Wohnzimmer"  <blinds>       (gLightManagement_ObscuredMode, gSpecialStateManagement_SceneMembers)
-Number      GF_Kitchen_LightManagement_DarkMode                "Lichtmodus (Dunkel) in Küche"           <moon>         (gLightManagement_DarkMode, gSpecialStateManagement_SceneMembers)
-Number      GF_Kitchen_LightManagement_BrightMode              "Lichtmodus (Hell) in Küche"             <sun>          (gLightManagement_BrightMode, gSpecialStateManagement_SceneMembers)
-Number      GF_Kitchen_LightManagement_ObscuredMode            "Lichtmodus (Verdunkelt) in Küche"       <blinds>       (gLightManagement_ObscuredMode, gSpecialStateManagement_SceneMembers)
-Number      GF_Greenhouse_LightManagement_DarkMode             "Lichtmodus (Dunkel) in Küche (Blumenkasten)"        <moon>      (gLightManagement_DarkMode, gSpecialStateManagement_SceneMembers)
-Number      GF_Greenhouse_LightManagement_BrightMode           "Lichtmodus (Hell) in Küche (Blumenkasten)"          <sun>       (gLightManagement_BrightMode, gSpecialStateManagement_SceneMembers)
-Number      GF_Greenhouse_LightManagement_ObscuredMode         "Lichtmodus (Verdunkelt) in Küche (Blumenkasten)"    <blinds>    (gLightManagement_ObscuredMode, gSpecialStateManagement_SceneMembers)
-Number      GF_StorageRoom_LightManagement_DarkMode            "Lichtmodus (Dunkel) in Abstellraum"     <moon>         (gLightManagement_DarkMode, gSpecialStateManagement_SceneMembers)
-Number      GF_StorageRoom_LightManagement_BrightMode          "Lichtmodus (Hell) in Abstellraum"       <sun>          (gLightManagement_BrightMode, gSpecialStateManagement_SceneMembers)
-Number      GF_StorageRoom_LightManagement_ObscuredMode        "Lichtmodus (Verdunkelt) in Abstellraum" <blinds>       (gLightManagement_ObscuredMode, gSpecialStateManagement_SceneMembers)
-Number      FF_Bedroom_LightManagement_DarkMode                "Lichtmodus (Dunkel) in Schlafzimmer"    <moon>         (gLightManagement_DarkMode, gSpecialStateManagement_SceneMembers)
-Number      FF_Bedroom_LightManagement_BrightMode              "Lichtmodus (Hell) in Schlafzimmer"      <sun>          (gLightManagement_BrightMode, gSpecialStateManagement_SceneMembers)
-Number      FF_Bedroom_LightManagement_ObscuredMode            "Lichtmodus (Verdunkelt) in Schlafzimmer"<blinds>       (gLightManagement_ObscuredMode, gSpecialStateManagement_SceneMembers)
-Number      FF_Wardrobe_LightManagement_DarkMode               "Lichtmodus (Dunkel) in Garderobe"       <moon>         (gLightManagement_DarkMode, gSpecialStateManagement_SceneMembers)
-Number      FF_Wardrobe_LightManagement_BrightMode             "Lichtmodus (Hell) in Garderobe"         <sun>          (gLightManagement_BrightMode, gSpecialStateManagement_SceneMembers)
-Number      FF_Wardrobe_LightManagement_ObscuredMode           "Lichtmodus (Verdunkelt) in Garderobe"   <blinds>       (gLightManagement_ObscuredMode, gSpecialStateManagement_SceneMembers)
-Number      FF_Office_LightManagement_DarkMode                 "Lichtmodus (Dunkel) in Büro "           <moon>         (gLightManagement_DarkMode, gSpecialStateManagement_SceneMembers)
-Number      FF_Office_LightManagement_BrightMode               "Lichtmodus (Hell) in Büro"              <sun>          (gLightManagement_BrightMode, gSpecialStateManagement_SceneMembers)
-Number      FF_Office_LightManagement_ObscuredMode             "Lichtmodus (Verdunkelt) in Büro"        <blinds>       (gLightManagement_ObscuredMode, gSpecialStateManagement_SceneMembers)
-Number      GF_Corridor_LightManagement_DarkMode               "Lichtmodus (Dunkel) in Flur"            <moon>         (gLightManagement_DarkMode, gSpecialStateManagement_SceneMembers)
-Number      GF_Corridor_LightManagement_BrightMode             "Lichtmodus (Hell) in Flur"              <sun>          (gLightManagement_BrightMode, gSpecialStateManagement_SceneMembers)
-Number      GF_Corridor_LightManagement_ObscuredMode           "Lichtmodus (Verdunkelt) in Flur"        <blinds>       (gLightManagement_ObscuredMode, gSpecialStateManagement_SceneMembers)
-Number      FF_Stairs_LightManagement_DarkMode                 "Lichtmodus (Dunkel) in Treppe"          <moon>         (gLightManagement_DarkMode, gSpecialStateManagement_SceneMembers)
-Number      FF_Stairs_LightManagement_BrightMode               "Lichtmodus (Hell) in Treppe"            <sun>          (gLightManagement_BrightMode, gSpecialStateManagement_SceneMembers)
-Number      FF_Stairs_LightManagement_ObscuredMode             "Lichtmodus (Verdunkelt) in Treppe"      <blinds>       (gLightManagement_ObscuredMode, gSpecialStateManagement_SceneMembers)
-Number      FF_Bathroom_LightManagement_DarkMode               "Lichtmodus (Dunkel) in Badezimmer"      <moon>         (gLightManagement_DarkMode, gSpecialStateManagement_SceneMembers)
-Number      FF_Bathroom_LightManagement_BrightMode             "Lichtmodus (Hell) in Badezimmer"        <sun>          (gLightManagement_BrightMode, gSpecialStateManagement_SceneMembers)
-Number      FF_Bathroom_LightManagement_ObscuredMode           "Lichtmodus (Verdunkelt) in Badezimmer"  <blinds>       (gLightManagement_ObscuredMode, gSpecialStateManagement_SceneMembers)
-Number      OS_Parking_LightManagement_DarkMode                "Lichtmodus (Dunkel) Parkplatz"          <moon>         (gLightManagement_DarkMode, gSpecialStateManagement_SceneMembers)
-Number      OS_Parking_LightManagement_BrightMode              "Lichtmodus (Hell) Parkplatz"            <sun>          (gLightManagement_BrightMode, gSpecialStateManagement_SceneMembers)
-Number      OS_Parking_LightManagement_ObscuredMode            "Lichtmodus (Verdunkelt) in Parkplatz"   <blinds>       (gLightManagement_ObscuredMode, gSpecialStateManagement_SceneMembers)
-Number      OS_Backyard_LightManagement_DarkMode               "Lichtmodus (Dunkel) Hinterhof"          <moon>         (gLightManagement_DarkMode, gSpecialStateManagement_SceneMembers)
-Number      OS_Backyard_LightManagement_BrightMode             "Lichtmodus (Hell) Hinterhof"            <sun>          (gLightManagement_BrightMode, gSpecialStateManagement_SceneMembers)
-Number      OS_Backyard_LightManagement_ObscuredMode           "Lichtmodus (Verdunkelt) in Hinterhof"   <blinds>       (gLightManagement_ObscuredMode, gSpecialStateManagement_SceneMembers)
 
-DateTime GF_LivingRoom_LightManagement_LastActivation     "Letztes Einschalten in Wohnzimmer: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"            <time>              (gLightManagement_LastActivation)
-DateTime GF_Kitchen_LightManagement_LastActivation        "Letztes Einschalten in Küche: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"                 <time>              (gLightManagement_LastActivation)
-DateTime GF_StorageRoom_LightManagement_LastActivation    "Letztes Einschalten in Abstellraum: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"           <time>              (gLightManagement_LastActivation)
-DateTime FF_Wardrobe_LightManagement_LastActivation       "Letztes Einschalten in Garderobe: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"             <time>              (gLightManagement_LastActivation)
-DateTime FF_Bedroom_LightManagement_LastActivation        "Letztes Einschalten in Schlafzimmer: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"          <time>              (gLightManagement_LastActivation)
-DateTime FF_Stairs_LightManagement_LastActivation         "Letztes Einschalten in Treppe: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"                <time>              (gLightManagement_LastActivation)
-DateTime FF_Bathroom_LightManagement_LastActivation       "Letztes Einschalten in Badezimmer: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"            <time>              (gLightManagement_LastActivation)
-DateTime FF_Office_LightManagement_LastActivation         "Letztes Einschalten in Büro: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"                  <time>              (gLightManagement_LastActivation)
-DateTime OS_Backyard_LightManagement_LastActivation       "Letztes Einschalten in Hinterhof: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"             <time>              (gLightManagement_LastActivation)
-DateTime OS_Parking_LightManagement_LastActivation        "Letztes Einschalten in Parkplatz: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"             <time>              (gLightManagement_LastActivation)
+Number      GF_LivingRoom_LightManagement_DarkMode          "Lichtmodus (Dunkel) in Wohnzimmer"      <moon>         (gLightManagement_DarkMode, gSpecialStateManagement_SceneMembers)
+Number      GF_LivingRoom_LightManagement_BrightMode        "Lichtmodus (Hell)  in Wohnzimmer"       <sun>          (gLightManagement_BrightMode, gSpecialStateManagement_SceneMembers)
+Number      GF_LivingRoom_LightManagement_ObscuredMode      "Lichtmodus (Verdunkelt) in Wohnzimmer"  <blinds>       (gLightManagement_ObscuredMode, gSpecialStateManagement_SceneMembers)
+DateTime    GF_LivingRoom_LightManagement_LastActivation    "Letztes Einschalten in Parkplatz: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"  <time>     (gLightManagement_LastActivation)
+*/

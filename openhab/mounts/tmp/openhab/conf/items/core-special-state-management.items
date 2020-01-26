@@ -18,6 +18,10 @@ Group   gSpecialStateManagement_StoreSceneTriggers "Szenen anpassen" <settings> 
 Group   gSpecialStateManagement_SelectSceneHelpers
 String  SpecialStateManagement_ScenesStore (gPersistence_SaveState, gSpecialStateManagement)
 
+/************************
+ * CREATE CUSTOM SCENES *
+ ************************
+
 Number  GF_LivingRoom_SpecialStateManagement_Scenes "Wohnzimmer" <sofa> (gSpecialStateManagement_Scenes, gPersistence_SaveState) //0=Default; 1=Movie; 2=Party
 Switch  GF_LivingRoom_SpecialStateManagement_StoreCurrentScene "Szene im Wohnzimmer überschreiben" <settings> (gSpecialStateManagement_StoreSceneTriggers)
 
@@ -25,3 +29,4 @@ Switch  GF_LivingRoom_SpecialStateManagement_StoreCurrentScene "Szene im Wohnzim
 Switch  GF_LivingRoom_SpecialStateManagement_SelectScene1 "Film-Szene im Wohnzimmer"        (gSpecialStateManagement_SelectSceneHelpers)    [ "Scene" ]
 Switch  GF_LivingRoom_SpecialStateManagement_SelectScene2 "Party-Szene im Wohnzimmer"       (gSpecialStateManagement_SelectSceneHelpers)    [ "Scene" ]
 Switch  GF_LivingRoom_SpecialStateManagement_SelectScene0 "Standard-Szene im Wohnzimmer"    (gSpecialStateManagement_SelectSceneHelpers)    [ "Scene" ]
+*/

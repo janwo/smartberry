@@ -1,0 +1,27 @@
+/**************************
+ * CREATE YOUR MAIN ITEMS *
+ **************************
+
+// LivingRoom
+Switch  GF_LivingRoom_Power                 "Steckdose in Wohnzimmer"                                       <poweroutlet>       (gGF_LivingRoom, gPower, gLightManagement_LightSwitchable, gPresenceManagement_SimulationItem, gSpecialStateManagement_SceneMembers) ["Outlet"]
+Switch  GF_LivingRoom_Light1_Power	        "Betonlampe in Wohnzimmer"                                      <light>             (gGF_LivingRoom, gLight, gPresenceManagement_SimulationItem)
+Color   GF_LivingRoom_Light1_Color          "Betonlampe in Wohnzimmer"                                      <colorpicker>       (gGF_LivingRoom, gLight, gLightManagement_LightSwitchable, gSpecialStateManagement_SceneMembers) ["Lighting"]
+Dimmer  GF_LivingRoom_Light1_Brightness     "Betonlampe in Wohnzimmer"                           <qualityofservice>  (gGF_LivingRoom, gLight)
+Switch  GF_LivingRoom_Sensor_Motion         "Bewegungsmelder in Wohnzimmer"                                 <motion>            (gSensor_Motion, gPresenceManagement_PresenceTrigger)
+Number  GF_LivingRoom_Sensor_Luminance      "Leuchtkraft in Wohnzimmer [%d %%]"                             <blinds>            (gGF_LivingRoom, gSensor_Luminance)
+Number  GF_LivingRoom_Sensor_Battery        "Sensor in Wohnzimmer [%d %%]"                                  <battery>           (gBattery)
+Contact GF_LivingRoom_Window                "Fensterkontakt in Wohnzimmer [MAP(de.map):%s]"                 <window>            (gGF_LivingRoom, gSensor_Contact, gPresenceManagement_PresenceTrigger, gSecurity_AssaultTrigger, gHeatingManagement_ContactSwitchable)
+Number  GF_LivingRoom_Window_Battery        "Fensterkontakt in Wohnzimmer [%d %%]"                          <battery>           (gBattery)
+
+Group   gGF_LivingRoom_Heater               "Heizung in Wohnzimmer"                                         <radiator>          (gHeatingManagement_Thermostat, gGF_LivingRoom) [ "Thermostat" ]
+Dimmer  GF_LivingRoom_Heater_Valve          "Heizung in Wohnzimmer: Ventilöffnung [%d %%]"                  <radiator>          (gGF_LivingRoom_Heater, gPersistence_TrackState)
+Number  GF_LivingRoom_Sensor_Humidity       "Luftfeuchtigkeit in Wohnzimmer [%d %%]"                        <humidity>          (gGF_LivingRoom_Heater, gGF_LivingRoom, gSensor_Humidity) ["CurrentHumidity"]
+Number  GF_LivingRoom_Sensor_Temperature    "Temperatur in Wohnzimmer [%.1f °C]"                            <temperature>       (gGF_LivingRoom_Heater, gSensor_Temperature) ["CurrentTemperature"]
+Number  GF_LivingRoom_Heater_Battery        "Heizung in Wohnzimmer [%d %%]"                                 <battery>           (gGF_LivingRoom_Heater, gBattery)
+Number  GF_LivingRoom_Heater_Temperature    "Heizung in Wohnzimmer: Normale Zieltemperatur [%.1f °C]"       <radiator>          (gGF_LivingRoom_Heater, gHeatingManagement_Thermostat_DefaultTemperature) [ "TargetTemperature" ]
+Number  GF_LivingRoom_Heater_Mode           "Heizung in Wohnzimmer: Modus"                                  <radiator>          (gGF_LivingRoom_Heater, gHeatingManagement_Thermostat_Mode) [ "HeatingCoolingMode" ]
+Number  GF_LivingRoom_Heater_EcoTemperature "Heizung in Wohnzimmer: Eco-Zieltemperatur [%.1f °C]"           <radiator>          (gGF_LivingRoom_Heater, gHeatingManagement_Thermostat_EcoTemperature)
+
+// Corridor
+Switch  GF_Corridor_Lock_State           "Türschloss in Flur"                        <lock>             (gGF_Corridor, gSecurity_AssaultDisarmamer, gLock)
+Number  GF_Corridor_Lock_Battery         "Türschloss in Flur [%d %%]"                <battery>          (gGF_Corridor, gBattery)

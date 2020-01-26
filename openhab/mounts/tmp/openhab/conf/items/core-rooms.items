@@ -1,6 +1,9 @@
 Group   gHome                          "Wohnung"
 
-/*
+/********************
+ * SETUP YOUR ROOMS *
+ ********************
+
 // Floors
 Group   gGF                            "Erdgeschoss"                                   <groundfloor>      (gHome)
 Group   gFF                            "Obergeschoss"                                  <firstfloor>       (gHome)
@@ -8,16 +11,6 @@ Group   gOS                            "Außen"                                 
 
 // Rooms
 Group   gGF_LivingRoom                 "Wohnzimmer"                                    <sofa>             (gGF)
-Group   gGF_Toilet                     "Toilette"                                      <toilet>           (gGF)
-Group   gGF_Corridor                   "Flur"                                          <corridor>         (gGF)
-Group   gGF_StorageRoom                "Abstellraum"                                   <washingmachine>   (gGF)
-Group   gGF_Kitchen                    "Küche"                                         <kitchen>          (gGF)
-Group   gGF_Greenhouse                 "Küche (Blumenkasten)"                          <lawnmower>        (gGF)
-Group   gFF_Stairs                     "Treppe"                                        <firstfloor>       (gFF)
-Group   gFF_Bedroom                    "Schlafzimmer"                                  <bedroom>          (gFF)
-Group   gFF_Wardrobe                   "Garderobe"                                     <wardrobe>         (gFF)
 Group   gFF_Office                     "Büro"                                          <office>           (gFF)
-Group   gFF_Bathroom                   "Badezimmer"                                    <bath>             (gFF)
-Group   gOS_Parking                    "Parkplatz"                                     <keyring>          (gOS)
 Group   gOS_Backyard                   "Hinterhof"                                     <garden>           (gOS)
 */

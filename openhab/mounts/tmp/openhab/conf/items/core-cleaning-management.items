@@ -1,24 +1,20 @@
 Group  gCleaning                    "House Cleaning Management"     <toilet>    (gHome)
-Switch gCleaning_Vacuum_Clean       "House cleaning"                <lawnmower> (gHome, gCleaning) { synonyms=["House cleaning", "Hausreinigung"], ga="Scene" }
+Switch gCleaning_Vacuum_Clean       "House cleaning"                <lawnmower> (gHome, gCleaning) { synonyms="House cleaning, Hausreinigung", ga="Scene" }
 Group  gCleaning_Vacuum_CommandItem                                 <lawnmower>
 Group  gCleaning_Vacuum_StateItem                                   <lawnmower>
+
 
 /*******************************
  * HOW TO SETUP VACUUM ROBOTS? *
  *******************************
-    1) Each vacuum robot has four necessary items, which all have the different groups attached. See the example below.
-    2)
+   1) Each vacuum robot has four necessary items, which all have the different groups attached. See the example below.
+   2)
 
  ***********
  * EXAMPLE *
  ***********
-    String FF_Vacuum_State          "Saugroboter: Status [MAP(core-cleaning-management_de.map):%s]"              <switch>    (gCleaning_Vacuum_StateItem, gCleaning)
-    Switch FF_Vacuum_Docked         "Saugroboter: In Ladestation [MAP(core-cleaning-management_de.map):%s]"      <energy>    (gCleaning)
-    String FF_Vacuum_Command                                                                                            (gCleaning_Vacuum_CommandItem, gCleaning)
-    Number FF_Vacuum_Battery        "Saugroboter: Batteriestand [%.0f %%]"                                  <battery>   (gCleaning, gBattery)
-
-    String GF_Vacuum_State          "Saugroboter: Status [MAP(core-cleaning-management_de.map):%s]"              <switch>    (gCleaning_Vacuum_StateItem, gCleaning)
-    Switch GF_Vacuum_Docked         "Saugroboter: In Ladestation [MAP(core-cleaning-management_de.map):%s]"      <energy>    (gCleaning)
-    String GF_Vacuum_Command                                                                                          (gCleaning_Vacuum_CommandItem, gCleaning)
-    Number GF_Vacuum_Battery        "Saugroboter: Batteriestand [%.0f %%]"                                  <battery>   (gCleaning, gBattery)
+   String FF_Vacuum_Command                                                                                            (gCleaning, gCleaning_Vacuum_CommandItem)
+   String FF_Vacuum_State          "Saugroboter: Status [MAP(core-cleaning-management_de.map):%s]"         <switch>    (gCleaning, gCleaning_Vacuum_StateItem)
+   Switch FF_Vacuum_Docked         "Saugroboter: In Ladestation [MAP(core-cleaning-management_de.map):%s]" <energy>    (gCleaning)
+   Number FF_Vacuum_Battery        "Saugroboter: Batteriestand [%.0f %%]"                                  <battery>   (gCleaning, gBattery)
 */

@@ -9,12 +9,9 @@ Group                       gPresenceManagement_PresenceTrigger                 
 Group                       gPresenceManagement_LastPresence  "Letzte Anwesenheiten"  <time>      (gPresenceManagement, gPersistence_TrackState, gPersistence_SaveState)
 Group:Switch:OR(ON, OFF)    gPresenceManagement_SimulationItem                        <motion>    (gPresenceManagement)
 
-DateTime GF_LivingRoom_PresenceManagement_LastPresence     "Letzte Anwesenheit in Wohnzimmer: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"            <time>              (gPresenceManagement_LastPresence)
-DateTime GF_Kitchen_PresenceManagement_LastPresence        "Letzte Anwesenheit in Küche: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"                 <time>              (gPresenceManagement_LastPresence)
-DateTime GF_StorageRoom_PresenceManagement_LastPresence    "Letzte Anwesenheit in Abstellraum: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"           <time>              (gPresenceManagement_LastPresence)
-DateTime GF_Corridor_PresenceManagement_LastPresence       "Letzte Anwesenheit in Flur: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"                  <time>              (gPresenceManagement_LastPresence)
-DateTime FF_Wardrobe_PresenceManagement_LastPresence       "Letzte Anwesenheit in Garderobe: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"             <time>              (gPresenceManagement_LastPresence)
-DateTime FF_Bedroom_PresenceManagement_LastPresence        "Letzte Anwesenheit in Schlafzimmer: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"          <time>              (gPresenceManagement_LastPresence)
-DateTime FF_Stairs_PresenceManagement_LastPresence         "Letzte Anwesenheit in Treppe: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"                <time>              (gPresenceManagement_LastPresence)
-DateTime FF_Bathroom_PresenceManagement_LastPresence       "Letzte Anwesenheit in Badezimmer: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"            <time>              (gPresenceManagement_LastPresence)
+/*******************************
+ * SET UP A PRESENCE DETECTION *
+ *******************************
+
 DateTime FF_Office_PresenceManagement_LastPresence         "Letzte Anwesenheit in Büro: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"                  <time>              (gPresenceManagement_LastPresence)
+*/
