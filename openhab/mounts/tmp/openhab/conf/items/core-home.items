@@ -25,3 +25,4 @@ Number  GF_LivingRoom_Heater_EcoTemperature "Heizung in Wohnzimmer: Eco-Zieltemp
 // Corridor
 Switch  GF_Corridor_Lock_State           "Türschloss in Flur"                        <lock>             (gGF_Corridor, gSecurity_AssaultDisarmamer, gLock)
 Number  GF_Corridor_Lock_Battery         "Türschloss in Flur [%d %%]"                <battery>          (gGF_Corridor, gBattery)
+*/
