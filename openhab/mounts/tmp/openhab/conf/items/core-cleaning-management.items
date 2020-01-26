@@ -1,7 +1,7 @@
-Group  gCleaning                "House Cleaning Management"     <toilet>    (gHome)
-Switch gCleaning_Vacuum_Clean   "House cleaning"                <lawnmower> (gHome, gCleaning) { synonyms=["House cleaning", "Hausreinigung"], ga="Scene" }
-Group  gCleaning_Vacuum_CommandItem                             <lawnmower>
-Group  gCleaning_Vacuum_StateItem                               <lawnmower>
+Group  gCleaning                    "House Cleaning Management"     <toilet>    (gHome)
+Switch gCleaning_Vacuum_Clean       "House cleaning"                <lawnmower> (gHome, gCleaning) { synonyms=["House cleaning", "Hausreinigung"], ga="Scene" }
+Group  gCleaning_Vacuum_CommandItem                                 <lawnmower>
+Group  gCleaning_Vacuum_StateItem                                   <lawnmower>
 
 /*******************************
  * HOW TO SETUP VACUUM ROBOTS? *
