@@ -1,7 +1,7 @@
-from core.rules import rule
 from core.triggers import when
-from personal.core_heating_management import SpecialState
+from core.rules import rule
 from personal.core_presence_management import PresenceState
+from personal.core_special_state_management import SpecialState
 from personal.core_helpers import get_room_name
 
 
