@@ -1,5 +1,5 @@
 Group  gCleaning                    "House Cleaning Management"     <toilet>    (gHome)
-Switch gCleaning_Vacuum_Clean       "House cleaning"                <lawnmower> (gHome, gCleaning) { synonyms="House cleaning, Hausreinigung", ga="Scene" }
+Switch gCleaning_Vacuum_Clean       "House cleaning"                <lawnmower> (gHome, gCleaning) { synonyms="House cleaning, Hausreinigung", ga="Vacuum" }
 Group  gCleaning_Vacuum_CommandItem                                 <lawnmower>
 Group  gCleaning_Vacuum_StateItem                                   <lawnmower>
 
