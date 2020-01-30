@@ -1,9 +1,11 @@
 from datetime import datetime, timedelta
 from core.metadata import get_metadata, set_metadata
 from personal.core_helpers import enum, get_room_name
+from core.triggers import when
+from core.rules import rule
 import re
 
-SpecialState = enum(NONE=0, SLEEP=1)
+SpecialState = enum(DEFAULT=0, SLEEP=1)
 SCENE_ITEM_METADATA_NAMESPACE = "scene-{0}-data"
 
 
@@ -14,8 +16,15 @@ def set_last_activation(event):
         datetime.now())
 
 
+@rule("Turn off light if SpecialStateManagement was set to sleep.", description="Turn off light if SpecialStateManagement was set to sleep.", tags=[])
+@when("Item SpecialStateManagement received update " + SpecialState.SLEEP)
+def turn_off_switchables_on_sleep(event):
+    for item in ir.getItem("gLightManagement_LightSwitchable_IgnoreWhenSleep").members:
+        item.sendCommand(OFF)
+
+
 @rule("Reset scenes if SpecialStateManagement was set to sleep.", description="Reset scenes if SpecialStateManagement was set to sleep.", tags=[])
-@when("Item SpecialStateManagement received update 1")
+@when("Item SpecialStateManagement received update " + SpecialState.SLEEP)
 def reset_scenes_on_sleep(event):
     for item in ir.getItem("gSpecialStateManagement_Scenes").members:
         item.sendCommand(0)
@@ -28,10 +37,11 @@ def reset_on_default_trigger(event):
     hours_after_deactivation = ir.getItem(
         "SpecialStateManagement_HoursUntilTriggersActivated").state.intValue()
     if (
-        item.state != SpecialState.NONE and
-        datetime.now() - timedelta(hours=hours_after_deactivation) > SpecialStateManagement_LastActivation.state.intValue()
+        item.state != SpecialState.DEFAULT and
+        datetime.now() - timedelta(hours=hours_after_deactivation) > ir.getItem(
+            "SpecialStateManagement_LastActivation").state.intValue()
     ):
-        item.postUpdate(SpecialState.NONE)
+        item.postUpdate(SpecialState.DEFAULT)
 
 
 @rule("Change scene.", description="Change scene.", tags=[])
@@ -47,7 +57,7 @@ def change_scene(event):
             if ir.getItem(item) != None:
                 item.postCommand(state)
     else:
-        change_scene.logInfo(
+        change_scene.log.info(
             "special-state-management.rules", "No states saved for scene " +
             event.triggeringItem.name + " [" + scene_index + "], yet."
         )
@@ -74,17 +84,10 @@ def store_scene(event):
             overwrite=True
         )
     else:
-        store_scene.logInfo(
+        store_scene.log.info(
             "special-state-management.rules",
             "No item of group SpecialStateManagement_Scenes found for room " + room + "."
         )
-
-
-@rule("Turn off light if SpecialStateManagement was set to sleep.", description="Turn off light if SpecialStateManagement was set to sleep.", tags=[])
-@when("Item SpecialStateManagement received update 1")
-def turn_off_switchables_on_sleep(event):
-    for item in ir.getItem("gLightManagement_LightSwitchable_IgnoreWhenSleep").members:
-        item.sendCommand(OFF)
 
 
 @rule("Forward SpecialStateManagement_SelectStateHelpers to SpecialStateManagement.", description="Forward SpecialStateManagement_SelectStateHelpers to SpecialStateManagement.", tags=[])
@@ -107,12 +110,12 @@ def forward_scenehelper_to_specialstatemanagment_scenes(event):
         if scene is not None:
             scene.postUpdate(match.group())
         else:
-            forward_scenehelper_to_specialstatemanagment_scenes.logError(
+            forward_scenehelper_to_specialstatemanagment_scenes.log.error(
                 "special-state-management.rules",
                 "No item of group SpecialStateManagement_Scenes found for room " + room + "."
             )
     else:
-        forward_scenehelper_to_specialstatemanagment_scenes.logError(
+        forward_scenehelper_to_specialstatemanagment_scenes.log.error(
             "special-state-management.rules",
             event.triggeringItem.name + " is malformatted as there is not integer at the end!"
         )

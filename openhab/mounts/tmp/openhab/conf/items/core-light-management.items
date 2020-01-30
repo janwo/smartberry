@@ -3,10 +3,10 @@ Number      LightManagement_SleepBrightness           "Lichtstärke im Schlafmod
 Number      LightManagement_DefaultDuration           "Standard Lichtdauer [%d min]"            <time>                  (gLightManagement, gPersistence_SaveState)
 Number      LightManagement_SleepDuration             "Lichtdauer im Schlafmodus [%d min]"      <time>                  (gLightManagement, gPersistence_SaveState)
 
-Number    LightManagement_LightState                            "Lichtstatus [MAP(core-light-management_de.map):%s]"     <sun>   (gLightManagement, gPersistence_TrackState, gPersistence_SaveState) // 0=Dunkel, 2=Hell, 1=Verdunkelt
-Number    LightManagement_LightState_LuminanceTreshold_Obscured "Lichtwert bis Verdunkelt [%d %%]"                  <line>  (gLightManagement, gPersistence_SaveState)
-Number    LightManagement_LightState_LuminanceTreshold_Dark     "Lichtwert bis Dunkel [%d %%]"                      <line>  (gLightManagement, gPersistence_SaveState)
-Number    LightManagement_LightState_LuminanceTreshold          "Aktueller Lichtwert [%d %%]"                       <line>  (gLightManagement, gPersistence_SaveState)
+Number    LightManagement_AmbientLightCondition                             "Lichtwert [MAP(core-light-management_de.map):%s]"  <sun>   (gLightManagement, gPersistence_TrackState, gPersistence_SaveState)
+Number    LightManagement_AmbientLightCondition_LuminanceTreshold_Obscured  "Lichtwert bis Verdunkelt [%d %%]"                  <line>  (gLightManagement, gPersistence_SaveState)
+Number    LightManagement_AmbientLightCondition_LuminanceTreshold_Dark      "Lichtwert bis Dunkel [%d %%]"                      <line>  (gLightManagement, gPersistence_SaveState)
+Number    LightManagement_AmbientLightCondition_LuminanceTreshold           "Aktueller Lichtwert [%d %%]"                       <line>  (gLightManagement, gPersistence_SaveState)
 
 Group                            gLightManagement                 "Lichtsteuerung"                                                  <light>               (gHome)
 Group                            gLightManagement_DarkMode        "Lichtmodus (Dunkel)"                                             <moon>                (gLightManagement, gPersistence_SaveState)
@@ -16,9 +16,9 @@ Group                            gLightManagement_LastActivation  "Letztes Einsc
 Group:Switch:OR(ON, OFF)         gLightManagement_LightSwitchable "Lichtschaltende Geräte"                                          <light>               (gLightManagement)
 Group                            gLightManagement_LightSwitchable_IgnoreWhenSleep "Lichtschaltende Geräte (Schlafbereiche)"         <light>               (gLightManagement)
 
-Number      LightManagement_WelcomeLight_DarkMode              "Begrüßungslicht (Dunkel)"                       <keyring>               (gLightManagement, gPersistence_SaveState) // 1=An, 0=Aus
-Number      LightManagement_WelcomeLight_BrightMode            "Begrüßungslicht (Hell)"                         <keyring>               (gLightManagement, gPersistence_SaveState) // 1=An, 0=Aus
-Number      LightManagement_WelcomeLight_ObscuredMode          "Begrüßungslicht (Verdunkelt)"                   <keyring>               (gLightManagement, gPersistence_SaveState) // 1=An, 0=Aus
+Switch      LightManagement_WelcomeLight_DarkMode              "Begrüßungslicht (Dunkel)"                       <keyring>               (gLightManagement, gPersistence_SaveState)
+Switch      LightManagement_WelcomeLight_BrightMode            "Begrüßungslicht (Hell)"                         <keyring>               (gLightManagement, gPersistence_SaveState)
+Switch      LightManagement_WelcomeLight_ObscuredMode          "Begrüßungslicht (Verdunkelt)"                   <keyring>               (gLightManagement, gPersistence_SaveState)
 
 /**********************
  * CREATE LIGHT MODES *
