@@ -7,7 +7,7 @@ from core.triggers import when
 def manage_house_cleaning(event):
     command = 'clean' if event.itemCommand is ON else 'dock'
     for item in ir.getItem("gCleaning_Vacuum_CommandItem").members:
-        item.sendCommand(command)
+        events.sendCommand(item.name, command)
 
 
 @rule("Manage state on manual house cleaning", description="Manage state on manual house cleaning", tags=[])
@@ -18,4 +18,4 @@ def manage_manual_house_cleaning_updates(event):
     updatedState = ON if hasBusyMember else OFF
     group = ir.getItem("gCleaning_Vacuum_Clean")
     if group.state != updatedState:
-        group.postUpdate(updatedState)
+        events.postUpdate(group.name, updatedState)

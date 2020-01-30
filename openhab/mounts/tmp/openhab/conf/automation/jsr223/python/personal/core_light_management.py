@@ -43,11 +43,11 @@ def turnOn(switchable, force=False):
         if(switchable.state != 0 or force):
             command = ir.getItem("LightManagement_DefaultBrightness").state.intValue(
             ) if ir.getItem("SpecialStateManagement").state == SpecialState.DEFAULT else ir.getItem("LightManagement_SleepBrightness").state.intValue()
-            switchable.sendCommand(command)
+            events.sendCommand(switchable.name, command)
 
     elif "gPower" in switchable.getGroupNames():
         if(switchable.state != OFF or force):
-            switchable.sendCommand(command)
+            events.sendCommand(switchable.name, command)
 
     else:
         logging.warn(
@@ -57,9 +57,9 @@ def turnOn(switchable, force=False):
 
 def turnOff(switchable, force=False):
     if force:
-        switchable.sendCommand(OFF)
+        events.sendCommand(switchable.name, OFF)
     elif switchable.state != OFF:
-        switchable.sendCommand(OFF)
+        events.sendCommand(switchable.name, OFF)
 
 
 @rule("Keep last light activation updated", description="Keep last light activation updated", tags=[])
@@ -74,7 +74,7 @@ def set_last_activation(event):
         (activation for activation in activations if activation.name.startsWith(room)), None)
 
     if activation != None:
-        activation.sendCommand(datetime.now())
+        events.sendCommand(activation.name, datetime.now())
     else:
         set_last_activation.log.warn(
             "light-management.rules",
@@ -121,9 +121,10 @@ def check_daylight(event):
     elif median < obscuredTreshold:
         mode = LightMode.OBSCURED
 
-    ir.get("LightManagement_AmbientLightCondition_LuminanceTreshold").postUpdate(median)
+    events.postUpdate(
+        "LightManagement_AmbientLightCondition_LuminanceTreshold", median)
     if ir.getItem("LightManagement_AmbientLightCondition").state != mode:
-        ir.getItem("LightManagement_AmbientLightCondition").postUpdate(mode)
+        events.postUpdate("LightManagement_AmbientLightCondition", mode)
 
 
 @rule("Manage lights according to respective modes among special states, nighttime and daytime.", description="Manage lights according to respective modes among special states, nighttime and daytime.", tags=[])
@@ -225,7 +226,8 @@ def manage_presence(event):
         )
 
         if len(scenes) > 0:
-            scenes.get(0).postUpdate(scenes.get(0).state.intValue())
+            events.postUpdate(scenes.get(0).name,
+                              scenes.get(0).state.intValue())
             return
 
         for switchable in ir.getItem("gLightManagement_LightSwitchable").members:
@@ -300,4 +302,4 @@ def elapsed_lights(event):
     for switchable in ir.getItem("gLightManagement_LightSwitchable").members:
         if ((switchable.state == ON or switchable.state != 0) and
                 any(lambda room: room == get_room_name(switchable.name), switchOffRooms)):
-            switchable.sendCommand(OFF)
+            events.sendCommand(switchable.name, OFF)

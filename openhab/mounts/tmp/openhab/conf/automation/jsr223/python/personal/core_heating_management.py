@@ -23,7 +23,7 @@ def update_heater_on_presence_change(event):
         state = ir.getItem("HeatingManagement_Thermostat_ModeAwayShort").state
 
     for item in ir.getItem("gHeatingManagement_Thermostat_Mode").members:
-        item.sendCommand(state)
+        events.sendCommand(item.name, state)
 
 
 @rule("Update heater when windows open or close", description="Update heater when windows open or close", tags=[])
@@ -35,7 +35,7 @@ def update_heater_on_window_event(event):
     if event.triggeringItem.state == OPEN:
         for thermostat in ir.getItem("gHeatingManagement_Thermostat_Mode").members:
             if thermostat.name.startsWith(room):
-                thermostat.sendCommand(0)
+                events.sendCommand(thermostat.name, 0)
 
     # No remaining opened windows after closing event?
     elif not any(member.name.startsWith(room) and member.state == OPEN for member in ir.getItem("gSensor_Contact").members):
@@ -43,4 +43,4 @@ def update_heater_on_window_event(event):
         # It does not respect any presence or special states for simplicity.
         for thermostat in ir.getItem("gHeatingManagement_Thermostat_Mode").members:
             if thermostat.name.startsWith(room):
-                thermostat.sendCommand(1)
+                events.sendCommand(thermostat.name, 1)
