@@ -42,5 +42,5 @@ def manage_elapsed(event):
                 )
                 return
 
-            if minutes_between(activation.state, ZonedDateTime.now()) > duration.state.intValue():
+            if minutes_between(activation.state, ZonedDateTime.now()) > duration.state:
                 events.sendCommand(switchable, OFF)

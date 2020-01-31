@@ -43,7 +43,7 @@ def armament(event):
     }
 
     operationState = operationMapping.get(ir.getItem(
-        "PresenceManagement").state.intValue(), None)
+        "PresenceManagement").state, None)
     if operationState == None:
         return
 
@@ -94,7 +94,7 @@ def siren_autooff(event):
             ir.getItem("Security_Sirene").state != ON or
             isinstance(ir.getItem("Security_AlarmTime").state, UnDefType) or
             minutes_between(ir.getItem("Security_AlarmTime").state, ZonedDateTime.now(
-            )) > autoOffTime.intValue()
+            )) > autoOffTime
         ):
         return
 

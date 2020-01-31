@@ -35,7 +35,7 @@ def reset_scenes_on_sleep(event):
 def reset_on_default_trigger(event):
     item = ir.getItem("SpecialStateManagement")
     hours_after_deactivation = ir.getItem(
-        "SpecialStateManagement_HoursUntilTriggersActivated").state.intValue()
+        "SpecialStateManagement_HoursUntilTriggersActivated").state
     if (
         item.state != SpecialState.DEFAULT and
         hours_between(ir.getItem("SpecialStateManagement_LastActivation").state,
@@ -47,7 +47,7 @@ def reset_on_default_trigger(event):
 @rule("Change scene.", description="Change scene.", tags=[])
 @when("Member of gSpecialStateManagement_Scenes changed")
 def change_scene(event):
-    scene_index = event.itemState.intValue()
+    scene_index = event.itemState
     store = get_metadata(
         event.itemName,
         SCENE_ITEM_METADATA_NAMESPACE.format(scene_index)
@@ -71,7 +71,7 @@ def store_scene(event):
     scene = next(
         (scene for scene in scenes if scene.name.startswith(room)), None)
     if scene != None:
-        scene_index = scene.state.intValue()
+        scene_index = scene.state
         store = {}
         for item in ir.getItem("gSpecialStateManagement_SceneMembers").members:
             if item.name.startswith(room):
