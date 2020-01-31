@@ -4,7 +4,7 @@ from core.triggers import when
 from core.rules import rule
 from personal.core_presence_management import PresenceState
 from personal.core_security_management import OperationState
-from core.date import minutes_between, ZonedDateTime
+from core.date import minutes_between, ZonedDateTime, format_date
 
 
 @rule("Security System - Trigger-Management", description="Security System - Trigger-Management", tags=[])
@@ -14,7 +14,8 @@ def assault_trigger(event):
     if ir.getItem("Security_OperationState").state == OperationState.OFF or ir.getItem("SpecialStateManagement").state != OperationState.NONE:
         return
 
-    events.postUpdate(ir.getItem("Security_AlarmTime"), ZonedDateTime.now())
+    events.postUpdate(ir.getItem("Security_AlarmTime"),
+                      format_date(ZonedDateTime.now()))
     assault_trigger.log.info(
         "Detected Assault Attack - Alarm was triggered!"
     )

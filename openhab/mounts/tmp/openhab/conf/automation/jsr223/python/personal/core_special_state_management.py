@@ -3,7 +3,7 @@ from personal.core_helpers import enum, get_room_name
 from personal.core_special_state_management import SpecialState
 from core.triggers import when
 from core.rules import rule
-from core.date import hours_between, ZonedDateTime
+from core.date import hours_between, ZonedDateTime, format_date
 import re
 
 SCENE_ITEM_METADATA_NAMESPACE = "scene-{0}-data"
@@ -13,7 +13,7 @@ SCENE_ITEM_METADATA_NAMESPACE = "scene-{0}-data"
 @when("Item SpecialStateManagement received update")
 def set_last_activation(event):
     events.postUpdate(ir.getItem(
-        "SpecialStateManagement_LastActivation"), ZonedDateTime.now())
+        "SpecialStateManagement_LastActivation"), format_date(ZonedDateTime.now()))
 
 
 @rule("Turn off light if SpecialStateManagement was set to sleep.", description="Turn off light if SpecialStateManagement was set to sleep.", tags=[])

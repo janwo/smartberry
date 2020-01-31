@@ -19,7 +19,7 @@ AmbientLightCondition = enum(
 )
 
 
-def get_light_mode():
+def get_light_mode_group():
     condition = ir.getItem("LightManagement_AmbientLightCondition").state
     return {
         AmbientLightCondition.DARK: ir.getItem("gLightManagement_DarkMode"),
@@ -29,7 +29,7 @@ def get_light_mode():
         AmbientLightCondition.BRIGHT if isinstance(
             condition, UnDefType) else condition.intValue(),
         ir.getItem("gLightManagement_BrightMode")
-    ).state
+    )
 
 
 def turnOn(switchable, force=False):

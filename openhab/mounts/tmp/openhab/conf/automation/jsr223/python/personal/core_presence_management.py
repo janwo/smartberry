@@ -1,6 +1,6 @@
 from core.rules import rule
 from core.triggers import when
-from core.date import hours_between, ZonedDateTime
+from core.date import hours_between, ZonedDateTime, format_date
 from personal.core_helpers import enum, get_room_name
 from personal.core_presence_management import PresenceState
 import random
@@ -10,7 +10,7 @@ import random
 @when("Member of gPresenceManagement_PresenceTrigger received update ON")
 def set_last_activation(event):
     events.postUpdate(ir.getItem(
-        "PresenceManagement_LastPresence").state, ZonedDateTime.now())
+        "PresenceManagement_LastPresence").state, format_date(ZonedDateTime.now()))
     if ir.getItem("PresenceManagement").state != PresenceState.HOME:
         events.postUpdate(ir.getItem("PresenceManagement"), PresenceState.HOME)
 
@@ -19,10 +19,11 @@ def set_last_activation(event):
     presence = next(
         (presence for presence in presences if presences.name.startswith(room)), None)
     if presence != None:
-        events.postUpdate(presence, ZonedDateTime.now())
+        events.postUpdate(presence, format_date(ZonedDateTime.now()))
     else:
         set_last_activation.log.warn(
-            "gPresenceManagement_LastPresence not found for room {}.".format(room)
+            "gPresenceManagement_LastPresence not found for room {}.".format(
+                room)
         )
 
 

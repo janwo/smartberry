@@ -1,11 +1,11 @@
 from core.log import logging
 from core.triggers import when
 from core.rules import rule
-from core.date import minutes_between, ZonedDateTime
+from core.date import minutes_between, ZonedDateTime, format_date
 from personal.core_presence_management import PresenceState
 from personal.core_special_state_management import SpecialState
 from personal.core_helpers import enum, get_room_name
-from personal.core_light_management import LightMode, AmbientLightCondition, get_light_mode, turnOn, turnOff
+from personal.core_light_management import LightMode, AmbientLightCondition, get_light_mode_group, turnOn, turnOff
 
 
 @rule("Keep last light activation updated", description="Keep last light activation updated", tags=[])
@@ -20,10 +20,11 @@ def set_last_activation(event):
         (activation for activation in activations if activation.name.startswith(room)), None)
 
     if activation != None:
-        events.sendCommand(activation, ZonedDateTime.now())
+        events.sendCommand(activation, format_date(ZonedDateTime.now()))
     else:
         set_last_activation.log.warn(
-            "gLightManagement_LastActivation not found for room {}.".format(room)
+            "gLightManagement_LastActivation not found for room {}.".format(
+                room)
         )
 
 
@@ -83,7 +84,7 @@ def check_daylight(event):
 @when("Item LightManagement_DefaultBrightness received update")
 @when("Item LightManagement_SleepBrightness received update")
 def manage_light_state(event):
-    mode = get_light_mode()
+    lightModeGroup = get_light_mode_group()
     switchOnRooms = map(
         lambda switchable: get_room_name(switchable.name),
         filter(
@@ -105,7 +106,7 @@ def manage_light_state(event):
                 )
                 # TODO: Wenn abwesend im Standardmodus => AN
             ),
-            mode.members
+            lightModeGroup.members
         )
     )
 
@@ -131,7 +132,7 @@ def manage_light_state(event):
                         "SpecialStateManagement").state != SpecialState.DEFAULT
                 )
             ),
-            mode.members
+            lightModeGroup.members
         )
     )
 
@@ -156,14 +157,14 @@ def manage_light_state(event):
 @when("Member of gPresenceManagement_LastPresence received update")
 def manage_presence(event):
     room = get_room_name(event.itemName)
-    mode = get_light_mode()
+    lightModeGroup = get_light_mode_group()
 
     if any(
         lambda mode: (
             mode.name.startswith(room) and
             mode.state == LightMode.AUTO_ON
         ),
-        mode.members
+        lightModeGroup.members
     ):
         # Trigger scene instead of lights, if scene is present in room.
         scenes = filter(
@@ -196,19 +197,19 @@ def welcome_light(event):
     )
 
     if welcomeLightMode.state == ON:
-        mode = get_light_mode()
+        lightModeGroup = get_light_mode_group()
         switchOnRooms = map(
             lambda mode: get_room_name(mode.name),
             filter(
                 lambda mode: mode.state == LightMode.AUTO_ON,
-                mode.members
+                lightModeGroup.members
             )
         )
 
-        for switchable in ir.getItem("gLightManagement_LightSwitchable").members:
-            room = get_room_name(switchable.name)
-            if any(lambda r: r == room, switchOnRooms):
-                turnOn(switchable)
+    for switchable in ir.getItem("gLightManagement_LightSwitchable").members:
+        room = get_room_name(switchable.name)
+        if any(lambda r: r == room, switchOnRooms):
+            turnOn(switchable)
 
 
 @rule("Manage elapsed lights.", description="Manage elapsed lights.", tags=[])
@@ -220,7 +221,7 @@ def elapsed_lights(event):
     duration = ir.getItem("LightManagement_DefaultDuration").state if ir.getItem(
         "SpecialStateManagement").state == SpecialState.DEFAULT else ir.getItem("LightManagement_SleepDuration").state
 
-    mode = get_light_mode()
+    lightModeGroup = get_light_mode_group()
 
     elapsedRooms = map(
         lambda mode: get_room_name(mode.name),
@@ -244,7 +245,7 @@ def elapsed_lights(event):
             lambda mode: get_room_name(mode.name),
             filter(
                 lambda mode: mode.state == LightMode.AUTO_ON,
-                mode.members
+                lightModeGroup.members
             )
         )
     )
