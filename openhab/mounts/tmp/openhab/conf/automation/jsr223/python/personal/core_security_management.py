@@ -37,8 +37,8 @@ def assault_trigger(event):
 @when("Item Security_OperationState_AwayLong received update")
 def armament(event):
     operationMapping = {
-        0: Security_OperationState_AwayShort.state,
-        2: Security_OperationState_AwayLong.state
+        OperationState.OFF: Security_OperationState_AwayShort.state,
+        OperationState.SILENTLY: Security_OperationState_AwayLong.state
     }
 
     operationState = operationMapping.get(ir.getItem(

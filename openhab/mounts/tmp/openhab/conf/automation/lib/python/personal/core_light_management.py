@@ -20,12 +20,13 @@ AmbientLightCondition = enum(
 
 
 def get_light_mode():
+    condition = ir.getItem("LightManagement_AmbientLightCondition").state
     return {
-        0: ir.getItem("gLightManagement_DarkMode"),
-        1: ir.getItem("gLightManagement_ObscuredMode"),
-        2: ir.getItem("gLightManagement_BrightMode")
+        AmbientLightCondition.DARK: ir.getItem("gLightManagement_DarkMode"),
+        AmbientLightCondition.OBSCURED: ir.getItem("gLightManagement_ObscuredMode"),
+        AmbientLightCondition.BRIGHT: ir.getItem("gLightManagement_BrightMode")
     }.get(
-        ir.getItem("LightManagement_AmbientLightCondition").state.intValue(),
+        AmbientLightCondition.BRIGHT if condition is None else condition.intValue(),
         ir.getItem("gLightManagement_BrightMode")
     ).state
 

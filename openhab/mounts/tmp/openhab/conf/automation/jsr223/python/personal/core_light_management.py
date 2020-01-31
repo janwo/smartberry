@@ -184,13 +184,14 @@ def manage_presence(event):
 @rule("Manage lights when come back home.", description="Manage lights when come back home.", tags=[])
 @when("Item PresenceManagement changed to {}".format(PresenceState.HOME))
 def welcome_light(event):
+    condition = ir.getItem("LightManagement_AmbientLightCondition")
     welcomeLightModeMapping = {
-        0: ir.getItem("LightManagement_WelcomeLight_DarkMode"),
-        1: ir.getItem("LightManagement_WelcomeLight_ObscuredMode"),
-        2: ir.getItem("LightManagement_WelcomeLight_BrightMode")
+        AmbientLightCondition.DARK: ir.getItem("LightManagement_WelcomeLight_DarkMode"),
+        AmbientLightCondition.OBSCURED: ir.getItem("LightManagement_WelcomeLight_ObscuredMode"),
+        AmbientLightCondition.BRIGHT: ir.getItem("LightManagement_WelcomeLight_BrightMode")
     }
     welcomeLightMode = welcomeLightModeMapping.get(
-        ir.getItem("LightManagement_AmbientLightCondition").state.intValue(),
+        AmbientLightCondition.BRIGHT if condition is None else condition.state.intValue(),
         ir.getItem("LightManagement_WelcomeLight_BrightMode")
     )
 
