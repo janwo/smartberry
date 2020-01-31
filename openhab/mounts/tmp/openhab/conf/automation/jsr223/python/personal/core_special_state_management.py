@@ -12,21 +12,22 @@ SCENE_ITEM_METADATA_NAMESPACE = "scene-{0}-data"
 @rule("Set last activation if SpecialStateManagement changes.", description="Set last activation if SpecialStateManagement changes.", tags=[])
 @when("Item SpecialStateManagement received update")
 def set_last_activation(event):
-    events.postUpdate("SpecialStateManagement_LastActivation", datetime.now())
+    events.postUpdate(ir.getItem(
+        "SpecialStateManagement_LastActivation"), datetime.now())
 
 
 @rule("Turn off light if SpecialStateManagement was set to sleep.", description="Turn off light if SpecialStateManagement was set to sleep.", tags=[])
 @when("Item SpecialStateManagement received update " + SpecialState.SLEEP)
 def turn_off_switchables_on_sleep(event):
     for item in ir.getItem("gLightManagement_LightSwitchable_IgnoreWhenSleep").members:
-        events.sendCommand(item.name, OFF)
+        events.sendCommand(item, OFF)
 
 
 @rule("Reset scenes if SpecialStateManagement was set to sleep.", description="Reset scenes if SpecialStateManagement was set to sleep.", tags=[])
 @when("Item SpecialStateManagement received update " + SpecialState.SLEEP)
 def reset_scenes_on_sleep(event):
     for item in ir.getItem("gSpecialStateManagement_Scenes").members:
-        events.sendCommand(item.name, 0)
+        events.sendCommand(item, 0)
 
 
 @rule("Set SpecialStateManagement to off if DefaultStateTrigger triggers.", description="Set SpecialStateManagement to off if DefaultStateTrigger triggers.", tags=[])
@@ -40,7 +41,7 @@ def reset_on_default_trigger(event):
         datetime.now() - timedelta(hours=hours_after_deactivation) > ir.getItem(
             "SpecialStateManagement_LastActivation").state.intValue()
     ):
-        events.postUpdate(item.name, SpecialState.DEFAULT)
+        events.postUpdate(item, SpecialState.DEFAULT)
 
 
 @rule("Change scene.", description="Change scene.", tags=[])
@@ -54,7 +55,7 @@ def change_scene(event):
     if store != None:
         for item, state in store.iteritems():
             if ir.getItem(item) != None:
-                events.sendCommand(item.name, state)
+                events.sendCommand(item, state)
     else:
         change_scene.log.info(
             "special-state-management.rules", "No states saved for scene " +
@@ -94,7 +95,7 @@ def store_scene(event):
 def forward_scenehelper_to_specialstatemanagment(event):
     match = re.search(r"^.*?(\\d+)$", event.triggeringItem.name)
     if match is not None:
-        events.postUpdate("SpecialStateManagement", match.group())
+        events.postUpdate(ir.getItem("SpecialStateManagement"), match.group())
 
 
 @rule("Forward SpecialStateManagement_SelectSceneHelpers to relevant member of gSpecialStateManagement_Scenes.", description="Forward SpecialStateManagement_SelectSceneHelpers to relevant member of gSpecialStateManagement_Scenes.", tags=[])
@@ -107,7 +108,7 @@ def forward_scenehelper_to_specialstatemanagment_scenes(event):
         scene = next(
             (scene for scene in scenes if scene.name.startsWith(room)), None)
         if scene is not None:
-            events.postUpdate(scene.name, match.group())
+            events.postUpdate(scene, match.group())
         else:
             forward_scenehelper_to_specialstatemanagment_scenes.log.error(
                 "special-state-management.rules",

@@ -12,7 +12,7 @@ def set_last_activation(event):
     activation = next(
         (activation for activation in activations if activation.name.startsWith(event.triggeringItem.name)), None)
     if activation != None:
-        events.sendCommand(activation.name, datetime.now())
+        events.sendCommand(activation, datetime.now())
     else:
         set_last_activation.log.warn(
             "timed-outlet-management.rules",
@@ -44,4 +44,4 @@ def manage_elapsed(event):
                 return
 
             if datetime.now() - timedelta(minutes=duration.state.intValue()) > activation.state.intValue():
-                events.sendCommand(switchable.name, OFF)
+                events.sendCommand(switchable, OFF)

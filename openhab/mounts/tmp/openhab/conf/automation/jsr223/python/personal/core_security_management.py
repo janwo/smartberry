@@ -15,7 +15,7 @@ def assault_trigger(event):
     if ir.getItem("Security_OperationState").state == OperationState.OFF or ir.getItem("SpecialStateManagement").state != OperationState.NONE:
         return
 
-    events.postUpdate("Security_AlarmTime", datetime.now())
+    events.postUpdate(ir.getItem("Security_AlarmTime"), datetime.now())
     assault_trigger.log.info(
         "security-management.rules",
         "Detected Assault Attack - Alarm was triggered!"
@@ -25,7 +25,7 @@ def assault_trigger(event):
         event.triggeringItem.label + " ausgelöst!"
 
     if Security_OperationState.state == OperationState.ON:
-        events.sendCommand("Security_Sirene", ON)
+        events.sendCommand(ir.getItem("Security_Sirene"), ON)
         message = "Lauter Alarm wurde von " + event.triggeringItem.label + " ausgelöst!"
 
     NotificationAction.sendBroadcastNotification(message)
@@ -52,7 +52,8 @@ def armament(event):
         (trigger for trigger in triggers if trigger.state == OPEN or trigger.state == ON), None)
 
     if trigger == None:
-        events.postUpdate("Security_OperationState", operationState)
+        events.postUpdate(ir.getItem(
+            "Security_OperationState"), operationState)
     else:
         NotificationAction.sendBroadcastNotification(
             trigger.label + " ist auf / an! Angrifferkennung bleibt aus."
@@ -62,7 +63,8 @@ def armament(event):
 @rule("Security System - Disarmament-Management", description="Security System - Disarmament-Management", tags=[])
 @when("Member of gSecurity_AssaultDisarmamer received update")
 def disarmament(event):
-    events.postUpdate("Security_OperationState", OperationState.OFF)
+    events.postUpdate(ir.getItem("Security_OperationState"),
+                      OperationState.OFF)
 
 
 @rule("Security System - Lock Closure-Management", description="Security System - Lock Closure-Management", tags=[])
@@ -76,7 +78,7 @@ def lock_closure(event):
         (lock for lock in locks if lock.name.startsWith(room)), None)
 
     if lock != None:
-        events.sendCommand(lock.name, ON)
+        events.sendCommand(lock, ON)
     else:
         lock_closure.log.warn(
             "security-management.rules",
@@ -89,14 +91,14 @@ def lock_closure(event):
 def siren_autooff(event):
     autoOffTime = ir.getItem("Security_SireneAutoOff").state
     if (autoOffTime == 0 or
-            ir.getItem("Security_Sirene").state != ON or
-            ir.getItem("Security_AlarmTime").state == None or
-            ir.getItem("Security_AlarmTime").intValue() > datetime.now(
-            ) - timedelta(minutes=autoOffTime.intValue())
-        ):
+                ir.getItem("Security_Sirene").state != ON or
+                ir.getItem("Security_AlarmTime").state == None or
+                ir.getItem("Security_AlarmTime").intValue() > datetime.now(
+                ) - timedelta(minutes=autoOffTime.intValue())
+            ):
         return
 
-    events.sendCommand("Security_Sirene", OFF)
+    events.sendCommand(ir.getItem("Security_Sirene"), OFF)
     NotificationAction.sendBroadcastNotification(
         "Alarm wurde nach " + autoOffTime + " Minuten automatisch deaktiviert."
     )

@@ -10,16 +10,17 @@ PresenceState = enum(HOME=1, AWAY_SHORT=0, AWAY_LONG=2)
 @rule("Set presence on motion.", description="Set presence on motion.", tags=[])
 @when("Member of gPresenceManagement_PresenceTrigger received update ON")
 def set_last_activation(event):
-    events.postUpdate("PresenceManagement_LastPresence", datetime.now())
+    events.postUpdate(ir.getItem(
+        "PresenceManagement_LastPresence"), datetime.now())
     if ir.getItem("PresenceManagement").state != PresenceState.HOME:
-        events.postUpdate("PresenceManagement", PresenceState.HOME)
+        events.postUpdate(ir.getItem("PresenceManagement"), PresenceState.HOME)
 
     room = get_room_name(event.triggeringItem.name)
     presences = ir.getItem("gPresenceManagement_LastPresence").members
     presence = next(
         (presence for presence in presences if presences.name.startsWith(room)), None)
     if presence != None:
-        events.postUpdate(presence.name, datetime.now())
+        events.postUpdate(presence, datetime.now())
     else:
         set_last_activation.log.warn(
             "presence-management.rules",
@@ -31,9 +32,11 @@ def set_last_activation(event):
 @when("Time cron 0 0 * ? * * *")
 def check_abondance(event):
     if datetime.now() - timedelta(minutes=ir.getItem("PresenceManagement_HoursUntilAwayLong").state.intValue() > ir.getItem("PresenceManagement_LastPresence").state.intValue()):
-        events.postUpdate("PresenceManagement", PresenceState.AWAY_LONG)
+        events.postUpdate(ir.getItem("PresenceManagement"),
+                          PresenceState.AWAY_LONG)
     elif datetime.now() - timedelta(minutes=ir.getItem("PresenceManagement_HoursUntilAwayShort").state.intValue() > ir.getItem("PresenceManagement_LastPresence").state.intValue()):
-        events.postUpdate("PresenceManagement", PresenceState.AWAY_SHORT)
+        events.postUpdate(ir.getItem("PresenceManagement"),
+                          PresenceState.AWAY_SHORT)
 
 
 @rule("Simulate lights when away and simulation state is activated.", description="Simulate lights when away and simulation state is activated.", tags=[])
@@ -45,6 +48,6 @@ def simulate_presence(event):
     for item in ir.getItem("gPresenceManagement_SimulationItem").members:
         if random.randrange(10) <= 2:
             if item.state == ON:
-                events.sendCommand(item.name, OFF)
+                events.sendCommand(item, OFF)
             else:
-                events.sendCommand(item.name, ON)
+                events.sendCommand(item, ON)
