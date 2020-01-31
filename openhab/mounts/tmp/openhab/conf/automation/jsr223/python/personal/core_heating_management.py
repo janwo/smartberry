@@ -38,7 +38,7 @@ def update_heater_on_window_event(event):
                 events.sendCommand(thermostat, 0)
 
     # No remaining opened windows after closing event?
-    elif not any(lambda member: member.name.startswith(room) and member.state == OPEN, ir.getItem("gSensor_Contact").members):
+    elif not any((member.name.startswith(room) and member.state == OPEN) for member in ir.getItem("gSensor_Contact").members):
         # Change to normal temperature.
         # It does not respect any presence or special states for simplicity.
         for thermostat in ir.getItem("gHeatingManagement_Thermostat_Mode").members:

@@ -27,7 +27,7 @@ def get_light_mode_group():
         AmbientLightCondition.BRIGHT: ir.getItem("gLightManagement_BrightMode")
     }.get(
         AmbientLightCondition.BRIGHT if isinstance(
-            condition, UnDefType) else condition.intValue(),
+            condition, UnDefType) else condition,
         ir.getItem("gLightManagement_BrightMode")
     )
 
@@ -42,8 +42,8 @@ def turnOn(switchable, force=False):
 
     if "gLight" in switchable.getGroupNames():
         if(switchable.state != 0 or force):
-            command = ir.getItem("LightManagement_DefaultBrightness").state.intValue(
-            ) if ir.getItem("SpecialStateManagement").state == SpecialState.DEFAULT else ir.getItem("LightManagement_SleepBrightness").state.intValue()
+            command = ir.getItem("LightManagement_DefaultBrightness").state if ir.getItem(
+                "SpecialStateManagement").state == SpecialState.DEFAULT else ir.getItem("LightManagement_SleepBrightness").state
             events.sendCommand(switchable, command)
 
     elif "gPower" in switchable.getGroupNames():

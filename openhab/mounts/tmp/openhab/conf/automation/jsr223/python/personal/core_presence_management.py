@@ -10,14 +10,14 @@ import random
 @when("Member of gPresenceManagement_PresenceTrigger received update ON")
 def set_last_activation(event):
     events.postUpdate(ir.getItem(
-        "PresenceManagement_LastPresence").state, format_date(ZonedDateTime.now()))
+        "PresenceManagement_LastPresence"), format_date(ZonedDateTime.now()))
     if ir.getItem("PresenceManagement").state != PresenceState.HOME:
         events.postUpdate(ir.getItem("PresenceManagement"), PresenceState.HOME)
 
     room = get_room_name(event.itemName)
     presences = ir.getItem("gPresenceManagement_LastPresence").members
     presence = next(
-        (presence for presence in presences if presences.name.startswith(room)), None)
+        (presence for presence in presences if presence.name.startswith(room)), None)
     if presence != None:
         events.postUpdate(presence, format_date(ZonedDateTime.now()))
     else:
@@ -30,10 +30,10 @@ def set_last_activation(event):
 @rule("Set presence state to away in absence", description="Set presence state to away in absence", tags=[])
 @when("Time cron 0 0 * ? * * *")
 def check_abondance(event):
-    if hours_between(ir.getItem("PresenceManagement_LastPresence").state, ZonedDateTime.now()) > ir.getItem("PresenceManagement_HoursUntilAwayLong").state.intValue():
+    if hours_between(ir.getItem("PresenceManagement_LastPresence").state, ZonedDateTime.now()) > ir.getItem("PresenceManagement_HoursUntilAwayLong").state:
         events.postUpdate(ir.getItem("PresenceManagement"),
                           PresenceState.AWAY_LONG)
-    elif hours_between(ir.getItem("PresenceManagement_LastPresence").state, ZonedDateTime.now()) > ir.getItem("PresenceManagement_HoursUntilAwayShort").state.intValue():
+    elif hours_between(ir.getItem("PresenceManagement_LastPresence").state, ZonedDateTime.now()) > ir.getItem("PresenceManagement_HoursUntilAwayShort").state:
         events.postUpdate(ir.getItem("PresenceManagement"),
                           PresenceState.AWAY_SHORT)
 

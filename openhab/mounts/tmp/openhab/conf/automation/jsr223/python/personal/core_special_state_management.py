@@ -49,7 +49,7 @@ def reset_on_default_trigger(event):
 def change_scene(event):
     scene_index = event.itemState.intValue()
     store = get_metadata(
-        ir.getItem(event.itemName),
+        event.itemName,
         SCENE_ITEM_METADATA_NAMESPACE.format(scene_index)
     )
     if store != None:
@@ -78,7 +78,7 @@ def store_scene(event):
                 store[item.name] = item.state
 
         set_metadata(
-            scene,
+            scene.name,
             SCENE_ITEM_METADATA_NAMESPACE.format(scene_index),
             store,
             overwrite=True

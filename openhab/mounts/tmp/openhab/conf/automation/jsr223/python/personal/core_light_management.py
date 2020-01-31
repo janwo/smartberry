@@ -46,8 +46,7 @@ def check_daylight(event):
     sensorsOfInactiveRooms = sorted(
         filter(
             lambda sensor: not isinstance(sensor.state, UnDefType) and any(
-                lambda activeRoom: activeRoom == get_room_name(sensor.name),
-                activeRooms
+                activeRoom == get_room_name(sensor.name) for activeRoom in activeRooms
             ) is None,
             ir.getItem("gSensor_Luminance").members
         ),
@@ -55,20 +54,21 @@ def check_daylight(event):
     )
 
     median = sensorsOfInactiveRooms.get(
-        len(sensorsOfInactiveRooms) / 2).state.intValue()
+        len(sensorsOfInactiveRooms) / 2).state
     darkTreshold = ir.getItem(
-        "LightManagement_AmbientLightCondition_LuminanceTreshold_Dark").state.intValue()
+        "LightManagement_AmbientLightCondition_LuminanceTreshold_Dark").state
     obscuredTreshold = ir.getItem(
-        "LightManagement_AmbientLightCondition_LuminanceTreshold_Obscured").state.intValue()
+        "LightManagement_AmbientLightCondition_LuminanceTreshold_Obscured").state
 
     mode = LightMode.BRIGHT
-    if median < darkTreshold:
-        mode = LightMode.DARK
-    elif median < obscuredTreshold:
-        mode = LightMode.OBSCURED
+    if not isinstance(median, UnDefType):
+        events.postUpdate(ir.getItem(
+            "LightManagement_AmbientLightCondition_LuminanceTreshold"), median)
+        if median < darkTreshold:
+            mode = LightMode.DARK
+        elif median < obscuredTreshold:
+            mode = LightMode.OBSCURED
 
-    events.postUpdate(ir.getItem(
-        "LightManagement_AmbientLightCondition_LuminanceTreshold"), median)
     if ir.getItem("LightManagement_AmbientLightCondition").state != mode:
         events.postUpdate(ir.getItem(
             "LightManagement_AmbientLightCondition"), mode)
@@ -138,19 +138,11 @@ def manage_light_state(event):
 
     for switchable in ir.getItem("gLightManagement_LightSwitchable").members:
         room = get_room_name(switchable.name)
-        if any(
-            lambda r: r == room,
-            switchOnRooms
-        ):
-            turnOn(switchable, "SpecialStateManagement" ==
-                   event.itemName)
+        if any(r == room for r in switchOnRooms):
+            turnOn(switchable, "SpecialStateManagement" == event.itemName)
 
-        if any(
-            lambda r: r == room,
-            switchOffRooms
-        ):
-            turnOff(switchable, "SpecialStateManagement" ==
-                    event.itemName)
+        if any(r == room for r in switchOffRooms):
+            turnOff(switchable, "SpecialStateManagement" == event.itemName)
 
 
 @rule("Manage lights on presence.", description="Manage lights on presence.", tags=[])
@@ -159,12 +151,10 @@ def manage_presence(event):
     room = get_room_name(event.itemName)
     lightModeGroup = get_light_mode_group()
 
-    if any(
-        lambda mode: (
+    if any((
             mode.name.startswith(room) and
             mode.state == LightMode.AUTO_ON
-        ),
-        lightModeGroup.members
+        ) for mode in lightModeGroup.members
     ):
         # Trigger scene instead of lights, if scene is present in room.
         scenes = filter(
@@ -173,7 +163,7 @@ def manage_presence(event):
         )
 
         if len(scenes) > 0:
-            events.postUpdate(scenes.get(0), scenes.get(0).state.intValue())
+            events.postUpdate(scenes.get(0), scenes.get(0).state)
             return
 
         for switchable in ir.getItem("gLightManagement_LightSwitchable").members:
@@ -188,11 +178,12 @@ def welcome_light(event):
     welcomeLightModeMapping = {
         AmbientLightCondition.DARK: ir.getItem("LightManagement_WelcomeLight_DarkMode"),
         AmbientLightCondition.OBSCURED: ir.getItem("LightManagement_WelcomeLight_ObscuredMode"),
-        AmbientLightCondition.BRIGHT: ir.getItem("LightManagement_WelcomeLight_BrightMode")
+        AmbientLightCondition.BRIGHT: ir.getItem(
+            "LightManagement_WelcomeLight_BrightMode")
     }
     welcomeLightMode = welcomeLightModeMapping.get(
         AmbientLightCondition.BRIGHT if isinstance(
-            condition, UnDefType) else condition.state.intValue(),
+            condition, UnDefType) else condition.state,
         ir.getItem("LightManagement_WelcomeLight_BrightMode")
     )
 
@@ -208,7 +199,7 @@ def welcome_light(event):
 
     for switchable in ir.getItem("gLightManagement_LightSwitchable").members:
         room = get_room_name(switchable.name)
-        if any(lambda r: r == room, switchOnRooms):
+        if any(r == room for r in switchOnRooms):
             turnOn(switchable)
 
 
@@ -230,17 +221,14 @@ def elapsed_lights(event):
                 isinstance(activation.state, UnDefType) or
                 minutes_between(
                     activation.state, ZonedDateTime.now()
-                ) > duration.intValue()
+                ) > duration
             ),
             ir.getItem("gLightManagement_LastActivation").members
         )
     )
 
     switchOffRooms = filter(
-        lambda room: any(
-            lambda elapsedRoom: elapsedRooms == room,
-            elapsedRooms
-        ),
+        lambda room: any(elapsedRoom == room for elapsedRoom in elapsedRooms),
         map(
             lambda mode: get_room_name(mode.name),
             filter(
@@ -252,5 +240,5 @@ def elapsed_lights(event):
 
     for switchable in ir.getItem("gLightManagement_LightSwitchable").members:
         if ((switchable.state == ON or switchable.state != 0) and
-                any(lambda room: room == get_room_name(switchable.name), switchOffRooms)):
+                any(room == get_room_name(switchable.name) for room in switchOffRooms)):
             events.sendCommand(switchable, OFF)
