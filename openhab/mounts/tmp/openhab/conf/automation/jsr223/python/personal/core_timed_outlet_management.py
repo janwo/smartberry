@@ -10,7 +10,7 @@ def set_last_activation(event):
     activations = ir.getItem(
         "gTimedOutletManagement_LastActivation").members
     activation = next(
-        (activation for activation in activations if activation.name.startsWith(event.itemName)), None)
+        (activation for activation in activations if activation.name.startswith(event.itemName)), None)
     if activation != None:
         events.sendCommand(activation, ZonedDateTime.now())
     else:
@@ -28,11 +28,11 @@ def manage_elapsed(event):
         if switchable.state == ON:
             activations = ir.getItem(
                 "gTimedOutletManagement_LastActivation").members
-            activation = next((activation for activation in activations if activation.name.startsWith(
+            activation = next((activation for activation in activations if activation.name.startswith(
                 switchable.name)), None)
             durations = ir.getItem(
                 "gTimedOutletManagement_ActiveDuration").members
-            duration = next((duration for duration in durations if duration.name.startsWith(
+            duration = next((duration for duration in durations if duration.name.startswith(
                 switchable.name)), None)
 
             if activation == None or duration == None:

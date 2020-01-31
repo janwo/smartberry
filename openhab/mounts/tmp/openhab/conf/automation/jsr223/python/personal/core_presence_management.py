@@ -17,7 +17,7 @@ def set_last_activation(event):
     room = get_room_name(event.itemName)
     presences = ir.getItem("gPresenceManagement_LastPresence").members
     presence = next(
-        (presence for presence in presences if presences.name.startsWith(room)), None)
+        (presence for presence in presences if presences.name.startswith(room)), None)
     if presence != None:
         events.postUpdate(presence, ZonedDateTime.now())
     else:

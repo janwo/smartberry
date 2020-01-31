@@ -34,13 +34,13 @@ def update_heater_on_window_event(event):
     # Stop all thermostats if window is open.
     if event.itemState == OPEN:
         for thermostat in ir.getItem("gHeatingManagement_Thermostat_Mode").members:
-            if thermostat.name.startsWith(room):
+            if thermostat.name.startswith(room):
                 events.sendCommand(thermostat, 0)
 
     # No remaining opened windows after closing event?
-    elif not any(member.name.startsWith(room) and member.state == OPEN for member in ir.getItem("gSensor_Contact").members):
+    elif not any(member.name.startswith(room) and member.state == OPEN for member in ir.getItem("gSensor_Contact").members):
         # Change to normal temperature.
         # It does not respect any presence or special states for simplicity.
         for thermostat in ir.getItem("gHeatingManagement_Thermostat_Mode").members:
-            if thermostat.name.startsWith(room):
+            if thermostat.name.startswith(room):
                 events.sendCommand(thermostat, 1)

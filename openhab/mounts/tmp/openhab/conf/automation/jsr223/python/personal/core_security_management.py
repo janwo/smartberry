@@ -75,7 +75,7 @@ def lock_closure(event):
     room = get_room_name(event.itemName)
     locks = ir.getItem("gLock").members
     lock = next(
-        (lock for lock in locks if lock.name.startsWith(room)), None)
+        (lock for lock in locks if lock.name.startswith(room)), None)
 
     if lock != None:
         events.sendCommand(lock, ON)

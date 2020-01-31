@@ -17,7 +17,7 @@ def set_last_activation(event):
     room = get_room_name(event.itemName)
     activations = ir.getItem("gLightManagement_LastActivation").members
     activation = next(
-        (activation for activation in activations if activation.name.startsWith(room)), None)
+        (activation for activation in activations if activation.name.startswith(room)), None)
 
     if activation != None:
         events.sendCommand(activation, ZonedDateTime.now())
@@ -161,14 +161,14 @@ def manage_presence(event):
 
     if any(
         lambda mode: (
-            mode.name.startsWith(room) and
+            mode.name.startswith(room) and
             mode.state == LightMode.AUTO_ON
         ),
         mode.members
     ):
         # Trigger scene instead of lights, if scene is present in room.
         scenes = filter(
-            lambda scene: scene.name.startsWith(room),
+            lambda scene: scene.name.startswith(room),
             ir.getItem("gSpecialStateManagement_Scenes").members
         )
 
@@ -177,7 +177,7 @@ def manage_presence(event):
             return
 
         for switchable in ir.getItem("gLightManagement_LightSwitchable").members:
-            if switchable.name.startsWith(room):
+            if switchable.name.startswith(room):
                 turnOn(switchable)
 
 

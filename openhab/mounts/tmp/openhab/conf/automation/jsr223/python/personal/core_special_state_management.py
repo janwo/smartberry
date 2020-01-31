@@ -69,12 +69,12 @@ def store_scene(event):
     scenes = ir.getItem("gSpecialStateManagement_Scenes").members
     room = get_room_name(event.itemName)
     scene = next(
-        (scene for scene in scenes if scene.name.startsWith(room)), None)
+        (scene for scene in scenes if scene.name.startswith(room)), None)
     if scene != None:
         scene_index = scene.state.intValue()
         store = {}
         for item in ir.getItem("gSpecialStateManagement_SceneMembers").members:
-            if item.name.startsWith(room):
+            if item.name.startswith(room):
                 store[item.name] = item.state
 
         set_metadata(
@@ -106,7 +106,7 @@ def forward_scenehelper_to_specialstatemanagment_scenes(event):
     if match is not None:
         scenes = ir.getItem("gSpecialStateManagement_Scenes").members
         scene = next(
-            (scene for scene in scenes if scene.name.startsWith(room)), None)
+            (scene for scene in scenes if scene.name.startswith(room)), None)
         if scene is not None:
             events.postUpdate(scene, match.group())
         else:
