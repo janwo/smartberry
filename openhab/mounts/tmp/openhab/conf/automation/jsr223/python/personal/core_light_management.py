@@ -35,7 +35,8 @@ def get_light_mode():
 def turnOn(switchable, force=False):
     if ir.getItem("SpecialStateManagement").state == SpecialState.SLEEP and 'gLightManagement_LightSwitchable_IgnoreWhenSleep' in switchable.getGroupNames():
         logging.info(
-            switchable.name + " was ignored during sleep state due to gLightManagement_LightSwitchable_IgnoreWhenSleep group."
+            "{} was ignored during sleep state due to gLightManagement_LightSwitchable_IgnoreWhenSleep group.".format(
+                switchable.name)
         )
         return
 
@@ -51,7 +52,8 @@ def turnOn(switchable, force=False):
 
     else:
         logging.warn(
-            switchable.name + " has no suitable group to fullfill requirements of a member of gLightManagement_LightSwitchable"
+            " has no suitable group to fullfill requirements of a member of gLightManagement_LightSwitchable".format(
+                switchable.name)
         )
 
 
@@ -77,8 +79,8 @@ def set_last_activation(event):
         events.sendCommand(activation, datetime.now())
     else:
         set_last_activation.log.warn(
-            "light-management.rules",
-            "gLightManagement_LastActivation not found for room " + room
+            "gLightManagement_LastActivation not found for room {}.".format(
+                room)
         )
 
 
@@ -236,7 +238,7 @@ def manage_presence(event):
 
 
 @rule("Manage lights when come back home.", description="Manage lights when come back home.", tags=[])
-@when("Item PresenceManagement changed to " + PresenceState.HOME)
+@when("Item PresenceManagement changed to {}".format(PresenceState.HOME))
 def welcome_light(event):
     welcomeLightModeMapping = {
         0: ir.getItem("LightManagement_WelcomeLight_DarkMode"),

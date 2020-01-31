@@ -23,8 +23,8 @@ def set_last_activation(event):
         events.postUpdate(presence, datetime.now())
     else:
         set_last_activation.log.warn(
-            "presence-management.rules",
-            "gPresenceManagement_LastPresence not found for room " + room
+            "gPresenceManagement_LastPresence not found for room {}.".format(
+                room)
         )
 
 
@@ -40,7 +40,7 @@ def check_abondance(event):
 
 
 @rule("Simulate lights when away and simulation state is activated.", description="Simulate lights when away and simulation state is activated.", tags=[])
-@when("Time cron 0 * /15 * ? * *")
+@when("Time cron 0 0/15 0 ? * * *")
 def simulate_presence(event):
     if ir.getItem("PresenceManagement").state != ir.getItem("PresenceManagement_Simulation").state:
         return

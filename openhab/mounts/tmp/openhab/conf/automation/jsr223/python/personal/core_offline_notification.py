@@ -13,17 +13,16 @@ def offline_check(event):
         not thing.getStatusInfo().getStatus().toString().equals("ONLINE")
     ), (t for t in things))
 
-    offlineThingsNotifications = map(lambda thing: (
-        thing.getLabel() + " is " + thing.getStatusInfo().getStatus()
-    ), offlineThingsNotifications)
+    offlineThingsNotifications = map(lambda thing: ("{0} is {1}".format(
+        thing.getLabel(), thing.getStatusInfo().getStatus()
+    )), offlineThingsNotifications)
 
     if len(offlineThingsNotifications) > 0:
-        notification = "Es wurden Geräte als nicht ONLINE erkannt:\n" + \
-            functools.reduce("\n", offlineThingsNotifications)
+        notification = "Es wurden Geräte als nicht ONLINE erkannt:\n{}".format(
+            functools.reduce("\n", offlineThingsNotifications))
         NotificationAction.sendBroadcastNotification(notification)
-        offline_check.log.info("offline-notifications.rules", notification)
+        offline_check.log.info(notification)
     else:
         offline_check.log.info(
-            "offline-notifications.rules",
             "All things are ONLINE!"
         )

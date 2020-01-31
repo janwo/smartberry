@@ -17,14 +17,14 @@ def set_last_activation(event):
 
 
 @rule("Turn off light if SpecialStateManagement was set to sleep.", description="Turn off light if SpecialStateManagement was set to sleep.", tags=[])
-@when("Item SpecialStateManagement received update " + SpecialState.SLEEP)
+@when("Item SpecialStateManagement received update {}".format(SpecialState.SLEEP))
 def turn_off_switchables_on_sleep(event):
     for item in ir.getItem("gLightManagement_LightSwitchable_IgnoreWhenSleep").members:
         events.sendCommand(item, OFF)
 
 
 @rule("Reset scenes if SpecialStateManagement was set to sleep.", description="Reset scenes if SpecialStateManagement was set to sleep.", tags=[])
-@when("Item SpecialStateManagement received update " + SpecialState.SLEEP)
+@when("Item SpecialStateManagement received update {}".format(SpecialState.SLEEP))
 def reset_scenes_on_sleep(event):
     for item in ir.getItem("gSpecialStateManagement_Scenes").members:
         events.sendCommand(item, 0)
@@ -58,8 +58,8 @@ def change_scene(event):
                 events.sendCommand(item, state)
     else:
         change_scene.log.info(
-            "special-state-management.rules", "No states saved for scene " +
-            event.triggeringItem.name + " [" + scene_index + "], yet."
+            "No states saved for scene {0} [{1}], yet.".format(
+                event.triggeringItem.name, scene_index)
         )
 
 
@@ -85,8 +85,8 @@ def store_scene(event):
         )
     else:
         store_scene.log.info(
-            "special-state-management.rules",
-            "No item of group SpecialStateManagement_Scenes found for room " + room + "."
+            "No item of group SpecialStateManagement_Scenes found for room {}.".format(
+                room)
         )
 
 
@@ -111,11 +111,11 @@ def forward_scenehelper_to_specialstatemanagment_scenes(event):
             events.postUpdate(scene, match.group())
         else:
             forward_scenehelper_to_specialstatemanagment_scenes.log.error(
-                "special-state-management.rules",
-                "No item of group SpecialStateManagement_Scenes found for room " + room + "."
+                "No item of group SpecialStateManagement_Scenes found for room {}.".format(
+                    room)
             )
     else:
         forward_scenehelper_to_specialstatemanagment_scenes.log.error(
-            "special-state-management.rules",
-            event.triggeringItem.name + " is malformatted as there is not integer at the end!"
+            "{} is malformatted as there is not integer at the end!".format(
+                event.triggeringItem.name)
         )

@@ -15,9 +15,8 @@ def set_last_activation(event):
         events.sendCommand(activation, datetime.now())
     else:
         set_last_activation.log.warn(
-            "timed-outlet-management.rules",
-            "gTimedOutletManagement_LastActivation not found for outlet " +
-            event.triggeringItem.name
+            "gTimedOutletManagement_LastActivation not found for outlet {}.".format(
+                event.triggeringItem.name)
         )
 
 
@@ -38,8 +37,8 @@ def manage_elapsed(event):
 
             if activation == None or duration == None:
                 manage_elapsed.log.warn(
-                    "timed-outlet-management.rules",
-                    "gTimedOutletManagement_LastActivation or gTimedOutletManagement_ActiveDuration not found for outlet " + s.name
+                    "gTimedOutletManagement_LastActivation or gTimedOutletManagement_ActiveDuration not found for outlet {}.".format(
+                        switchable.name)
                 )
                 return
 

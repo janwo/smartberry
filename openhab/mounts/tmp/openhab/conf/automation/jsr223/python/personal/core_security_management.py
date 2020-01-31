@@ -17,23 +17,23 @@ def assault_trigger(event):
 
     events.postUpdate(ir.getItem("Security_AlarmTime"), datetime.now())
     assault_trigger.log.info(
-        "security-management.rules",
         "Detected Assault Attack - Alarm was triggered!"
     )
 
-    message = "Lautloser Alarm wurde von " + \
-        event.triggeringItem.label + " ausgelöst!"
+    message = "Lautloser Alarm wurde von {} ausgelöst!".format(
+        event.triggeringItem.label)
 
     if Security_OperationState.state == OperationState.ON:
         events.sendCommand(ir.getItem("Security_Sirene"), ON)
-        message = "Lauter Alarm wurde von " + event.triggeringItem.label + " ausgelöst!"
+        message = "Lauter Alarm wurde von {} ausgelöst!".format(
+            event.triggeringItem.label)
 
     NotificationAction.sendBroadcastNotification(message)
 
 
 @rule("Security System - Armament-Management", description="Security System - Armament-Management", tags=[])
-@when("Item PresenceManagement received update " + PresenceState.AWAY_SHORT)
-@when("Item PresenceManagement received update " + PresenceState.AWAY_LONG)
+@when("Item PresenceManagement received update {}".format(PresenceState.AWAY_SHORT))
+@when("Item PresenceManagement received update {}".format(PresenceState.AWAY_LONG))
 @when("Item Security_OperationState_AwayShort received update")
 @when("Item Security_OperationState_AwayLong received update")
 def armament(event):
@@ -56,7 +56,8 @@ def armament(event):
             "Security_OperationState"), operationState)
     else:
         NotificationAction.sendBroadcastNotification(
-            trigger.label + " ist auf / an! Angrifferkennung bleibt aus."
+            "{} ist auf / an! Angrifferkennung bleibt aus.".format(
+                trigger.label)
         )
 
 
@@ -81,8 +82,7 @@ def lock_closure(event):
         events.sendCommand(lock, ON)
     else:
         lock_closure.log.warn(
-            "security-management.rules",
-            "gLock not found for room " + room
+            "gLock not found for room {}.".format(room)
         )
 
 
@@ -91,18 +91,19 @@ def lock_closure(event):
 def siren_autooff(event):
     autoOffTime = ir.getItem("Security_SireneAutoOff").state
     if (autoOffTime == 0 or
-                ir.getItem("Security_Sirene").state != ON or
-                ir.getItem("Security_AlarmTime").state == None or
-                ir.getItem("Security_AlarmTime").intValue() > datetime.now(
-                ) - timedelta(minutes=autoOffTime.intValue())
-            ):
+            ir.getItem("Security_Sirene").state != ON or
+            ir.getItem("Security_AlarmTime").state == None or
+            ir.getItem("Security_AlarmTime").intValue() > datetime.now(
+            ) - timedelta(minutes=autoOffTime.intValue())
+        ):
         return
 
     events.sendCommand(ir.getItem("Security_Sirene"), OFF)
     NotificationAction.sendBroadcastNotification(
-        "Alarm wurde nach " + autoOffTime + " Minuten automatisch deaktiviert."
+        "Alarm wurde nach {} Minuten automatisch deaktiviert.".format(
+            autoOffTime)
     )
     siren_autooff.log.info(
-        "security-management.rules", "Alarm was turned off automatically after " +
-        autoOffTime + " minutes."
+        "Alarm was turned off automatically after {} minutes.".format(
+            autoOffTime)
     )
