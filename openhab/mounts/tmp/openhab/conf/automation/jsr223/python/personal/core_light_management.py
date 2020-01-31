@@ -53,8 +53,7 @@ def check_daylight(event):
         key=lambda sensor: sensor.state
     )
 
-    median = sensorsOfInactiveRooms.get(
-        len(sensorsOfInactiveRooms) / 2).state
+    median = sensorsOfInactiveRooms[len(sensorsOfInactiveRooms) / 2].state
     darkTreshold = ir.getItem(
         "LightManagement_AmbientLightCondition_LuminanceTreshold_Dark").state
     obscuredTreshold = ir.getItem(
@@ -157,13 +156,11 @@ def manage_presence(event):
         ) for mode in lightModeGroup.members
     ):
         # Trigger scene instead of lights, if scene is present in room.
-        scenes = filter(
-            lambda scene: scene.name.startswith(room),
-            ir.getItem("gSpecialStateManagement_Scenes").members
-        )
+        scene = next(
+            (scene for scene in ir.getItem("gSpecialStateManagement_Scenes").members if scene.name.startswith(room)), None)
 
-        if len(scenes) > 0:
-            events.postUpdate(scenes.get(0), scenes.get(0).state)
+        if scene != None:
+            events.postUpdate(scene, scene.state)
             return
 
         for switchable in ir.getItem("gLightManagement_LightSwitchable").members:
