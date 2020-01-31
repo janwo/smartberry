@@ -1,5 +1,5 @@
 from personal.core_helpers import enum
-from core.jsr223.scope import events, OFF, ON, ir
+from core.jsr223.scope import events, OFF, ON, ir, UnDefType
 from core.log import logging
 from personal.core_special_state_management import SpecialState
 

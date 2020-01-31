@@ -34,7 +34,7 @@ def set_last_activation(event):
 @when("Item LightManagement_AmbientLightCondition_LuminanceTreshold_Obscured changed")
 def check_daylight(event):
     activeSwitchables = filter(
-        lambda switchable: switchable.state != UnDefType and (
+        lambda switchable: not isinstance(switchable.state, UnDefType) and (
             switchable.state > 0 or switchable.state == ON),
         ir.getItem("gLightManagement_LightSwitchable").members
     )
@@ -45,7 +45,7 @@ def check_daylight(event):
 
     sensorsOfInactiveRooms = sorted(
         filter(
-            lambda sensor: sensor.state != UnDefType and any(
+            lambda sensor: not isinstance(sensor.state, UnDefType) and any(
                 lambda activeRoom: activeRoom == get_room_name(sensor.name),
                 activeRooms
             ) is None,
@@ -191,7 +191,8 @@ def welcome_light(event):
         AmbientLightCondition.BRIGHT: ir.getItem("LightManagement_WelcomeLight_BrightMode")
     }
     welcomeLightMode = welcomeLightModeMapping.get(
-        AmbientLightCondition.BRIGHT if condition is UnDefType else condition.state.intValue(),
+        AmbientLightCondition.BRIGHT if isinstance(
+            condition, UnDefType) else condition.state.intValue(),
         ir.getItem("LightManagement_WelcomeLight_BrightMode")
     )
 
@@ -226,7 +227,7 @@ def elapsed_lights(event):
         lambda mode: get_room_name(mode.name),
         filter(
             lambda activation: (
-                activation.state == UnDefType or
+                isinstance(activation.state, UnDefType) or
                 minutes_between(
                     activation.state, ZonedDateTime.now()
                 ) > duration.intValue()
