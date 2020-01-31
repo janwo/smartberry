@@ -26,7 +26,7 @@ def get_light_mode():
         AmbientLightCondition.OBSCURED: ir.getItem("gLightManagement_ObscuredMode"),
         AmbientLightCondition.BRIGHT: ir.getItem("gLightManagement_BrightMode")
     }.get(
-        AmbientLightCondition.BRIGHT if condition is None else condition.intValue(),
+        AmbientLightCondition.BRIGHT if condition is UnDefType else condition.intValue(),
         ir.getItem("gLightManagement_BrightMode")
     ).state
 

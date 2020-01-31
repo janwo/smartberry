@@ -90,11 +90,11 @@ def lock_closure(event):
 def siren_autooff(event):
     autoOffTime = ir.getItem("Security_SireneAutoOff").state
     if (autoOffTime == 0 or
-                ir.getItem("Security_Sirene").state != ON or
-                ir.getItem("Security_AlarmTime").state == None or
-                minutes_between(ir.getItem("Security_AlarmTime").state, ZonedDateTime.now(
+        ir.getItem("Security_Sirene").state != ON or
+        ir.getItem("Security_AlarmTime").state == UnDefType or
+        minutes_between(ir.getItem("Security_AlarmTime").state, ZonedDateTime.now(
                 )) > autoOffTime.intValue()
-            ):
+        ):
         return
 
     events.sendCommand(ir.getItem("Security_Sirene"), OFF)
