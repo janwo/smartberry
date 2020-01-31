@@ -20,12 +20,12 @@ def assault_trigger(event):
     )
 
     message = "Lautloser Alarm wurde von {} ausgelöst!".format(
-        event.triggeringItem.label)
+        ir.getItem(event.itemName).label)
 
     if ir.getItem("Security_OperationState").state == OperationState.ON:
         events.sendCommand(ir.getItem("Security_Sirene"), ON)
         message = "Lauter Alarm wurde von {} ausgelöst!".format(
-            event.triggeringItem.label)
+            ir.getItem(event.itemName).label)
 
     NotificationAction.sendBroadcastNotification(message)
 
@@ -72,7 +72,7 @@ def disarmament(event):
 @when("Member of gSecurity_LockClosureTrigger received update OFF")
 def lock_closure(event):
     ir.getItem("Security_OperationState").postUpdate(OperationState.OFF)
-    room = get_room_name(event.triggeringItem.name)
+    room = get_room_name(event.itemName)
     locks = ir.getItem("gLock").members
     lock = next(
         (lock for lock in locks if lock.name.startsWith(room)), None)

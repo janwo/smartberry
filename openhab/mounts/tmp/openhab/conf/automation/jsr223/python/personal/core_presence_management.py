@@ -14,7 +14,7 @@ def set_last_activation(event):
     if ir.getItem("PresenceManagement").state != PresenceState.HOME:
         events.postUpdate(ir.getItem("PresenceManagement"), PresenceState.HOME)
 
-    room = get_room_name(event.triggeringItem.name)
+    room = get_room_name(event.itemName)
     presences = ir.getItem("gPresenceManagement_LastPresence").members
     presence = next(
         (presence for presence in presences if presences.name.startsWith(room)), None)

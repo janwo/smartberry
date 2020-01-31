@@ -11,10 +11,10 @@ from personal.core_light_management import LightMode, AmbientLightCondition, get
 @rule("Keep last light activation updated", description="Keep last light activation updated", tags=[])
 @when("Member of gLightManagement_LightSwitchable received update")
 def set_last_activation(event):
-    if event.triggeringItem.state == 0 or event.triggeringItem.state == OFF:
+    if event.itemState == 0 or event.itemState == OFF:
         return
 
-    room = get_room_name(event.triggeringItem.name)
+    room = get_room_name(event.itemName)
     activations = ir.getItem("gLightManagement_LastActivation").members
     activation = next(
         (activation for activation in activations if activation.name.startsWith(room)), None)
@@ -143,20 +143,20 @@ def manage_light_state(event):
             switchOnRooms
         ):
             turnOn(switchable, "SpecialStateManagement" ==
-                   event.triggeringItem.name)
+                   event.itemName)
 
         if any(
             lambda r: r == room,
             switchOffRooms
         ):
             turnOff(switchable, "SpecialStateManagement" ==
-                    event.triggeringItem.name)
+                    event.itemName)
 
 
 @rule("Manage lights on presence.", description="Manage lights on presence.", tags=[])
 @when("Member of gPresenceManagement_LastPresence received update")
 def manage_presence(event):
-    room = get_room_name(event.triggeringItem.name)
+    room = get_room_name(event.itemName)
     mode = get_light_mode()
 
     if any(

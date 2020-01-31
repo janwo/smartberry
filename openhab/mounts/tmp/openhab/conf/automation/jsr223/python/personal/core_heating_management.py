@@ -29,10 +29,10 @@ def update_heater_on_presence_change(event):
 @rule("Update heater when windows open or close", description="Update heater when windows open or close", tags=[])
 @when("Member of gHeatingManagement_ContactSwitchable changed")
 def update_heater_on_window_event(event):
-    room = get_room_name(event.triggeringItem.name)
+    room = get_room_name(event.itemName)
 
     # Stop all thermostats if window is open.
-    if event.triggeringItem.state == OPEN:
+    if event.itemState == OPEN:
         for thermostat in ir.getItem("gHeatingManagement_Thermostat_Mode").members:
             if thermostat.name.startsWith(room):
                 events.sendCommand(thermostat, 0)

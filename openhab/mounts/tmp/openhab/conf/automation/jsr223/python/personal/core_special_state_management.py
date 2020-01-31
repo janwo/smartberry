@@ -47,9 +47,9 @@ def reset_on_default_trigger(event):
 @rule("Change scene.", description="Change scene.", tags=[])
 @when("Member of gSpecialStateManagement_Scenes changed")
 def change_scene(event):
-    scene_index = event.triggeringItem.state.intValue()
+    scene_index = event.itemState.intValue()
     store = get_metadata(
-        event.triggeringItem,
+        ir.getItem(event.itemName),
         SCENE_ITEM_METADATA_NAMESPACE.format(scene_index)
     )
     if store != None:
@@ -59,7 +59,7 @@ def change_scene(event):
     else:
         change_scene.log.info(
             "No states saved for scene {0} [{1}], yet.".format(
-                event.triggeringItem.name, scene_index)
+                event.itemName, scene_index)
         )
 
 
@@ -67,7 +67,7 @@ def change_scene(event):
 @when("Member of gSpecialStateManagement_StoreSceneTriggers received update ON")
 def store_scene(event):
     scenes = ir.getItem("gSpecialStateManagement_Scenes").members
-    room = get_room_name(event.triggeringItem.name)
+    room = get_room_name(event.itemName)
     scene = next(
         (scene for scene in scenes if scene.name.startsWith(room)), None)
     if scene != None:
@@ -93,7 +93,7 @@ def store_scene(event):
 @rule("Forward SpecialStateManagement_SelectStateHelpers to SpecialStateManagement.", description="Forward SpecialStateManagement_SelectStateHelpers to SpecialStateManagement.", tags=[])
 @when("Member of gSpecialStateManagement_SelectStateHelpers received update")
 def forward_scenehelper_to_specialstatemanagment(event):
-    match = re.search(r"^.*?(\\d+)$", event.triggeringItem.name)
+    match = re.search(r"^.*?(\\d+)$", event.itemName)
     if match is not None:
         events.postUpdate(ir.getItem("SpecialStateManagement"), match.group())
 
@@ -101,8 +101,8 @@ def forward_scenehelper_to_specialstatemanagment(event):
 @rule("Forward SpecialStateManagement_SelectSceneHelpers to relevant member of gSpecialStateManagement_Scenes.", description="Forward SpecialStateManagement_SelectSceneHelpers to relevant member of gSpecialStateManagement_Scenes.", tags=[])
 @when("Member of gSpecialStateManagement_SelectSceneHelpers received update")
 def forward_scenehelper_to_specialstatemanagment_scenes(event):
-    room = get_room_name(event.triggeringItem.name)
-    match = re.search(r"^.*?(\\d+)$", event.triggeringItem.name)
+    room = get_room_name(event.itemName)
+    match = re.search(r"^.*?(\\d+)$", event.itemName)
     if match is not None:
         scenes = ir.getItem("gSpecialStateManagement_Scenes").members
         scene = next(
@@ -117,5 +117,5 @@ def forward_scenehelper_to_specialstatemanagment_scenes(event):
     else:
         forward_scenehelper_to_specialstatemanagment_scenes.log.error(
             "{} is malformatted as there is not integer at the end!".format(
-                event.triggeringItem.name)
+                event.itemName)
         )

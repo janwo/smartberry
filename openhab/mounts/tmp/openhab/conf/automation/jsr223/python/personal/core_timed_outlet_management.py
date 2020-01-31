@@ -10,13 +10,13 @@ def set_last_activation(event):
     activations = ir.getItem(
         "gTimedOutletManagement_LastActivation").members
     activation = next(
-        (activation for activation in activations if activation.name.startsWith(event.triggeringItem.name)), None)
+        (activation for activation in activations if activation.name.startsWith(event.itemName)), None)
     if activation != None:
         events.sendCommand(activation, ZonedDateTime.now())
     else:
         set_last_activation.log.warn(
             "gTimedOutletManagement_LastActivation not found for outlet {}.".format(
-                event.triggeringItem.name)
+                event.itemName)
         )
 
 
