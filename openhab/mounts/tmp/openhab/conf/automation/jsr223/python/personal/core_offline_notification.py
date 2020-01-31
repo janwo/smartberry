@@ -1,6 +1,5 @@
 from core.triggers import when
 from core.rules import rule
-from core.things import things
 from core.actions import NotificationAction
 import functools
 
@@ -23,6 +22,4 @@ def offline_check(event):
         NotificationAction.sendBroadcastNotification(notification)
         offline_check.log.info(notification)
     else:
-        offline_check.log.info(
-            "All things are ONLINE!"
-        )
+        offline_check.log.info("All things are ONLINE!")

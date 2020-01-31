@@ -1,11 +1,11 @@
 from datetime import datetime, timedelta
 from core.metadata import get_metadata, set_metadata
 from personal.core_helpers import enum, get_room_name
+from personal.core_special_state_management import SpecialState
 from core.triggers import when
 from core.rules import rule
 import re
 
-SpecialState = enum(DEFAULT=0, SLEEP=1)
 SCENE_ITEM_METADATA_NAMESPACE = "scene-{0}-data"
 
 

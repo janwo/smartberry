@@ -4,8 +4,7 @@ from core.actions import NotificationAction
 from core.triggers import when
 from core.rules import rule
 from personal.core_presence_management import PresenceState
-
-OperationState = enum(OFF=0, ON=1, SILENTLY=2)
+from personal.core_security_management import OperationState
 
 
 @rule("Security System - Trigger-Management", description="Security System - Trigger-Management", tags=[])
@@ -91,11 +90,11 @@ def lock_closure(event):
 def siren_autooff(event):
     autoOffTime = ir.getItem("Security_SireneAutoOff").state
     if (autoOffTime == 0 or
-            ir.getItem("Security_Sirene").state != ON or
-            ir.getItem("Security_AlarmTime").state == None or
-            ir.getItem("Security_AlarmTime").intValue() > datetime.now(
-            ) - timedelta(minutes=autoOffTime.intValue())
-        ):
+                ir.getItem("Security_Sirene").state != ON or
+                ir.getItem("Security_AlarmTime").state == None or
+                ir.getItem("Security_AlarmTime").intValue() > datetime.now(
+                ) - timedelta(minutes=autoOffTime.intValue())
+            ):
         return
 
     events.sendCommand(ir.getItem("Security_Sirene"), OFF)

@@ -1,10 +1,9 @@
 from core.rules import rule
 from core.triggers import when
 from personal.core_helpers import enum, get_room_name
+from personal.core_presence_management import PresenceState
 from datetime import datetime, timedelta
 import random
-
-PresenceState = enum(HOME=1, AWAY_SHORT=0, AWAY_LONG=2)
 
 
 @rule("Set presence on motion.", description="Set presence on motion.", tags=[])

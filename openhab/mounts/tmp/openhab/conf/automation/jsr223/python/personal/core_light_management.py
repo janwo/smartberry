@@ -5,63 +5,7 @@ from datetime import datetime, timedelta
 from personal.core_presence_management import PresenceState
 from personal.core_special_state_management import SpecialState
 from personal.core_helpers import enum, get_room_name
-
-LightMode = enum(
-    OFF=0,
-    ON=1,
-    AUTO_ON=2,
-    ON_AWAY_AND_SPECIAL_STATE_DEFAULT=3,
-    ON_HOME_AND_SPECIAL_STATE_DEFAULT=4,
-    ON_SPECIAL_STATE_DEFAULT=5
-)
-AmbientLightCondition = enum(
-    DARK=0,
-    OBSCURED=1,
-    BRIGHT=2
-)
-
-
-def get_light_mode():
-    return {
-        0: ir.getItem("gLightManagement_DarkMode"),
-        1: ir.getItem("gLightManagement_ObscuredMode"),
-        2: ir.getItem("gLightManagement_BrightMode")
-    }.get(
-        ir.getItem("LightManagement_AmbientLightCondition").state.intValue(),
-        ir.getItem("gLightManagement_BrightMode")
-    ).state
-
-
-def turnOn(switchable, force=False):
-    if ir.getItem("SpecialStateManagement").state == SpecialState.SLEEP and 'gLightManagement_LightSwitchable_IgnoreWhenSleep' in switchable.getGroupNames():
-        logging.info(
-            "{} was ignored during sleep state due to gLightManagement_LightSwitchable_IgnoreWhenSleep group.".format(
-                switchable.name)
-        )
-        return
-
-    if "gLight" in switchable.getGroupNames():
-        if(switchable.state != 0 or force):
-            command = ir.getItem("LightManagement_DefaultBrightness").state.intValue(
-            ) if ir.getItem("SpecialStateManagement").state == SpecialState.DEFAULT else ir.getItem("LightManagement_SleepBrightness").state.intValue()
-            events.sendCommand(switchable, command)
-
-    elif "gPower" in switchable.getGroupNames():
-        if(switchable.state != OFF or force):
-            events.sendCommand(switchable, command)
-
-    else:
-        logging.warn(
-            " has no suitable group to fullfill requirements of a member of gLightManagement_LightSwitchable".format(
-                switchable.name)
-        )
-
-
-def turnOff(switchable, force=False):
-    if force:
-        events.sendCommand(switchable, OFF)
-    elif switchable.state != OFF:
-        events.sendCommand(switchable, OFF)
+from personal.core_light_management import LightMode, AmbientLightCondition, get_light_mode, turnOn, turnOff
 
 
 @rule("Keep last light activation updated", description="Keep last light activation updated", tags=[])
