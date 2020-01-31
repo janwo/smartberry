@@ -1,8 +1,8 @@
 from core.rules import rule
 from core.triggers import when
+from core.date import hours_between, ZonedDateTime
 from personal.core_helpers import enum, get_room_name
 from personal.core_presence_management import PresenceState
-from datetime import datetime, timedelta
 import random
 
 
@@ -10,7 +10,7 @@ import random
 @when("Member of gPresenceManagement_PresenceTrigger received update ON")
 def set_last_activation(event):
     events.postUpdate(ir.getItem(
-        "PresenceManagement_LastPresence"), datetime.now())
+        "PresenceManagement_LastPresence").state, ZonedDateTime.now())
     if ir.getItem("PresenceManagement").state != PresenceState.HOME:
         events.postUpdate(ir.getItem("PresenceManagement"), PresenceState.HOME)
 
@@ -19,7 +19,7 @@ def set_last_activation(event):
     presence = next(
         (presence for presence in presences if presences.name.startsWith(room)), None)
     if presence != None:
-        events.postUpdate(presence, datetime.now())
+        events.postUpdate(presence, ZonedDateTime.now())
     else:
         set_last_activation.log.warn(
             "gPresenceManagement_LastPresence not found for room {}.".format(
@@ -30,10 +30,10 @@ def set_last_activation(event):
 @rule("Set presence state to away in absence", description="Set presence state to away in absence", tags=[])
 @when("Time cron 0 0 * ? * * *")
 def check_abondance(event):
-    if datetime.now() - timedelta(minutes=ir.getItem("PresenceManagement_HoursUntilAwayLong").state.intValue() > ir.getItem("PresenceManagement_LastPresence").state.intValue()):
+    if hours_between(ir.getItem("PresenceManagement_LastPresence").state, ZonedDateTime.now()) > ir.getItem("PresenceManagement_HoursUntilAwayLong").state.intValue():
         events.postUpdate(ir.getItem("PresenceManagement"),
                           PresenceState.AWAY_LONG)
-    elif datetime.now() - timedelta(minutes=ir.getItem("PresenceManagement_HoursUntilAwayShort").state.intValue() > ir.getItem("PresenceManagement_LastPresence").state.intValue()):
+    elif hours_between(ir.getItem("PresenceManagement_LastPresence").state, ZonedDateTime.now()) > ir.getItem("PresenceManagement_HoursUntilAwayShort").state.intValue():
         events.postUpdate(ir.getItem("PresenceManagement"),
                           PresenceState.AWAY_SHORT)
 

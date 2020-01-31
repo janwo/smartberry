@@ -1,7 +1,7 @@
 from core.log import logging
 from core.triggers import when
 from core.rules import rule
-from datetime import datetime, timedelta
+from core.date import minutes_between, ZonedDateTime
 from personal.core_presence_management import PresenceState
 from personal.core_special_state_management import SpecialState
 from personal.core_helpers import enum, get_room_name
@@ -20,7 +20,7 @@ def set_last_activation(event):
         (activation for activation in activations if activation.name.startsWith(room)), None)
 
     if activation != None:
-        events.sendCommand(activation, datetime.now())
+        events.sendCommand(activation, ZonedDateTime.now())
     else:
         set_last_activation.log.warn(
             "gLightManagement_LastActivation not found for room {}.".format(
@@ -225,9 +225,12 @@ def elapsed_lights(event):
     elapsedRooms = map(
         lambda mode: get_room_name(mode.name),
         filter(
-            lambda activation: (activation.state == None or
-                                datetime.now() - timedelta(minutes=duration.intValue()) > activation.state.intValue()
-                                ),
+            lambda activation: (
+                activation.state == None or
+                minutes_between(
+                    activation.state, ZonedDateTime.now()
+                ) > duration.intValue()
+            ),
             ir.getItem("gLightManagement_LastActivation").members
         )
     )

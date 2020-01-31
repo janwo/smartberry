@@ -1,9 +1,9 @@
-from datetime import datetime, timedelta
 from core.metadata import get_metadata, set_metadata
 from personal.core_helpers import enum, get_room_name
 from personal.core_special_state_management import SpecialState
 from core.triggers import when
 from core.rules import rule
+from core.date import hours_between, ZonedDateTime
 import re
 
 SCENE_ITEM_METADATA_NAMESPACE = "scene-{0}-data"
@@ -13,7 +13,7 @@ SCENE_ITEM_METADATA_NAMESPACE = "scene-{0}-data"
 @when("Item SpecialStateManagement received update")
 def set_last_activation(event):
     events.postUpdate(ir.getItem(
-        "SpecialStateManagement_LastActivation"), datetime.now())
+        "SpecialStateManagement_LastActivation"), ZonedDateTime.now())
 
 
 @rule("Turn off light if SpecialStateManagement was set to sleep.", description="Turn off light if SpecialStateManagement was set to sleep.", tags=[])
@@ -38,8 +38,8 @@ def reset_on_default_trigger(event):
         "SpecialStateManagement_HoursUntilTriggersActivated").state.intValue()
     if (
         item.state != SpecialState.DEFAULT and
-        datetime.now() - timedelta(hours=hours_after_deactivation) > ir.getItem(
-            "SpecialStateManagement_LastActivation").state.intValue()
+        hours_between(ir.getItem("SpecialStateManagement_LastActivation").state,
+                      ZonedDateTime.now()) > hours_after_deactivation
     ):
         events.postUpdate(item, SpecialState.DEFAULT)
 

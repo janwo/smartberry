@@ -1,10 +1,10 @@
-from datetime import datetime, timedelta
 from personal.core_helpers import enum, get_room_name
 from core.actions import NotificationAction
 from core.triggers import when
 from core.rules import rule
 from personal.core_presence_management import PresenceState
 from personal.core_security_management import OperationState
+from core.date import minutes_between, ZonedDateTime
 
 
 @rule("Security System - Trigger-Management", description="Security System - Trigger-Management", tags=[])
@@ -14,7 +14,7 @@ def assault_trigger(event):
     if ir.getItem("Security_OperationState").state == OperationState.OFF or ir.getItem("SpecialStateManagement").state != OperationState.NONE:
         return
 
-    events.postUpdate(ir.getItem("Security_AlarmTime"), datetime.now())
+    events.postUpdate(ir.getItem("Security_AlarmTime"), ZonedDateTime.now())
     assault_trigger.log.info(
         "Detected Assault Attack - Alarm was triggered!"
     )
@@ -22,7 +22,7 @@ def assault_trigger(event):
     message = "Lautloser Alarm wurde von {} ausgelöst!".format(
         event.triggeringItem.label)
 
-    if Security_OperationState.state == OperationState.ON:
+    if ir.getItem("Security_OperationState").state == OperationState.ON:
         events.sendCommand(ir.getItem("Security_Sirene"), ON)
         message = "Lauter Alarm wurde von {} ausgelöst!".format(
             event.triggeringItem.label)
@@ -37,8 +37,8 @@ def assault_trigger(event):
 @when("Item Security_OperationState_AwayLong received update")
 def armament(event):
     operationMapping = {
-        OperationState.OFF: Security_OperationState_AwayShort.state,
-        OperationState.SILENTLY: Security_OperationState_AwayLong.state
+        OperationState.OFF: ir.getItem("Security_OperationState_AwayShort").state,
+        OperationState.SILENTLY: ir.getItem("Security_OperationState_AwayLong").state
     }
 
     operationState = operationMapping.get(ir.getItem(
@@ -92,8 +92,8 @@ def siren_autooff(event):
     if (autoOffTime == 0 or
                 ir.getItem("Security_Sirene").state != ON or
                 ir.getItem("Security_AlarmTime").state == None or
-                ir.getItem("Security_AlarmTime").intValue() > datetime.now(
-                ) - timedelta(minutes=autoOffTime.intValue())
+                minutes_between(ir.getItem("Security_AlarmTime").state, ZonedDateTime.now(
+                )) > autoOffTime.intValue()
             ):
         return
 

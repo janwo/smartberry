@@ -1,7 +1,7 @@
 from core.triggers import when
 from core.rules import rule
-from datetime import datetime, timedelta
 from personal.core_helpers import get_room_name
+from core.date import minutes_between, ZonedDateTime
 
 
 @rule("Keep last timed outlet activation updated", description="Keep last timed outlet activation updated.", tags=[])
@@ -12,7 +12,7 @@ def set_last_activation(event):
     activation = next(
         (activation for activation in activations if activation.name.startsWith(event.triggeringItem.name)), None)
     if activation != None:
-        events.sendCommand(activation, datetime.now())
+        events.sendCommand(activation, ZonedDateTime.now())
     else:
         set_last_activation.log.warn(
             "gTimedOutletManagement_LastActivation not found for outlet {}.".format(
@@ -42,5 +42,5 @@ def manage_elapsed(event):
                 )
                 return
 
-            if datetime.now() - timedelta(minutes=duration.state.intValue()) > activation.state.intValue():
+            if minutes_between(activation.state, ZonedDateTime.now()) > duration.state.intValue():
                 events.sendCommand(switchable, OFF)
