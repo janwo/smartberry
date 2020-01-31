@@ -23,8 +23,7 @@ def set_last_activation(event):
         events.sendCommand(activation, ZonedDateTime.now())
     else:
         set_last_activation.log.warn(
-            "gLightManagement_LastActivation not found for room {}.".format(
-                room)
+            "gLightManagement_LastActivation not found for room {}.".format(room)
         )
 
 

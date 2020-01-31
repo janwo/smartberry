@@ -22,8 +22,7 @@ def set_last_activation(event):
         events.postUpdate(presence, ZonedDateTime.now())
     else:
         set_last_activation.log.warn(
-            "gPresenceManagement_LastPresence not found for room {}.".format(
-                room)
+            "gPresenceManagement_LastPresence not found for room {}.".format(room)
         )
 
 
