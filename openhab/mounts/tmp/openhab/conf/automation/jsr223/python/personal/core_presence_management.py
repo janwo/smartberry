@@ -1,7 +1,7 @@
 from core.rules import rule
 from core.triggers import when
 from core.date import hours_between, ZonedDateTime, format_date
-from personal.core_helpers import enum, get_room_name
+from personal.core_helpers import get_room_name
 from personal.core_presence_management import PresenceState
 import random
 

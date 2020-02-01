@@ -4,7 +4,7 @@ from core.rules import rule
 from core.date import minutes_between, ZonedDateTime, format_date
 from personal.core_presence_management import PresenceState
 from personal.core_special_state_management import SpecialState
-from personal.core_helpers import enum, get_room_name
+from personal.core_helpers import get_room_name
 from personal.core_light_management import LightMode, AmbientLightCondition, get_light_mode_group, turnOn, turnOff
 
 
@@ -38,6 +38,7 @@ def check_daylight(event):
             switchable.state > 0 or switchable.state == ON),
         ir.getItem("gLightManagement_LightSwitchable").members
     )
+
     activeRooms = map(
         lambda switchable: get_room_name(switchable.name),
         activeSwitchables
@@ -53,19 +54,22 @@ def check_daylight(event):
         key=lambda sensor: sensor.state
     )
 
-    median = sensorsOfInactiveRooms[len(sensorsOfInactiveRooms) / 2].state
-    darkTreshold = ir.getItem(
-        "LightManagement_AmbientLightCondition_LuminanceTreshold_Dark").state
-    obscuredTreshold = ir.getItem(
-        "LightManagement_AmbientLightCondition_LuminanceTreshold_Obscured").state
+    medianSensorItem = None
+    if len(sensorsOfInactiveRooms) > 0:
+        medianSensorItem = sensorsOfInactiveRooms[len(
+            sensorsOfInactiveRooms) / 2]
+    darkTresholdItem = ir.getItem(
+        "LightManagement_AmbientLightCondition_LuminanceTreshold_Dark")
+    obscuredTresholdItem = ir.getItem(
+        "LightManagement_AmbientLightCondition_LuminanceTreshold_Obscured")
 
     mode = LightMode.BRIGHT
-    if not isinstance(median, UnDefType):
+    if medianSensorItem != None and not isinstance(medianSensorItem.state, UnDefType):
         events.postUpdate(ir.getItem(
-            "LightManagement_AmbientLightCondition_LuminanceTreshold"), median)
-        if median < darkTreshold:
+            "LightManagement_AmbientLightCondition_LuminanceTreshold"), medianSensorItem.state)
+        if medianSensorItem.state < darkTresholdItem.state:
             mode = LightMode.DARK
-        elif median < obscuredTreshold:
+        elif medianSensorItem.state < obscuredTresholdItem.item:
             mode = LightMode.OBSCURED
 
     if ir.getItem("LightManagement_AmbientLightCondition").state != mode:

@@ -1,4 +1,4 @@
-from personal.core_helpers import enum, get_room_name
+from personal.core_helpers import get_room_name
 from core.actions import NotificationAction
 from core.triggers import when
 from core.rules import rule
@@ -91,11 +91,11 @@ def lock_closure(event):
 def siren_autooff(event):
     autoOffTime = ir.getItem("Security_SireneAutoOff").state
     if (autoOffTime == 0 or
-            ir.getItem("Security_Sirene").state != ON or
-            isinstance(ir.getItem("Security_AlarmTime").state, UnDefType) or
-            minutes_between(ir.getItem("Security_AlarmTime").state, ZonedDateTime.now(
-            )) > autoOffTime
-        ):
+                ir.getItem("Security_Sirene").state != ON or
+                isinstance(ir.getItem("Security_AlarmTime").state, UnDefType) or
+                minutes_between(ir.getItem("Security_AlarmTime").state, ZonedDateTime.now(
+                )) > autoOffTime
+            ):
         return
 
     events.sendCommand(ir.getItem("Security_Sirene"), OFF)

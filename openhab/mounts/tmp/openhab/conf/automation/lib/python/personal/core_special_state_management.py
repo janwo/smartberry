@@ -1,3 +1,6 @@
-from personal.core_helpers import enum
+# from core.jsr223.scope import
 
-SpecialState = enum(DEFAULT=0, SLEEP=1)
+
+class SpecialState:
+    DEFAULT = 0
+    SLEEP = 1
