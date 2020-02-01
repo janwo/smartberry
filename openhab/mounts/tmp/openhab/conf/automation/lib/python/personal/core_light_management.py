@@ -1,21 +1,22 @@
+from personal.core_helpers import enum
 from core.jsr223.scope import events, OFF, ON, ir, UnDefType
 from core.log import logging
 from personal.core_special_state_management import SpecialState
 
+LightMode = enum(
+    OFF=0,
+    ON=1,
+    AUTO_ON=2,
+    ON_AWAY_AND_SPECIAL_STATE_DEFAULT=3,
+    ON_HOME_AND_SPECIAL_STATE_DEFAULT=4,
+    ON_SPECIAL_STATE_DEFAULT=5
+)
 
-class LightMode:
-    OFF = 0
-    ON = 1
-    AUTO_ON = 2
-    ON_AWAY_AND_SPECIAL_STATE_DEFAULT = 3
-    ON_HOME_AND_SPECIAL_STATE_DEFAULT = 4
-    ON_SPECIAL_STATE_DEFAULT = 5
-
-
-class AmbientLightCondition:
-    DARK = 0
-    OBSCURED = 1
-    BRIGHT = 2
+AmbientLightCondition = enum(
+    DARK=0,
+    OBSCURED=1,
+    BRIGHT=2
+)
 
 
 def get_light_mode_group():

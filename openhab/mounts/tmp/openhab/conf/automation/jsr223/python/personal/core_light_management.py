@@ -63,18 +63,18 @@ def check_daylight(event):
     obscuredTresholdItem = ir.getItem(
         "LightManagement_AmbientLightCondition_LuminanceTreshold_Obscured")
 
-    mode = LightMode.BRIGHT
+    condition = AmbientLightCondition.BRIGHT
     if medianSensorItem != None and not isinstance(medianSensorItem.state, UnDefType):
         events.postUpdate(ir.getItem(
             "LightManagement_AmbientLightCondition_LuminanceTreshold"), medianSensorItem.state)
         if medianSensorItem.state < darkTresholdItem.state:
-            mode = LightMode.DARK
+            condition = AmbientLightCondition.DARK
         elif medianSensorItem.state < obscuredTresholdItem.item:
-            mode = LightMode.OBSCURED
+            condition = AmbientLightCondition.OBSCURED
 
-    if ir.getItem("LightManagement_AmbientLightCondition").state != mode:
-        events.postUpdate(ir.getItem(
-            "LightManagement_AmbientLightCondition"), mode)
+    conditionItem = ir.getItem("LightManagement_AmbientLightCondition")
+    if conditionItem.state != condition:
+        events.postUpdate(conditionItem, condition)
 
 
 @rule("Manage lights according to respective modes among special states, nighttime and daytime.", description="Manage lights according to respective modes among special states, nighttime and daytime.", tags=[])
