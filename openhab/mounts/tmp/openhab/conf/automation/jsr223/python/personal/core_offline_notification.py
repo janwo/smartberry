@@ -10,7 +10,7 @@ def offline_check(event):
     offlineThingsNotifications = filter(lambda thing: (
         thing.getStatusInfo() != None and
         not thing.getStatusInfo().getStatus().toString().equals("ONLINE")
-    ), (t for t in things))
+    ), things)
 
     offlineThingsNotifications = map(lambda thing: ("{0} is {1}".format(
         thing.getLabel(), thing.getStatusInfo().getStatus()

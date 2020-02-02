@@ -72,7 +72,8 @@ def disarmament(event):
 @when("Member of gSecurity_LockClosureTrigger received update CLOSED")
 @when("Member of gSecurity_LockClosureTrigger received update OFF")
 def lock_closure(event):
-    ir.getItem("Security_OperationState").postUpdate(OperationState.OFF)
+    events.postUpdate(ir.getItem("Security_OperationState"),
+                      OperationState.OFF)
     room = get_room_name(event.itemName)
     locks = ir.getItem("gLock").members
     lock = next(
@@ -91,11 +92,11 @@ def lock_closure(event):
 def siren_autooff(event):
     autoOffTime = ir.getItem("Security_SireneAutoOff").state
     if (autoOffTime == 0 or
-                ir.getItem("Security_Sirene").state != ON or
-                isinstance(ir.getItem("Security_AlarmTime").state, UnDefType) or
-                minutes_between(ir.getItem("Security_AlarmTime").state, ZonedDateTime.now(
+        ir.getItem("Security_Sirene").state != ON or
+        isinstance(ir.getItem("Security_AlarmTime").state, UnDefType) or
+        minutes_between(ir.getItem("Security_AlarmTime").state, ZonedDateTime.now(
                 )) > autoOffTime
-            ):
+        ):
         return
 
     events.sendCommand(ir.getItem("Security_Sirene"), OFF)
