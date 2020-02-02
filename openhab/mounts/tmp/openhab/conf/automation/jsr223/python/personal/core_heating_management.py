@@ -1,7 +1,7 @@
 from core.triggers import when
 from core.rules import rule
-from personal.core_presence_management import PresenceState
-from personal.core_special_state_management import SpecialState
+from personal.core_presence_management import PresenceState, is_presence_state
+from personal.core_special_state_management import SpecialState, is_special_state
 from personal.core_helpers import get_room_name
 
 
@@ -15,11 +15,11 @@ from personal.core_helpers import get_room_name
 def update_heater_on_presence_change(event):
     state = ir.getItem("HeatingManagement_Thermostat_ModeDefault").state
 
-    if ir.getItem("SpecialStateManagement").state == SpecialState.SLEEP:
+    if is_special_state(SpecialState.SLEEP):
         state = ir.getItem("HeatingManagement_Thermostat_ModeSleep").state
-    elif ir.getItem("PresenceManagement").state == PresenceState.AWAY_LONG:
+    elif is_presence_state(PresenceState.AWAY_LONG):
         state = ir.getItem("HeatingManagement_Thermostat_ModeAwayLong").state
-    elif ir.getItem("PresenceManagement").state == PresenceState.AWAY_SHORT:
+    elif is_presence_state(PresenceState.AWAY_SHORT):
         state = ir.getItem("HeatingManagement_Thermostat_ModeAwayShort").state
 
     for item in ir.getItem("gHeatingManagement_Thermostat_Mode").members:

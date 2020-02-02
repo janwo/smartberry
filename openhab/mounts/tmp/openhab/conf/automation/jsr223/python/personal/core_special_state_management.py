@@ -1,6 +1,6 @@
 from core.metadata import get_metadata, set_metadata
 from personal.core_helpers import get_room_name
-from personal.core_special_state_management import SpecialState
+from personal.core_special_state_management import SpecialState, is_special_state
 from core.triggers import when
 from core.rules import rule
 from core.date import hours_between, ZonedDateTime, format_date
@@ -33,11 +33,10 @@ def reset_scenes_on_sleep(event):
 @rule("Set SpecialStateManagement to off if DefaultStateTrigger triggers.", description="Set SpecialStateManagement to off if DefaultStateTrigger triggers.", tags=[])
 @when("Member of gSpecialStateManagement_DefaultStateTrigger received update ON")
 def reset_on_default_trigger(event):
-    item = ir.getItem("SpecialStateManagement")
     hours_after_deactivation = ir.getItem(
         "SpecialStateManagement_HoursUntilTriggersActivated").state
     if (
-        item.state != SpecialState.DEFAULT and
+        not is_special_state(SpecialState.DEFAULT) and
         hours_between(ir.getItem("SpecialStateManagement_LastActivation").state,
                       ZonedDateTime.now()) > hours_after_deactivation
     ):

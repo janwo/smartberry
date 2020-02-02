@@ -2,8 +2,9 @@ from personal.core_helpers import get_room_name
 from core.actions import NotificationAction
 from core.triggers import when
 from core.rules import rule
-from personal.core_presence_management import PresenceState
-from personal.core_security_management import OperationState
+from personal.core_presence_management import PresenceState, is_presence_state
+from personal.core_security_management import OperationState, is_security_state
+from personal.core_special_state_management import SpecialState, is_special_state
 from core.date import minutes_between, ZonedDateTime, format_date
 
 
@@ -11,7 +12,7 @@ from core.date import minutes_between, ZonedDateTime, format_date
 @when("Member of gSecurity_AssaultTrigger received update OPEN")
 @when("Member of gSecurity_AssaultTrigger received update ON")
 def assault_trigger(event):
-    if ir.getItem("Security_OperationState").state == OperationState.OFF or ir.getItem("SpecialStateManagement").state != OperationState.NONE:
+    if is_security_state(OperationState.OFF) or not is_special_state(SpecialState.DEFAULT):
         return
 
     events.postUpdate(ir.getItem("Security_AlarmTime"),
@@ -23,7 +24,7 @@ def assault_trigger(event):
     message = "Lautloser Alarm wurde von {} ausgelöst!".format(
         ir.getItem(event.itemName).label)
 
-    if ir.getItem("Security_OperationState").state == OperationState.ON:
+    if is_security_state(OperationState.ON):
         events.sendCommand(ir.getItem("Security_Sirene"), ON)
         message = "Lauter Alarm wurde von {} ausgelöst!".format(
             ir.getItem(event.itemName).label)
@@ -38,12 +39,14 @@ def assault_trigger(event):
 @when("Item Security_OperationState_AwayLong received update")
 def armament(event):
     operationMapping = {
-        OperationState.OFF: ir.getItem("Security_OperationState_AwayShort").state,
-        OperationState.SILENTLY: ir.getItem("Security_OperationState_AwayLong").state
+        PresenceState.AWAY_SHORT: ir.getItem("Security_OperationState_AwayShort").state,
+        PresenceState.AWAY_LONG: ir.getItem("Security_OperationState_AwayLong").state
     }
 
-    operationState = operationMapping.get(ir.getItem(
-        "PresenceManagement").state, None)
+    presenceState = ir.getItem(
+        "PresenceManagement").state
+    operationState = operationMapping.get(PresenceState.HOME if isinstance(
+        presenceState, UnDefType) else presenceState.intValue(), None)
     if operationState == None:
         return
 
@@ -92,11 +95,11 @@ def lock_closure(event):
 def siren_autooff(event):
     autoOffTime = ir.getItem("Security_SireneAutoOff").state
     if (autoOffTime == 0 or
-        ir.getItem("Security_Sirene").state != ON or
-        isinstance(ir.getItem("Security_AlarmTime").state, UnDefType) or
-        minutes_between(ir.getItem("Security_AlarmTime").state, ZonedDateTime.now(
+            ir.getItem("Security_Sirene").state != ON or
+            isinstance(ir.getItem("Security_AlarmTime").state, UnDefType) or
+            minutes_between(ir.getItem("Security_AlarmTime").state, ZonedDateTime.now(
                 )) > autoOffTime
-        ):
+            ):
         return
 
     events.sendCommand(ir.getItem("Security_Sirene"), OFF)

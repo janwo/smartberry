@@ -1,7 +1,7 @@
 from personal.core_helpers import enum
 from core.jsr223.scope import events, OFF, ON, ir, UnDefType
 from core.log import logging
-from personal.core_special_state_management import SpecialState
+from personal.core_special_state_management import SpecialState, is_special_state
 
 LightMode = enum(
     OFF=0,
@@ -27,13 +27,13 @@ def get_light_mode_group():
         AmbientLightCondition.BRIGHT: ir.getItem("gLightManagement_BrightMode")
     }.get(
         AmbientLightCondition.BRIGHT if isinstance(
-            condition, UnDefType) else condition,
+            condition, UnDefType) else condition.intValue(),
         ir.getItem("gLightManagement_BrightMode")
     )
 
 
 def turnOn(switchable, force=False):
-    if ir.getItem("SpecialStateManagement").state == SpecialState.SLEEP and 'gLightManagement_LightSwitchable_IgnoreWhenSleep' in switchable.getGroupNames():
+    if is_special_state(SpecialState.SLEEP)and 'gLightManagement_LightSwitchable_IgnoreWhenSleep' in switchable.getGroupNames():
         logging.info(
             "{} was ignored during sleep state due to gLightManagement_LightSwitchable_IgnoreWhenSleep group.".format(
                 switchable.name)
@@ -42,8 +42,8 @@ def turnOn(switchable, force=False):
 
     if "gLight" in switchable.getGroupNames():
         if(switchable.state != 0 or force):
-            command = ir.getItem("LightManagement_DefaultBrightness").state if ir.getItem(
-                "SpecialStateManagement").state == SpecialState.DEFAULT else ir.getItem("LightManagement_SleepBrightness").state
+            command = ir.getItem("LightManagement_DefaultBrightness").state if is_special_state(SpecialState.DEFAULT) else ir.getItem(
+                "LightManagement_SleepBrightness").state
             events.sendCommand(switchable, command)
 
     elif "gPower" in switchable.getGroupNames():

@@ -2,7 +2,7 @@ from core.rules import rule
 from core.triggers import when
 from core.date import hours_between, ZonedDateTime, format_date
 from personal.core_helpers import get_room_name
-from personal.core_presence_management import PresenceState
+from personal.core_presence_management import PresenceState, is_presence_state
 import random
 
 
@@ -11,7 +11,7 @@ import random
 def set_last_activation(event):
     events.postUpdate(ir.getItem(
         "PresenceManagement_LastPresence"), format_date(ZonedDateTime.now()))
-    if ir.getItem("PresenceManagement").state != PresenceState.HOME:
+    if not is_presence_state(PresenceState.HOME):
         events.postUpdate(ir.getItem("PresenceManagement"), PresenceState.HOME)
 
     room = get_room_name(event.itemName)

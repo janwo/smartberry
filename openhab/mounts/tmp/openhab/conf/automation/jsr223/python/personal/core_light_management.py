@@ -2,8 +2,8 @@ from core.log import logging
 from core.triggers import when
 from core.rules import rule
 from core.date import minutes_between, ZonedDateTime, format_date
-from personal.core_presence_management import PresenceState
-from personal.core_special_state_management import SpecialState
+from personal.core_presence_management import PresenceState, is_presence_state
+from personal.core_special_state_management import SpecialState, is_special_state
 from personal.core_helpers import get_room_name
 from personal.core_light_management import LightMode, AmbientLightCondition, get_light_mode_group, turnOn, turnOff
 
@@ -11,7 +11,7 @@ from personal.core_light_management import LightMode, AmbientLightCondition, get
 @rule("Keep last light activation updated", description="Keep last light activation updated", tags=[])
 @when("Member of gLightManagement_LightSwitchable received update")
 def set_last_activation(event):
-    if event.itemState == 0 or event.itemState == OFF:
+    if ir.getItem(event.itemName).getStateAs(OnOffType) == OFF:
         return
 
     room = get_room_name(event.itemName)
@@ -34,8 +34,7 @@ def set_last_activation(event):
 @when("Item LightManagement_AmbientLightCondition_LuminanceTreshold_Obscured changed")
 def check_daylight(event):
     activeSwitchables = filter(
-        lambda switchable: not isinstance(switchable.state, UnDefType) and (
-            switchable.state > 0 or switchable.state == ON),
+        lambda switchable: switchable.getStateAs(OnOffType) == ON,
         ir.getItem("gLightManagement_LightSwitchable").members
     )
 
@@ -48,7 +47,7 @@ def check_daylight(event):
         filter(
             lambda sensor: not isinstance(sensor.state, UnDefType) and any(
                 activeRoom == get_room_name(sensor.name) for activeRoom in activeRooms
-            ) is None,
+            ),
             ir.getItem("gSensor_Luminance").members
         ),
         key=lambda sensor: sensor.state
@@ -89,23 +88,20 @@ def check_daylight(event):
 def manage_light_state(event):
     lightModeGroup = get_light_mode_group()
     switchOnRooms = map(
-        lambda switchable: get_room_name(switchable.name),
+        lambda groupMember: get_room_name(groupMember.name),
         filter(
-            lambda switchable: (
-                switchable.state == LightMode.ON or (
-                    switchable.state == LightMode.ON_HOME_AND_SPECIAL_STATE_DEFAULT and
-                    ir.getItem("SpecialStateManagement").state == SpecialState.DEFAULT and
-                    ir.getItem(
-                        "PresenceManagement").state == PresenceState.HOME
+            lambda groupMember: not isinstance(groupMember.state, UnDefType) and (
+                groupMember.state.intValue() == LightMode.ON or (
+                    groupMember.state.intValue() == LightMode.ON_HOME_AND_SPECIAL_STATE_DEFAULT and
+                    is_special_state(SpecialState.DEFAULT) and
+                    is_presence_state(PresenceState.HOME)
                 ) or (
-                    switchable.state == LightMode.ON_AWAY_AND_SPECIAL_STATE_DEFAULT and
-                    ir.getItem("SpecialStateManagement").state == SpecialState.DEFAULT and
-                    ir.getItem(
-                        "PresenceManagement").state != PresenceState.HOME
+                    groupMember.state == LightMode.ON_AWAY_AND_SPECIAL_STATE_DEFAULT and
+                    is_special_state(SpecialState.DEFAULT) and
+                    not is_presence_state(PresenceState.HOME)
                 ) or (
-                    switchable.state == LightMode.ON_SPECIAL_STATE_DEFAULT and
-                    ir.getItem(
-                        "SpecialStateManagement").state == SpecialState.DEFAULT
+                    groupMember.state == LightMode.ON_SPECIAL_STATE_DEFAULT and
+                    is_special_state(SpecialState.DEFAULT)
                 )
                 # TODO: Wenn abwesend im Standardmodus => AN
             ),
@@ -114,30 +110,30 @@ def manage_light_state(event):
     )
 
     switchOffRooms = map(
-        lambda switchable: get_room_name(switchable.name),
+        lambda groupMember: get_room_name(groupMember.name),
         filter(
-            lambda switchable: (
-                switchable.state == LightMode.OFF or (
-                    switchable.state == LightMode.ON_HOME_AND_SPECIAL_STATE_DEFAULT and (
-                        ir.getItem("SpecialStateManagement").state != SpecialState.DEFAULT or
-                        ir.getItem(
-                            "PresenceManagement").state != PresenceState.HOME
+            lambda groupMember: (
+                groupMember.state == LightMode.OFF or (
+                    groupMember.state == LightMode.ON_HOME_AND_SPECIAL_STATE_DEFAULT and (
+                        not is_special_state(SpecialState.DEFAULT) and
+                        not is_presence_state(PresenceState.HOME)
                     )
                 ) or (
-                    switchable.state == LightMode.ON_AWAY_AND_SPECIAL_STATE_DEFAULT and (
-                        ir.getItem("SpecialStateManagement").state != SpecialState.DEFAULT or
-                        ir.getItem(
-                            "PresenceManagement").state == PresenceState.HOME
+                    groupMember.state == LightMode.ON_AWAY_AND_SPECIAL_STATE_DEFAULT and (
+                        not is_special_state(SpecialState.DEFAULT) and
+                        is_presence_state(PresenceState.HOME)
                     )
                 ) or (
-                    switchable.state == LightMode.ON_SPECIAL_STATE_DEFAULT and
-                    ir.getItem(
-                        "SpecialStateManagement").state != SpecialState.DEFAULT
+                    groupMember.state == LightMode.ON_SPECIAL_STATE_DEFAULT and
+                    not is_special_state(SpecialState.DEFAULT)
                 )
             ),
             lightModeGroup.members
         )
     )
+
+    manage_light_state.log.warn("{0} {1} {2}".format(
+        len(switchOnRooms), len(switchOffRooms), lightModeGroup.name))
 
     for switchable in ir.getItem("gLightManagement_LightSwitchable").members:
         room = get_room_name(switchable.name)
@@ -210,8 +206,8 @@ def welcome_light(event):
 @when("Item LightManagement_DefaultDuration received update")
 @when("Item LightManagement_SleepDuration received update")
 def elapsed_lights(event):
-    duration = ir.getItem("LightManagement_DefaultDuration").state if ir.getItem(
-        "SpecialStateManagement").state == SpecialState.DEFAULT else ir.getItem("LightManagement_SleepDuration").state
+    duration = ir.getItem("LightManagement_DefaultDuration").state if is_special_state(
+        SpecialState.DEFAULT) else ir.getItem("LightManagement_SleepDuration").state
 
     lightModeGroup = get_light_mode_group()
 
@@ -240,6 +236,5 @@ def elapsed_lights(event):
     )
 
     for switchable in ir.getItem("gLightManagement_LightSwitchable").members:
-        if ((switchable.state == ON or switchable.state != 0) and
-                any(room == get_room_name(switchable.name) for room in switchOffRooms)):
+        if (switchable.getStateAs(OnOffType) == ON and any(room == get_room_name(switchable.name) for room in switchOffRooms)):
             events.sendCommand(switchable, OFF)
