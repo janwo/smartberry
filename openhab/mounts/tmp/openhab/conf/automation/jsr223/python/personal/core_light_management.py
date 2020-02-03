@@ -45,7 +45,7 @@ def check_daylight(event):
 
     sensorsOfInactiveRooms = sorted(
         filter(
-            lambda sensor: not isinstance(sensor.state, UnDefType) and any(
+            lambda sensor: not isinstance(sensor.state, UnDefType) and not any(
                 activeRoom == get_room_name(sensor.name) for activeRoom in activeRooms
             ),
             ir.getItem("gSensor_Luminance").members
@@ -61,14 +61,15 @@ def check_daylight(event):
     if len(sensorsOfInactiveRooms) == 0:
         return
 
-    medianSensorItem = sensorsOfInactiveRooms[len(
-        sensorsOfInactiveRooms) / 2]
+    medianSensorItem = sensorsOfInactiveRooms[len(sensorsOfInactiveRooms) / 2]
 
     if isinstance(medianSensorItem.state, UnDefType):
         return
 
-    events.postUpdate(ir.getItem(
-        "LightManagement_AmbientLightCondition_LuminanceTreshold"), medianSensorItem.state)
+    events.postUpdate(
+        ir.getItem("LightManagement_AmbientLightCondition_LuminanceTreshold"),
+        medianSensorItem.state
+    )
 
     condition = AmbientLightCondition.BRIGHT
     if medianSensorItem.state < darkTresholdItem.state:

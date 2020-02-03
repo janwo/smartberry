@@ -40,7 +40,8 @@ def assault_trigger(event):
 def armament(event):
     operationMapping = {
         PresenceState.AWAY_SHORT: ir.getItem("Security_OperationState_AwayShort").state,
-        PresenceState.AWAY_LONG: ir.getItem("Security_OperationState_AwayLong").state
+        PresenceState.AWAY_LONG: ir.getItem(
+            "Security_OperationState_AwayLong").state
     }
 
     presenceState = ir.getItem(
@@ -75,8 +76,6 @@ def disarmament(event):
 @when("Member of gSecurity_LockClosureTrigger received update CLOSED")
 @when("Member of gSecurity_LockClosureTrigger received update OFF")
 def lock_closure(event):
-    events.postUpdate(ir.getItem("Security_OperationState"),
-                      OperationState.OFF)
     room = get_room_name(event.itemName)
     locks = ir.getItem("gLock").members
     lock = next(
@@ -93,21 +92,25 @@ def lock_closure(event):
 @rule("Security System - Turn off siren after X minutes", description="Security System - Turn off siren after X minutes", tags=[])
 @when("Time cron 0 * * ? * * *")
 def siren_autooff(event):
-    autoOffTime = ir.getItem("Security_SireneAutoOff").state
-    if (autoOffTime == 0 or
+    autoOffTime = ir.getItem("Security_SireneAutoOff")
+    if isinstance(autoOffTime.state, UnDefType):
+        siren_autooff.log.warn("No value for {} set.".format(autoOffTime.name))
+        return
+
+    if (autoOffTime.state.intValue() == 0 or
             ir.getItem("Security_Sirene").state != ON or
             isinstance(ir.getItem("Security_AlarmTime").state, UnDefType) or
             minutes_between(ir.getItem("Security_AlarmTime").state, ZonedDateTime.now(
-                )) > autoOffTime
-            ):
+            )) > autoOffTime.state.intValue()
+        ):
         return
 
     events.sendCommand(ir.getItem("Security_Sirene"), OFF)
     NotificationAction.sendBroadcastNotification(
         "Alarm wurde nach {} Minuten automatisch deaktiviert.".format(
-            autoOffTime)
+            autoOffTime.state)
     )
     siren_autooff.log.info(
         "Alarm was turned off automatically after {} minutes.".format(
-            autoOffTime)
+            autoOffTime.state)
     )
