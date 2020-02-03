@@ -35,7 +35,7 @@ def manage_elapsed(event):
             duration = next((duration for duration in durations if duration.name.startswith(
                 switchable.name)), None)
 
-            if activation == None or duration == None:
+            if activation == None or isinstance(activation.state, UnDefType) or duration == None or isinstance(duration.state, UnDefType):
                 manage_elapsed.log.warn(
                     "gTimedOutletManagement_LastActivation or gTimedOutletManagement_ActiveDuration not found for outlet {}.".format(
                         switchable.name)
