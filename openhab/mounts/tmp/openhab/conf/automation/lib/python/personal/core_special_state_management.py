@@ -1,4 +1,4 @@
-# from core.jsr223.scope import
+from core.jsr223.scope import ir, UnDefType
 from personal.core_helpers import enum
 
 
