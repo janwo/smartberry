@@ -34,13 +34,21 @@ def reset_scenes_on_sleep(event):
 @when("Member of gSpecialStateManagement_DefaultStateTrigger received update ON")
 def reset_on_default_trigger(event):
     hours_after_deactivation = ir.getItem(
-        "SpecialStateManagement_HoursUntilTriggersActivated").state
+        "SpecialStateManagement_HoursUntilTriggersActivated")
+    if isinstance(hours_after_deactivation.state, UnDefType):
+        reset_on_default_trigger.log.warn(
+            "No value set for {}.".format(hours_after_deactivation.name))
+        return
+
     if (
         not is_special_state(SpecialState.DEFAULT) and
         hours_between(ir.getItem("SpecialStateManagement_LastActivation").state,
-                      ZonedDateTime.now()) > hours_after_deactivation
+                      ZonedDateTime.now()) > hours_after_deactivation.state.intValue()
     ):
-        events.postUpdate(item, SpecialState.DEFAULT)
+        events.postUpdate(
+            ir.getItem("SpecialStateManagement"),
+            SpecialState.DEFAULT
+        )
 
 
 @rule("Change scene.", description="Change scene.", tags=[])
@@ -51,10 +59,11 @@ def change_scene(event):
         event.itemName,
         SCENE_ITEM_METADATA_NAMESPACE.format(scene_index)
     )
+
     if store != None:
-        for item, state in store.iteritems():
+        for item, state in store.configuration.iteritems():
             if ir.getItem(item) != None:
-                events.sendCommand(item, state)
+                events.sendCommand(ir.getItem(item), state)
     else:
         change_scene.log.info(
             "No states saved for scene {0} [{1}], yet.".format(
@@ -82,6 +91,8 @@ def store_scene(event):
             store,
             overwrite=True
         )
+
+        events.postUpdate(ir.getItem(event.itemName), OFF)
     else:
         store_scene.log.info(
             "No item of group SpecialStateManagement_Scenes found for room {}.".format(
@@ -94,7 +105,7 @@ def store_scene(event):
 def forward_scenehelper_to_specialstatemanagment(event):
     match = re.search(r"^.*?(\\d+)$", event.itemName)
     if match is not None:
-        events.postUpdate(ir.getItem("SpecialStateManagement"), match.group())
+        events.postUpdate(ir.getItem("SpecialStateManagement"), match.group(1))
 
 
 @rule("Forward SpecialStateManagement_SelectSceneHelpers to relevant member of gSpecialStateManagement_Scenes.", description="Forward SpecialStateManagement_SelectSceneHelpers to relevant member of gSpecialStateManagement_Scenes.", tags=[])
@@ -107,7 +118,7 @@ def forward_scenehelper_to_specialstatemanagment_scenes(event):
         scene = next(
             (scene for scene in scenes if scene.name.startswith(room)), None)
         if scene is not None:
-            events.postUpdate(scene, match.group())
+            events.postUpdate(scene, match.group(1))
         else:
             forward_scenehelper_to_specialstatemanagment_scenes.log.error(
                 "No item of group SpecialStateManagement_Scenes found for room {}.".format(
