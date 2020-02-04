@@ -63,7 +63,7 @@ def change_scene(event):
     if store != None:
         for item, state in store.configuration.iteritems():
             if ir.getItem(item) != None:
-                events.sendCommand(ir.getItem(item), state)
+                events.sendCommand(ir.getItem(item), str(state))
     else:
         change_scene.log.info(
             "No states saved for scene {0} [{1}], yet.".format(
@@ -103,7 +103,7 @@ def store_scene(event):
 @rule("Forward SpecialStateManagement_SelectStateHelpers to SpecialStateManagement.", description="Forward SpecialStateManagement_SelectStateHelpers to SpecialStateManagement.", tags=[])
 @when("Member of gSpecialStateManagement_SelectStateHelpers received update")
 def forward_scenehelper_to_specialstatemanagment(event):
-    match = re.search(r"^.*?(\\d+)$", event.itemName)
+    match = re.search(r"^.*?(\d+)$", event.itemName)
     if match is not None:
         events.postUpdate(ir.getItem("SpecialStateManagement"), match.group(1))
 
@@ -112,7 +112,7 @@ def forward_scenehelper_to_specialstatemanagment(event):
 @when("Member of gSpecialStateManagement_SelectSceneHelpers received update")
 def forward_scenehelper_to_specialstatemanagment_scenes(event):
     room = get_room_name(event.itemName)
-    match = re.search(r"^.*?(\\d+)$", event.itemName)
+    match = re.search(r"^.*?(\d+)$", event.itemName)
     if match is not None:
         scenes = ir.getItem("gSpecialStateManagement_Scenes").members
         scene = next(
