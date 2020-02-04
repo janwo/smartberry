@@ -26,8 +26,9 @@ def turn_off_switchables_on_sleep(event):
 @rule("Reset scenes if SpecialStateManagement was set to sleep.", description="Reset scenes if SpecialStateManagement was set to sleep.", tags=[])
 @when("Item SpecialStateManagement received update {}".format(SpecialState.SLEEP))
 def reset_scenes_on_sleep(event):
-    for item in ir.getItem("gSpecialStateManagement_Scenes").members:
-        events.sendCommand(item, 0)
+    if ir.getItem("SpecialStateManagement_ResetScenesOnSleep").state == ON:
+        for item in ir.getItem("gSpecialStateManagement_Scenes").members:
+            events.sendCommand(item, 0)
 
 
 @rule("Set SpecialStateManagement to off if DefaultStateTrigger triggers.", description="Set SpecialStateManagement to off if DefaultStateTrigger triggers.", tags=[])
@@ -52,7 +53,7 @@ def reset_on_default_trigger(event):
 
 
 @rule("Change scene.", description="Change scene.", tags=[])
-@when("Member of gSpecialStateManagement_Scenes changed")
+@when("Member of gSpecialStateManagement_Scenes updated")
 def change_scene(event):
     scene_index = event.itemState
     store = get_metadata(
