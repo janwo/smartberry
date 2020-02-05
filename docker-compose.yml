@@ -62,6 +62,8 @@ services:
     environment:
       AUTH_OPENHAB_UUID:
       AUTH_OPENHAB_SECRET:
+      AUTH_OPENHAB_PASSWORD:
+
 
   influxdb:
     build: ./influxdb
