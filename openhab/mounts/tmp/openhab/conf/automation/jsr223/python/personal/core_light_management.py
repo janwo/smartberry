@@ -183,7 +183,7 @@ def welcome_light(event):
     }
     welcomeLightMode = welcomeLightModeMapping.get(
         AmbientLightCondition.BRIGHT if isinstance(
-            condition, UnDefType) else condition.state,
+            condition, UnDefType) else condition.state.intValue(),
         ir.getItem("LightManagement_WelcomeLight_BrightMode")
     )
 
@@ -198,10 +198,10 @@ def welcome_light(event):
             )
         )
 
-    for switchable in ir.getItem("gLightManagement_LightSwitchable").members:
-        room = get_room_name(switchable.name)
-        if any(r == room for r in switchOnRooms):
-            turnOn(switchable)
+        for switchable in ir.getItem("gLightManagement_LightSwitchable").members:
+            room = get_room_name(switchable.name)
+            if any(r == room for r in switchOnRooms):
+                turnOn(switchable)
 
 
 @rule("Manage elapsed lights.", description="Manage elapsed lights.", tags=[])
