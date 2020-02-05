@@ -53,7 +53,7 @@ def reset_on_default_trigger(event):
 
 
 @rule("Change scene.", description="Change scene.", tags=[])
-@when("Member of gSpecialStateManagement_Scenes updated")
+@when("Member of gSpecialStateManagement_Scenes received update")
 def change_scene(event):
     scene_index = event.itemState
     store = get_metadata(
