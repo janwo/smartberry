@@ -84,7 +84,7 @@ def store_scene(event):
         store = {}
         for item in ir.getItem("gSpecialStateManagement_SceneMembers").members:
             if item.name.startswith(room):
-                store[item.name] = item.state
+                store[item.name] = item.state.toString()
 
         set_metadata(
             scene.name,
