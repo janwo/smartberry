@@ -3,6 +3,7 @@ from core.triggers import when
 from core.date import hours_between, ZonedDateTime, format_date
 from personal.core_helpers import get_room_name
 from personal.core_presence_management import PresenceState, is_presence_state
+from personal.core_light_management import turnOff, turnOn
 import random
 
 
@@ -30,10 +31,23 @@ def set_last_activation(event):
 @rule("Set presence state to away in absence", description="Set presence state to away in absence", tags=[])
 @when("Time cron 0 0 * ? * * *")
 def check_abondance(event):
-    if hours_between(ir.getItem("PresenceManagement_LastPresence").state, ZonedDateTime.now()) > ir.getItem("PresenceManagement_HoursUntilAwayLong").state:
+    hours_away_long = ir.getItem(
+        "PresenceManagement_HoursUntilAwayLong")
+    if isinstance(hours_away_long.state, UnDefType):
+        check_abondance.log.warn(
+            "No value set for {}.".format(hours_away_long.name))
+        return
+
+    hours_away_short = ir.getItem("PresenceManagement_HoursUntilAwayShort")
+    if isinstance(hours_away_short.state, UnDefType):
+        check_abondance.log.warn(
+            "No value set for {}.".format(hours_away_short.name))
+        return
+
+    if hours_between(ir.getItem("PresenceManagement_LastPresence").state, ZonedDateTime.now()) > hours_away_long.state.intValue():
         events.postUpdate(ir.getItem("PresenceManagement"),
                           PresenceState.AWAY_LONG)
-    elif hours_between(ir.getItem("PresenceManagement_LastPresence").state, ZonedDateTime.now()) > ir.getItem("PresenceManagement_HoursUntilAwayShort").state:
+    elif hours_between(ir.getItem("PresenceManagement_LastPresence").state, ZonedDateTime.now()) > hours_away_short.state.intValue():
         events.postUpdate(ir.getItem("PresenceManagement"),
                           PresenceState.AWAY_SHORT)
 
@@ -41,12 +55,16 @@ def check_abondance(event):
 @rule("Simulate lights when away and simulation state is activated.", description="Simulate lights when away and simulation state is activated.", tags=[])
 @when("Time cron 0 0/15 0 ? * * *")
 def simulate_presence(event):
-    if ir.getItem("PresenceManagement").state != ir.getItem("PresenceManagement_Simulation").state:
+    simulateOnPresenceState = ir.getItem("PresenceManagement_Simulation")
+    if isinstance(simulateOnPresenceState.state, UnDefType):
+        simulate_presence.log.warn(
+            "No value set for {}.".format(simulateOnPresenceState.name))
         return
 
-    for item in ir.getItem("gPresenceManagement_SimulationItem").members:
-        if random.randrange(10) <= 2:
-            if item.state == ON:
-                events.sendCommand(item, OFF)
-            else:
-                events.sendCommand(item, ON)
+    if is_presence_state(simulateOnPresenceState.state.intValue()):
+        for item in ir.getItem("gPresenceManagement_SimulationItem").members:
+            if random.randrange(10) <= 2:
+                if item.state == ON:
+                    turnOff(item)
+                else:
+                    turnOn(item)

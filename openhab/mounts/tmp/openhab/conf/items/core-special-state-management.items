@@ -16,7 +16,7 @@ Group   gSpecialStateManagement_Scenes (gSpecialStateManagement)
 Switch  SpecialStateManagement_ResetScenesOnSleep  "Szenen im Schlafmodus zurücksetzen" <moon> (gSpecialStateManagement, gPersistence_SaveState)
 
 Group   gSpecialStateManagement_SceneMembers "Szenen-Mitglied" (gSpecialStateManagement)
-Group   gSpecialStateManagement_StoreSceneTriggers "Szenen anpassen" <settings> (gSpecialStateManagement)
+Group   gSpecialStateManagement_StoreSceneTriggers "Szenen anpassen"                    <settings> (gSpecialStateManagement)
 Group   gSpecialStateManagement_SelectSceneHelpers
 String  SpecialStateManagement_ScenesStore (gPersistence_SaveState, gSpecialStateManagement)
 
