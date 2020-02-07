@@ -14,7 +14,7 @@ Group  gCleaning_Vacuum_StateItem                                   <lawnmower>
  * EXAMPLE *
  ***********
    String FF_Vacuum_Command                                                                                            (gCleaning, gCleaning_Vacuum_CommandItem)
-   String FF_Vacuum_State          "Saugroboter: Status [MAP(core-cleaning-management_de.map):%s]"         <switch>    (gCleaning, gCleaning_Vacuum_StateItem)
-   Switch FF_Vacuum_Docked         "Saugroboter: In Ladestation [MAP(core-cleaning-management_de.map):%s]" <energy>    (gCleaning)
+   String FF_Vacuum_State          "Saugroboter: Status [MAP(core_cleaning_management_de.map):%s]"         <switch>    (gCleaning, gCleaning_Vacuum_StateItem)
+   Switch FF_Vacuum_Docked         "Saugroboter: In Ladestation [MAP(core_cleaning_management_de.map):%s]" <energy>    (gCleaning)
    Number FF_Vacuum_Battery        "Saugroboter: Batteriestand [%.0f %%]"                                  <battery>   (gCleaning, gBattery)
 */

@@ -1,4 +1,4 @@
-sitemap settings label="Einstellungen" {
+sitemap core_settings label="Einstellungen" {
 
     Frame label="Szenen + Sonderzustände" icon="sofa" {
         Text label="Sonderzustände anpassen" icon="settings" {
