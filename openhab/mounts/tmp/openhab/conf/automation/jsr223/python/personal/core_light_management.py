@@ -109,7 +109,6 @@ def manage_light_state(event):
                     groupMember.state.intValue() == LightMode.ON_SPECIAL_STATE_DEFAULT and
                     is_special_state(SpecialState.DEFAULT)
                 )
-                # TODO: Wenn abwesend im Standardmodus => AN
             ),
             lightModeGroup.members
         )
