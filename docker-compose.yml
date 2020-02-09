@@ -53,8 +53,7 @@ services:
     restart: unless-stopped
     expose:
       - "8080"
-    devices:
-      - "/dev:/dev"
+    privileged: true
     volumes:
       - openhab-addons:/openhab/addons
       - openhab-conf:/openhab/conf
