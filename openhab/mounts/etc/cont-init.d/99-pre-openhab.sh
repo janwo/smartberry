@@ -26,3 +26,42 @@ find ${OPENHAB_HOME}/conf/transform -type f -name 'core_*.map' -delete
 # Overwrite files including conf-folder
 rsync -a /tmp/openhab/ ${OPENHAB_HOME}
 chown -R openhab:openhab ${OPENHAB_HOME}
+
+# Add transformation services
+MISC_LINE=$(grep '^[[:space:]]\?transformation' ${OPENHAB_HOME}/conf/services/addons.cfg)
+if [ $? -eq 0 ]; then
+    if [[ ${MISC_LINE} != *"map"* ]]; then
+        sed -i 's/transformation\s\?=\s\?/transformation = map,/' ${OPENHAB_HOME}/conf/services/addons.cfg
+    fi
+else
+    ## Just append last line
+    echo "transformation = map" >> ${APPDIR}/conf/services/addons.cfg
+fi
+
+# Add misc services
+MISC_LINE=$(grep '^[[:space:]]\?misc' ${OPENHAB_HOME}/conf/services/addons.cfg)
+if [ $? -eq 0 ]; then
+    if [[ ${MISC_LINE} != *"ruleengine"* ]]; then
+        sed -i 's/misc\s\?=\s\?/misc = ruleengine,/' ${OPENHAB_HOME}/conf/services/addons.cfg
+    fi
+    if [[ ${MISC_LINE} != *"openhabcloud"* ]]; then
+        sed -i 's/misc\s\?=\s\?/misc = openhabcloud,/' ${OPENHAB_HOME}/conf/services/addons.cfg
+    fi
+else
+    ## Just append last line
+    echo "misc = ruleengine, openhabcloud" >> ${APPDIR}/conf/services/addons.cfg
+fi
+
+# Add persistence services
+MISC_LINE=$(grep '^[[:space:]]\?persistence' ${OPENHAB_HOME}/conf/services/addons.cfg)
+if [ $? -eq 0 ]; then
+    if [[ ${MISC_LINE} != *"ruleengine"* ]]; then
+        sed -i 's/persistence\s\?=\s\?/persistence = influxdb,/' ${OPENHAB_HOME}/conf/services/addons.cfg
+    fi
+    if [[ ${MISC_LINE} != *"openhabcloud"* ]]; then
+        sed -i 's/persistence\s\?=\s\?/persistence = mapdb,/' ${OPENHAB_HOME}/conf/services/addons.cfg
+    fi
+else
+    ## Just append last line
+    echo "persistence = mapdb, influxdb" >> ${APPDIR}/conf/services/addons.cfg
+fi
