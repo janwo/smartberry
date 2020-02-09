@@ -1,4 +1,7 @@
 #!/bin/sh
+# Set permissions
+adduser openhab tty
+
 # Set openhabcloud
 if [ ! -z ${AUTH_OPENHAB_UUID} ]
 then
