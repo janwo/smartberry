@@ -54,7 +54,7 @@ services:
     expose:
       - "8080"
     devices:
-      - "/dev/ttyACM0:/dev/ttyACM0"
+      - "/dev:/dev"
     volumes:
       - openhab-addons:/openhab/addons
       - openhab-conf:/openhab/conf
