@@ -55,10 +55,10 @@ fi
 # Add persistence services
 MISC_LINE=$(grep '^[[:space:]]\?persistence' ${OPENHAB_HOME}/conf/services/addons.cfg)
 if [ $? -eq 0 ]; then
-    if [[ ${MISC_LINE} != *"ruleengine"* ]]; then
+    if [[ ${MISC_LINE} != *"influxdb"* ]]; then
         sed -i 's/persistence\s\?=\s\?/persistence = influxdb,/' ${OPENHAB_HOME}/conf/services/addons.cfg
     fi
-    if [[ ${MISC_LINE} != *"openhabcloud"* ]]; then
+    if [[ ${MISC_LINE} != *"mapdb"* ]]; then
         sed -i 's/persistence\s\?=\s\?/persistence = mapdb,/' ${OPENHAB_HOME}/conf/services/addons.cfg
     fi
 else
