@@ -6,6 +6,7 @@ from personal.core_special_state_management import SpecialState, is_special_stat
 LightMode = enum(
     OFF=0,
     ON=1,
+    UNCHANGED=6,
     AUTO_ON=2,
     ON_AWAY_AND_SPECIAL_STATE_DEFAULT=3,
     ON_HOME_AND_SPECIAL_STATE_DEFAULT=4,

@@ -96,7 +96,8 @@ def manage_light_state(event):
     switchOnRooms = map(
         lambda groupMember: get_room_name(groupMember.name),
         filter(
-            lambda groupMember: not isinstance(groupMember.state, UnDefType) and (
+            lambda groupMember: not isinstance(groupMember.state, UnDefType) and
+            groupMember.state.intValue() != LightMode.UNCHANGED and (
                 groupMember.state.intValue() == LightMode.ON or (
                     groupMember.state.intValue() == LightMode.ON_HOME_AND_SPECIAL_STATE_DEFAULT and
                     is_special_state(SpecialState.DEFAULT) and
@@ -117,7 +118,8 @@ def manage_light_state(event):
     switchOffRooms = map(
         lambda groupMember: get_room_name(groupMember.name),
         filter(
-            lambda groupMember: not isinstance(groupMember.state, UnDefType) and (
+            lambda groupMember: not isinstance(groupMember.state, UnDefType) and
+            groupMember.state.intValue() != LightMode.UNCHANGED and (
                 groupMember.state.intValue() == LightMode.OFF or (
                     groupMember.state.intValue() == LightMode.ON_HOME_AND_SPECIAL_STATE_DEFAULT and (
                         not is_special_state(SpecialState.DEFAULT) and

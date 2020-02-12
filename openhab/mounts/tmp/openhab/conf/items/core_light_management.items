@@ -31,6 +31,7 @@ LightManagement - Modes
     2=Auto-An,
     3=Bei Abwesenheit (Standardmodus)
     4=Bei Anwesenheit (Standardmodus)
+    5=Keine Änderung duchführen
 
 Number      GF_LivingRoom_LightManagement_DarkMode          "Lichtmodus (Dunkel) in Wohnzimmer"      <moon>         (gLightManagement_DarkMode, gSpecialStateManagement_SceneMembers)
 Number      GF_LivingRoom_LightManagement_BrightMode        "Lichtmodus (Hell)  in Wohnzimmer"       <sun>          (gLightManagement_BrightMode, gSpecialStateManagement_SceneMembers)

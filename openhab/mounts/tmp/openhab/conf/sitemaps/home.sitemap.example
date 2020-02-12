@@ -26,7 +26,13 @@
 
 //     // Show all light modes in available rooms.
 //     Group item=gLightManagement_LastActivation
-//   }
+
+//     // Add Light Modes [If you do not have Light Conditions, Bright Mode is used.]
+//     Text label="Automatisches An- und Ausschalten" icon="light" {
+//        Selection item=GF_LivingRoom_LightManagement_DarkMode mappings=[0="Aus", 1="An", 5="An (Standardmodus)", 2="Auto-An", 3="Bei Abwesenheit (Standardmodus)", 4="Bei Anwesenheit (Standardmodus)", 5="Ohne Änderung"]
+//        Selection item=GF_LivingRoom_LightManagement_BrightMode mappings=[0="Aus", 1="An", 5="An (Standardmodus)", 2="Auto-An", 3="Bei Abwesenheit (Standardmodus)", 4="Bei Anwesenheit (Standardmodus)", 5="Ohne Änderung"]
+//        Selection item=GF_LivingRoom_LightManagement_ObscuredMode mappings=[0="Aus", 1="An", 5="An (Standardmodus)", 2="Auto-An", 3="Bei Abwesenheit (Standardmodus)", 4="Bei Anwesenheit (Standardmodus)", 5="Ohne Änderung"]
+//     }
 
 //   Frame label="Sicherheit" {
 //     // Display the security operation state.
