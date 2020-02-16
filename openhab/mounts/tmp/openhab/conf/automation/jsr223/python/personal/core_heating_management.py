@@ -5,7 +5,7 @@ from personal.core_special_state_management import SpecialState, is_special_stat
 from personal.core_helpers import get_room_name
 
 
-@rule("Update heater on presence changes", description="Update heater on presence changes", tags=[])
+@rule("Core - Update heater on presence changes", description="Update heater on presence changes", tags=[])
 @when("Item PresenceManagement received update")
 @when("Item SpecialStateManagement received update")
 @when("Item HeatingManagement_Thermostat_ModeDefault changed")
@@ -26,7 +26,7 @@ def update_heater_on_presence_change(event):
         events.sendCommand(item, state)
 
 
-@rule("Update heater when windows open or close", description="Update heater when windows open or close", tags=[])
+@rule("Core - Update heater when windows open or close", description="Update heater when windows open or close", tags=[])
 @when("Member of gHeatingManagement_ContactSwitchable changed")
 def update_heater_on_window_event(event):
     room = get_room_name(event.itemName)

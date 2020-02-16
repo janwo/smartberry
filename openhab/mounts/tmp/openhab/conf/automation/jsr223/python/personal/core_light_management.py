@@ -8,7 +8,7 @@ from personal.core_helpers import get_room_name
 from personal.core_light_management import LightMode, AmbientLightCondition, get_light_mode_group, turnOn, turnOff
 
 
-@rule("Keep last light activation updated", description="Keep last light activation updated", tags=[])
+@rule("Core - Keep last light activation updated", description="Keep last light activation updated", tags=[])
 @when("Member of gLightManagement_LightSwitchable received update")
 def set_last_activation(event):
     if ir.getItem(event.itemName).getStateAs(OnOffType) == OFF:
@@ -28,7 +28,7 @@ def set_last_activation(event):
         )
 
 
-@rule("Manage daylight status changes.", description="Manage daylight status changes.", tags=[])
+@rule("Core - Manage daylight status changes.", description="Manage daylight status changes.", tags=[])
 @when("Member of gSensor_Luminance changed")
 @when("Item LightManagement_AmbientLightCondition_LuminanceTreshold_Dark changed")
 @when("Item LightManagement_AmbientLightCondition_LuminanceTreshold_Obscured changed")
@@ -82,7 +82,7 @@ def check_daylight(event):
         events.postUpdate(conditionItem, condition)
 
 
-@rule("Manage lights according to respective modes among special states, nighttime and daytime.", description="Manage lights according to respective modes among special states, nighttime and daytime.", tags=[])
+@rule("Core - Manage lights according to respective modes among special states, nighttime and daytime.", description="Manage lights according to respective modes among special states, nighttime and daytime.", tags=[])
 @when("Member of gLightManagement_DarkMode received update")
 @when("Member of gLightManagement_BrightMode received update")
 @when("Member of gLightManagement_ObscuredMode received update")
@@ -147,7 +147,7 @@ def manage_light_state(event):
             turnOff(switchable, "SpecialStateManagement" == event.itemName)
 
 
-@rule("Manage lights on presence.", description="Manage lights on presence.", tags=[])
+@rule("Core - Manage lights on presence.", description="Manage lights on presence.", tags=[])
 @when("Member of gPresenceManagement_LastPresence received update")
 def manage_presence(event):
     room = get_room_name(event.itemName)
@@ -172,7 +172,7 @@ def manage_presence(event):
                 turnOn(switchable)
 
 
-@rule("Manage lights when come back home.", description="Manage lights when come back home.", tags=[])
+@rule("Core - Manage lights when come back home.", description="Manage lights when come back home.", tags=[])
 @when("Item PresenceManagement changed to {}".format(PresenceState.HOME))
 def welcome_light(event):
     condition = ir.getItem("LightManagement_AmbientLightCondition")
@@ -205,7 +205,7 @@ def welcome_light(event):
                 turnOn(switchable)
 
 
-@rule("Manage elapsed lights.", description="Manage elapsed lights.", tags=[])
+@rule("Core - Manage elapsed lights.", description="Manage elapsed lights.", tags=[])
 @when("Time cron 0 * * ? * * *")
 @when("Item SpecialStateManagement received update")
 @when("Item LightManagement_DefaultDuration received update")

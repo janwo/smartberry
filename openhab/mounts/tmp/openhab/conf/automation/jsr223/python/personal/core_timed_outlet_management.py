@@ -4,7 +4,7 @@ from personal.core_helpers import get_room_name
 from core.date import minutes_between, format_date, ZonedDateTime
 
 
-@rule("Keep last timed outlet activation updated", description="Keep last timed outlet activation updated.", tags=[])
+@rule("Core - Keep last timed outlet activation updated", description="Keep last timed outlet activation updated.", tags=[])
 @when("Member of gTimedOutletManagement_Switchable changed to ON")
 def set_last_activation(event):
     activations = ir.getItem(
@@ -20,7 +20,7 @@ def set_last_activation(event):
         )
 
 
-@rule("Manage elapsed outlets", description="Manage elapsed outlets", tags=[])
+@rule("Core - Manage elapsed outlets", description="Manage elapsed outlets", tags=[])
 @when("Time cron 0 * * ? * * *")
 @when("Member of gTimedOutletManagement_ActiveDuration received update")
 def manage_elapsed(event):

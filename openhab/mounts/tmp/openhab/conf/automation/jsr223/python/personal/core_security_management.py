@@ -8,7 +8,7 @@ from personal.core_special_state_management import SpecialState, is_special_stat
 from core.date import minutes_between, ZonedDateTime, format_date
 
 
-@rule("Security System - Trigger-Management", description="Security System - Trigger-Management", tags=[])
+@rule("Core - Security System - Trigger-Management", description="Security System - Trigger-Management", tags=[])
 @when("Member of gSecurity_AssaultTrigger received update OPEN")
 @when("Member of gSecurity_AssaultTrigger received update ON")
 def assault_trigger(event):
@@ -32,7 +32,7 @@ def assault_trigger(event):
     NotificationAction.sendBroadcastNotification(message)
 
 
-@rule("Security System - Armament-Management", description="Security System - Armament-Management", tags=[])
+@rule("Core - Security System - Armament-Management", description="Security System - Armament-Management", tags=[])
 @when("Item PresenceManagement received update {}".format(PresenceState.AWAY_SHORT))
 @when("Item PresenceManagement received update {}".format(PresenceState.AWAY_LONG))
 @when("Item Security_OperationState_AwayShort received update")
@@ -65,14 +65,14 @@ def armament(event):
         )
 
 
-@rule("Security System - Disarmament-Management", description="Security System - Disarmament-Management", tags=[])
+@rule("Core - Security System - Disarmament-Management", description="Security System - Disarmament-Management", tags=[])
 @when("Member of gSecurity_AssaultDisarmamer received update")
 def disarmament(event):
     events.postUpdate(ir.getItem("Security_OperationState"),
                       OperationState.OFF)
 
 
-@rule("Security System - Lock Closure-Management", description="Security System - Lock Closure-Management", tags=[])
+@rule("Core - Security System - Lock Closure-Management", description="Security System - Lock Closure-Management", tags=[])
 @when("Member of gSecurity_LockClosureTrigger received update CLOSED")
 @when("Member of gSecurity_LockClosureTrigger received update OFF")
 def lock_closure(event):
@@ -89,7 +89,7 @@ def lock_closure(event):
         )
 
 
-@rule("Security System - Turn off siren after X minutes", description="Security System - Turn off siren after X minutes", tags=[])
+@rule("Core - Security System - Turn off siren after X minutes", description="Security System - Turn off siren after X minutes", tags=[])
 @when("Time cron 0 * * ? * * *")
 def siren_autooff(event):
     autoOffTime = ir.getItem("Security_SireneAutoOff")

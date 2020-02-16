@@ -4,7 +4,7 @@ from core.actions import NotificationAction
 import functools
 
 
-@rule("Check things for offline state.", description="Check things for offline state.", tags=[])
+@rule("Core - Check things for offline state.", description="Check things for offline state.", tags=[])
 @when("Time cron 0 0 12 * * ?")
 def offline_check(event):
     offlineThingsNotifications = filter(lambda thing: (

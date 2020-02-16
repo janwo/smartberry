@@ -2,7 +2,7 @@ from core.rules import rule
 from core.triggers import when
 
 
-@rule("Start or stop house cleaning", description="Start or stop house cleaning", tags=[])
+@rule("Core - Start or stop house cleaning", description="Start or stop house cleaning", tags=[])
 @when("Item gCleaning_Vacuum_Clean received command")
 def manage_house_cleaning(event):
     command = 'clean' if event.itemCommand is ON else 'dock'
@@ -10,7 +10,7 @@ def manage_house_cleaning(event):
         events.sendCommand(item, command)
 
 
-@rule("Manage state on manual house cleaning", description="Manage state on manual house cleaning", tags=[])
+@rule("Core - Manage state on manual house cleaning", description="Manage state on manual house cleaning", tags=[])
 @when("Member of gCleaning_Vacuum_StateItem received update")
 def manage_manual_house_cleaning_updates(event):
     members = ir.getItem("gCleaning_Vacuum_StateItem").members

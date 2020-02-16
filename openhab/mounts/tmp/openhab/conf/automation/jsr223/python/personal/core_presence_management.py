@@ -7,7 +7,7 @@ from personal.core_light_management import turnOff, turnOn
 import random
 
 
-@rule("Set presence on motion.", description="Set presence on motion.", tags=[])
+@rule("Core - Set presence on motion.", description="Set presence on motion.", tags=[])
 @when("Member of gPresenceManagement_PresenceTrigger received update ON")
 def set_last_activation(event):
     events.postUpdate(ir.getItem(
@@ -28,7 +28,7 @@ def set_last_activation(event):
         )
 
 
-@rule("Set presence state to away in absence", description="Set presence state to away in absence", tags=[])
+@rule("Core - Set presence state to away in absence", description="Set presence state to away in absence", tags=[])
 @when("Time cron 0 0 * ? * * *")
 def check_abondance(event):
     hours_away_long = ir.getItem(
@@ -52,7 +52,7 @@ def check_abondance(event):
                           PresenceState.AWAY_SHORT)
 
 
-@rule("Simulate lights when away and simulation state is activated.", description="Simulate lights when away and simulation state is activated.", tags=[])
+@rule("Core - Simulate lights when away and simulation state is activated.", description="Simulate lights when away and simulation state is activated.", tags=[])
 @when("Time cron 0 0/15 0 ? * * *")
 def simulate_presence(event):
     simulateOnPresenceState = ir.getItem("PresenceManagement_Simulation")
