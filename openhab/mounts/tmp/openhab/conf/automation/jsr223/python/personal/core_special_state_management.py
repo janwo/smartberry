@@ -1,12 +1,9 @@
-from core.metadata import get_metadata, set_metadata
 from personal.core_helpers import get_room_name
-from personal.core_special_state_management import SpecialState, is_special_state
+from personal.core_special_state_management import SpecialState, is_special_state, get_scene_item_states, save_scene_item_states
 from core.triggers import when
 from core.rules import rule
 from core.date import hours_between, ZonedDateTime, format_date
 import re
-
-SCENE_ITEM_METADATA_NAMESPACE = "scene-{0}-data"
 
 
 @rule("Core - Set last activation if SpecialStateManagement changes.", description="Set last activation if SpecialStateManagement changes.", tags=[])
@@ -56,13 +53,11 @@ def reset_on_default_trigger(event):
 @when("Member of gSpecialStateManagement_Scenes received update")
 def change_scene(event):
     scene_index = event.itemState
-    store = get_metadata(
-        event.itemName,
-        SCENE_ITEM_METADATA_NAMESPACE.format(scene_index)
-    )
+    scene = ir.getItem(event.itemName)
+    item_states = get_scene_item_states(scene)
 
-    if store != None:
-        for item, state in store.configuration.iteritems():
+    if item_states != None:
+        for item, state in item_states:
             if ir.getItem(item) != None:
                 events.sendCommand(ir.getItem(item), str(state))
     else:
@@ -80,19 +75,7 @@ def store_scene(event):
     scene = next(
         (scene for scene in scenes if scene.name.startswith(room)), None)
     if scene != None:
-        scene_index = scene.state
-        store = {}
-        for item in ir.getItem("gSpecialStateManagement_SceneMembers").members:
-            if item.name.startswith(room):
-                store[item.name] = item.state.toString()
-
-        set_metadata(
-            scene.name,
-            SCENE_ITEM_METADATA_NAMESPACE.format(scene_index),
-            store,
-            overwrite=True
-        )
-
+        save_scene_item_states(scene)
         events.postUpdate(ir.getItem(event.itemName), OFF)
     else:
         store_scene.log.info(

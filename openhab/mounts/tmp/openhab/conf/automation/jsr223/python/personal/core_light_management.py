@@ -3,7 +3,7 @@ from core.triggers import when
 from core.rules import rule
 from core.date import minutes_between, ZonedDateTime, format_date
 from personal.core_presence_management import PresenceState, is_presence_state
-from personal.core_special_state_management import SpecialState, is_special_state
+from personal.core_special_state_management import SpecialState, is_special_state, has_scene_member_of_state
 from personal.core_helpers import get_room_name
 from personal.core_light_management import LightMode, AmbientLightCondition, get_light_mode_group, turnOn, turnOff
 
@@ -164,7 +164,8 @@ def manage_presence(event):
             (scene for scene in ir.getItem("gSpecialStateManagement_Scenes").members if scene.name.startswith(room)), None)
 
         if scene != None:
-            events.postUpdate(scene, scene.state)
+            if not has_scene_member_of_state(scene, ON):
+                events.postUpdate(scene, scene.state)
             return
 
         for switchable in ir.getItem("gLightManagement_LightSwitchable").members:
