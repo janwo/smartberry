@@ -53,4 +53,8 @@ sitemap core_settings label="Einstellungen" {
         Group item=gSecurity_AssaultDisarmamer
         Setpoint item=Security_SireneAutoOff minValue=0 maxValue=30 step=1
     }
+
+    Frame label="Sonstiges" {
+        Selection item=MiscManagement_BroadcastNotificationMode mappings=[0="Aus", 1="Standard", 2="Nur Dringend"]
+    }
 }

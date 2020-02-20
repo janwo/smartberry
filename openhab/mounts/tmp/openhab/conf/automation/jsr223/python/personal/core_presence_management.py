@@ -5,6 +5,7 @@ from personal.core_helpers import get_room_name
 from personal.core_presence_management import PresenceState, is_presence_state
 from personal.core_light_management import turnOff, turnOn
 import random
+from personal.core_misc import BroadcastType, broadcast
 
 
 @rule("Core - Set presence on motion.", description="Set presence on motion.", tags=[])
@@ -22,10 +23,10 @@ def set_last_activation(event):
     if presence != None:
         events.postUpdate(presence, format_date(ZonedDateTime.now()))
     else:
-        set_last_activation.log.warn(
-            "gPresenceManagement_LastPresence not found for room {}.".format(
-                room)
-        )
+        text = "gPresenceManagement_LastPresence not found for room {}.".format(
+            room)
+        broadcast(text)
+        set_last_activation.log.warn(text)
 
 
 @rule("Core - Set presence state to away in absence", description="Set presence state to away in absence", tags=[])
@@ -34,14 +35,16 @@ def check_abondance(event):
     hours_away_long = ir.getItem(
         "PresenceManagement_HoursUntilAwayLong")
     if isinstance(hours_away_long.state, UnDefType):
-        check_abondance.log.warn(
-            "No value set for {}.".format(hours_away_long.name))
+        text = "No value set for {}.".format(hours_away_long.name)
+        broadcast(text)
+        check_abondance.log.warn(text)
         return
 
     hours_away_short = ir.getItem("PresenceManagement_HoursUntilAwayShort")
     if isinstance(hours_away_short.state, UnDefType):
-        check_abondance.log.warn(
-            "No value set for {}.".format(hours_away_short.name))
+        text = "No value set for {}.".format(hours_away_short.name)
+        broadcast(text)
+        check_abondance.log.warn(text)
         return
 
     if hours_between(ir.getItem("PresenceManagement_LastPresence").state, ZonedDateTime.now()) > hours_away_long.state.intValue():
@@ -57,8 +60,9 @@ def check_abondance(event):
 def simulate_presence(event):
     simulateOnPresenceState = ir.getItem("PresenceManagement_Simulation")
     if isinstance(simulateOnPresenceState.state, UnDefType):
-        simulate_presence.log.warn(
-            "No value set for {}.".format(simulateOnPresenceState.name))
+        text = "No value set for {}.".format(simulateOnPresenceState.name)
+        broadcast(text)
+        simulate_presence.log.warn(text)
         return
 
     if is_presence_state(simulateOnPresenceState.state.intValue()):

@@ -4,6 +4,7 @@ from core.triggers import when
 from core.rules import rule
 from core.date import hours_between, ZonedDateTime, format_date
 import re
+from personal.core_misc import BroadcastType, broadcast
 
 
 @rule("Core - Set last activation if SpecialStateManagement changes.", description="Set last activation if SpecialStateManagement changes.", tags=[])
@@ -34,8 +35,9 @@ def reset_on_default_trigger(event):
     hours_after_deactivation = ir.getItem(
         "SpecialStateManagement_HoursUntilTriggersActivated")
     if isinstance(hours_after_deactivation.state, UnDefType):
-        reset_on_default_trigger.log.warn(
-            "No value set for {}.".format(hours_after_deactivation.name))
+        text = "No value set for {}.".format(hours_after_deactivation.name)
+        broadcast(text)
+        reset_on_default_trigger.log.warn(text)
         return
 
     if (
@@ -61,10 +63,10 @@ def change_scene(event):
             if ir.getItem(item) != None:
                 events.sendCommand(ir.getItem(item), str(state))
     else:
-        change_scene.log.info(
-            "No states saved for scene {0} [{1}], yet.".format(
-                event.itemName, scene_index)
-        )
+        text = "No states saved for scene {0} [{1}], yet.".format(
+            event.itemName, scene_index)
+        broadcast(text)
+        change_scene.log.warn(text)
 
 
 @rule("Core - Store scene.", description="Store scene.", tags=[])
@@ -78,10 +80,10 @@ def store_scene(event):
         save_scene_item_states(scene)
         events.postUpdate(ir.getItem(event.itemName), OFF)
     else:
-        store_scene.log.info(
-            "No item of group SpecialStateManagement_Scenes found for room {}.".format(
-                room)
-        )
+        text = "No item of group SpecialStateManagement_Scenes found for room {}.".format(
+            room)
+        broadcast(text)
+        store_scene.log.warn(text)
 
 
 @rule("Core - Forward SpecialStateManagement_SelectStateHelpers to SpecialStateManagement.", description="Forward SpecialStateManagement_SelectStateHelpers to SpecialStateManagement.", tags=[])
@@ -104,12 +106,12 @@ def forward_scenehelper_to_specialstatemanagment_scenes(event):
         if scene is not None:
             events.postUpdate(scene, match.group(1))
         else:
-            forward_scenehelper_to_specialstatemanagment_scenes.log.error(
-                "No item of group SpecialStateManagement_Scenes found for room {}.".format(
-                    room)
-            )
+            text = "No item of group SpecialStateManagement_Scenes found for room {}.".format(
+                room)
+            broadcast(text)
+            forward_scenehelper_to_specialstatemanagment_scenes.log.warn(text)
     else:
-        forward_scenehelper_to_specialstatemanagment_scenes.log.error(
-            "{} is malformatted as there is not integer at the end!".format(
-                event.itemName)
-        )
+        text = "{} is malformatted as there is not integer at the end!".format(
+            event.itemName)
+        broadcast(text)
+        forward_scenehelper_to_specialstatemanagment_scenes.log.warn(text)

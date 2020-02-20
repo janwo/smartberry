@@ -6,6 +6,7 @@ from personal.core_presence_management import PresenceState, is_presence_state
 from personal.core_special_state_management import SpecialState, is_special_state, has_scene_member_of_state
 from personal.core_helpers import get_room_name
 from personal.core_light_management import LightMode, AmbientLightCondition, get_light_mode_group, turnOn, turnOff
+from personal.core_misc import BroadcastType, broadcast
 
 
 @rule("Core - Keep last light activation updated", description="Keep last light activation updated", tags=[])
@@ -22,10 +23,10 @@ def set_last_activation(event):
     if activation != None:
         events.sendCommand(activation, format_date(ZonedDateTime.now()))
     else:
-        set_last_activation.log.warn(
-            "gLightManagement_LastActivation not found for room {}.".format(
-                room)
-        )
+        text = "gLightManagement_LastActivation not found for room {}.".format(
+            room)
+        broadcast(text)
+        set_last_activation.log.warn(text)
 
 
 @rule("Core - Manage daylight status changes.", description="Manage daylight status changes.", tags=[])
@@ -122,12 +123,12 @@ def manage_light_state(event):
             groupMember.state.intValue() != LightMode.UNCHANGED and (
                 groupMember.state.intValue() == LightMode.OFF or (
                     groupMember.state.intValue() == LightMode.ON_HOME_AND_SPECIAL_STATE_DEFAULT and (
-                        not is_special_state(SpecialState.DEFAULT) and
+                        not is_special_state(SpecialState.DEFAULT) or
                         not is_presence_state(PresenceState.HOME)
                     )
                 ) or (
                     groupMember.state.intValue() == LightMode.ON_AWAY_AND_SPECIAL_STATE_DEFAULT and (
-                        not is_special_state(SpecialState.DEFAULT) and
+                        not is_special_state(SpecialState.DEFAULT) or
                         is_presence_state(PresenceState.HOME)
                     )
                 ) or (
@@ -217,8 +218,9 @@ def elapsed_lights(event):
         SpecialState.DEFAULT) else ir.getItem("LightManagement_SleepDuration")
 
     if isinstance(durationItem.state, UnDefType):
-        elapsed_lights.log.warn(
-            "No value for {} is set.".format(durationItem.name))
+        text = "No value for {} is set.".format(durationItem.name)
+        broadcast(text)
+        elapsed_lights.log.warn(text)
         return
 
     elapsedRooms = map(

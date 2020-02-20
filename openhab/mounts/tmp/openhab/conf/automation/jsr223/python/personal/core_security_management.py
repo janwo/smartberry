@@ -1,11 +1,11 @@
 from personal.core_helpers import get_room_name
-from core.actions import NotificationAction
 from core.triggers import when
 from core.rules import rule
 from personal.core_presence_management import PresenceState, is_presence_state
 from personal.core_security_management import OperationState, is_security_state
 from personal.core_special_state_management import SpecialState, is_special_state
 from core.date import minutes_between, ZonedDateTime, format_date
+from personal.core_misc import BroadcastType, broadcast
 
 
 @rule("Core - Security System - Trigger-Management", description="Security System - Trigger-Management", tags=[])
@@ -17,9 +17,6 @@ def assault_trigger(event):
 
     events.postUpdate(ir.getItem("Security_AlarmTime"),
                       format_date(ZonedDateTime.now()))
-    assault_trigger.log.info(
-        "Detected Assault Attack - Alarm was triggered!"
-    )
 
     message = "Lautloser Alarm wurde von {} ausgelöst!".format(
         ir.getItem(event.itemName).label)
@@ -29,7 +26,10 @@ def assault_trigger(event):
         message = "Lauter Alarm wurde von {} ausgelöst!".format(
             ir.getItem(event.itemName).label)
 
-    NotificationAction.sendBroadcastNotification(message)
+    broadcast(message, BroadcastType.ATTENTION)
+    assault_trigger.log.warn(
+        "Detected Assault Attack - Alarm was triggered!"
+    )
 
 
 @rule("Core - Security System - Armament-Management", description="Security System - Armament-Management", tags=[])
@@ -59,7 +59,7 @@ def armament(event):
         events.postUpdate(ir.getItem(
             "Security_OperationState"), operationState)
     else:
-        NotificationAction.sendBroadcastNotification(
+        broadcast(
             "{} ist auf / an! Angrifferkennung bleibt aus.".format(
                 trigger.label)
         )
@@ -84,9 +84,9 @@ def lock_closure(event):
     if lock != None:
         events.sendCommand(lock, ON)
     else:
-        lock_closure.log.warn(
-            "gLock not found for room {}.".format(room)
-        )
+        text = "gLock not found for room {}.".format(room)
+        broadcast(text)
+        lock_closure.log.warn(text)
 
 
 @rule("Core - Security System - Turn off siren after X minutes", description="Security System - Turn off siren after X minutes", tags=[])
@@ -94,21 +94,24 @@ def lock_closure(event):
 def siren_autooff(event):
     autoOffTime = ir.getItem("Security_SireneAutoOff")
     if isinstance(autoOffTime.state, UnDefType):
-        siren_autooff.log.warn("No value for {} set.".format(autoOffTime.name))
+        text = "No value for {} set.".format(autoOffTime.name)
+        broadcast(text)
+        siren_autooff.log.warn(text)
         return
 
     if (autoOffTime.state.intValue() == 0 or
-            ir.getItem("Security_Sirene").state != ON or
-            isinstance(ir.getItem("Security_AlarmTime").state, UnDefType) or
-            minutes_between(ir.getItem("Security_AlarmTime").state, ZonedDateTime.now(
-            )) > autoOffTime.state.intValue()
+        ir.getItem("Security_Sirene").state != ON or
+        isinstance(ir.getItem("Security_AlarmTime").state, UnDefType) or
+        minutes_between(ir.getItem("Security_AlarmTime").state, ZonedDateTime.now(
+                )) > autoOffTime.state.intValue()
         ):
         return
 
     events.sendCommand(ir.getItem("Security_Sirene"), OFF)
-    NotificationAction.sendBroadcastNotification(
+    broadcast(
         "Alarm wurde nach {} Minuten automatisch deaktiviert.".format(
-            autoOffTime.state)
+            autoOffTime.state),
+        BroadcastType.ATTENTION
     )
     siren_autooff.log.info(
         "Alarm was turned off automatically after {} minutes.".format(

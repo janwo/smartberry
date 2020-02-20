@@ -1,6 +1,7 @@
+import functools
 from core.triggers import when
 from core.rules import rule
-from core.actions import NotificationAction
+from personal.core_misc import BroadcastType, broadcast
 import functools
 
 
@@ -19,7 +20,6 @@ def offline_check(event):
     if len(offlineThingsNotifications) > 0:
         notification = "Es wurden Geräte als nicht ONLINE erkannt:\n{}".format(
             functools.reduce("\n", offlineThingsNotifications))
-        NotificationAction.sendBroadcastNotification(notification)
-        offline_check.log.info(notification)
+        broadcast(notification)
     else:
         offline_check.log.info("All things are ONLINE!")

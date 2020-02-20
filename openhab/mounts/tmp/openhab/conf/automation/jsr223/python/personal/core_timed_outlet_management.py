@@ -2,6 +2,7 @@ from core.triggers import when
 from core.rules import rule
 from personal.core_helpers import get_room_name
 from core.date import minutes_between, format_date, ZonedDateTime
+from personal.core_misc import BroadcastType, broadcast
 
 
 @rule("Core - Keep last timed outlet activation updated", description="Keep last timed outlet activation updated.", tags=[])
@@ -14,10 +15,10 @@ def set_last_activation(event):
     if activation != None:
         events.sendCommand(activation, format_date(ZonedDateTime.now()))
     else:
-        set_last_activation.log.warn(
-            "gTimedOutletManagement_LastActivation not found for outlet {}.".format(
-                event.itemName)
-        )
+        text = "gTimedOutletManagement_LastActivation not found for outlet {}.".format(
+            event.itemName)
+        broadcast(text)
+        set_last_activation.log.warn(text)
 
 
 @rule("Core - Manage elapsed outlets", description="Manage elapsed outlets", tags=[])
@@ -36,10 +37,10 @@ def manage_elapsed(event):
                 switchable.name)), None)
 
             if activation == None or isinstance(activation.state, UnDefType) or duration == None or isinstance(duration.state, UnDefType):
-                manage_elapsed.log.warn(
-                    "gTimedOutletManagement_LastActivation or gTimedOutletManagement_ActiveDuration not found for outlet {}.".format(
-                        switchable.name)
-                )
+                text = "gTimedOutletManagement_LastActivation or gTimedOutletManagement_ActiveDuration not found for outlet {}.".format(
+                    switchable.name)
+                broadcast(text)
+                manage_elapsed.log.warn(text)
                 return
 
             if minutes_between(activation.state, ZonedDateTime.now()) > duration.state.intValue():
