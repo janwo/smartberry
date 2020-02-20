@@ -46,10 +46,14 @@ def turnOn(switchable, force=False):
             command = ir.getItem("LightManagement_DefaultBrightness").state if is_special_state(SpecialState.DEFAULT) else ir.getItem(
                 "LightManagement_SleepBrightness").state
             events.sendCommand(switchable, command)
+        else:
+            events.postUpdate(switchable, switchable.state)
 
     elif "gPower" in switchable.getGroupNames():
         if switchable.getStateAs(OnOffType) != ON or force:
             events.sendCommand(switchable, ON)
+        else:
+            events.postUpdate(switchable, switchable.state)
 
     else:
         logging.warn(

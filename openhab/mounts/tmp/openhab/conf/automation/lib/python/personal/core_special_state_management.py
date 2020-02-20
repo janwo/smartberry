@@ -1,4 +1,4 @@
-from core.jsr223.scope import ir, UnDefType, ON
+from core.jsr223.scope import ir, UnDefType, ON, events
 from personal.core_helpers import enum
 from core.metadata import get_metadata, set_metadata
 from personal.core_helpers import get_room_name
@@ -21,6 +21,14 @@ def has_scene_member_of_state(scene_item, state=ON, scene_index=-1):
             if itemObj != None and itemObj.getStateAs(state.getClass()) == state:
                 return True
     return False
+
+
+def poke_scene_members(scene_item, scene_index=-1):
+    item_states = get_scene_item_states(scene_item, scene_index)
+    if item_states != None:
+        for item, saved_state in item_states:
+            itemObj = ir.getItem(item)
+            events.postUpdate(itemObj, itemObj.state)
 
 
 def get_scene_item_states(scene_item, scene_index=-1):
