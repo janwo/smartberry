@@ -18,7 +18,7 @@ def has_scene_member_of_state(scene_item, state=ON, scene_index=-1):
     if item_states != None:
         for item, saved_state in item_states:
             itemObj = ir.getItem(item)
-            if itemObj != None and itemObj.state == state:
+            if itemObj != None and itemObj.getStateAs(state.getClass()) == state:
                 return True
     return False
 
