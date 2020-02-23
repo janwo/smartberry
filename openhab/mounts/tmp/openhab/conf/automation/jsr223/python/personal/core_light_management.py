@@ -165,7 +165,7 @@ def manage_presence(event):
             (scene for scene in ir.getItem("gSpecialStateManagement_Scenes").members if scene.name.startswith(room)), None)
 
         if scene != None:
-            if has_scene_member_of_state(scene, ON):
+            if has_scene_member_of_state(scene, state=ON, of_groups=["gLightManagement_LightSwitchable"]):
                 poke_scene_members(scene)
             else:
                 events.postUpdate(scene, scene.state)

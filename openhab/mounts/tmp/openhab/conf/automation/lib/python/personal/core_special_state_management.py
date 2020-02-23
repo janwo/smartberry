@@ -3,7 +3,10 @@ from personal.core_helpers import enum
 from core.metadata import get_metadata, set_metadata
 from personal.core_helpers import get_room_name
 
-SpecialState = enum(DEFAULT=0, SLEEP=1)
+SpecialState = enum(
+    DEFAULT=0,
+    SLEEP=1
+)
 SCENE_ITEM_METADATA_NAMESPACE = "scene-{0}-data"
 
 
@@ -12,22 +15,26 @@ def is_special_state(state=SpecialState.DEFAULT):
     return not isinstance(actualState, UnDefType) and actualState.intValue() == state
 
 
-def has_scene_member_of_state(scene_item, state=ON, scene_index=-1):
+def has_scene_member_of_state(scene_item, state=ON, scene_index=-1, of_groups=[]):
     item_states = get_scene_item_states(scene_item, scene_index)
 
     if item_states != None:
         for item, saved_state in item_states:
             itemObj = ir.getItem(item)
+            if len(of_groups) > 0 and not any(value for value in of_groups if value in itemObj.groupNames):
+                continue
             if itemObj != None and itemObj.getStateAs(state.getClass()) == state:
                 return True
     return False
 
 
-def poke_scene_members(scene_item, scene_index=-1):
+def poke_scene_members(scene_item, scene_index=-1, of_groups=[]):
     item_states = get_scene_item_states(scene_item, scene_index)
     if item_states != None:
         for item, saved_state in item_states:
             itemObj = ir.getItem(item)
+            if len(of_groups) > 0 and not any(value for value in of_groups if value in itemObj.groupNames):
+                continue
             events.postUpdate(itemObj, itemObj.state)
 
 
