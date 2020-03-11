@@ -1,10 +1,10 @@
 from personal.core_helpers import get_room_name
-from personal.core_special_state_management import SpecialState, is_special_state, get_scene_item_states, save_scene_item_states
+from personal.core_special_state_management import SpecialState, is_special_state, get_scene_item_states, save_scene_item_states, update_scene_members
 from core.triggers import when
 from core.rules import rule
 from core.date import hours_between, ZonedDateTime, format_date
 import re
-from personal.core_misc import BroadcastType, broadcast
+from personal.core_misc import broadcast
 
 
 @rule("Core - Set last activation if SpecialStateManagement changes.", description="Set last activation if SpecialStateManagement changes.", tags=[])
@@ -56,17 +56,7 @@ def reset_on_default_trigger(event):
 def change_scene(event):
     scene_index = event.itemState
     scene = ir.getItem(event.itemName)
-    item_states = get_scene_item_states(scene)
-
-    if item_states != None:
-        for item, state in item_states:
-            if ir.getItem(item) != None:
-                events.sendCommand(ir.getItem(item), str(state))
-    else:
-        text = "No states saved for scene {0} [{1}], yet.".format(
-            event.itemName, scene_index)
-        broadcast(text)
-        change_scene.log.warn(text)
+    update_scene_members(scene, scene_index)
 
 
 @rule("Core - Store scene.", description="Store scene.", tags=[])

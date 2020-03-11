@@ -2,6 +2,8 @@ from core.jsr223.scope import ir, UnDefType, ON, events
 from personal.core_helpers import enum
 from core.metadata import get_metadata, set_metadata
 from personal.core_helpers import get_room_name
+from core.log import logging
+from personal.core_misc import broadcast
 
 SpecialState = enum(
     DEFAULT=0,
@@ -15,27 +17,32 @@ def is_special_state(state=SpecialState.DEFAULT):
     return not isinstance(actualState, UnDefType) and actualState.intValue() == state
 
 
-def has_scene_member_of_state(scene_item, state=ON, scene_index=-1, of_groups=[]):
-    item_states = get_scene_item_states(scene_item, scene_index)
+def has_scene_member_of_condition(scene, condition, scene_index=-1):
+    item_states = get_scene_item_states(scene, scene_index)
 
     if item_states != None:
         for item, saved_state in item_states:
-            itemObj = ir.getItem(item)
-            if len(of_groups) > 0 and not any(value for value in of_groups if value in itemObj.groupNames):
-                continue
-            if itemObj != None and itemObj.getStateAs(state.getClass()) == state:
+            item_obj = ir.getItem(item)
+            if item_obj != None and condition(item):
                 return True
     return False
 
 
-def poke_scene_members(scene_item, scene_index=-1, of_groups=[]):
-    item_states = get_scene_item_states(scene_item, scene_index)
+def update_scene_members(scene, condition=(lambda input: True), scene_index=-1, poke_only=False):
+    item_states = get_scene_item_states(scene, scene_index)
     if item_states != None:
         for item, saved_state in item_states:
-            itemObj = ir.getItem(item)
-            if len(of_groups) > 0 and not any(value for value in of_groups if value in itemObj.groupNames):
-                continue
-            events.postUpdate(itemObj, itemObj.state)
+            item_obj = ir.getItem(item)
+            if item_obj != None and condition(item):
+                if poke_only:
+                    events.postUpdate(item_obj, item_obj.state)
+                else:
+                    events.sendCommand(item_obj, str(saved_state))
+    else:
+        text = "No states saved for scene {0} [{1}], yet.".format(
+            scene_item.name, scene_index)
+        broadcast(text)
+        logging.warn(text)
 
 
 def get_scene_item_states(scene_item, scene_index=-1):

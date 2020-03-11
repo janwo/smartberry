@@ -33,12 +33,18 @@ def get_light_mode_group():
     )
 
 
-def turnOn(switchable, force=False):
-    if is_special_state(SpecialState.SLEEP) and 'gLightManagement_LightSwitchable_IgnoreWhenSleep' in switchable.getGroupNames():
+def isIgnored(switchable):
+    if is_special_state(SpecialState.SLEEP) and 'gLightManagement_LightSwitchable_IgnoreWhenSleep' in switchable.groupNames:
         logging.info(
             "{} was ignored during sleep state due to gLightManagement_LightSwitchable_IgnoreWhenSleep group.".format(
                 switchable.name)
         )
+        return True
+    return False
+
+
+def turnOn(switchable, force=False):
+    if isIgnored(switchable):
         return
 
     if "gLight" in switchable.getGroupNames():

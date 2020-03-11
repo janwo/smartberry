@@ -2,7 +2,7 @@ from core.triggers import when
 from core.rules import rule
 from personal.core_helpers import get_room_name
 from core.date import minutes_between, format_date, ZonedDateTime
-from personal.core_misc import BroadcastType, broadcast
+from personal.core_misc import broadcast
 
 
 @rule("Core - Keep last timed outlet activation updated", description="Keep last timed outlet activation updated.", tags=[])

@@ -3,10 +3,10 @@ from core.triggers import when
 from core.rules import rule
 from core.date import minutes_between, ZonedDateTime, format_date
 from personal.core_presence_management import PresenceState, is_presence_state
-from personal.core_special_state_management import SpecialState, is_special_state, has_scene_member_of_state, poke_scene_members
+from personal.core_special_state_management import SpecialState, is_special_state, has_scene_member_of_condition, update_scene_members
 from personal.core_helpers import get_room_name
-from personal.core_light_management import LightMode, AmbientLightCondition, get_light_mode_group, turnOn, turnOff
-from personal.core_misc import BroadcastType, broadcast
+from personal.core_light_management import LightMode, AmbientLightCondition, get_light_mode_group, turnOn, turnOff, isIgnored
+from personal.core_misc import broadcast
 
 
 @rule("Core - Keep last light activation updated", description="Keep last light activation updated", tags=[])
@@ -165,10 +165,27 @@ def manage_presence(event):
             (scene for scene in ir.getItem("gSpecialStateManagement_Scenes").members if scene.name.startswith(room)), None)
 
         if scene != None:
-            if has_scene_member_of_state(scene, state=ON, of_groups=["gLightManagement_LightSwitchable"]):
-                poke_scene_members(scene)
-            else:
-                events.postUpdate(scene, scene.state)
+            poke_only = has_scene_member_of_condition(
+                scene=scene,
+                condition=(
+                    lambda member: "gLightManagement_LightSwitchable" in member.groupNames and member.state == ON)
+            )
+
+            def test_member(member):
+                if "gLightManagement_LightSwitchable" not in member.groupNames:
+                    return False
+
+                if isIgnored(member):
+                    manage_presence.log.info(
+                        "{} was ignored during sleep state due to gLightManagement_LightSwitchable_IgnoreWhenSleep group.".format(member.name))
+                    return False
+                return True
+
+            update_scene_members(
+                scene=scene,
+                condition=(lambda member: test_member(member)),
+                poke_only=poke_only
+            )
             return
 
         for switchable in ir.getItem("gLightManagement_LightSwitchable").members:
