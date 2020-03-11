@@ -23,7 +23,7 @@ def has_scene_member_of_condition(scene, condition, scene_index=-1):
     if item_states != None:
         for item, saved_state in item_states:
             item_obj = ir.getItem(item)
-            if item_obj != None and condition(item):
+            if item_obj != None and condition(item_obj):
                 return True
     return False
 
@@ -33,14 +33,14 @@ def update_scene_members(scene, condition=(lambda input: True), scene_index=-1, 
     if item_states != None:
         for item, saved_state in item_states:
             item_obj = ir.getItem(item)
-            if item_obj != None and condition(item):
+            if item_obj != None and condition(item_obj):
                 if poke_only:
                     events.postUpdate(item_obj, item_obj.state)
                 else:
                     events.sendCommand(item_obj, str(saved_state))
     else:
         text = "No states saved for scene {0} [{1}], yet.".format(
-            scene_item.name, scene_index)
+            scene.name, scene_index)
         broadcast(text)
         logging.warn(text)
 
