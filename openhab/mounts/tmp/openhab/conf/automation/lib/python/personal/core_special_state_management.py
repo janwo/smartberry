@@ -45,10 +45,10 @@ def update_scene_members(scene, condition=(lambda input: True), scene_index=-1, 
         logging.warn(text)
 
 
-def get_scene_item_states(scene_item, scene_index=-1):
-    scene_index = scene_item.state if scene_index < 0 else scene_index
+def get_scene_item_states(scene, scene_index=-1):
+    scene_index = scene.state if scene_index < 0 else scene_index
     store = get_metadata(
-        scene_item.name,
+        scene.name,
         SCENE_ITEM_METADATA_NAMESPACE.format(scene_index)
     )
 
