@@ -81,18 +81,18 @@ services:
       INFLUXDB_HTTP_LOG_ENABLED: false
       INFLUXDB_META_LOGGING_ENABLED: false
 
-  grafana:
-    build: ./grafana
-    networks:
-      - smartberry
-    restart: unless-stopped
-    ports:
-      - "3000:3000"
-    volumes:
-      - grafana:/var/lib/grafana
-    environment:
-      GF_SECURITY_ADMIN_USER: grafana
-      AUTH_GRAFANA_PASSWORD:
+  # grafana:
+  #   build: ./grafana
+  #   networks:
+  #     - smartberry
+  #   restart: unless-stopped
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - grafana:/var/lib/grafana
+  #   environment:
+  #     GF_SECURITY_ADMIN_USER: grafana
+  #     AUTH_GRAFANA_PASSWORD:
 
   watchtower:
     image: containrrr/watchtower
