@@ -27,7 +27,7 @@ def update_heater_on_presence_change(event):
 
 
 @rule("Core - Update heater when windows open or close", description="Update heater when windows open or close", tags=[])
-@when("Member of gHeatingManagement_ContactSwitchable changed")
+@when("Member of gHeatingManagement_ContactSwitchable received update")
 def update_heater_on_window_event(event):
     room = get_room_name(event.itemName)
 
@@ -38,7 +38,7 @@ def update_heater_on_window_event(event):
                 events.sendCommand(thermostat, 0)
 
     # No remaining opened windows after closing event?
-    elif not any((member.name.startswith(room) and member.state == OPEN) for member in ir.getItem("gSensor_Contact").members):
+    elif not any((member.name.startswith(room) and member.state == OPEN) for member in ir.getItem("gHeatingManagement_ContactSwitchable").members):
         # Change to normal temperature.
         # It does not respect any presence or special states for simplicity.
         for thermostat in ir.getItem("gHeatingManagement_Thermostat_Mode").members:
