@@ -39,7 +39,7 @@ def check_daylight(event):
     if event == None:
         lastCheckBuffer = ir.getItem(
             "LightManagement_AmbientLightCondition_LastLuminanceCheckBuffer")
-        if not isinstance(lastCheck.state, UnDefType) and minutes_between(
+        if not isinstance(lastCheck.state, UnDefType) and not isinstance(lastCheckBuffer.state, UnDefType) and minutes_between(
             lastCheck.state, ZonedDateTime.now()
         ) < lastCheckBuffer.state.intValue():
             return
