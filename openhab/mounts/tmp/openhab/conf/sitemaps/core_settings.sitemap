@@ -34,6 +34,7 @@ sitemap core_settings label="Einstellungen" {
         Setpoint item=LightManagement_SleepBrightness minValue=5 maxValue=100 step=5
         Setpoint item=LightManagement_DefaultDuration minValue=5 maxValue=100 step=5
         Setpoint item=LightManagement_SleepDuration minValue=5 maxValue=100 step=5
+        Setpoint item=LightManagement_AmbientLightCondition_LastLuminanceCheckBuffer minValue=5 maxValue=60 step=5
         Setpoint item=LightManagement_AmbientLightCondition_LuminanceTreshold_Obscured minValue=5 maxValue=100 step=5
         Setpoint item=LightManagement_AmbientLightCondition_LuminanceTreshold_Dark minValue=5 maxValue=100 step=5
         Text item=LightManagement_AmbientLightCondition

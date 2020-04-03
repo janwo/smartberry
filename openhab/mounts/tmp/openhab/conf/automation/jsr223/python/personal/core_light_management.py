@@ -30,10 +30,21 @@ def set_last_activation(event):
 
 
 @rule("Core - Manage daylight status changes.", description="Manage daylight status changes.", tags=[])
-@when("Member of gSensor_Luminance changed")
+@when("Time cron 0 * * ? * * *")
 @when("Item LightManagement_AmbientLightCondition_LuminanceTreshold_Dark changed")
 @when("Item LightManagement_AmbientLightCondition_LuminanceTreshold_Obscured changed")
 def check_daylight(event):
+    lastCheck = ir.getItem(
+        "LightManagement_AmbientLightCondition_LastLuminanceCheck")
+    if event == None:
+        lastCheckBuffer = ir.getItem(
+            "LightManagement_AmbientLightCondition_LastLuminanceCheckBuffer")
+        if not isinstance(lastCheck.state, UnDefType) and minutes_between(
+            lastCheck.state, ZonedDateTime.now()
+        ) < lastCheckBuffer.state.intValue():
+            return
+    events.sendCommand(lastCheck, format_date(ZonedDateTime.now()))
+
     activeSwitchables = filter(
         lambda switchable: switchable.getStateAs(OnOffType) == ON,
         ir.getItem("gLightManagement_LightSwitchable").members
