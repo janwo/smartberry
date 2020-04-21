@@ -4,7 +4,6 @@ volumes:
   openhab-conf:
   openhab-userdata:
   influxdb:
-  grafana:
 
 networks:
   smartberry:
@@ -29,9 +28,7 @@ services:
       AUTH_SAMBA_PASSWORD:
       USERID: 9001
       GROUPID: 9001
-      SHARE1: openhab;/mount/openhab;yes;no;no;openhab
-      #SHARE2: grafana;/mount/grafana;yes;no;no;grafana
-      #SHARE3: influxdb;/mount/influxdb;yes;no;no;influxdb
+      SHARE: openhab;/mount/openhab;yes;no;no;openhab
 
   traefik:
     build: ./traefik
@@ -77,22 +74,9 @@ services:
       AUTH_INFLUXDB_PASSWORD:
       INFLUXDB_LOG_LEVEL: error
       INFLUXDB_DATA_QUERY_LOG_ENABLED: true
-      INFLUXDB_REPORTING_DISABLED: false
+      INFLUXDB_REPORTING_DISABLED: true
       INFLUXDB_HTTP_LOG_ENABLED: false
       INFLUXDB_META_LOGGING_ENABLED: false
-
-  # grafana:
-  #   build: ./grafana
-  #   networks:
-  #     - smartberry
-  #   restart: unless-stopped
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - grafana:/var/lib/grafana
-  #   environment:
-  #     GF_SECURITY_ADMIN_USER: grafana
-  #     AUTH_GRAFANA_PASSWORD:
 
   watchtower:
     image: containrrr/watchtower
