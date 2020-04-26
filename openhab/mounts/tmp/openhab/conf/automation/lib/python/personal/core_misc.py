@@ -29,6 +29,8 @@ def broadcast(text, broadcast_type=BroadcastType.INFO):
             notificationMode == BroadcastNotificationMode.ATTENTION_ONLY
         )
     ):
-        logging.info(
-            "Sending following broadcast message to user: {}".format(text))
         NotificationAction.sendBroadcastNotification(text)
+        logging.info(
+            "Following message was broadcasted to all users: {}".format(text))
+    else:
+        logging.info("Following message was muted: {}".format(text))

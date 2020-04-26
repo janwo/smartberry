@@ -18,7 +18,6 @@ def set_last_activation(event):
         text = "gTimedOutletManagement_LastActivation not found for outlet {}.".format(
             event.itemName)
         broadcast(text)
-        set_last_activation.log.warn(text)
 
 
 @rule("Core - Manage elapsed outlets", description="Manage elapsed outlets", tags=[])
@@ -40,7 +39,6 @@ def manage_elapsed(event):
                 text = "gTimedOutletManagement_LastActivation or gTimedOutletManagement_ActiveDuration not found for outlet {}.".format(
                     switchable.name)
                 broadcast(text)
-                manage_elapsed.log.warn(text)
                 return
 
             if minutes_between(activation.state, ZonedDateTime.now()) > duration.state.intValue():

@@ -26,7 +26,6 @@ def set_last_activation(event):
         text = "gPresenceManagement_LastPresence not found for room {}.".format(
             room)
         broadcast(text)
-        set_last_activation.log.warn(text)
 
 
 @rule("Core - Set presence state to away in absence", description="Set presence state to away in absence", tags=[])
@@ -37,14 +36,12 @@ def check_abondance(event):
     if isinstance(hours_away_long.state, UnDefType):
         text = "No value set for {}.".format(hours_away_long.name)
         broadcast(text)
-        check_abondance.log.warn(text)
         return
 
     hours_away_short = ir.getItem("PresenceManagement_HoursUntilAwayShort")
     if isinstance(hours_away_short.state, UnDefType):
         text = "No value set for {}.".format(hours_away_short.name)
         broadcast(text)
-        check_abondance.log.warn(text)
         return
 
     if hours_between(ir.getItem("PresenceManagement_LastPresence").state, ZonedDateTime.now()) > hours_away_long.state.intValue():
@@ -62,7 +59,6 @@ def simulate_presence(event):
     if isinstance(simulateOnPresenceState.state, UnDefType):
         text = "No value set for {}.".format(simulateOnPresenceState.name)
         broadcast(text)
-        simulate_presence.log.warn(text)
         return
 
     if is_presence_state(simulateOnPresenceState.state.intValue()):

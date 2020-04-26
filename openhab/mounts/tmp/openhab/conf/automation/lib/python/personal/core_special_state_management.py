@@ -2,7 +2,6 @@ from core.jsr223.scope import ir, UnDefType, ON, events
 from personal.core_helpers import enum
 from core.metadata import get_metadata, set_metadata
 from personal.core_helpers import get_room_name
-from core.log import logging
 from personal.core_misc import broadcast
 
 SpecialState = enum(
@@ -42,7 +41,6 @@ def update_scene_members(scene, condition=(lambda input: True), scene_index=-1, 
         text = "No states saved for scene {0} [{1}], yet.".format(
             scene.name, scene_index)
         broadcast(text)
-        logging.warn(text)
 
 
 def get_scene_item_states(scene, scene_index=-1):

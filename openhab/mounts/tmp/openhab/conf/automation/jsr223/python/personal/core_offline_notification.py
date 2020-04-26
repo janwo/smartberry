@@ -16,7 +16,7 @@ def offline_check(event):
     )), offlineThingsNotifications)
 
     if len(offlineThingsNotifications) > 0:
-        notification = "Es wurden Geräte als nicht ONLINE erkannt:\n{}".format(functools.reduce(
+        notification = "Some things are not ONLINE:\n{}".format(functools.reduce(
             lambda a, b: a + "\n" + b,
             offlineThingsNotifications
         ))

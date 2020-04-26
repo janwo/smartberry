@@ -23,7 +23,9 @@ def update_heater_on_presence_change(event):
         state = ir.getItem("HeatingManagement_Thermostat_ModeAwayShort").state
 
     for item in ir.getItem("gHeatingManagement_Thermostat_Mode").members:
-        events.sendCommand(item, state)
+        room = get_room_name(item.name)
+        if not any((member.name.startswith(room) and member.state == OPEN) for member in ir.getItem("gHeatingManagement_ContactSwitchable").members):
+            events.sendCommand(item, state)
 
 
 @rule("Core - Update heater when windows open or close", description="Update heater when windows open or close", tags=[])

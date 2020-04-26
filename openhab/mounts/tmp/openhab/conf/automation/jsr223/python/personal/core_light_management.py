@@ -1,4 +1,3 @@
-from core.log import logging
 from core.triggers import when
 from core.rules import rule
 from core.date import minutes_between, ZonedDateTime, format_date
@@ -26,7 +25,6 @@ def set_last_activation(event):
         text = "gLightManagement_LastActivation not found for room {}.".format(
             room)
         broadcast(text)
-        set_last_activation.log.warn(text)
 
 
 @rule("Core - Manage daylight status changes.", description="Manage daylight status changes.", tags=[])
@@ -250,7 +248,6 @@ def elapsed_lights(event):
     if isinstance(durationItem.state, UnDefType):
         text = "No value for {} is set.".format(durationItem.name)
         broadcast(text)
-        elapsed_lights.log.warn(text)
         return
 
     elapsedRooms = map(

@@ -35,9 +35,8 @@ def reset_on_default_trigger(event):
     hours_after_deactivation = ir.getItem(
         "SpecialStateManagement_HoursUntilTriggersActivated")
     if isinstance(hours_after_deactivation.state, UnDefType):
-        text = "No value set for {}.".format(hours_after_deactivation.name)
+        text = "No value was set for {}.".format(hours_after_deactivation.name)
         broadcast(text)
-        reset_on_default_trigger.log.warn(text)
         return
 
     if (
@@ -51,12 +50,12 @@ def reset_on_default_trigger(event):
         )
 
 
-@rule("Core - Change scene.", description="Change scene.", tags=[])
+@rule("Core - Activate scene.", description="Activate scene.", tags=[])
 @when("Member of gSpecialStateManagement_Scenes received update")
-def change_scene(event):
+def activate_scene(event):
     scene_index = event.itemState
     scene = ir.getItem(event.itemName)
-    update_scene_members(scene, scene_index)
+    update_scene_members(scene=scene, scene_index=scene_index)
 
 
 @rule("Core - Store scene.", description="Store scene.", tags=[])
@@ -73,7 +72,6 @@ def store_scene(event):
         text = "No item of group SpecialStateManagement_Scenes found for room {}.".format(
             room)
         broadcast(text)
-        store_scene.log.warn(text)
 
 
 @rule("Core - Forward SpecialStateManagement_SelectStateHelpers to SpecialStateManagement.", description="Forward SpecialStateManagement_SelectStateHelpers to SpecialStateManagement.", tags=[])
@@ -99,9 +97,7 @@ def forward_scenehelper_to_specialstatemanagment_scenes(event):
             text = "No item of group SpecialStateManagement_Scenes found for room {}.".format(
                 room)
             broadcast(text)
-            forward_scenehelper_to_specialstatemanagment_scenes.log.warn(text)
     else:
         text = "{} is malformatted as there is not integer at the end!".format(
             event.itemName)
         broadcast(text)
-        forward_scenehelper_to_specialstatemanagment_scenes.log.warn(text)

@@ -12,24 +12,24 @@ from personal.core_misc import BroadcastType, broadcast
 @when("Member of gSecurity_AssaultTrigger received update OPEN")
 @when("Member of gSecurity_AssaultTrigger received update ON")
 def assault_trigger(event):
-    if is_security_state(OperationState.OFF) or not is_special_state(SpecialState.DEFAULT):
+    if (
+        is_security_state(OperationState.OFF) or
+        not is_special_state(SpecialState.DEFAULT)
+    ):
         return
 
-    events.postUpdate(ir.getItem("Security_AlarmTime"),
-                      format_date(ZonedDateTime.now()))
-
-    message = "Lautloser Alarm wurde von {} ausgelöst!".format(
-        ir.getItem(event.itemName).label)
-
-    if is_security_state(OperationState.ON):
-        events.sendCommand(ir.getItem("Security_Sirene"), ON)
-        message = "Lauter Alarm wurde von {} ausgelöst!".format(
-            ir.getItem(event.itemName).label)
-
-    broadcast(message, BroadcastType.ATTENTION)
-    assault_trigger.log.warn(
-        "Detected Assault Attack - Alarm was triggered!"
+    events.postUpdate(
+        ir.getItem("Security_AlarmTime"),
+        format_date(ZonedDateTime.now())
     )
+
+    label = ir.getItem(event.itemName).label
+    message = "Silent alarm was triggered by {}!".format(label)
+    if is_security_state(OperationState.ON):
+        message = "Striking alarm was triggered by {}!".format(label)
+        events.sendCommand(ir.getItem("Security_Sirene"), ON)
+
+    broadcast(message,  BroadcastType.ATTENTION)
 
 
 @rule("Core - Security System - Armament-Management", description="Security System - Armament-Management", tags=[])
@@ -59,17 +59,18 @@ def armament(event):
         events.postUpdate(ir.getItem(
             "Security_OperationState"), operationState)
     else:
-        broadcast(
-            "{} ist auf / an! Angrifferkennung bleibt aus.".format(
-                trigger.label)
-        )
+        broadcast("{} is in an opened state. No initiation into assault detection.".format(
+            trigger.label
+        ))
 
 
 @rule("Core - Security System - Disarmament-Management", description="Security System - Disarmament-Management", tags=[])
 @when("Member of gSecurity_AssaultDisarmamer received update")
 def disarmament(event):
-    events.postUpdate(ir.getItem("Security_OperationState"),
-                      OperationState.OFF)
+    events.postUpdate(
+        ir.getItem("Security_OperationState"),
+        OperationState.OF
+    )
 
 
 @rule("Core - Security System - Lock Closure-Management", description="Security System - Lock Closure-Management", tags=[])
@@ -86,7 +87,6 @@ def lock_closure(event):
     else:
         text = "gLock not found for room {}.".format(room)
         broadcast(text)
-        lock_closure.log.warn(text)
 
 
 @rule("Core - Security System - Turn off siren after X minutes", description="Security System - Turn off siren after X minutes", tags=[])
@@ -94,26 +94,22 @@ def lock_closure(event):
 def siren_autooff(event):
     autoOffTime = ir.getItem("Security_SireneAutoOff")
     if isinstance(autoOffTime.state, UnDefType):
-        text = "No value for {} set.".format(autoOffTime.name)
+        text = "No value was set for {}.".format(autoOffTime.name)
         broadcast(text)
-        siren_autooff.log.warn(text)
         return
 
     if (autoOffTime.state.intValue() == 0 or
-        ir.getItem("Security_Sirene").state != ON or
-        isinstance(ir.getItem("Security_AlarmTime").state, UnDefType) or
-        minutes_between(ir.getItem("Security_AlarmTime").state, ZonedDateTime.now(
+            ir.getItem("Security_Sirene").state != ON or
+            isinstance(ir.getItem("Security_AlarmTime").state, UnDefType) or
+            minutes_between(ir.getItem("Security_AlarmTime").state, ZonedDateTime.now(
                 )) > autoOffTime.state.intValue()
-        ):
+            ):
         return
 
     events.sendCommand(ir.getItem("Security_Sirene"), OFF)
+    message = "Alarm was automatically disabled after {} minutes.".format(
+        autoOffTime.state)
     broadcast(
-        "Alarm wurde nach {} Minuten automatisch deaktiviert.".format(
-            autoOffTime.state),
+        message,
         BroadcastType.ATTENTION
-    )
-    siren_autooff.log.info(
-        "Alarm was turned off automatically after {} minutes.".format(
-            autoOffTime.state)
     )
