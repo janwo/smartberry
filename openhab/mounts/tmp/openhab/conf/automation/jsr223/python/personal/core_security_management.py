@@ -69,7 +69,7 @@ def armament(event):
 def disarmament(event):
     events.postUpdate(
         ir.getItem("Security_OperationState"),
-        OperationState.OF
+        OperationState.OFF
     )
 
 
