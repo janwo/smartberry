@@ -26,7 +26,8 @@ def turn_off_switchables_on_sleep(event):
 def reset_scenes_on_sleep(event):
     if ir.getItem("SpecialStateManagement_ResetScenesOnSleep").state == ON:
         for item in ir.getItem("gSpecialStateManagement_Scenes").members:
-            events.sendCommand(item, 0)
+            if item.state != 0:
+                events.sendCommand(item, 0)
 
 
 @rule("Core - Set SpecialStateManagement to off if DefaultStateTrigger triggers.", description="Set SpecialStateManagement to off if DefaultStateTrigger triggers.", tags=[])
