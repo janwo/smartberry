@@ -89,6 +89,13 @@ def lock_closure(event):
         broadcast(text)
 
 
+@rule("Core - Security System - Turn off siren after Security_OperationState update", description="Security System - Turn off siren after Security_OperationState update", tags=[])
+@when("Item Security_OperationState received update")
+def siren_off(event):
+    if ir.getItem("Security_Sirene").state == ON:
+        events.sendCommand(ir.getItem("Security_Sirene"), OFF)
+
+
 @rule("Core - Security System - Turn off siren after X minutes", description="Security System - Turn off siren after X minutes", tags=[])
 @when("Time cron 0 * * ? * * *")
 def siren_autooff(event):
@@ -102,8 +109,8 @@ def siren_autooff(event):
             ir.getItem("Security_Sirene").state != ON or
             isinstance(ir.getItem("Security_AlarmTime").state, UnDefType) or
             minutes_between(ir.getItem("Security_AlarmTime").state, ZonedDateTime.now(
-                )) > autoOffTime.state.intValue()
-            ):
+            )) > autoOffTime.state.intValue()
+        ):
         return
 
     events.sendCommand(ir.getItem("Security_Sirene"), OFF)

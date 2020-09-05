@@ -26,6 +26,8 @@ def turn_off_switchables_on_sleep(event):
 def reset_scenes_on_sleep(event):
     if ir.getItem("SpecialStateManagement_ResetScenesOnSleep").state == ON:
         for item in ir.getItem("gSpecialStateManagement_Scenes").members:
+            reset_scenes_on_sleep.log.info(
+                item.name + ": item.state != 0 => " + item.state != 0 + " item.state = " + item.state)
             if item.state != 0:
                 events.sendCommand(item, 0)
 
