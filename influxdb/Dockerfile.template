@@ -1,5 +1,0 @@
-FROM influxdb:latest
-COPY ./pre-influxdb.sh /pre-influxdb.sh
-RUN chmod +x /pre-influxdb.sh
-ENTRYPOINT ["/pre-influxdb.sh"]
-CMD ["influxd"]

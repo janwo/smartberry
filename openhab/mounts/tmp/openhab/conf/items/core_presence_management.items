@@ -1,4 +1,4 @@
-Number     PresenceManagement                     "Anwesenheit"                                                            <motion>    (gPresenceManagement, gPersistence_TrackState, gPersistence_SaveState) // 1=Anwesend, 0=Kurz abwesend, 2=Lange abwesend
+Number     PresenceManagement                     "Anwesenheit"                                                            <motion>    (gPresenceManagement, gPersistence_SaveState) // 1=Anwesend, 0=Kurz abwesend, 2=Lange abwesend
 DateTime   PresenceManagement_LastPresence        "Letzte Anwesenheit (Gesamt): [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"           <time>      (gPresenceManagement_LastPresence)
 Number     PresenceManagement_Simulation          "Anwesenheit bei Dunkelheit simulieren"                                  <light>     (gPresenceManagement, gPersistence_SaveState) //2=Wenn lange abwesend, 0=Wenn kurz abwesend, 3=Aus
 Number     PresenceManagement_HoursUntilAwayShort "Stunden bis kurze Abwesenheit [%d h]"                                   <motion>    (gPresenceManagement, gPersistence_SaveState)
@@ -6,7 +6,7 @@ Number     PresenceManagement_HoursUntilAwayLong  "Stunden bis lange Abwesenheit
 
 Group                       gPresenceManagement                                       <motion>    (gHome)
 Group                       gPresenceManagement_PresenceTrigger                       <motion>    (gPresenceManagement)
-Group                       gPresenceManagement_LastPresence  "Letzte Anwesenheiten"  <time>      (gPresenceManagement, gPersistence_TrackState, gPersistence_SaveState)
+Group                       gPresenceManagement_LastPresence  "Letzte Anwesenheiten"  <time>      (gPresenceManagement, gPersistence_SaveState)
 Group:Switch:OR(ON, OFF)    gPresenceManagement_SimulationItem                        <motion>    (gPresenceManagement)
 
 /*******************************

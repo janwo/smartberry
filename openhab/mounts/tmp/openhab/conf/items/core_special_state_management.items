@@ -3,7 +3,7 @@ Group gSpecialStateManagement                                   "Sonderzustände
 Group gSpecialStateManagement_DefaultStateTrigger               "Auslösende Geräte für Rücksetzung von Sonderzustände"              <motion>
 Group gSpecialStateManagement_SelectStateHelpers
 
-Number      SpecialStateManagement                              "Sonderzustand"                                                     <cinema>    (gSpecialStateManagement, gPersistence_TrackState, gPersistence_SaveState) // 0=Deaktiviert, 1=Schlafmodus
+Number      SpecialStateManagement                              "Sonderzustand"                                                     <cinema>    (gSpecialStateManagement, gPersistence_SaveState) // 0=Deaktiviert, 1=Schlafmodus
 DateTime    SpecialStateManagement_LastActivation               "Letzte Sonderzustands-Änderung [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"    <time>      (gSpecialStateManagement, gPersistence_SaveState)
 Number      SpecialStateManagement_HoursUntilTriggersActivated  "Stundenminimum bis Rücksetzung durch Auslöser [%d h]"              <time>      (gSpecialStateManagement, gPersistence_SaveState)
 

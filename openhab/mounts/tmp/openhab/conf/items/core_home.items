@@ -14,7 +14,7 @@ Contact GF_LivingRoom_Window                "Fensterkontakt in Wohnzimmer [MAP(d
 Number  GF_LivingRoom_Window_Battery        "Fensterkontakt in Wohnzimmer [%d %%]"                          <battery>           (gBattery)
 
 Group   gGF_LivingRoom_Heater               "Heizung in Wohnzimmer"                                         <radiator>          (gHeatingManagement_Thermostat, gGF_LivingRoom) [ "Thermostat" ]
-Dimmer  GF_LivingRoom_Heater_Valve          "Heizung in Wohnzimmer: Ventilöffnung [%d %%]"                  <radiator>          (gGF_LivingRoom_Heater, gPersistence_TrackState)
+Dimmer  GF_LivingRoom_Heater_Valve          "Heizung in Wohnzimmer: Ventilöffnung [%d %%]"                  <radiator>          (gGF_LivingRoom_Heater)
 Number  GF_LivingRoom_Sensor_Humidity       "Luftfeuchtigkeit in Wohnzimmer [%d %%]"                        <humidity>          (gGF_LivingRoom_Heater, gGF_LivingRoom, gSensor_Humidity) ["CurrentHumidity"]
 Number  GF_LivingRoom_Sensor_Temperature    "Temperatur in Wohnzimmer [%.1f °C]"                            <temperature>       (gGF_LivingRoom_Heater, gSensor_Temperature) ["CurrentTemperature"]
 Number  GF_LivingRoom_Heater_Battery        "Heizung in Wohnzimmer [%d %%]"                                 <battery>           (gGF_LivingRoom_Heater, gBattery)

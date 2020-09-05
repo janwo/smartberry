@@ -58,36 +58,6 @@ services:
       AUTH_OPENHAB_SECRET:
       AUTH_OPENHAB_PASSWORD:
 
-
-  influxdb:
-    build: ./influxdb
-    networks:
-      - smartberry
-    restart: unless-stopped
-    volumes:
-      - influxdb:/var/lib/influxdb
-    environment:
-      INFLUXDB_DB: smartberry
-      INFLUXDB_USER: influxdb
-      AUTH_INFLUXDB_PASSWORD:
-      INFLUXDB_LOG_LEVEL: error
-      INFLUXDB_DATA_QUERY_LOG_ENABLED: true
-      INFLUXDB_REPORTING_DISABLED: true
-      INFLUXDB_HTTP_LOG_ENABLED: false
-      INFLUXDB_META_LOGGING_ENABLED: false
-
-  watchtower:
-    image: containrrr/watchtower
-    networks:
-      - smartberry
-    restart: unless-stopped
-    labels:
-      io.balena.features.balena-socket: true
-    environment:
-      WATCHTOWER_SCHEDULE: 0 0 4 ? * 6
-      WATCHTOWER_CLEANUP: 'true'
-      DOCKER_HOST: unix:///var/run/balena.sock
-
   bluetooth-beacon:
     image: dominikth/rpi-docker-ibeacon:latest
     network_mode: host
