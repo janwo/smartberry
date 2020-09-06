@@ -3,7 +3,7 @@ from core.triggers import when
 
 
 @rule("Core - Start or stop house cleaning", description="Start or stop house cleaning", tags=[])
-@when("Item gCleaning_Vacuum_Clean received command")
+@when("Member of gCleaning_Vacuum_Clean received command")
 def manage_house_cleaning(event):
     command = 'clean' if event.itemCommand is ON else 'dock'
     for item in ir.getItem("gCleaning_Vacuum_CommandItem").members:

@@ -1,17 +1,18 @@
 Group  gCleaning                    "House Cleaning Management"     <toilet>    (gHome)
 Group  gCleaning_Vacuum_CommandItem                                 <lawnmower>
 Group  gCleaning_Vacuum_StateItem                                   <lawnmower>
+Group  gCleaning_Vacuum_Clean                                       <lawnmower>
 
 /*******************************
  * HOW TO SETUP VACUUM ROBOTS? *
  *******************************
    1) Each vacuum robot has four necessary items, which all have the different groups attached. See the example below. Add them to your items for every vacuum robot you have.
-   2) Add the switch gCleaning_Vacuum_Clean to your items in order to start cleaning.
+   2) Add the switch Cleaning_Vacuum_Clean to your items in order to start cleaning.
 
  ***********
  * EXAMPLE *
  ***********
-   Switch gCleaning_Vacuum_Clean       "House Cleaning"                <lawnmower> (gHome, gCleaning) { synonyms="House cleaning, Hausreinigung", ga="Vacuum" }
+   Switch Cleaning_Vacuum_Clean    "House Cleaning"                                                       <lawnmower>   (gHome, gCleaning, gCleaning_Vacuum_Clean) { synonyms="House cleaning, Hausreinigung", ga="Vacuum" }
 
    String FF_Vacuum_Command                                                                                            (gCleaning, gCleaning_Vacuum_CommandItem)
    String FF_Vacuum_State          "Saugroboter: Status [MAP(core_cleaning_management_de.map):%s]"         <switch>    (gCleaning, gCleaning_Vacuum_StateItem)
