@@ -14,9 +14,6 @@ fi
 # Set hostfile
 echo ${AUTH_DEVICE_HOSTKEY} > ${OPENHAB_HOME}/userdata/etc/host.key
 
-# Set influxdb
-sed -i "s?AUTH_INFLUXDB_PASSWORD?${AUTH_INFLUXDB_PASSWORD}?g" /tmp/openhab/conf/services/influxdb.cfg
-
 # Remove non standard files within conf-folder
 find ${OPENHAB_HOME}/conf/sitemaps -type f -name 'core_*.sitemap' -delete
 find ${OPENHAB_HOME}/conf/items -type f -name 'core_*.items' -delete
@@ -55,13 +52,10 @@ fi
 # Add persistence services
 MISC_LINE=$(grep '^[[:space:]]\?persistence' ${OPENHAB_HOME}/conf/services/addons.cfg)
 if [ $? -eq 0 ]; then
-    if [[ ${MISC_LINE} != *"influxdb"* ]]; then
-        sed -i 's/persistence\s\?=\s\?/persistence = influxdb,/' ${OPENHAB_HOME}/conf/services/addons.cfg
-    fi
     if [[ ${MISC_LINE} != *"mapdb"* ]]; then
         sed -i 's/persistence\s\?=\s\?/persistence = mapdb,/' ${OPENHAB_HOME}/conf/services/addons.cfg
     fi
 else
     ## Just append last line
-    echo "persistence = mapdb, influxdb" >> ${APPDIR}/conf/services/addons.cfg
+    echo "persistence = mapdb" >> ${APPDIR}/conf/services/addons.cfg
 fi

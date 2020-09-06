@@ -3,7 +3,6 @@ volumes:
   openhab-addons:
   openhab-conf:
   openhab-userdata:
-  influxdb:
 
 networks:
   smartberry:
