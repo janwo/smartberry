@@ -16,6 +16,6 @@ def manage_manual_house_cleaning_updates(event):
     members = ir.getItem("gCleaning_Vacuum_StateItem").members
     hasBusyMember = any(member.state == 'BUSY' for member in members)
     updatedState = ON if hasBusyMember else OFF
-    group = ir.getItem("gCleaning_Vacuum_Clean")
-    if group.state != updatedState:
-        events.postUpdate(group, updatedState)
+    for member in ir.getItem("gCleaning_Vacuum_Clean").members:
+        if member.state != updatedState:
+            events.postUpdate(member, updatedState)

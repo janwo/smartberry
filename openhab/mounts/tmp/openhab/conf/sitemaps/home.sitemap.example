@@ -43,7 +43,7 @@
 //   }
 
 //   // Create a section for house cleaning information.
-//   Switch item=gCleaning_Vacuum_Clean
+//   Switch item=Cleaning_Vacuum_Clean
 //   Frame label="Hausreinigung" {
 // 		Text label="Erdgeschoss" icon="corridor" {
 // 			Text item=GF_Vacuum_Battery
