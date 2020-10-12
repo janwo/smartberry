@@ -56,8 +56,6 @@ services:
       AUTH_OPENHAB_PASSWORD:
     labels:
       traefik.enable: "true"
-      traefik.http.routers.openhab-router.rule: PathPrefix(`/`)
-      traefik.http.routers.openhab-router.entrypoints: web
 
   bluetooth-beacon:
     image: dominikth/rpi-docker-ibeacon:latest

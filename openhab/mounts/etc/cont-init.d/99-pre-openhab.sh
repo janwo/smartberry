@@ -32,7 +32,7 @@ if [ $? -eq 0 ]; then
     fi
 else
     ## Just append last line
-    echo "transformation = map" >> ${APPDIR}/conf/services/addons.cfg
+    echo "transformation = map" >> ${OPENHAB_HOME}/conf/services/addons.cfg
 fi
 
 # Add misc services
@@ -43,7 +43,7 @@ if [ $? -eq 0 ]; then
     fi
 else
     ## Just append last line
-    echo "misc = openhabcloud" >> ${APPDIR}/conf/services/addons.cfg
+    echo "misc = openhabcloud" >> ${OPENHAB_HOME}/conf/services/addons.cfg
 fi
 
 # Add persistence services
@@ -54,5 +54,5 @@ if [ $? -eq 0 ]; then
     fi
 else
     ## Just append last line
-    echo "persistence = mapdb" >> ${APPDIR}/conf/services/addons.cfg
+    echo "persistence = mapdb" >> ${OPENHAB_HOME}/conf/services/addons.cfg
 fi
