@@ -56,9 +56,9 @@ services:
       AUTH_OPENHAB_PASSWORD:
     labels:
       traefik.enable: "true"
-      traefik.http.routers.openhab-router.rule: "PathPrefix(`/`)"
-      traefik.http.routers.openhab-router.entrypoints: "web"
-      traefik.http.routers.openhab-router.service: "openhab-service"
+      traefik.http.routers.openhab-router.rule: PathPrefix(`/`)
+      traefik.http.routers.openhab-router.entrypoints: web
+      traefik.http.routers.openhab-router.service: openhab-service
       traefik.http.services.openhab-service.loadbalancer.server.port: 8080
 
   bluetooth-beacon:
