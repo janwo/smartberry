@@ -5,30 +5,6 @@ RUN apt-get update && apt-get install -y \
     curl \
     unzip
 
-# Install Jython
-ARG JYTHON_HOME="/opt/jython"
-ARG JYTHON_VERSION="2.7.0"
-ENV JYTHON_HOME="${JYTHON_HOME}" \
-    JYTHON_JAVA_OPTS="-Xbootclasspath/a:${JYTHON_HOME}/jython.jar -Dpython.home=${JYTHON_HOME} -Dpython.path=${JYTHON_HOME}/Lib:${OPENHAB_HOME}/conf/automation/lib/python"
-
-RUN mkdir -p ${JYTHON_HOME} && \
-    curl -L https://repo1.maven.org/maven2/org/python/jython-installer/${JYTHON_VERSION}/jython-installer-${JYTHON_VERSION}.jar -o /tmp/jython-installer.jar && \
-    java -jar /tmp/jython-installer.jar -s -d ${JYTHON_HOME}/ -t standard -e demo doc src && \
-    rm /tmp/jython-installer.jar && \
-    chmod -R o+w ${JYTHON_HOME}
-
-RUN curl -L https://github.com/OH-Jython-Scripters/openhab2-jython/archive/master.zip -o /tmp/master.zip && \
-    unzip /tmp/master.zip -d /tmp && \
-    rm /tmp/master.zip && \
-    mv /tmp/openhab-helper-libraries-master/Core /tmp/jython && \
-    mv /tmp/jython/automation/lib/python/configuration.py.example /tmp/jython/automation/lib/python/configuration.py && \
-    mv /tmp/jython/automation/lib/python/personal/__init__.py.example /tmp/jython/automation/lib/python/personal/__init__.py && \
-    rm -rf /tmp/openhab-helper-libraries-master && \
-    rm -rf /tmp/jython/automation/lib/javascript && \
-    rm -rf /tmp/jython/automation/lib/groovy && \
-    rm -rf /tmp/jython/automation/jsr223/javascript && \
-    rm -rf /tmp/jython/automation/jsr223/groovy
-
 COPY ./mounts/etc/cont-init.d/ /etc/cont-init.d/
 COPY ./mounts/tmp/openhab/ /tmp/openhab/
 LABEL traefik.enable=true \
