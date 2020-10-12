@@ -37,8 +37,6 @@ services:
     restart: unless-stopped
     labels:
       io.balena.features.balena-socket: true
-    environment:
-      AUTH_OPENHAB_PASSWORD:
 
   openhab:
     build: ./openhab
@@ -56,6 +54,12 @@ services:
       AUTH_OPENHAB_UUID:
       AUTH_OPENHAB_SECRET:
       AUTH_OPENHAB_PASSWORD:
+    label:
+      traefik.enable: "true"
+      traefik.http.routers.openhab-router.rule: "PathPrefix(`/`)"
+      traefik.http.routers.openhab-router.entrypoints: "web"
+      traefik.http.routers.openhab-router.service: openhab-service
+      traefik.http.services.openhab-service.loadbalancer.server.port: 8080
 
   bluetooth-beacon:
     image: dominikth/rpi-docker-ibeacon:latest
