@@ -1,4 +1,4 @@
-Group   gHome                          "Wohnung"
+Group   gHome                          "Wohnung"            ["Location"]
 
 /********************
  * SETUP YOUR ROOMS *

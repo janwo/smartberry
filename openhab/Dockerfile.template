@@ -1,4 +1,4 @@
-FROM openhab/openhab:3.0.0-snapshot
+FROM openhab/openhab:3.0.0.M1-debian
 #FROM openhab/openhab:latest-debian
 RUN apt-get update && apt-get install -y \
     rsync \
