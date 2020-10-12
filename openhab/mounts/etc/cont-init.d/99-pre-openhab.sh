@@ -38,15 +38,12 @@ fi
 # Add misc services
 MISC_LINE=$(grep '^[[:space:]]\?misc' ${OPENHAB_HOME}/conf/services/addons.cfg)
 if [ $? -eq 0 ]; then
-    if [[ ${MISC_LINE} != *"ruleengine"* ]]; then
-        sed -i 's/misc\s\?=\s\?/misc = ruleengine,/' ${OPENHAB_HOME}/conf/services/addons.cfg
-    fi
     if [[ ${MISC_LINE} != *"openhabcloud"* ]]; then
         sed -i 's/misc\s\?=\s\?/misc = openhabcloud,/' ${OPENHAB_HOME}/conf/services/addons.cfg
     fi
 else
     ## Just append last line
-    echo "misc = ruleengine, openhabcloud" >> ${APPDIR}/conf/services/addons.cfg
+    echo "misc = openhabcloud" >> ${APPDIR}/conf/services/addons.cfg
 fi
 
 # Add persistence services
