@@ -54,7 +54,7 @@ services:
       AUTH_OPENHAB_UUID:
       AUTH_OPENHAB_SECRET:
       AUTH_OPENHAB_PASSWORD:
-    label:
+    labels:
       traefik.enable: "true"
       traefik.http.routers.openhab-router.rule: "PathPrefix(`/`)"
       traefik.http.routers.openhab-router.entrypoints: "web"
