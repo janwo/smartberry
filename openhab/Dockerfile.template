@@ -1,4 +1,5 @@
-FROM openhab/openhab:latest-debian
+FROM openhab/openhab:3.0.0-snapshot
+#FROM openhab/openhab:latest-debian
 RUN apt-get update && apt-get install -y \
     rsync \
     curl \
@@ -31,8 +32,8 @@ RUN curl -L https://github.com/OH-Jython-Scripters/openhab2-jython/archive/maste
 COPY ./mounts/etc/cont-init.d/ /etc/cont-init.d/
 COPY ./mounts/tmp/openhab/ /tmp/openhab/
 LABEL traefik.enable=true \
-      traefik.backend="openhab" \
-      traefik.http.routers.openhab-router.middlewares="openhab-auth@file" \
-      traefik.http.routers.openhab-router.rule="PathPrefix(`/`)" \
-      traefik.http.routers.traefik-router.entrypoints="web" \
-      traefik.http.services.openhab-service.loadbalancer.server.port=8080
+    traefik.backend="openhab" \
+    traefik.http.routers.openhab-router.middlewares="openhab-auth@file" \
+    traefik.http.routers.openhab-router.rule="PathPrefix(`/`)" \
+    traefik.http.routers.traefik-router.entrypoints="web" \
+    traefik.http.services.openhab-service.loadbalancer.server.port=8080
