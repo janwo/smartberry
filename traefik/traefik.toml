@@ -15,6 +15,3 @@
     endpoint = "unix:///var/run/balena.sock"
     exposedByDefault = false
     network = "smartberry"
-
-  [providers.file]
-    filename = "/etc/traefik/dynamic-conf.toml"
