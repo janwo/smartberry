@@ -8,8 +8,7 @@ from personal.core_misc import broadcast
 @rule("Core - Keep last timed outlet activation updated", description="Keep last timed outlet activation updated.", tags=[])
 @when("Member of gTimedOutletManagement_Switchable changed to ON")
 def set_last_activation(event):
-    activations = ir.getItem(
-        "gTimedOutletManagement_LastActivation").members
+    activations = ir.getItem("gTimedOutletManagement_LastActivation").members
     activation = next(
         (activation for activation in activations if activation.name.startswith(event.itemName)), None)
     if activation != None:

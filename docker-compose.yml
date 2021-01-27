@@ -9,7 +9,9 @@ networks:
 
 services:
   samba:
-    build: ./samba
+    build:
+      context: ./samba
+      dockerfile: Dockerfile.template
     ports:
       - "445:445/udp"
       - "139:139/udp"
@@ -28,7 +30,9 @@ services:
       SHARE: openhab;/mount;yes;no;no;openhab
 
   traefik:
-    build: ./traefik
+    build:
+      context: ./traefik
+      dockerfile: Dockerfile.template
     ports:
       - 80:80
       - 8080:8080
@@ -39,7 +43,9 @@ services:
       io.balena.features.balena-socket: true
 
   openhab:
-    build: ./openhab
+    build:
+      context: ./openhab
+      dockerfile: Dockerfile.template
     networks:
       - smartberry
     restart: unless-stopped
@@ -53,7 +59,6 @@ services:
     environment:
       AUTH_OPENHAB_UUID:
       AUTH_OPENHAB_SECRET:
-      AUTH_OPENHAB_PASSWORD:
     labels:
       traefik.enable: "true"
       traefik.http.routers.openhab.rule: PathPrefix(`/`)
