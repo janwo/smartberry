@@ -8,7 +8,7 @@ RUN apk add --no-cache \
 COPY --chown=${USER_ID}:${GROUP_ID} ./mounts/etc/cont-init.d/ /etc/cont-init.d
 COPY --chown=${USER_ID}:${GROUP_ID} ./mounts/tmp/openhab/ /tmp/${OPENHAB_HOME}
 
-RUN curl -O -L https://github.com/jimtng/openhab-helper-libraries/archive/oh3-patch.zip && unzip oh3-patch.zip && \
+RUN curl -O -L https://github.com/jimtng/openhab-helper-libraries/archive/oh3-patch.zip && unzip oh3-patch.zip && rm oh3-patch.zip && \
     chown -R ${USER_ID}:${GROUP_ID} ./openhab-helper-libraries-oh3-patch && \
     mv ./openhab-helper-libraries-oh3-patch/Core/automation/lib/python/configuration.py.example /tmp/${OPENHAB_HOME}/conf/automation/lib/python/configuration.py && \
     mv ./openhab-helper-libraries-oh3-patch/Core/automation/lib/python/personal/__init__.py.example /tmp/${OPENHAB_HOME}/conf/automation/lib/python/personal/__init__.py && \
