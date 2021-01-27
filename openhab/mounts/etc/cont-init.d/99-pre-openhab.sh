@@ -47,7 +47,7 @@ fi
 MISC_LINE="$(grep -E '^[^#]?\s?misc' ${ADDONS_FILE} || echo '' )"
 if [ "${MISC_LINE}" != '' ]; then
     if [[ "${MISC_LINE}" != *"openhabcloud"* ]]; then
-        sed -i 's/misc\s\?=\s\?/misc = openhabcloud,/' addons.cfg
+        sed -i 's/misc\s\?=\s\?/misc = openhabcloud,/' ${ADDONS_FILE}
     fi
 else
     ## Just append last line
