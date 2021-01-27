@@ -1,4 +1,4 @@
-FROM openhab/openhab:latest
+FROM openhab/openhab:3.0.0
 #FROM openhab/openhab:latest-alpine
 
 RUN apt-get update && apt-get install \
