@@ -31,7 +31,7 @@ rsync -av -rv /tmp/${OPENHAB_HOME}/ ${OPENHAB_HOME}
 
 # Add transformation services
 ADDONS_FILE=${OPENHAB_HOME}/conf/services/addons.cfg
-TRANSFORMATION_LINE=$(grep -e '^[^#]\s?transformation' ${ADDONS_FILE} || echo '' )
+TRANSFORMATION_LINE=$(grep -e '^[^#]?\s?transformation' ${ADDONS_FILE} || echo '' )
 if [ ! -z ${TRANSFORMATION_LINE} ]; then
     if [[ ${TRANSFORMATION_LINE} != *"map"* ]]; then
         sed -i 's/transformation\s\?=\s\?/transformation = map,/' ${ADDONS_FILE}
@@ -42,7 +42,7 @@ else
 fi
 
 # Add misc services
-MISC_LINE=$(grep -e '^[^#]\s?misc' ${ADDONS_FILE} || echo '' )
+MISC_LINE=$(grep -e '^[^#]?\s?misc' ${ADDONS_FILE} || echo '' )
 if [ ! -z ${MISC_LINE} ]; then
     if [[ ${MISC_LINE} != *"openhabcloud"* ]]; then
         sed -i 's/misc\s\?=\s\?/misc = openhabcloud,/' ${ADDONS_FILE}
@@ -53,7 +53,7 @@ else
 fi
 
 # Add automation services
-AUTOMATION_LINE=$(grep -e '^[^#]\s?automation' ${ADDONS_FILE} || echo '')
+AUTOMATION_LINE=$(grep -e '^[^#]?\s?automation' ${ADDONS_FILE} || echo '')
 if [ ! -z ${AUTOMATION_LINE} ]; then
     if [[ ${AUTOMATION_LINE} != *"jythonscripting"* ]]; then
         sed -i 's/automation\s\?=\s\?/automation = jythonscripting,/' ${ADDONS_FILE}
@@ -64,7 +64,7 @@ else
 fi
 
 # Add persistence services
-PERSISTENCE_LINE=$(grep -e '^[^#]\s?persistence' ${ADDONS_FILE} || echo '' )
+PERSISTENCE_LINE=$(grep -e '^[^#]?\s?persistence' ${ADDONS_FILE} || echo '' )
 if [ ! -z ${PERSISTENCE_LINE} ]; then
     if [[ ${PERSISTENCE_LINE} != *"rrd4j"* ]]; then
         sed -i 's/persistence\s\?=\s\?/persistence = rrd4j,/' ${ADDONS_FILE}
