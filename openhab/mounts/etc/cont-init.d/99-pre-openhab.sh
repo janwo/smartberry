@@ -26,12 +26,7 @@ find ${OPENHAB_HOME}/conf/rules -type f -name 'core_*.rules' -delete
 find ${OPENHAB_HOME}/conf/transform -type f -name 'core_*.map' -delete
 
 # Overwrite files including conf-folder
-ls /tmp/${OPENHAB_HOME}/conf/automation/lib/python/personal
 rsync -av -rv /tmp/${OPENHAB_HOME}/ ${OPENHAB_HOME}
-
-# Allow internal ssh connections
-RUNTIME_FILE=${OPENHAB_HOME}/conf/services/runtime.cfg
-sed -n -e 's/[#\s]*\(org.apache.karaf.shell:sshHost\s\?=\s\?\)[^\s]*/\10.0.0.0/' ${RUNTIME_FILE}
 
 # Start addons.cfg transformations
 ADDONS_FILE=${OPENHAB_HOME}/conf/services/addons.cfg
