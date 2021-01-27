@@ -1,4 +1,4 @@
-FROM openhab/openhab:latest-alpine
+FROM openhab/openhab:3.1.0-snapshot-alpine
 RUN apk add --no-cache \
     rsync \
     curl \
