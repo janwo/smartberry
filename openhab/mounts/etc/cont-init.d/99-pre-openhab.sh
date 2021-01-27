@@ -29,11 +29,13 @@ find ${OPENHAB_HOME}/conf/transform -type f -name 'core_*.map' -delete
 ls /tmp/${OPENHAB_HOME}/conf/automation/lib/python/personal
 rsync -av -rv /tmp/${OPENHAB_HOME}/ ${OPENHAB_HOME}
 
-# Add transformation services
+# Start addons.cfg transformations
 ADDONS_FILE=${OPENHAB_HOME}/conf/services/addons.cfg
-TRANSFORMATION_LINE=$(grep -e '^[^#]?\s?transformation' ${ADDONS_FILE} || echo '' )
-if [ ! -z ${TRANSFORMATION_LINE} ]; then
-    if [[ ${TRANSFORMATION_LINE} != *"map"* ]]; then
+
+# => transformation
+TRANSFORMATION_LINE="$(grep -E '^[^#]?\s?transformation' ${ADDONS_FILE} || echo '' )"
+if [ "${TRANSFORMATION_LINE}" != '' ]; then
+    if [[ "${TRANSFORMATION_LINE}" != *"map"* ]]; then
         sed -i 's/transformation\s\?=\s\?/transformation = map,/' ${ADDONS_FILE}
     fi
 else
@@ -41,21 +43,21 @@ else
     echo "transformation = map" >> ${ADDONS_FILE}
 fi
 
-# Add misc services
-MISC_LINE=$(grep -e '^[^#]?\s?misc' ${ADDONS_FILE} || echo '' )
-if [ ! -z ${MISC_LINE} ]; then
-    if [[ ${MISC_LINE} != *"openhabcloud"* ]]; then
-        sed -i 's/misc\s\?=\s\?/misc = openhabcloud,/' ${ADDONS_FILE}
+# => misc
+MISC_LINE="$(grep -E '^[^#]?\s?misc' ${ADDONS_FILE} || echo '' )"
+if [ "${MISC_LINE}" != '' ]; then
+    if [[ "${MISC_LINE}" != *"openhabcloud"* ]]; then
+        sed -i 's/misc\s\?=\s\?/misc = openhabcloud,/' addons.cfg
     fi
 else
     ## Just append last line
     echo "misc = openhabcloud" >> ${ADDONS_FILE}
 fi
 
-# Add automation services
-AUTOMATION_LINE=$(grep -e '^[^#]?\s?automation' ${ADDONS_FILE} || echo '')
-if [ ! -z ${AUTOMATION_LINE} ]; then
-    if [[ ${AUTOMATION_LINE} != *"jythonscripting"* ]]; then
+# => automation
+AUTOMATION_LINE="$(grep -E '^[^#]?\s?automation' ${ADDONS_FILE} || echo '')"
+if [ "${AUTOMATION_LINE}" != '' ]; then
+    if [[ "${AUTOMATION_LINE}" != *"jythonscripting"* ]]; then
         sed -i 's/automation\s\?=\s\?/automation = jythonscripting,/' ${ADDONS_FILE}
     fi
 else
@@ -63,10 +65,10 @@ else
     echo "automation = jythonscripting" >> ${ADDONS_FILE}
 fi
 
-# Add persistence services
-PERSISTENCE_LINE=$(grep -e '^[^#]?\s?persistence' ${ADDONS_FILE} || echo '' )
-if [ ! -z ${PERSISTENCE_LINE} ]; then
-    if [[ ${PERSISTENCE_LINE} != *"rrd4j"* ]]; then
+# => persistence
+PERSISTENCE_LINE="$(grep -E '^[^#]?\s?persistence' ${ADDONS_FILE} || echo '' )"
+if [ "${PERSISTENCE_LINE}" != '' ]; then
+    if [[ "${PERSISTENCE_LINE}" != *"rrd4j"* ]]; then
         sed -i 's/persistence\s\?=\s\?/persistence = rrd4j,/' ${ADDONS_FILE}
     fi
 else
