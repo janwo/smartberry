@@ -1,9 +1,15 @@
 FROM openhab/openhab:latest
+#FROM openhab/openhab:latest-alpine
+
 RUN apt-get update && apt-get install \
     rsync \
-    curl \
-    unzip \
-    grep
+    curl
+
+# RUN apk add --no-cache \
+#     rsync \
+#     curl \
+#     unzip \
+#     grep
 
 COPY --chown=${USER_ID}:${GROUP_ID} ./mounts/etc/cont-init.d/ /etc/cont-init.d
 COPY --chown=${USER_ID}:${GROUP_ID} ./mounts/tmp/openhab/ /tmp/${OPENHAB_HOME}
