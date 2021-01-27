@@ -1,5 +1,5 @@
-FROM openhab/openhab:3.0.0-alpine
-RUN apk add --no-cache \
+FROM openhab/openhab:latest
+RUN apt-get update && apt-get install \
     rsync \
     curl \
     unzip \
