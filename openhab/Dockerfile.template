@@ -3,8 +3,7 @@ FROM openhab/openhab:3.0.0
 
 RUN apt-get update && apt-get install \
     rsync \
-    curl \
-    jq
+    curl
 
 # RUN apk add --no-cache \
 #     rsync \
