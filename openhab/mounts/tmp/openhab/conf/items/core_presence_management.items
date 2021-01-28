@@ -12,10 +12,10 @@ Number  PresenceManagement  "Anwesenheit"   <motion>    (gPresenceManagement, gP
     ]
 }
 
-DateTime   PresenceManagement_LastPresence        "Letzte Anwesenheit (Gesamt): [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"           <time>      (gPresenceManagement_LastPresence)
-Number     PresenceManagement_Simulation          "Anwesenheit bei Dunkelheit simulieren"                                  <light>     (gPresenceManagement, gPersistence_SaveState) //2=Wenn lange abwesend, 0=Wenn kurz abwesend, 3=Aus
-Number     PresenceManagement_HoursUntilAwayShort "Stunden bis kurze Abwesenheit [%d h]"                                   <motion>    (gPresenceManagement, gPersistence_SaveState)
-Number     PresenceManagement_HoursUntilAwayLong  "Stunden bis lange Abwesenheit [%d h]"                                   <motion>    (gPresenceManagement, gPersistence_SaveState)
+DateTime   PresenceManagement_LastPresence        "Letzte Anwesenheit (Gesamt): [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"           <time>      (gPresenceManagement, gPresenceManagement_LastPresence) ["Point"]
+Number     PresenceManagement_Simulation          "Anwesenheit bei Dunkelheit simulieren"                                  <light>     (gPresenceManagement, gPresenceManagement, gPersistence_SaveState) ["Point"] //2=Wenn lange abwesend, 0=Wenn kurz abwesend, 3=Aus
+Number     PresenceManagement_HoursUntilAwayShort "Stunden bis kurze Abwesenheit [%d h]"                                   <motion>    (gPresenceManagement, gPresenceManagement, gPersistence_SaveState) ["Point"]
+Number     PresenceManagement_HoursUntilAwayLong  "Stunden bis lange Abwesenheit [%d h]"                                   <motion>    (gPresenceManagement, gPresenceManagement, gPersistence_SaveState) ["Point"]
 
 Group                       gPresenceManagement "Anwesenheitsmanagement"              <motion>    (gSettings) ["WebService"]
 Group                       gPresenceManagement_PresenceTrigger                       <motion>    (gPresenceManagement)
