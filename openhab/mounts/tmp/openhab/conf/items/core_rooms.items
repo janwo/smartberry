@@ -1,4 +1,5 @@
-Group   gHome                          "Wohnung"            ["Location"]
+Group   gHome                          "Wohnung"          <home>     ["Location"]
+Group   gSettings                      "Einstellungen"    <settings> ["Location"]
 
 /********************
  * SETUP YOUR ROOMS *

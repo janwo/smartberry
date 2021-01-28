@@ -1,0 +1,31 @@
+{
+  "component": "oh-block",
+  "config": {
+    "title": "Einstellungen"
+  },
+  "slots": {
+    "default": [
+      {
+        "component": "oh-grid-cells",
+        "config": {},
+        "slots": {
+          "default": [
+            {
+              "component": "oh-label-cell",
+              "config": {
+                "action": "options",
+                "actionItem": "PresenceManagement",
+                "icon": "oh:motion",
+                "label": "\u003ditems.PresenceManagement.title",
+                "item": "PresenceManagement",
+                "title": "Anwesenheit",
+                "stateAsHeader": true,
+                "expandable": false
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

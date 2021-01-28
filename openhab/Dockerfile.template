@@ -3,13 +3,15 @@ FROM openhab/openhab:3.0.0
 
 RUN apt-get update && apt-get install \
     rsync \
-    curl
+    curl \
+    jq
 
 # RUN apk add --no-cache \
 #     rsync \
 #     curl \
 #     unzip \
-#     grep
+#     grep \
+#     jq
 
 COPY --chown=${USER_ID}:${GROUP_ID} ./mounts/etc/cont-init.d/ /etc/cont-init.d
 COPY --chown=${USER_ID}:${GROUP_ID} ./mounts/tmp/openhab/ /tmp/${OPENHAB_HOME}
