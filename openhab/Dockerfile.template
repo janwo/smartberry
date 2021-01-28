@@ -1,9 +1,10 @@
 FROM openhab/openhab:3.0.0
 #FROM openhab/openhab:latest-alpine
 
-RUN apt-get update && apt-get install \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     rsync \
-    curl
+    curl \
+    jq
 
 # RUN apk add --no-cache \
 #     rsync \
