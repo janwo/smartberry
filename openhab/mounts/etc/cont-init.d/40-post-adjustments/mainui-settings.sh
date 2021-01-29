@@ -1,6 +1,7 @@
 #!/bin/sh
 set -eu
 
+# test this: https://jqplay.org/s/kMICp35ZIT
 # Add settings to main page
 TARGET_JSON=${OPENHAB_HOME}/userdata/jsondb/uicomponents_ui_page.json
 REPLACEMENT_JSON=/etc/cont-init.d/40-post-adjustments/~mainui-settings.json
