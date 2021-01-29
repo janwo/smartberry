@@ -10,7 +10,7 @@ if [ -d ${AUTOMATION_LIB_PYTHON_PATH} ]; then
     find $AUTOMATION_LIB_PYTHON_PATH -type f -name '$py.class' -exec rm -f {} +
     find $AUTOMATION_LIB_PYTHON_PATH -type f -name 'core_*.py' -exec rm -f {} +
 else
-    echo 'reset-jython-directory.sh: $AUTOMATION_LIB_PYTHON_PATH not set!'
+    echo "reset-jython-directory.sh: \$AUTOMATION_LIB_PYTHON_PATH=$AUTOMATION_LIB_PYTHON_PATH not found!"
 fi
 
 if [ -d ${AUTOMATION_JSR223_PYTHON_PATH} ]; then
@@ -19,5 +19,5 @@ if [ -d ${AUTOMATION_JSR223_PYTHON_PATH} ]; then
     find $AUTOMATION_JSR223_PYTHON_PATH -type f -name '$py.class' -exec rm -f {} +
     find $AUTOMATION_JSR223_PYTHON_PATH -type f -name 'core_*.py' -exec rm -f {} +
 else
-    echo 'reset-jython-directory.sh: $AUTOMATION_JSR223_PYTHON_PATH not set!'
+    echo "reset-jython-directory.sh: \$AUTOMATION_JSR223_PYTHON_PATH=$AUTOMATION_JSR223_PYTHON_PATH not found!"
 fi
