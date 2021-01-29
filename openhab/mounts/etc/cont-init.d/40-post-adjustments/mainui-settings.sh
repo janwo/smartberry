@@ -5,7 +5,7 @@ set -eu
 TARGET_JSON=${OPENHAB_HOME}/userdata/jsondb/uicomponents_ui_page.json
 REPLACEMENT_JSON=/etc/cont-init.d/40-post-adjustments/~mainui-settings.json
 
-if [ -f $TARGET_JSON && -f $REPLACEMENT_JSON ]; then
+if [ -f $TARGET_JSON ] && [ -f $REPLACEMENT_JSON ]; then
     TMP_JSON=${TARGET_JSON}.tmp
     echo "mainui-settings.sh: Adjust $TARGET_JSON with $REPLACEMENT_JSON..."
 
