@@ -7,7 +7,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     unzip \
     grep \
-    jq
+    jq \
+    tail \
+    xargs
 
 COPY --chown=${USER_ID}:${GROUP_ID} ./mounts/etc/cont-init.d/ /etc/cont-init.d
 COPY --chown=${USER_ID}:${GROUP_ID} ./mounts/tmp/openhab/ /tmp/${OPENHAB_HOME}
