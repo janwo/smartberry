@@ -9,8 +9,10 @@ jobs:
   Deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1.1.0
+    - uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+    - uses: actions/setup-node@v2.1.4
     - uses: theaccordance/balena-push@v1.0.0
       with:
         api-token: ${{ secrets.BALENA_API_TOKEN }}

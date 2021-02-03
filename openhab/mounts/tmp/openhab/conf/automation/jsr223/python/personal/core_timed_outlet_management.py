@@ -4,7 +4,6 @@ from personal.core_helpers import METADATA_NAMESPACE, get_location, get_random_n
 from core.date import minutes_between, format_date, ZonedDateTime
 from personal.core_broadcast import broadcast
 from core.metadata import set_key_value, get_key_value
-from functools import map
 from core.items import add_item
 from core.jsr223.scope import ir, UnDefType, events
 
