@@ -2,6 +2,7 @@ import functools
 from core.triggers import when
 from core.rules import rule
 from personal.core_broadcast import BroadcastType, broadcast
+from core.jsr223.scope import ir, UnDefType, events
 
 
 @rule("Core - Check things for offline state.", description="Check things for offline state.", tags=[])

@@ -3,6 +3,7 @@ from core.rules import rule
 from personal.core_presence_management import PresenceState, get_presence
 from personal.core_special_state_management import SpecialState, is_special_state
 from personal.core_helpers import get_location, has_same_location
+from core.jsr223.scope import ir, UnDefType, events
 
 
 @rule("Core - Check conditions to update heater values", description="Check conditions to update heater values", tags=[])

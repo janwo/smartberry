@@ -4,11 +4,12 @@ from core.date import hours_between, ZonedDateTime, format_date
 from personal.core_presence_management import PresenceState, trigger_presence, get_presence
 from personal.core_broadcast import BroadcastType, broadcast
 from random import randint
+from core.jsr223.scope import ir, UnDefType, events
 
 
 @rule("Core - Trigger presence on motion.", description="Trigger presence on motion.", tags=[])
-@when("Member of gPresenceManagement_PresenceTrigger received update ON")
-def trigger_presence(event):
+@when("PresenceManagement received update ON")
+def trigger_presence_on_motion(event):
     item = ir.getItem(event.itemName)
     trigger_presence(item)
 

@@ -5,6 +5,7 @@ from core.rules import rule
 from core.date import hours_between, ZonedDateTime, format_date
 import re
 from personal.core_broadcast import broadcast
+from core.jsr223.scope import ir, UnDefType, events
 
 
 @rule("Core - Set last activation if SpecialStateManagement changes.", description="Set last activation if SpecialStateManagement changes.", tags=[])

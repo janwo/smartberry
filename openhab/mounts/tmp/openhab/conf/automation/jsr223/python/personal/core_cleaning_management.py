@@ -1,5 +1,6 @@
 from core.rules import rule
 from core.triggers import when
+from core.jsr223.scope import ir, UnDefType, events
 
 
 @rule("Core - Start or stop house cleaning", description="Start or stop house cleaning", tags=[])

@@ -6,6 +6,7 @@ from personal.core_special_state_management import SpecialState, is_special_stat
 from personal.core_helpers import get_room_name
 from personal.core_light_management import LightMode, AmbientLightCondition, get_light_mode_group, turnOn, turnOff, isIgnored
 from personal.core_broadcast import broadcast
+from core.jsr223.scope import ir, UnDefType, events
 
 
 @rule("Core - Keep last light activation updated", description="Keep last light activation updated", tags=[])
