@@ -9,7 +9,11 @@ jobs:
   Deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Balena Push
+    - name: Checkout repository
+      uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+    - name: Push to balena
       run: |
         curl -L -o /tmp/balena.zip ${{ secrets.BALENA_CLI_RELEASE_ZIP }}
         unzip /tmp/balena.zip -d /opt
