@@ -11,7 +11,7 @@ jobs:
     steps:
     - name: Balena Push
       run: |
-        curl -L -o /tmp/balena.zip {{ secrets.BALENA_CLI_RELEASE_ZIP }}
+        curl -L -o /tmp/balena.zip ${{ secrets.BALENA_CLI_RELEASE_ZIP }}
         unzip /tmp/balena.zip -d /opt
         rm /tmp/balena.zip
         export PATH=$PATH:/opt/balena-cli
