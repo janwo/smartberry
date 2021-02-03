@@ -11,8 +11,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-        with:
-          persist-credentials: false
+      with:
+        persist-credentials: false
     - name: Push to balena
       run: |
         curl -L -o /tmp/balena.zip ${{ secrets.BALENA_CLI_RELEASE_ZIP }}
