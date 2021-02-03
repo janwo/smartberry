@@ -1,11 +1,11 @@
-from personal.core_helpers import get_room_name
+from personal.core_helpers import has_same_location
 from core.triggers import when
 from core.rules import rule
-from personal.core_presence_management import PresenceState, is_presence_state
+from personal.core_presence_management import PresenceState, get_presence
 from personal.core_security_management import OperationState, is_security_state
 from personal.core_special_state_management import SpecialState, is_special_state
 from core.date import minutes_between, ZonedDateTime, format_date
-from personal.core_misc import BroadcastType, broadcast
+from personal.core_broadcast import BroadcastType, broadcast
 
 
 @rule("Core - Security System - Trigger-Management", description="Security System - Trigger-Management", tags=[])
@@ -40,14 +40,10 @@ def assault_trigger(event):
 def armament(event):
     operationMapping = {
         PresenceState.AWAY_SHORT: ir.getItem("Security_OperationState_AwayShort").state,
-        PresenceState.AWAY_LONG: ir.getItem(
-            "Security_OperationState_AwayLong").state
+        PresenceState.AWAY_LONG: ir.getItem("Security_OperationState_AwayLong").state
     }
 
-    presenceState = ir.getItem(
-        "PresenceManagement").state
-    operationState = operationMapping.get(PresenceState.HOME if isinstance(
-        presenceState, UnDefType) else presenceState.intValue(), None)
+    operationState = operationMapping.get(get_presence(), None)
     if operationState == None:
         return
 
@@ -56,8 +52,10 @@ def armament(event):
         (trigger for trigger in triggers if trigger.state == OPEN or trigger.state == ON), None)
 
     if trigger == None:
-        events.postUpdate(ir.getItem(
-            "Security_OperationState"), operationState)
+        events.postUpdate(
+            ir.getItem("Security_OperationState"),
+            operationState
+        )
     else:
         broadcast("{} is in an opened state. No initiation into assault detection.".format(
             trigger.label
@@ -77,16 +75,17 @@ def disarmament(event):
 @when("Member of gSecurity_LockClosureTrigger received update CLOSED")
 @when("Member of gSecurity_LockClosureTrigger received update OFF")
 def lock_closure(event):
-    room = get_room_name(event.itemName)
-    locks = ir.getItem("gLock").members
+    triggerItem = ir.getItem(event.itemName)
+    locks = ir.getItem("gSecurityLock").members
     lock = next(
-        (lock for lock in locks if lock.name.startswith(room)), None)
+        (lock for lock in locks if has_same_location(triggerItem, lock)),
+        None
+    )
 
     if lock != None:
         events.sendCommand(lock, ON)
     else:
-        text = "gLock not found for room {}.".format(room)
-        broadcast(text)
+        broadcast("gSecurityLock not found for item {}.".format(triggerItem.name))
 
 
 @rule("Core - Security System - Turn off siren after Security_OperationState update", description="Security System - Turn off siren after Security_OperationState update", tags=[])
@@ -106,10 +105,10 @@ def siren_autooff(event):
         return
 
     if (autoOffTime.state.intValue() == 0 or
-            ir.getItem("Security_Sirene").state != ON or
-            isinstance(ir.getItem("Security_AlarmTime").state, UnDefType) or
-            minutes_between(ir.getItem("Security_AlarmTime").state, ZonedDateTime.now(
-            )) > autoOffTime.state.intValue()
+        ir.getItem("Security_Sirene").state != ON or
+        isinstance(ir.getItem("Security_AlarmTime").state, UnDefType) or
+        minutes_between(ir.getItem("Security_AlarmTime").state, ZonedDateTime.now(
+                )) > autoOffTime.state.intValue()
         ):
         return
 

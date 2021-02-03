@@ -2,7 +2,7 @@ from core.jsr223.scope import ir, UnDefType, ON, events
 from personal.core_helpers import enum
 from core.metadata import get_metadata, set_metadata
 from personal.core_helpers import get_room_name
-from personal.core_misc import broadcast
+from personal.core_broadcast import broadcast
 
 SpecialState = enum(
     DEFAULT=0,

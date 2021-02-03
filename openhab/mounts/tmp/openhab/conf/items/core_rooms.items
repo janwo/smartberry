@@ -1,17 +1,2 @@
-Group   gHome                          "Wohnung"          <home>     ["Location"]
-Group   gSettings                      "Einstellungen"    <settings> ["Location"]
-
-/********************
- * SETUP YOUR ROOMS *
- ********************
-
-// Floors
-Group   gGF                            "Erdgeschoss"                                   <groundfloor>      (gHome)
-Group   gFF                            "Obergeschoss"                                  <firstfloor>       (gHome)
-Group   gOS                            "Außen"                                         <garden>           (gHome)
-
-// Rooms
-Group   gGF_LivingRoom                 "Wohnzimmer"                                    <sofa>             (gGF)
-Group   gFF_Office                     "Büro"                                          <office>           (gFF)
-Group   gOS_Backyard                   "Hinterhof"                                     <garden>           (gOS)
-*/
+Group gHome "Wohnung" <home> ["Location"]
+Group gSettings "Einstellungen" <settings> ["Location"]

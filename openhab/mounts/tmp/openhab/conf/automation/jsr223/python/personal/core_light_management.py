@@ -5,7 +5,7 @@ from personal.core_presence_management import PresenceState, is_presence_state
 from personal.core_special_state_management import SpecialState, is_special_state, has_scene_member_of_condition, update_scene_members
 from personal.core_helpers import get_room_name
 from personal.core_light_management import LightMode, AmbientLightCondition, get_light_mode_group, turnOn, turnOff, isIgnored
-from personal.core_misc import broadcast
+from personal.core_broadcast import broadcast
 
 
 @rule("Core - Keep last light activation updated", description="Keep last light activation updated", tags=[])

@@ -29,11 +29,12 @@ Switch      LightManagement_WelcomeLight_ObscuredMode          "Begrüßungslich
 LightManagement - Modes
     0=Aus
     1=An
-    5=An (Standardmodus)
+    3=An bei Abwesenheit (Standardmodus) #deprecated
+    4=An bei Anwesenheit (Standardmodus) #deprecated
+    5=An (Standardmodus) #deprecated
     2=Auto-An,
-    3=Bei Abwesenheit (Standardmodus)
-    4=Bei Anwesenheit (Standardmodus)
     5=Keine Änderung duchführen
+    6=Simulate
 
 Number      GF_LivingRoom_LightManagement_DarkMode          "Lichtmodus (Dunkel) in Wohnzimmer"      <moon>         (gLightManagement_DarkMode, gSpecialStateManagement_SceneMembers)
 Number      GF_LivingRoom_LightManagement_BrightMode        "Lichtmodus (Hell)  in Wohnzimmer"       <sun>          (gLightManagement_BrightMode, gSpecialStateManagement_SceneMembers)
