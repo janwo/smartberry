@@ -5,7 +5,7 @@ from core.date import minutes_between, format_date, ZonedDateTime
 from personal.core_broadcast import broadcast
 from core.metadata import set_key_value, get_key_value
 from core.items import add_item
-from core.jsr223.scope import ir, UnDefType, events
+from core.jsr223.scope import ir, UnDefType, events, ON, OFF
 
 
 @rule("Core - Keep last timed outlet activation updated", description="Keep last timed outlet activation updated.", tags=[])
@@ -31,9 +31,9 @@ def manage_elapsed(event):
                 METADATA_NAMESPACE,
                 'timed-outlet'
             )
-            activation = meta["last-update"] if meta != None and "last-update" in meta else None
+            activation = meta["last-update"] if meta and "last-update" in meta else None
             duration = ir.getItem(
-                meta["duration-item"]) if meta != None and "duration-item" in meta else None
+                meta["duration-item"]) if meta and "duration-item" in meta else None
 
             if activation == None or duration == None or isinstance(duration.state, UnDefType):
                 broadcast("gTimedOutletManagement_ActiveDuration not found for outlet {}.".format(
@@ -56,7 +56,7 @@ def create_timed_outlet_helper_items(event):
             'timed-outlet'
         )
 
-        if meta == None or "duration-item" not in meta:
+        if not meta or "duration-item" not in meta:
             durationItem = add_item(
                 "Core_TimedOutletManagement_{0}_ActiveDuration-{1}".format(
                     timedOutlet.name,

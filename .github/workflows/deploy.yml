@@ -20,4 +20,4 @@ jobs:
         rm /tmp/balena.zip
         export PATH=$PATH:/opt/balena-cli
         balena login --token ${{ secrets.BALENA_API_TOKEN }}
-        balena push ${{ secrets.BALENA_APPLICATION_NAME }}
+        balena push ${{ secrets.BALENA_APPLICATION_NAME }} --detached

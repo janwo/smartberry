@@ -1,4 +1,4 @@
-from core.log import logging
+from org.openhab.core.model.script.actions import Log
 from personal.core_helpers import enum
 from core.actions import NotificationAction
 from core.jsr223.scope import ir, UnDefType
@@ -30,7 +30,7 @@ def broadcast(text, broadcast_type=BroadcastType.INFO):
         )
     ):
         NotificationAction.sendBroadcastNotification(text)
-        logging.info(
+        Log.logInfo(
             "Following message was broadcasted to all users: {}".format(text))
     else:
-        logging.info("Following message was muted: {}".format(text))
+        Log.logInfo("Following message was muted: {}".format(text))

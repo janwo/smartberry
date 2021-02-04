@@ -1,3 +1,4 @@
+from org.openhab.core.model.script.actions import Log
 from core.metadata import get_key_value
 from core.jsr223.scope import ir, UnDefType
 import re  # deprecated
@@ -12,13 +13,13 @@ def enum(**enums):
 
 
 def get_location(item):
-    semantics = get_key_value(
+    locationName = get_key_value(
         item.name,
         'semantics',
-        'config'
+        'hasLocation'
     )
 
-    return ir.getItem(semantics["hasLocation"]) if 'hasLocation' in semantics else None
+    return ir.getItem(locationName) if locationName else None
 
 
 def has_same_location(item1, item2):

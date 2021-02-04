@@ -1,6 +1,6 @@
 from personal.core_helpers import enum
 from core.jsr223.scope import events, OFF, ON, ir, UnDefType, OnOffType
-from core.log import logging
+from org.openhab.core.model.script.actions import Log
 from personal.core_special_state_management import SpecialState, is_special_state
 
 LightMode = enum(
@@ -35,7 +35,7 @@ def get_light_mode_group():
 
 def isIgnored(switchable):
     if is_special_state(SpecialState.SLEEP) and 'gLightManagement_LightSwitchable_IgnoreWhenSleep' in switchable.groupNames:
-        logging.info(
+        Log.logInfo(
             "{} was ignored during sleep state due to gLightManagement_LightSwitchable_IgnoreWhenSleep group.".format(
                 switchable.name)
         )
@@ -62,7 +62,7 @@ def turnOn(switchable, force=False):
             events.postUpdate(switchable, switchable.state)
 
     else:
-        logging.warn(
+        Log.logWarn(
             "{} has no suitable group to fullfill requirements of a member of gLightManagement_LightSwitchable".format(
                 switchable.name)
         )

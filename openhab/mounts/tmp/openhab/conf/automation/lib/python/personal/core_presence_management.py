@@ -1,6 +1,6 @@
 from personal.core_helpers import enum, METADATA_NAMESPACE, get_location
-from core.jsr223.scope import ir, UnDefType, events
 from core.metadata import get_key_value, set_key_value
+from core.jsr223.scope import ir, UnDefType, events
 from core.date import hours_between, ZonedDateTime, format_date
 from personal.core_broadcast import BroadcastType, broadcast
 
@@ -19,12 +19,13 @@ def get_presence(item=None):
         presenceProvider = ir.getItem(
             "PresenceManagement") if location == None else location
 
-    presence = get_key_value(
+    lastUpdate = get_key_value(
         presenceProvider.name,
         METADATA_NAMESPACE,
-        'presence'
+        'presence',
+        "last-update"
     )
-    if "last-update" not in presence:
+    if lastUpdate:
         return PresenceState.HOME if presenceProvider.name == "PresenceManagement" else get_presence()
 
     hours_away_long = ir.getItem("PresenceManagement_HoursUntilAwayLong")
@@ -38,13 +39,13 @@ def get_presence(item=None):
         return PresenceState.HOME
 
     if hours_between(
-        presence["last-update"],
+        lastUpdate,
         ZonedDateTime.now()
     ) > hours_away_long.state.intValue():
         return PresenceState.AWAY_LONG
 
     elif hours_between(
-        presence["last-update"],
+        lastUpdate,
         ZonedDateTime.now()
     ) > hours_away_short.state.intValue():
         return PresenceState.AWAY_SHORT
