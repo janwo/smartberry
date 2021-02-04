@@ -6,7 +6,8 @@ from personal.core_security_management import OperationState, is_security_state
 from personal.core_special_state_management import SpecialState, is_special_state
 from core.date import minutes_between, ZonedDateTime, format_date
 from personal.core_broadcast import BroadcastType, broadcast
-from core.jsr223.scope import ir, UnDefType, events
+from core.jsr223.scope import ir, events
+from org.openhab.core.types import UnDefType
 
 
 @rule("Core - Security System - Trigger-Management", description="Security System - Trigger-Management", tags=[])

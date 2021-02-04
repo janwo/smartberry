@@ -1,6 +1,7 @@
 
-from core.jsr223.scope import ir, UnDefType
+from core.jsr223.scope import ir
 from personal.core_helpers import enum
+from org.openhab.core.types import UnDefType
 
 OperationState = enum(OFF=0, ON=1, SILENTLY=2)
 

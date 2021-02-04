@@ -1,7 +1,8 @@
 from personal.core_helpers import enum
-from core.jsr223.scope import events, OFF, ON, ir, UnDefType, OnOffType
+from core.jsr223.scope import events, OFF, ON, ir
 from org.openhab.core.model.script.actions import Log
 from personal.core_special_state_management import SpecialState, is_special_state
+from org.openhab.core.types import UnDefType, OnOffType
 
 LightMode = enum(
     OFF=0,

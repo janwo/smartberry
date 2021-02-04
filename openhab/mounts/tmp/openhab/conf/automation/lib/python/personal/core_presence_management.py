@@ -1,6 +1,7 @@
 from personal.core_helpers import enum, METADATA_NAMESPACE, get_location
 from core.metadata import get_key_value, set_key_value
-from core.jsr223.scope import ir, UnDefType, events
+from core.jsr223.scope import ir, events
+from org.openhab.core.types import UnDefType
 from core.date import hours_between, ZonedDateTime, format_date
 from personal.core_broadcast import BroadcastType, broadcast
 
@@ -11,7 +12,7 @@ PresenceState = enum(
 )
 
 
-def get_presence(item):
+def get_presence(item=None):
     if item == None:
         presenceProvider = ir.getItem("PresenceManagement")
     else:
@@ -34,7 +35,7 @@ def get_presence(item):
         return PresenceState.HOME
 
     hours_away_short = ir.getItem("PresenceManagement_HoursUntilAwayShort")
-    if isinstance(hours_away_short.state, UnDefType):
+    if isinstance(hours_away_short.state.class, UnDefType):
         broadcast("No value set for {}.".format(hours_away_short.name))
         return PresenceState.HOME
 

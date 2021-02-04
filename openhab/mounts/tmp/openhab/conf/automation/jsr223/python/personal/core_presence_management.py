@@ -1,10 +1,10 @@
 from core.rules import rule
 from core.triggers import when
-from core.date import hours_between, ZonedDateTime, format_date
 from personal.core_presence_management import PresenceState, trigger_presence, get_presence
 from personal.core_broadcast import BroadcastType, broadcast
 from random import randint
-from core.jsr223.scope import ir, UnDefType, events
+from core.jsr223.scope import ir, events
+from org.openhab.core.types import UnDefType
 
 
 @rule("Core - Trigger presence on motion.", description="Trigger presence on motion.", tags=[])

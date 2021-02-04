@@ -1,7 +1,8 @@
 from org.openhab.core.model.script.actions import Log
 from personal.core_helpers import enum
 from core.actions import NotificationAction
-from core.jsr223.scope import ir, UnDefType
+from core.jsr223.scope import ir
+from org.openhab.core.types import UnDefType
 
 BroadcastType = enum(
     ATTENTION=1,
