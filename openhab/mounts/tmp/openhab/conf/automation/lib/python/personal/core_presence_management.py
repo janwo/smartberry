@@ -11,7 +11,7 @@ PresenceState = enum(
 )
 
 
-def get_presence(item=None):
+def get_presence(item):
     if item == None:
         presenceProvider = ir.getItem("PresenceManagement")
     else:

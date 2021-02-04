@@ -17,7 +17,6 @@
 //     Switch item=PresenceManagement label="Status" icon="boy_1" mappings=[1="Anwesend", 0="Kurz abwesend", 2="Lange abwesend"]
 
 //     // Show all presence states in available rooms.
-//     Group item=gPresenceManagement_LastPresence
 //   }
 
 //   Frame label="Lichtmanagement" icon="lightbulb" {

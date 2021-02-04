@@ -13,11 +13,22 @@ def enum(**enums):
 
 
 def get_location(item):
-    locationName = get_key_value(
+    equipmentName = get_key_value(
         item.name,
+        'semantics',
+        'isPointOf'
+    )
+
+    locationName = get_key_value(
+        equipmentName if equipmentName else item.name,
         'semantics',
         'hasLocation'
     )
+
+    Log.logInfo("log", "{0} has location {1}".format(
+        item.name,
+        locationName
+    ))
 
     return ir.getItem(locationName) if locationName else None
 

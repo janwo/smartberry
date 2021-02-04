@@ -159,7 +159,7 @@ def manage_light_state(event):
 
 
 @rule("Core - Manage lights on presence.", description="Manage lights on presence.", tags=[])
-@when("Member of gPresenceManagement_LastPresence received update")
+@when("Member of gPresenceManagement_LastPresence received update ON")
 def manage_presence(event):
     room = get_room_name(event.itemName)
     lightModeGroup = get_light_mode_group()

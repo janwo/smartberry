@@ -8,7 +8,7 @@ from core.jsr223.scope import ir, UnDefType, events
 
 
 @rule("Core - Trigger presence on motion.", description="Trigger presence on motion.", tags=[])
-@when("PresenceManagement received update ON")
+@when("Member of gPresenceManagement_PresenceTrigger received update ON")
 def trigger_presence_on_motion(event):
     item = ir.getItem(event.itemName)
     trigger_presence(item)
