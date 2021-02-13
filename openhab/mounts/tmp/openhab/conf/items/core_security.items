@@ -1,0 +1,34 @@
+Group gCore_Security "Sicherheitssystem" <alarm> (gCore_Settings) ["Equipment"] {
+  cellWidget="oh-label-cell"[
+    icon="oh:alarm",
+    label="=items.gCore_Security.title",
+    title="=items.gCore_Security.title",
+    footer="=items.gCore_Security.state"
+  ]
+}
+
+Group gCore_Security_AssaultTrigger "Auslösende Geräte" <motion> ["Equipment"] (gCore_Security)
+
+Group gCore_Security_AssaultDisarmamer "Entschärfende Geräte" <smiley> ["Equipment"] (gCore_Security)
+
+Group gCore_Security_LockClosureTrigger "Schlossschließende Geräte" <lock> ["Equipment"] (gCore_Security)
+
+Switch Core_Security_Sirene "Sirene" <siren> (gCore_Security)
+
+Number Core_Security_SireneAutoOff "Sirene: Auto-Off (Minuten) [%d min]" <siren> (gCore_Security)
+
+Number Core_Security_OperationState "Angrifferkennung [MAP(core_security_de.map):%s]" <shield> (gCore_Security) {
+    stateDescription=""[
+        options="1=An,0=Aus,2=An (Lautlos)"
+    ],
+    cellWidget=""[
+        label="=items.Core_Security_OperationState.title",
+        icon="oh:shield"
+    ],
+    listWidget=""[
+        icon="oh:shield",
+        subtitle="=items.Core_Security_OperationState.displayState"
+    ]
+}
+
+DateTime Core_Security_AlarmTime "Letzter Angriff [%1$td.%1$tm.%1$tY %1$tH:%1$tM]" <siren> (gCore_Security)

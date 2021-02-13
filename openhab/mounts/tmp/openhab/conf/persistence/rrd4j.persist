@@ -1,6 +1,7 @@
 Strategies {
-        default = everyUpdate
+  everyMinute : "0 * * * * ?"
 }
+
 Items {
-        gPersistence_SaveState*: strategy = everyChange, restoreOnStartup
+  * : strategy = everyChange, everyMinute, restoreOnStartup
 }

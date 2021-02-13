@@ -1,0 +1,21 @@
+Group Core_DefaultScene "Hauptszene" <cinema> (gCore_Home) ["Point"] {
+    stateDescription=""[
+        options="0=Anwesend,1=Abwesend,2=Lange abwesend,3=Schlafen"
+    ],
+    cellWidget=""[
+        label="=items.Core_DefaultScene.title",
+        icon="oh:cinema"
+    ],
+    listWidget=""[
+        icon="oh:cinema",
+        subtitle="=items.Core_DefaultScene.displayState"
+    ],
+    core="[
+        scenes=[
+            custom-members=[
+                "Core_Security_OperationState",
+                "Core_Heating_Thermostat_ModeDefault"
+            ]
+        ]
+    ]
+}

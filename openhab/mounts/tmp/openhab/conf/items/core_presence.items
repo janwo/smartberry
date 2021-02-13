@@ -1,0 +1,65 @@
+
+Group gCore_Presence "Anwesenheit" <motion> (gCore_Settings) ["Equipment"] {
+  cellWidget="oh-label-cell"[
+    icon="oh:motion",
+    label="Vor X Tagen",
+    title="=items.gCore_Presence.title",
+    footer="=items.gCore_Presence.state"
+  ]
+}
+
+Group gCore_Presence_PresenceTrigger <motion> (gCore_Presence) ["Point"] {
+    cellWidget=""[
+        label="=items.gCore_Presence_PresenceTrigger.title",
+        icon="oh:motion"
+    ],
+    listWidget=""[
+        icon="oh:motion"
+    ]
+}
+
+
+Number Core_Presence "Anwesenheit" <motion> (gCore_Presence) ["Point"] {
+    stateDescription=""[
+        options="1=Anwesend,0=Kurz abwesend,2=Lange abwesend"
+    ],
+    cellWidget=""[
+        label="=items.Core_Presence.title",
+        icon="oh:motion"
+    ],
+    listWidget=""[
+        icon="oh:motion",
+        subtitle="=items.Core_Presence.displayState"
+    ]
+}
+
+
+Number Core_Presence_HoursUntilAwayShort "Stunden bis kurze Abwesenheit [%d h]" <light> (gCore_Presence) ["Point"] {
+    stateDescription="oh-stepper-item"[
+        pattern="%dh",
+        min="1",
+        max="100",
+        step="1"
+    ],
+    listWidget="oh-stepper-item"[
+        raised="true",
+        round="true",
+        icon="oh:light",
+        subtitle="=items.Core_Presence_HoursUntilAwayShort.displayState"
+    ]
+}
+
+Number Core_Presence_HoursUntilAwayLong "Stunden bis lange Abwesenheit [%d h]" <light> (gCore_Presence) ["Point"] {
+    stateDescription=""[
+        pattern="%dh",
+        min="1",
+        max="100",
+        step="1"
+    ],
+    listWidget="oh-stepper-item"[
+        raised="true",
+        round="true",
+        icon="oh:light",
+        subtitle="=items.Core_Presence_HoursUntilAwayLong.displayState"
+    ]
+}

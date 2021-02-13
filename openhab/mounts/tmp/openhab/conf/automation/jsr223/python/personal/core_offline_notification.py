@@ -2,11 +2,11 @@ import functools
 from core.triggers import when
 from core.rules import rule
 from personal.core_broadcast import BroadcastType, broadcast
-from core.jsr223.scope import ir, events
+from core.jsr223.scope import ir, events, things
 from org.openhab.core.types import UnDefType
 
 
-@rule("Core - Check things for offline state.", description="Check things for offline state.", tags=[])
+@rule("Core - Check things for offline state.", description="Check things for offline state.", tags=['core', 'lights'])
 @when("Time cron 0 0 12 * * ?")
 def offline_check(event):
     offlineThingsNotifications = filter(lambda thing: (

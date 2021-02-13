@@ -1,3 +1,0 @@
-Group gTimedOutletManagement "Zeituhr-Steckdosen-Management" <poweroutlet>  (gSettings) ["WebService"]
-Group gTimedOutletManagement_Switchable "Zeituhr-Steckdosen" <poweroutlet> (gTimedOutletManagement)
-Group gTimedOutletManagement_ActiveDuration "Einschaltdauer von Zeituhr-Steckdosen" <time> (gTimedOutletManagement, gPersistence_SaveState)

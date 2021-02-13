@@ -1,2 +1,2 @@
-Group gHome "Wohnung" <home> ["Location"]
-Group gSettings "Einstellungen" <settings> ["Location"]
+Group gCore_Home "Wohnung" <home> ["Location"]
+Group gCore_Settings "Einstellungen" <settings> ["Location"]

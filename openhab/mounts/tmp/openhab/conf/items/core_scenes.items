@@ -1,0 +1,28 @@
+Group gCore_Scenes
+
+Group gCore_Scenes_Settings "Szenen" <party> (gCore_Settings) ["Equipment"] {
+  cellWidget="oh-label-cell"[
+    icon="oh:party",
+    title="=items.gCore_Scenes_Settings.title",
+  ]
+}
+
+Group gCore_Scenes_StoreTriggers "Szene überschreiben" <settings> ["Equipment"] (gCore_Scenes_Settings) {
+    cellWidget=""[
+        label="=items.gCore_Scenes_StoreTriggers.title",
+        icon="oh:settings"
+    ],
+    listWidget=""[
+        icon="oh:settings"
+    ]
+}
+
+Group gCore_Scenes_StateTriggers "Szenenauslösende Items" <settings> ["Equipment"] (gCore_Scenes_Settings) {
+    cellWidget=""[
+        label="=items.gCore_Scenes_StateTriggers.title",
+        icon="oh:settings"
+    ],
+    listWidget=""[
+        icon="oh:settings"
+    ]
+}

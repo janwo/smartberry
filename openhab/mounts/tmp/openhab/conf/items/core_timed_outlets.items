@@ -1,0 +1,21 @@
+Group gCore_TimedOutlets_Switchable
+
+Group gCore_TimedOutlets "Zeituhr-Steckdosen" <poweroutlet> (gCore_Settings) ["Equipment"] {
+    cellWidget=""[
+        label="=items.gCore_TimedOutlets.title",
+        icon="oh:poweroutlet"
+    ],
+    listWidget=""[
+        icon="oh:poweroutlet"
+    ]
+}
+
+Group gCore_TimedOutlets_ActiveDuration "Einschaltdauer von Zeituhr-Steckdosen" <time> (gCore_TimedOutlets) ["Equipment"] {
+    cellWidget=""[
+        label="=items.gCore_TimedOutlets_ActiveDuration.title",
+        icon="oh:time"
+    ],
+    listWidget=""[
+        icon="oh:time"
+    ]
+}

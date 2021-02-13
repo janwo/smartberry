@@ -13,12 +13,75 @@
             {
               "component": "oh-label-cell",
               "config": {
-                "action": "options",
-                "actionItem": "PresenceManagement",
                 "icon": "oh:motion",
-                "label": "\u003ditems.PresenceManagement.title",
-                "item": "PresenceManagement",
                 "title": "Anwesenheit",
+                "item": "Core_Presence",
+                "label": "=items.Core_Presence.title",
+                "action": "options",
+                "actionItem": "Core_Presence",
+                "stateAsHeader": true,
+                "expandable": false
+              }
+            }
+          ]
+        }
+      },
+      {
+        "component": "oh-grid-cells",
+        "config": {},
+        "slots": {
+          "default": [
+            {
+              "component": "oh-label-cell",
+              "config": {
+                "icon": "oh:party",
+                "title": "Szene",
+                "item": "Core_DefaultScene",
+                "label": "=items.Core_DefaultScene.title",
+                "action": "options",
+                "actionItem": "Core_DefaultScene",
+                "stateAsHeader": true,
+                "expandable": false
+              }
+            }
+          ]
+        }
+      },
+      {
+        "component": "oh-grid-cells",
+        "config": {},
+        "slots": {
+          "default": [
+            {
+              "component": "oh-label-cell",
+              "config": {
+                "icon": "oh:alarm",
+                "title": "Angrifferkennung",
+                "item": "Core_Security_OperationState",
+                "label": "=items.Core_Security_OperationState.title",
+                "action": "options",
+                "actionItem": "Core_Security_OperationState",
+                "stateAsHeader": true,
+                "expandable": false
+              }
+            }
+          ]
+        }
+      },
+      {
+        "component": "oh-grid-cells",
+        "config": {},
+        "slots": {
+          "default": [
+            {
+              "component": "oh-label-cell",
+              "config": {
+                "icon": "oh:heating",
+                "title": "Klima",
+                "item": "Core_Heating_Thermostat_ModeDefault",
+                "label": "=items.Core_Heating_Thermostat_ModeDefault.title",
+                "action": "options",
+                "actionItem": "Core_Heating_Thermostat_ModeDefault",
                 "stateAsHeader": true,
                 "expandable": false
               }

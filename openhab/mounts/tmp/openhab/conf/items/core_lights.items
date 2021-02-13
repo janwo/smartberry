@@ -1,0 +1,64 @@
+Group gCore_Lights "Lichtsteuerung" <light> (gCore_Settings) ["Equipment"] {
+  cellWidget="oh-label-cell"[
+    icon="oh:light",
+    label="Label",
+    title="=items.gCore_Lights.title",
+    footer="=items.gCore_Lights.state"
+  ]
+}
+
+Group gCore_LightSwitchables
+
+Group gCore_Lights_DarkMode "Lichtmodus (Dunkel)" <moon> (gCore_Lights)
+
+Group gCore_Lights_BrightMode "Lichtmodus (Hell)" <sun> (gCore_Lights)
+
+Group gCore_Lights_ObscuredMode "Lichtmodus (Verdunkelt)" <blinds> (gCore_Lights)
+
+Number Core_Lights_DefaultDuration "Standard Lichtdauer [%d min]" <time> (gCore_Lights)
+
+Number Core_Lights_AmbientLightCondition  "Lichtwert-Einstufung [MAP(core_lights_de.map):%s]" <sun> (gCore_Lights) /*Core_Lights_AmbientLightCondition_LuminanceTreshold as subtitle "Aktueller Lichtwert [%d %%]" */
+
+Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured "Lichtwert bis Verdunkelt [%d %%]" <line>  (gCore_Lights)
+
+Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark "Lichtwert bis Dunkel [%d %%]" <line> (gCore_Lights)
+
+Switch Core_Lights_WelcomeLight_DarkMode "Begrüßungslicht (Dunkel)" <keyring> (gCore_Lights)
+
+Switch Core_Lights_WelcomeLight_BrightMode "Begrüßungslicht (Hell)" <keyring> (gCore_Lights)
+
+Switch Core_Lights_WelcomeLight_ObscuredMode "Begrüßungslicht (Verdunkelt)" <keyring> (gCore_Lights)
+
+/**********************
+ * CREATE LIGHT MODES *
+ **********************
+
+
+    Frame label="Lichtmanagement" icon="lightbulb" {
+        Setpoint item=Core_Lights_DefaultBrightness minValue=5 maxValue=100 step=5
+        Setpoint item=Core_Lights_DefaultDuration minValue=5 maxValue=100 step=5
+        Setpoint item=Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured minValue=5 maxValue=100 step=5
+        Setpoint item=Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark minValue=5 maxValue=100 step=5
+        Text item=Core_Lights_AmbientLightCondition
+
+        Text label="Begrüßungslicht" icon="keyring" {
+            Switch item=Core_Lights_WelcomeLight_DarkMode
+            Switch item=Core_Lights_WelcomeLight_BrightMode
+            Switch item=Core_Lights_WelcomeLight_ObscuredMode
+        }
+    }
+
+
+//     // Add Light Modes [If you do not have Light Conditions, Bright Mode is used.]
+//     Text label="Automatisches An- und Ausschalten" icon="light" {
+//        Selection item=GF_LivingRoom_LightManagement_DarkMode mappings=[0="Aus", 1="An", 5="An (Standardmodus)", 2="Auto-An", 3="Bei Abwesenheit (Standardmodus)", 4="Bei Anwesenheit (Standardmodus)", 5="Ohne Änderung"]
+//        Selection item=GF_LivingRoom_LightManagement_BrightMode mappings=[0="Aus", 1="An", 5="An (Standardmodus)", 2="Auto-An", 3="Bei Abwesenheit (Standardmodus)", 4="Bei Anwesenheit (Standardmodus)", 5="Ohne Änderung"]
+//        Selection item=GF_LivingRoom_LightManagement_ObscuredMode mappings=[0="Aus", 1="An", 5="An (Standardmodus)", 2="Auto-An", 3="Bei Abwesenheit (Standardmodus)", 4="Bei Anwesenheit (Standardmodus)", 5="Ohne Änderung"]
+//     }
+
+
+Number      GF_LivingRoom_LightManagement_DarkMode          "Lichtmodus (Dunkel) in Wohnzimmer"      <moon>         (gCore_Lights_DarkMode, gSpecialStateManagement_SceneMembers)
+Number      GF_LivingRoom_LightManagement_BrightMode        "Lichtmodus (Hell)  in Wohnzimmer"       <sun>          (gCore_Lights_BrightMode, gSpecialStateManagement_SceneMembers)
+Number      GF_LivingRoom_LightManagement_ObscuredMode      "Lichtmodus (Verdunkelt) in Wohnzimmer"  <blinds>       (gCore_Lights_ObscuredMode, gSpecialStateManagement_SceneMembers)
+DateTime    GF_LivingRoom_LightManagement_LastActivation    "Letztes Einschalten in Parkplatz: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"  <time>     (gCore_Lights_LastActivation)
+*/

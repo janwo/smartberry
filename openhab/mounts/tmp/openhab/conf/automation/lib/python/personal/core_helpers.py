@@ -1,7 +1,7 @@
 from org.openhab.core.model.script.actions import Log
-from core.metadata import get_key_value
 from core.jsr223.scope import ir
-import re  # deprecated
+from core.metadata import set_key_value, get_key_value
+from core.items import add_item
 from random import randint
 from org.openhab.core.types import UnDefType
 
@@ -14,6 +14,9 @@ def enum(**enums):
 
 
 def get_location(item):
+    if isinstance(item, str):
+        item = ir.getItem(item)
+
     equipmentName = get_key_value(
         item.name,
         'semantics',
@@ -25,11 +28,6 @@ def get_location(item):
         'semantics',
         'hasLocation'
     )
-
-    Log.logInfo("log", "{0} has location {1}".format(
-        item.name,
-        locationName
-    ))
 
     return ir.getItem(locationName) if locationName else None
 
@@ -43,11 +41,107 @@ def has_same_location(item1, item2):
 def get_random_number(length=10):
     return randint(10**(length-1), (10**length)-1)
 
-# deprecated
+
+def get_items_of_any_tags(tags=[]):
+    return reduce(lambda x, y: x + y, map(lambda tag: ir.getItemsByTag(tag),  tags))
 
 
-def get_room_name(item_name):
-    match = re.search(r"^([^_]+_[^_]+).*$", item_name)
-    if match is None:
+def sync_group_with_tags(group, tags):
+    tagItems = ir.get_items_of_any_tags(tags)
+
+    def mayRemoveFromGroup(groupMember, tagSet, group):
+        if groupMember not in tagSet:
+            group.removeMember(groupMember)
+            return True
+        return False
+
+    currentGroupMembers = filter(
+        lambda member: not mayRemoveFromGroup(member, tagItems, group),
+        group.allMembers
+    )
+
+    for tagItem in tagItems:
+        if tagItem not in currentGroupMembers:
+            currentGroupMembers.append(tagItem)
+            group.addMember(tagItem)
+
+    return currentGroupMembers
+
+
+def get_helper_item(of, namespace, name):
+    meta = get_key_value(
+        of.name,
+        METADATA_NAMESPACE,
+        namespace,
+        'helper-items',
+        name
+    )
+    try:
+        if meta:
+            return ir.getItem(meta)
+    except:
         return None
-    return match.group(1)
+
+
+def get_item_of_helper_item(helperItem):
+    meta = get_key_value(
+        helperItem.name,
+        METADATA_NAMESPACE,
+        'helper-item-of'
+    )
+    try:
+        if meta:
+            return ir.getItem(meta)
+    except:
+        return None
+
+
+def create_helper_item(of, namespace, name, item_type, category, label, groups=[], tags=[]):
+    helperItem = get_helper_item(of, namespace, name)
+    if not helperItem:
+        tags.append('HelperItem')
+        helperItem = add_item(
+            "Core_HelperItem{0}_Of_{1}_As_{2}_In_{3}".format(
+                get_random_number(10),
+                of.name,
+                name,
+                namespace
+            ),
+            item_type=item_type,
+            category=category,
+            groups=groups,
+            label=label,
+            tags=tags
+        )
+
+        set_key_value(
+            helperItem.name,
+            METADATA_NAMESPACE,
+            'helper-item-of',
+            of.name
+        )
+
+        set_key_value(
+            of.name,
+            METADATA_NAMESPACE,
+            namespace,
+            'helper-items',
+            name
+        )
+    return helperItem
+
+
+def remove_unlinked_helper_items():
+    for helper in ir.getItemsByTag('HelperItem').members:
+        of = get_key_value(
+            helper.name,
+            METADATA_NAMESPACE,
+            'helper-item-of'
+        )
+
+        if not of:
+            ir.remove(helper.name)
+        try:
+            ir.getItem(of.name)
+        except:
+            ir.remove(helper.name)

@@ -14,11 +14,11 @@ PresenceState = enum(
 
 def get_presence(item=None):
     if item == None:
-        presenceProvider = ir.getItem("PresenceManagement")
+        presenceProvider = ir.getItem("Core_Presence")
     else:
         location = get_location(item)
         presenceProvider = ir.getItem(
-            "PresenceManagement") if location == None else location
+            "Core_Presence") if location == None else location
 
     lastUpdate = get_key_value(
         presenceProvider.name,
@@ -27,15 +27,16 @@ def get_presence(item=None):
         "last-update"
     )
     if lastUpdate:
-        return PresenceState.HOME if presenceProvider.name == "PresenceManagement" else get_presence()
+        return PresenceState.HOME if presenceProvider.name == "Core_Presence" else get_presence()
 
-    hours_away_long = ir.getItem("PresenceManagement_HoursUntilAwayLong")
+    hours_away_long = ir.getItem("Core_Presence_HoursUntilAwayLong")
     if isinstance(hours_away_long.state, UnDefType):
         broadcast("No value set for {}.".format(hours_away_long.name))
         return PresenceState.HOME
 
-    hours_away_short = ir.getItem("PresenceManagement_HoursUntilAwayShort")
-    if isinstance(hours_away_short.state.class, UnDefType):
+    hours_away_short = ir.getItem(
+        "Core_Presence_HoursUntilAwayShort")
+    if isinstance(hours_away_short.state, UnDefType):
         broadcast("No value set for {}.".format(hours_away_short.name))
         return PresenceState.HOME
 
@@ -66,7 +67,7 @@ def trigger_presence(item):
             format_date(ZonedDateTime.now())
         )
 
-    presenceManagement = ir.getItem("PresenceManagement")
+    presenceManagement = ir.getItem("Core_Presence")
     events.postUpdate(presenceManagement, PresenceState.HOME)
     set_key_value(
         presenceManagement.name,
@@ -75,10 +76,3 @@ def trigger_presence(item):
         "last-update",
         format_date(ZonedDateTime.now())
     )
-
-# deprecated
-
-
-def is_presence_state(state=PresenceState.HOME):
-    actualState = ir.getItem("PresenceManagement").state
-    return not isinstance(actualState, UnDefType) and actualState.intValue() == state

@@ -1,0 +1,25 @@
+Group gCore_Heating "Klimaeinstellungen" <heating> (gCore_Settings)
+
+Group gCore_Heating_ContactSwitchable "Deaktivierende Kontakte" <heating> (gCore_Settings)
+
+Number Core_Heating_Thermostat_ModeDefault "Temperaturmodus" <heating> (gCore_Heating) ["Point"] {
+    stateDescription=""[
+        options="0=Aus,11=Eco-Temperatur,2=Normaltemperatur"
+    ],
+    cellWidget=""[
+        label="=items.Core_Heating_Thermostat_ModeDefault.title",
+        icon="oh:motion"
+    ],
+    listWidget=""[
+        icon="oh:motion",
+        subtitle="=items.Core_Heating_Thermostat_ModeDefault.displayState"
+    ]
+}
+
+Group:Number gCore_Heating_Thermostat "Thermostat" <thermostat>
+
+Group:Number gCore_Heating_Thermostat_Mode "Temperatursteuerungsmodus" <temperature>
+
+Group:Number gCore_Heating_Thermostat_EcoTemperature "Zieltemperatur (Eco)" <temperature_cold>
+
+Group:Number gCore_Heating_Thermostat_DefaultTemperature "Zieltemperatur (Normal)" <temperature_hot>

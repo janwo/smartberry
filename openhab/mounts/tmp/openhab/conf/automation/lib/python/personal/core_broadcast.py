@@ -17,7 +17,7 @@ BroadcastNotificationMode = enum(
 
 
 def broadcast(text, broadcast_type=BroadcastType.INFO):
-    state = ir.getItem("Core_BroadcastNotificationMode").state
+    state = ir.getItem("Core_Broadcast_NotificationMode").state
     notificationMode = state.intValue() if not isinstance(
         state, UnDefType) else BroadcastNotificationMode.DEFAULT
 
