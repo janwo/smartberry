@@ -15,9 +15,9 @@ COPY --chown=${USER_ID}:${GROUP_ID} ./mounts/etc/cont-init.d/ /etc/cont-init.d
 COPY --chown=${USER_ID}:${GROUP_ID} ./mounts/tmp/openhab/ /tmp/${OPENHAB_HOME}
 
 ENV HELPER_LIBRARIES_DIR=openhab-helper-libraries-ivans-updates
-ENV HELPER_LIBRARIES_ZIPNAME=openhab-helper-libraries-ivans-updates
+ENV HELPER_LIBRARIES_ZIPNAME=ivans-updates.zip
 ENV HELPER_LIBRARIES_LINK=https://github.com/CrazyIvan359/openhab-helper-libraries/archive/ivans-updates.zip
-RUN curl -O -L ${HELPER_LIBRARIES_LINK} && unzip ${HELPER_LIBRARIES_ZIPNAME}.zip && rm ${HELPER_LIBRARIES_ZIPNAME}.zip && \
+RUN curl -O -L ${HELPER_LIBRARIES_LINK} && unzip ${HELPER_LIBRARIES_ZIPNAME} && rm ${HELPER_LIBRARIES_ZIPNAME} && \
     chown -R ${USER_ID}:${GROUP_ID} ./${HELPER_LIBRARIES_DIR} && \
     mv ./${HELPER_LIBRARIES_DIR}/Core/automation/lib/python/configuration.py.example /tmp/${OPENHAB_HOME}/conf/automation/lib/python/configuration.py && \
     mv ./o${HELPER_LIBRARIES_DIR}/Core/automation/lib/python/personal/__init__.py.example /tmp/${OPENHAB_HOME}/conf/automation/lib/python/personal/__init__.py && \
