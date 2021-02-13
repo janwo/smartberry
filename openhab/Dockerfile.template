@@ -14,10 +14,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --chown=${USER_ID}:${GROUP_ID} ./mounts/etc/cont-init.d/ /etc/cont-init.d
 COPY --chown=${USER_ID}:${GROUP_ID} ./mounts/tmp/openhab/ /tmp/${OPENHAB_HOME}
 
-RUN curl -O -L https://github.com/CrazyIvan359/openhab-helper-libraries/archive/ivans-updates.zip && unzip oh3-patch.zip && rm oh3-patch.zip && \
-    chown -R ${USER_ID}:${GROUP_ID} ./openhab-helper-libraries-oh3-patch && \
-    mv ./openhab-helper-libraries-oh3-patch/Core/automation/lib/python/configuration.py.example /tmp/${OPENHAB_HOME}/conf/automation/lib/python/configuration.py && \
-    mv ./openhab-helper-libraries-oh3-patch/Core/automation/lib/python/personal/__init__.py.example /tmp/${OPENHAB_HOME}/conf/automation/lib/python/personal/__init__.py && \
-    mv ./openhab-helper-libraries-oh3-patch/Core/automation/lib/python/core/ /tmp/${OPENHAB_HOME}/conf/automation/lib/python/ && \
-    mv ./openhab-helper-libraries-oh3-patch/Core/automation/jsr223/python/core/ /tmp/${OPENHAB_HOME}/conf/automation/jsr223/python/ && \
-    rm -R ./openhab-helper-libraries-oh3-patch
+ENV HELPER_LIBRARIES_DIR=openhab-helper-libraries-ivans-updates
+ENV HELPER_LIBRARIES_ZIPNAME=openhab-helper-libraries-ivans-updates
+ENV HELPER_LIBRARIES_LINK=https://github.com/CrazyIvan359/openhab-helper-libraries/archive/ivans-updates.zip
+RUN curl -O -L ${HELPER_LIBRARIES_LINK} && unzip ${HELPER_LIBRARIES_ZIPNAME}.zip && rm ${HELPER_LIBRARIES_ZIPNAME}.zip && \
+    chown -R ${USER_ID}:${GROUP_ID} ./${HELPER_LIBRARIES_DIR} && \
+    mv ./${HELPER_LIBRARIES_DIR}/Core/automation/lib/python/configuration.py.example /tmp/${OPENHAB_HOME}/conf/automation/lib/python/configuration.py && \
+    mv ./o${HELPER_LIBRARIES_DIR}/Core/automation/lib/python/personal/__init__.py.example /tmp/${OPENHAB_HOME}/conf/automation/lib/python/personal/__init__.py && \
+    mv ./${HELPER_LIBRARIES_DIR}/Core/automation/lib/python/core/ /tmp/${OPENHAB_HOME}/conf/automation/lib/python/ && \
+    mv ./${HELPER_LIBRARIES_DIR}/Core/automation/jsr223/python/core/ /tmp/${OPENHAB_HOME}/conf/automation/jsr223/python/ && \
+    rm -R ./${HELPER_LIBRARIES_DIR}
