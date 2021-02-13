@@ -20,7 +20,7 @@ ENV HELPER_LIBRARIES_LINK=https://github.com/CrazyIvan359/openhab-helper-librari
 RUN curl -O -L ${HELPER_LIBRARIES_LINK} && unzip ${HELPER_LIBRARIES_ZIPNAME} && rm ${HELPER_LIBRARIES_ZIPNAME} && \
     chown -R ${USER_ID}:${GROUP_ID} ./${HELPER_LIBRARIES_DIR} && \
     mv ./${HELPER_LIBRARIES_DIR}/Core/automation/lib/python/configuration.py.example /tmp/${OPENHAB_HOME}/conf/automation/lib/python/configuration.py && \
-    mv ./o${HELPER_LIBRARIES_DIR}/Core/automation/lib/python/personal/__init__.py.example /tmp/${OPENHAB_HOME}/conf/automation/lib/python/personal/__init__.py && \
+    mv ./${HELPER_LIBRARIES_DIR}/Core/automation/lib/python/personal/__init__.py.example /tmp/${OPENHAB_HOME}/conf/automation/lib/python/personal/__init__.py && \
     mv ./${HELPER_LIBRARIES_DIR}/Core/automation/lib/python/core/ /tmp/${OPENHAB_HOME}/conf/automation/lib/python/ && \
     mv ./${HELPER_LIBRARIES_DIR}/Core/automation/jsr223/python/core/ /tmp/${OPENHAB_HOME}/conf/automation/jsr223/python/ && \
     rm -R ./${HELPER_LIBRARIES_DIR}
