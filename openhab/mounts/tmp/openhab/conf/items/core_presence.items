@@ -18,7 +18,6 @@ Group gCore_Presence_PresenceTrigger <motion> (gCore_Presence) ["Point"] {
     ]
 }
 
-
 Number Core_Presence "Anwesenheit" <motion> (gCore_Presence) ["Point"] {
     stateDescription=""[
         options="1=Anwesend,0=Kurz abwesend,2=Lange abwesend"
@@ -32,7 +31,6 @@ Number Core_Presence "Anwesenheit" <motion> (gCore_Presence) ["Point"] {
         subtitle="\u003ditems.Core_Presence.displayState"
     ]
 }
-
 
 Number Core_Presence_HoursUntilAwayShort "Stunden bis kurze Abwesenheit [%d h]" <light> (gCore_Presence) ["Point"] {
     stateDescription="oh-stepper-item"[

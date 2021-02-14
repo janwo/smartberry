@@ -17,11 +17,53 @@ Group gCore_Lights_ObscuredMode "Lichtmodus (Verdunkelt)" <blinds> (gCore_Lights
 
 Number Core_Lights_DefaultDuration "Standard Lichtdauer [%d min]" <time> (gCore_Lights)
 
-Number Core_Lights_AmbientLightCondition  "Lichtwert-Einstufung [MAP(core_lights_de.map):%s]" <sun> (gCore_Lights) /*Core_Lights_AmbientLightCondition_LuminanceTreshold as subtitle "Aktueller Lichtwert [%d %%]" */
+Number Core_Lights_AmbientLightCondition  "Lichtwert-Einstufung [MAP(core_lights_de.map):%s]" <sun> (gCore_Lights) /*Core_Lights_AmbientLightCondition_LuminanceTreshold as subtitle "Aktueller Lichtwert [%d %%]" */ ["Point"]  {
+    stateDescription=""[
+        pattern="%dh",
+        min="1",
+        max="100",
+        step="1"
+    ],
+    listWidget="oh-stepper-item"[
+        raised="true",
+        round="true",
+        icon="oh:light",
+        subtitle="\u003ditems.Core_Lights_AmbientLightCondition.displayState"
+    ]
+}
 
-Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured "Lichtwert bis Verdunkelt [%d %%]" <line>  (gCore_Lights)
 
-Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark "Lichtwert bis Dunkel [%d %%]" <line> (gCore_Lights)
+Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured "Lichtwert bis Verdunkelt [%d %%]" <line>  (gCore_Lights) ["Point"]  {
+    stateDescription=""[
+        pattern="%dh",
+        min="1",
+        max="100",
+        step="1"
+    ],
+    listWidget="oh-stepper-item"[
+        raised="true",
+        round="true",
+        icon="oh:light",
+        subtitle="\u003ditems.Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured.displayState"
+    ]
+}
+
+
+Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark "Lichtwert bis Dunkel [%d %%]" <line> (gCore_Lights) ["Point"] {
+    stateDescription=""[
+        pattern="%dh",
+        min="1",
+        max="100",
+        step="1"
+    ],
+    listWidget="oh-stepper-item"[
+        raised="true",
+        round="true",
+        icon="oh:light",
+        subtitle="\u003ditems.Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark.displayState"
+    ]
+}
+
 
 Switch Core_Lights_WelcomeLight_DarkMode "Begrüßungslicht (Dunkel)" <keyring> (gCore_Lights)
 

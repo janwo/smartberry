@@ -2,7 +2,7 @@ from core.triggers import when
 from core.rules import rule
 from core.date import minutes_between, ZonedDateTime, format_date
 from personal.core_presence import PresenceState
-from personal.core_scenes import has_scene_member_of_condition, trigger_scene, get_scene_items
+from personal.core_scenes import trigger_scene, get_scene_items
 from personal.core_helpers import METADATA_NAMESPACE, get_location, has_same_location, get_item_of_helper_item, get_items_of_any_tags, sync_group_with_tags
 from personal.core_lights import SWITCHABLE_TAGS, set_location_as_activated, is_elapsed, LightMode, AmbientLightCondition, get_light_mode_group, turnOn, turnOff, get_switchables
 from personal.core_broadcast import broadcast

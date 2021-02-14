@@ -15,7 +15,20 @@ Group gCore_Security_LockClosureTrigger "Schlossschließende Geräte" <lock> (gC
 
 Switch Core_Security_Sirene "Sirene" <siren> (gCore_Security) ["Point"]
 
-Number Core_Security_SireneAutoOff "Sirene: Auto-Off (Minuten) [%d min]" <siren> (gCore_Security) ["Point"]
+Number Core_Security_SireneAutoOff "Sirene: Auto-Off (Minuten) [%d min]" <siren> (gCore_Security) ["Point"] {
+    stateDescription="oh-stepper-item"[
+        pattern="%dh",
+        min="1",
+        max="100",
+        step="1"
+    ],
+    listWidget="oh-stepper-item"[
+        raised="true",
+        round="true",
+        icon="oh:light",
+        subtitle="\u003ditems.Core_Security_SireneAutoOff.displayState"
+    ]
+}
 
 Number Core_Security_OperationState "Angrifferkennung [MAP(core_security_de.map):%s]" <shield> (gCore_Security) ["Point"]  {
     stateDescription=""[

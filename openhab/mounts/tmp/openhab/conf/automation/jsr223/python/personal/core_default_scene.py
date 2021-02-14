@@ -2,7 +2,6 @@ from core.triggers import when
 from core.rules import rule
 from core.jsr223.scope import ir
 from org.openhab.core.types import UnDefType
-from personal.core_default_scene import DefaultSceneState
 from personal.core_scenes import apply_context
 from personal.core_helpers import enum
 

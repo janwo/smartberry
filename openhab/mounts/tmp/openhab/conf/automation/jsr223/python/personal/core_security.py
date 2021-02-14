@@ -104,10 +104,6 @@ def siren_off(event):
 @when("Time cron 0 * * ? * * *")
 def siren_autooff(event):
     autoOffTime = ir.getItem("Core_Security_SireneAutoOff")
-    if isinstance(autoOffTime.state, UnDefType):
-        text = "No value was set for {}.".format(autoOffTime.name)
-        broadcast(text)
-        return
 
     lastAlarmTime = get_key_value(
         'Core_Security_OperationState',
