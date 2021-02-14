@@ -7,7 +7,7 @@ Group gCore_Lights "Lichtsteuerung" <light> (gCore_Settings) ["Equipment"] {
   ]
 }
 
-Group gCore_LightSwitchables
+Group gCore_Lights_Switchables
 
 Group gCore_Lights_DarkMode "Lichtmodus (Dunkel)" <moon> (gCore_Lights)
 
@@ -57,8 +57,7 @@ Switch Core_Lights_WelcomeLight_ObscuredMode "Begrüßungslicht (Verdunkelt)" <k
 //     }
 
 
-Number      GF_LivingRoom_LightManagement_DarkMode          "Lichtmodus (Dunkel) in Wohnzimmer"      <moon>         (gCore_Lights_DarkMode, gSpecialStateManagement_SceneMembers)
-Number      GF_LivingRoom_LightManagement_BrightMode        "Lichtmodus (Hell)  in Wohnzimmer"       <sun>          (gCore_Lights_BrightMode, gSpecialStateManagement_SceneMembers)
-Number      GF_LivingRoom_LightManagement_ObscuredMode      "Lichtmodus (Verdunkelt) in Wohnzimmer"  <blinds>       (gCore_Lights_ObscuredMode, gSpecialStateManagement_SceneMembers)
-DateTime    GF_LivingRoom_LightManagement_LastActivation    "Letztes Einschalten in Parkplatz: [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"  <time>     (gCore_Lights_LastActivation)
+Number      GF_LivingRoom_LightManagement_DarkMode          "Lichtmodus (Dunkel) in Wohnzimmer"      <moon>         (gCore_Lights_DarkMode)
+Number      GF_LivingRoom_LightManagement_BrightMode        "Lichtmodus (Hell)  in Wohnzimmer"       <sun>          (gCore_Lights_BrightMode)
+Number      GF_LivingRoom_LightManagement_ObscuredMode      "Lichtmodus (Verdunkelt) in Wohnzimmer"  <blinds>       (gCore_Lights_ObscuredMode)
 */

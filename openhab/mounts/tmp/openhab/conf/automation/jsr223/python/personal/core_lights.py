@@ -17,15 +17,15 @@ from random import randint
 @when("Item updated")
 @when("Item removed")
 def sync_helper_items(event):
-    # Sync group gCore_LightSwitchables with switchable items - it's needed to create triggers on it
+    # Sync group gCore_Lights_Switchables with switchable items - it's needed to create triggers on it
     members = sync_group_with_tags(
-        ir.getItem("gCore_LightSwitchables"),
+        ir.getItem("gCore_Lights_Switchables"),
         SWITCHABLE_TAGS
     )
 
 
 @rule("Core - Keep last light activation updated", description="Keep last light activation updated", tags=["core", 'lights'])
-@when("Member of gCore_LightSwitchables received update ON")
+@when("Member of gCore_Lights_Switchables received update ON")
 def set_last_activation(event):
     item = ir.getItem(event.itemName)
     set_location_as_activated(item)
