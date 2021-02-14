@@ -17,8 +17,11 @@ def assault_trigger(event):
     if is_security_state(OperationState.OFF):
         return
 
-    events.postUpdate(
-        ir.getItem("Core_Security_AlarmTime"),
+    set_key_value(
+        'Core_Security_OperationState',
+        METADATA_NAMESPACE,
+        'security',
+        'last-alarm',
         format_date(ZonedDateTime.now())
     )
 
@@ -106,12 +109,22 @@ def siren_autooff(event):
         broadcast(text)
         return
 
-    if (autoOffTime.state.intValue() == 0 or
-            ir.getItem("Core_Security_Sirene").state != ON or
-            isinstance(ir.getItem("Core_Security_AlarmTime").state, UnDefType) or
-            minutes_between(ir.getItem("Core_Security_AlarmTime").state, ZonedDateTime.now(
-                )) > autoOffTime.state.intValue()
-            ):
+    lastAlarmTime = get_key_value(
+        'Core_Security_OperationState',
+        METADATA_NAMESPACE,
+        'security',
+        'last-alarm'
+    )
+
+    if (
+        autoOffTime.state.intValue() == 0 or
+        ir.getItem("Core_Security_Sirene").state != ON or
+        not lastAlarmTime or
+        minutes_between(
+            lastAlarmTime,
+            ZonedDateTime.now()
+        ) > autoOffTime.state.intValue()
+    ):
         return
 
     events.sendCommand(ir.getItem("Core_Security_Sirene"), OFF)

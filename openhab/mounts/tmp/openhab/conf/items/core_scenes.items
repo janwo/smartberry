@@ -7,7 +7,7 @@ Group gCore_Scenes_Settings "Szenen" <party> (gCore_Settings) ["Equipment"] {
   ]
 }
 
-Group gCore_Scenes_StoreTriggers "Szene überschreiben" <settings> ["Equipment"] (gCore_Scenes_Settings) {
+Group gCore_Scenes_StoreTriggers "Szene überschreiben" <settings> (gCore_Scenes_Settings) ["Equipment"] {
     cellWidget=""[
         label="=items.gCore_Scenes_StoreTriggers.title",
         icon="oh:settings"
@@ -17,7 +17,7 @@ Group gCore_Scenes_StoreTriggers "Szene überschreiben" <settings> ["Equipment"]
     ]
 }
 
-Group gCore_Scenes_StateTriggers "Szenenauslösende Items" <settings> ["Equipment"] (gCore_Scenes_Settings) {
+Group gCore_Scenes_StateTriggers "Szenenauslösende Items" <settings> (gCore_Scenes_Settings) ["Equipment"] {
     cellWidget=""[
         label="=items.gCore_Scenes_StateTriggers.title",
         icon="oh:settings"
