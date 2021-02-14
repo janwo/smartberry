@@ -47,7 +47,7 @@ def get_items_of_any_tags(tags=[]):
 
 
 def sync_group_with_tags(group, tags):
-    tagItems = ir.get_items_of_any_tags(tags)
+    tagItems = get_items_of_any_tags(tags)
 
     def mayRemoveFromGroup(groupMember, tagSet, group):
         if groupMember not in tagSet:
@@ -132,7 +132,7 @@ def create_helper_item(of, namespace, name, item_type, category, label, groups=[
 
 
 def remove_unlinked_helper_items():
-    for helper in ir.getItemsByTag('HelperItem').members:
+    for helper in ir.getItemsByTag('HelperItem'):
         of = get_key_value(
             helper.name,
             METADATA_NAMESPACE,

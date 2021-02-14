@@ -32,6 +32,11 @@ def broadcast(text, broadcast_type=BroadcastType.INFO):
     ):
         NotificationAction.sendBroadcastNotification(text)
         Log.logInfo(
-            "Following message was broadcasted to all users: {}".format(text))
+            "Broadcast message",
+            "Following message was broadcasted to all users: {}".format(text)
+        )
     else:
-        Log.logInfo("Following message was muted: {}".format(text))
+        Log.logInfo(
+            "Broadcast message",
+            "Following message was muted: {}".format(text)
+        )
