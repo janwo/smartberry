@@ -1,7 +1,8 @@
 from personal.core_helpers import enum, get_location, METADATA_NAMESPACE, get_items_of_any_tags
 from core.jsr223.scope import events, OFF, ON, ir
 from org.openhab.core.model.script.actions import Log
-from org.openhab.core.types import UnDefType, OnOffType
+from org.openhab.core.types import UnDefType
+from org.openhab.core.library.types import OnOffType
 from core.metadata import get_key_value, set_key_value
 from core.date import hours_between, ZonedDateTime, format_date
 from personal.core_broadcast import BroadcastType, broadcast

@@ -2,8 +2,8 @@ Group gCore_Lights "Lichtsteuerung" <light> (gCore_Settings) ["Equipment"] {
   cellWidget="oh-label-cell"[
     icon="oh:light",
     label="Label",
-    title="=items.gCore_Lights.title",
-    footer="=items.gCore_Lights.state"
+    title="\u003ditems.gCore_Lights.title",
+    footer="\u003ditems.gCore_Lights.state"
   ]
 }
 

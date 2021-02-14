@@ -1,7 +1,7 @@
 Group gCore_Broadcast "Benachrichtigungen" <error> (gCore_Settings) ["Equipment"] {
   cellWidget="oh-label-cell"[
     icon="oh:error",
-    title="=items.gCore_Broadcast.title",
+    title="\u003ditems.gCore_Broadcast.title"
   ]
 }
 
@@ -10,11 +10,11 @@ Number Core_Broadcast_NotificationMode "Benachrichtigungsmodus" <error> (gCore_B
         options="0="Aus", 1="Standard", 2="Nur Dringend"
     ],
     cellWidget=""[
-        label="=items.Core_Broadcast_NotificationMode.title",
+        label="\u003ditems.Core_Broadcast_NotificationMode.title",
         icon="oh:error"
     ],
     listWidget=""[
         icon="oh:error",
-        subtitle="=items.Core_Broadcast_NotificationMode.displayState"
+        subtitle="\u003ditems.Core_Broadcast_NotificationMode.displayState"
     ]
 }

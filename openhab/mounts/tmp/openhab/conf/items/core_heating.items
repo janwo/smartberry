@@ -7,12 +7,12 @@ Number Core_Heating_Thermostat_ModeDefault "Temperaturmodus" <heating> (gCore_He
         options="0=Aus,11=Eco-Temperatur,2=Normaltemperatur"
     ],
     cellWidget=""[
-        label="=items.Core_Heating_Thermostat_ModeDefault.title",
+        label="\u003ditems.Core_Heating_Thermostat_ModeDefault.title",
         icon="oh:motion"
     ],
     listWidget=""[
         icon="oh:motion",
-        subtitle="=items.Core_Heating_Thermostat_ModeDefault.displayState"
+        subtitle="\u003ditems.Core_Heating_Thermostat_ModeDefault.displayState"
     ]
 }
 

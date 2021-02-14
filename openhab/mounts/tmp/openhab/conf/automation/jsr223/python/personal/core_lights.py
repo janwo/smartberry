@@ -7,7 +7,8 @@ from personal.core_helpers import METADATA_NAMESPACE, get_location, has_same_loc
 from personal.core_lights import SWITCHABLE_TAGS, set_location_as_activated, is_elapsed, LightMode, AmbientLightCondition, get_light_mode_group, turnOn, turnOff, get_switchables
 from personal.core_broadcast import broadcast
 from core.jsr223.scope import ir, events, OFF, ON
-from org.openhab.core.types import UnDefType, OnOffType
+from org.openhab.core.types import UnDefType
+from org.openhab.core.library.types import OnOffType
 from core.metadata import set_key_value, get_key_value
 from random import randint
 

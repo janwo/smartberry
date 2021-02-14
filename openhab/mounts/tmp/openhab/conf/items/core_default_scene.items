@@ -3,16 +3,16 @@ Group Core_DefaultScene "Hauptszene" <cinema> (gCore_Home) ["Point"] {
         options="0=Anwesend,1=Abwesend,2=Lange abwesend,3=Schlafen"
     ],
     cellWidget=""[
-        label="=items.Core_DefaultScene.title",
+        label="\u003ditems.Core_DefaultScene.title",
         icon="oh:cinema"
     ],
     listWidget=""[
         icon="oh:cinema",
-        subtitle="=items.Core_DefaultScene.displayState"
+        subtitle="\u003ditems.Core_DefaultScene.displayState"
     ],
-    core="[
-        scenes=[
-            custom-members=[
+    core=""[
+        scenes=""[
+            custom-members=""[
                 "Core_Security_OperationState",
                 "Core_Heating_Thermostat_ModeDefault"
             ]

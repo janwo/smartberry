@@ -3,14 +3,14 @@ Group gCore_Presence "Anwesenheit" <motion> (gCore_Settings) ["Equipment"] {
   cellWidget="oh-label-cell"[
     icon="oh:motion",
     label="Vor X Tagen",
-    title="=items.gCore_Presence.title",
-    footer="=items.gCore_Presence.state"
+    title="\u003ditems.gCore_Presence.title",
+    footer="\u003ditems.gCore_Presence.state"
   ]
 }
 
 Group gCore_Presence_PresenceTrigger <motion> (gCore_Presence) ["Point"] {
     cellWidget=""[
-        label="=items.gCore_Presence_PresenceTrigger.title",
+        label="\u003ditems.gCore_Presence_PresenceTrigger.title",
         icon="oh:motion"
     ],
     listWidget=""[
@@ -24,12 +24,12 @@ Number Core_Presence "Anwesenheit" <motion> (gCore_Presence) ["Point"] {
         options="1=Anwesend,0=Kurz abwesend,2=Lange abwesend"
     ],
     cellWidget=""[
-        label="=items.Core_Presence.title",
+        label="\u003ditems.Core_Presence.title",
         icon="oh:motion"
     ],
     listWidget=""[
         icon="oh:motion",
-        subtitle="=items.Core_Presence.displayState"
+        subtitle="\u003ditems.Core_Presence.displayState"
     ]
 }
 
@@ -45,7 +45,7 @@ Number Core_Presence_HoursUntilAwayShort "Stunden bis kurze Abwesenheit [%d h]" 
         raised="true",
         round="true",
         icon="oh:light",
-        subtitle="=items.Core_Presence_HoursUntilAwayShort.displayState"
+        subtitle="\u003ditems.Core_Presence_HoursUntilAwayShort.displayState"
     ]
 }
 
@@ -60,6 +60,6 @@ Number Core_Presence_HoursUntilAwayLong "Stunden bis lange Abwesenheit [%d h]" <
         raised="true",
         round="true",
         icon="oh:light",
-        subtitle="=items.Core_Presence_HoursUntilAwayLong.displayState"
+        subtitle="\u003ditems.Core_Presence_HoursUntilAwayLong.displayState"
     ]
 }

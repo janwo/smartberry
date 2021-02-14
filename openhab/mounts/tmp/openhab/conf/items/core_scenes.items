@@ -3,13 +3,13 @@ Group gCore_Scenes
 Group gCore_Scenes_Settings "Szenen" <party> (gCore_Settings) ["Equipment"] {
   cellWidget="oh-label-cell"[
     icon="oh:party",
-    title="=items.gCore_Scenes_Settings.title",
+    title="\u003ditems.gCore_Scenes_Settings.title"
   ]
 }
 
 Group gCore_Scenes_StoreTriggers "Szene überschreiben" <settings> (gCore_Scenes_Settings) ["Equipment"] {
     cellWidget=""[
-        label="=items.gCore_Scenes_StoreTriggers.title",
+        label="\u003ditems.gCore_Scenes_StoreTriggers.title",
         icon="oh:settings"
     ],
     listWidget=""[
@@ -19,7 +19,7 @@ Group gCore_Scenes_StoreTriggers "Szene überschreiben" <settings> (gCore_Scenes
 
 Group gCore_Scenes_StateTriggers "Szenenauslösende Items" <settings> (gCore_Scenes_Settings) ["Equipment"] {
     cellWidget=""[
-        label="=items.gCore_Scenes_StateTriggers.title",
+        label="\u003ditems.gCore_Scenes_StateTriggers.title",
         icon="oh:settings"
     ],
     listWidget=""[

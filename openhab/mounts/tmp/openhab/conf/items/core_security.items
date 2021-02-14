@@ -1,9 +1,9 @@
 Group gCore_Security "Sicherheitssystem" <alarm> (gCore_Settings) ["Equipment"] {
   cellWidget="oh-label-cell"[
     icon="oh:alarm",
-    label="=items.gCore_Security.title",
-    title="=items.gCore_Security.title",
-    footer="=items.gCore_Security.state"
+    label="\u003ditems.gCore_Security.title",
+    title="\u003ditems.gCore_Security.title",
+    footer="\u003ditems.gCore_Security.state"
   ]
 }
 
@@ -22,11 +22,11 @@ Number Core_Security_OperationState "Angrifferkennung [MAP(core_security_de.map)
         options="1=An,0=Aus,2=An (Lautlos)"
     ],
     cellWidget=""[
-        label="=items.Core_Security_OperationState.title",
+        label="\u003ditems.Core_Security_OperationState.title",
         icon="oh:shield"
     ],
     listWidget=""[
         icon="oh:shield",
-        subtitle="=items.Core_Security_OperationState.displayState"
+        subtitle="\u003ditems.Core_Security_OperationState.displayState"
     ]
 }
