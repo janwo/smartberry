@@ -25,8 +25,7 @@ Number Core_Lights_DefaultDuration "Standard Lichtdauer [%d min]" <time> (gCore_
     listWidget="oh-stepper-item"[
         raised="true",
         round="true",
-        icon="oh:time",
-        subtitle="\u003ditems.Core_Lights_DefaultDuration.displayState"
+        icon="oh:time"
     ]
 }
 
@@ -40,8 +39,7 @@ Number Core_Lights_AmbientLightCondition  "Lichtwert-Einstufung" <sun> (gCore_Li
     listWidget="oh-stepper-item"[
         raised="true",
         round="true",
-        icon="oh:light",
-        subtitle="\u003ditems.Core_Lights_AmbientLightCondition.displayState"
+        icon="oh:light"
     ]
 }
 
@@ -56,8 +54,7 @@ Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured "Lichtwert b
     listWidget="oh-stepper-item"[
         raised="true",
         round="true",
-        icon="oh:light",
-        subtitle="\u003ditems.Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured.displayState"
+        icon="oh:light"
     ]
 }
 
@@ -72,8 +69,7 @@ Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark "Lichtwert bis D
     listWidget="oh-stepper-item"[
         raised="true",
         round="true",
-        icon="oh:light",
-        subtitle="\u003ditems.Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark.displayState"
+        icon="oh:light"
     ]
 }
 

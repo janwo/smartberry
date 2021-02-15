@@ -1,4 +1,4 @@
 Group gCore_Cleaning "House Cleaning Management" <lawnmower> (gCore_Settings)
-Group gCore_Cleaning_Vacuum_CommandItem                                 <lawnmower>
-Group gCore_Cleaning_Vacuum_StateItem                                   <lawnmower>
-Group gCore_Cleaning_Vacuum_Clean                                       <lawnmower>
+Group gCore_Cleaning_Vacuum_CommandItem <lawnmower>
+Group gCore_Cleaning_Vacuum_StateItem <lawnmower>
+Group gCore_Cleaning_Vacuum_Clean <lawnmower>

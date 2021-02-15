@@ -22,15 +22,7 @@
                 "stateAsHeader": true,
                 "expandable": false
               }
-            }
-          ]
-        }
-      },
-      {
-        "component": "oh-grid-cells",
-        "config": {},
-        "slots": {
-          "default": [
+            },
             {
               "component": "oh-label-cell",
               "config": {
@@ -43,15 +35,7 @@
                 "stateAsHeader": true,
                 "expandable": false
               }
-            }
-          ]
-        }
-      },
-      {
-        "component": "oh-grid-cells",
-        "config": {},
-        "slots": {
-          "default": [
+            },
             {
               "component": "oh-label-cell",
               "config": {
@@ -64,15 +48,7 @@
                 "stateAsHeader": true,
                 "expandable": false
               }
-            }
-          ]
-        }
-      },
-      {
-        "component": "oh-grid-cells",
-        "config": {},
-        "slots": {
-          "default": [
+            },
             {
               "component": "oh-label-cell",
               "config": {

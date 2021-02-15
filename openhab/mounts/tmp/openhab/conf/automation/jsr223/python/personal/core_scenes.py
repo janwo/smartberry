@@ -79,7 +79,11 @@ def sync_helper_items(event):
         )
 
         commandDescription = member.getCommandDescription()
-        if 'options' in commandDescription and len(commandDescription.options) > 0:
+        if (
+            commandDescription and
+            'options' in commandDescription and
+            len(commandDescription.options) > 0
+        ):
             set_key_value(
                 helper.name,
                 'stateDescription'

@@ -21,7 +21,7 @@ Group gCore_Presence_PresenceTrigger "Anwesenheitssensoren" <motion> (gCore_Pres
 Number Core_Presence "Anwesenheit" <motion> (gCore_Presence) ["Point"] {
     stateDescription=""[
         pattern="%d",
-        options="1=Anwesend,0=Kurz abwesend,2=Lange abwesend"
+        options="1.0=Anwesend,0.0=Kurz abwesend,2.0=Lange abwesend"
     ],
     cellWidget=""[
         label="\u003ditems.Core_Presence.title",
@@ -58,7 +58,6 @@ Number Core_Presence_HoursUntilAwayLong "Stunden bis lange Abwesenheit [%d h]" <
     listWidget="oh-stepper-item"[
         raised="true",
         round="true",
-        icon="oh:light",
-        subtitle="\u003ditems.Core_Presence_HoursUntilAwayLong.displayState"
+        icon="oh:light"
     ]
 }

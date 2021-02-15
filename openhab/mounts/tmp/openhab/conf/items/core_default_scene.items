@@ -1,7 +1,7 @@
 Group Core_DefaultScene "Hauptszene" <cinema> (gCore_Home) ["Point"] {
     stateDescription=""[
         pattern="%d",
-        options="0=Anwesend,1=Abwesend,2=Lange abwesend,3=Schlafen"
+        options="0.0=Anwesend,1.0=Abwesend,2.0=Lange abwesend,3.0=Schlafen"
     ],
     cellWidget=""[
         label="\u003ditems.Core_DefaultScene.title",
