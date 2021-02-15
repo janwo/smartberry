@@ -4,7 +4,9 @@ from core.metadata import set_key_value, get_key_value
 from core.items import add_item
 from random import randint
 from org.openhab.core.types import UnDefType
-
+from java.time import LocalDateTime, ZonedDateTime
+from java.time import ZoneId, ZoneOffset
+from java.time.format import DateTimeFormatter
 
 METADATA_NAMESPACE = "core"
 
@@ -149,3 +151,7 @@ def remove_unlinked_helper_items():
             ir.getItem(of)
         except:
             ir.remove(helper.name)
+
+
+def get_date(dateString, format_string="yyyy-MM-dd'T'HH:mm:ss.SSxx"):
+    return LocalDateTime.parse(dateString, DateTimeFormatter.ofPattern(format_string)).atZone(ZoneId.systemDefault())

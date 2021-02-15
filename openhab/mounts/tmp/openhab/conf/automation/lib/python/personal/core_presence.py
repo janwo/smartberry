@@ -1,4 +1,4 @@
-from personal.core_helpers import enum, METADATA_NAMESPACE, get_location
+from personal.core_helpers import get_date, enum, METADATA_NAMESPACE, get_location
 from core.metadata import get_key_value, set_key_value
 from core.jsr223.scope import ir, events
 from org.openhab.core.types import UnDefType
@@ -41,13 +41,13 @@ def get_presence(item=None):
         return PresenceState.HOME
 
     if hours_between(
-        lastUpdate,
+        get_date(lastUpdate),
         ZonedDateTime.now()
     ) > hours_away_long.state.floatValue():
         return PresenceState.AWAY_LONG
 
     elif hours_between(
-        lastUpdate,
+        get_date(lastUpdate),
         ZonedDateTime.now()
     ) > hours_away_short.state.floatValue():
         return PresenceState.AWAY_SHORT

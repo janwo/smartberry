@@ -1,4 +1,4 @@
-from personal.core_helpers import enum, get_location, METADATA_NAMESPACE, get_items_of_any_tags
+from personal.core_helpers import get_date, enum, get_location, METADATA_NAMESPACE, get_items_of_any_tags
 from core.jsr223.scope import events, OFF, ON, ir
 from org.openhab.core.model.script.actions import Log
 from org.openhab.core.types import UnDefType
@@ -58,7 +58,7 @@ def is_elapsed(item):
             return False
 
         return hours_between(
-            lastActivation,
+            get_date(lastActivation),
             ZonedDateTime.now()
         ) > durationItem.state.floatValue()
 

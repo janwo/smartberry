@@ -1,6 +1,6 @@
 from core.triggers import when
 from core.rules import rule
-from personal.core_helpers import METADATA_NAMESPACE, create_helper_item, get_helper_item, remove_unlinked_helper_items
+from personal.core_helpers import get_date, METADATA_NAMESPACE, create_helper_item, get_helper_item, remove_unlinked_helper_items
 from core.date import minutes_between, format_date, ZonedDateTime
 from personal.core_broadcast import broadcast
 from core.metadata import set_key_value, get_key_value
@@ -50,7 +50,7 @@ def manage_elapsed(event):
                     switchable.name))
                 return
 
-            if minutes_between(lastUpdate, ZonedDateTime.now()) > durationItem.state.floatValue():
+            if minutes_between(get_date(lastUpdate), ZonedDateTime.now()) > durationItem.state.floatValue():
                 events.sendCommand(switchable, OFF)
 
 

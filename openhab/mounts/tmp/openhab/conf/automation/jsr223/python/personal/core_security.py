@@ -1,4 +1,4 @@
-from personal.core_helpers import get_items_of_any_tags, has_same_location, METADATA_NAMESPACE
+from personal.core_helpers import get_date, get_items_of_any_tags, has_same_location, METADATA_NAMESPACE
 from core.triggers import when
 from core.rules import rule
 from personal.core_presence import PresenceState, get_presence
@@ -118,7 +118,7 @@ def siren_autooff(event):
         ir.getItem("Core_Security_Sirene").state != ON or
         not lastAlarmTime or
         minutes_between(
-            lastAlarmTime,
+            get_date(lastAlarmTime),
             ZonedDateTime.now()
         ) > autoOffTime.state.floatValue()
     ):

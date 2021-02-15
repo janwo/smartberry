@@ -1,4 +1,4 @@
-from personal.core_helpers import get_location, sync_group_with_tags, has_same_location, METADATA_NAMESPACE, get_random_number, get_items_of_any_tags, create_helper_item, get_item_of_helper_item, remove_unlinked_helper_items
+from personal.core_helpers import get_date, get_location, sync_group_with_tags, has_same_location, METADATA_NAMESPACE, get_random_number, get_items_of_any_tags, create_helper_item, get_item_of_helper_item, remove_unlinked_helper_items
 from personal.core_scenes import get_scene_item_states, save_scene_item_states, trigger_scene, get_scene_states
 from core.triggers import when
 from core.rules import rule
@@ -248,17 +248,17 @@ def manage_scenetriggers(event):
 
         if ('hours-until-active' in triggerInfo and (
             not lastActivation or hours_between(
-                lastActivation,
+                get_date(lastActivation),
                 ZonedDateTime.now()
             ) < triggerInfo['hours-until-active']
         )) or ('minutes-until-active' in triggerInfo and (
             not lastActivation or minutes_between(
-                lastActivation,
+                get_date(lastActivation),
                 ZonedDateTime.now()
             ) < triggerInfo['minutes-until-active']
         )) or ('seconds-until-active' in triggerInfo and (
             not lastActivation or seconds_between(
-                lastActivation,
+                get_date(lastActivation),
                 ZonedDateTime.now()
             ) < triggerInfo['seconds-until-active']
         )):
