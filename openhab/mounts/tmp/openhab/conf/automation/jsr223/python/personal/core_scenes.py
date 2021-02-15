@@ -45,7 +45,7 @@ def sync_helper_items(event):
             'store-trigger',
             'Number',
             'settings',
-            "{0}-Szene überschreiben".format(member.name),
+            u"{0}-Szene überschreiben".format(member.name),
             ['gCore_Scenes_StoreTriggers'],
             ['Point']
         )

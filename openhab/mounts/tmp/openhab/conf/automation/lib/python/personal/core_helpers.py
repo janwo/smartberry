@@ -69,14 +69,14 @@ def sync_group_with_tags(group, tags):
 
 
 def get_helper_item(of, namespace, name):
-    meta = get_key_value(
-        of.name,
-        METADATA_NAMESPACE,
-        namespace,
-        'helper-items',
-        name
-    )
     try:
+        meta = get_key_value(
+            of.name,
+            METADATA_NAMESPACE,
+            namespace,
+            'helper-items',
+            name
+        )
         if meta:
             return ir.getItem(meta)
     except:
@@ -84,12 +84,12 @@ def get_helper_item(of, namespace, name):
 
 
 def get_item_of_helper_item(helperItem):
-    meta = get_key_value(
-        helperItem.name,
-        METADATA_NAMESPACE,
-        'helper-item-of'
-    )
     try:
+        meta = get_key_value(
+            helperItem.name,
+            METADATA_NAMESPACE,
+            'helper-item-of'
+        )
         if meta:
             return ir.getItem(meta)
     except:
