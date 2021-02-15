@@ -52,28 +52,28 @@ def sync_helper_items(event):
 
         set_key_value(
             helper.name,
-            'cellWidget'
+            'cellWidget',
             'label',
             '=items.{0}.title'.format(member.name)
         )
 
         set_key_value(
             helper.name,
-            'cellWidget'
+            'cellWidget',
             'icon',
             'oh:settings'
         )
 
         set_key_value(
             helper.name,
-            'listWidget'
+            'listWidget',
             'subtitle',
             '=items.{0}.displayState'.format(member.name)
         )
 
         set_key_value(
             helper.name,
-            'listWidget'
+            'listWidget',
             'icon',
             'oh:settings'
         )
@@ -86,7 +86,7 @@ def sync_helper_items(event):
         ):
             set_key_value(
                 helper.name,
-                'stateDescription'
+                'stateDescription',
                 'options',
                 map(
                     lambda option: {
@@ -139,28 +139,28 @@ def sync_helper_items(event):
 
             set_key_value(
                 helper.name,
-                'cellWidget'
+                'cellWidget',
                 'label',
                 '=items.{0}.title'.format(stateTrigger.name)
             )
 
             set_key_value(
                 helper.name,
-                'cellWidget'
+                'cellWidget',
                 'icon',
                 'oh:settings'
             )
 
             set_key_value(
                 helper.name,
-                'listWidget'
+                'listWidget',
                 'subtitle',
                 '=items.{0}.displayState'.format(stateTrigger.name)
             )
 
             set_key_value(
                 helper.name,
-                'listWidget'
+                'listWidget',
                 'icon',
                 'oh:settings'
             )

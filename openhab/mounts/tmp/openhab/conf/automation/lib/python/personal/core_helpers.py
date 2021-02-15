@@ -61,6 +61,10 @@ def sync_group_with_tags(group, tags):
     )
 
     for tagItem in tagItems:
+        Log.logInfo(
+            "Log",
+            tagItem.name
+        )
         if tagItem not in currentGroupMembers:
             currentGroupMembers.append(tagItem)
             group.addMember(tagItem)

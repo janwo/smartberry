@@ -8,7 +8,6 @@ Group Core_DefaultScene "Hauptszene" <cinema> (gCore_Home) ["Point"] {
         icon="oh:cinema"
     ],
     listWidget=""[
-        icon="oh:cinema",
-        subtitle="\u003ditems.Core_DefaultScene.displayState"
+        icon="oh:cinema"
     ]
 }

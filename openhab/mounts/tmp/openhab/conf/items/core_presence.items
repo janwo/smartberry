@@ -28,8 +28,7 @@ Number Core_Presence "Anwesenheit" <motion> (gCore_Presence) ["Point"] {
         icon="oh:motion"
     ],
     listWidget=""[
-        icon="oh:motion",
-        subtitle="\u003ditems.Core_Presence.displayState"
+        icon="oh:motion"
     ]
 }
 
@@ -43,8 +42,7 @@ Number Core_Presence_HoursUntilAwayShort "Stunden bis kurze Abwesenheit [%d h]" 
     listWidget="oh-stepper-item"[
         raised="true",
         round="true",
-        icon="oh:light",
-        subtitle="\u003ditems.Core_Presence_HoursUntilAwayShort.displayState"
+        icon="oh:light"
     ]
 }
 
