@@ -1,5 +1,4 @@
 Group gCore_Cleaning "House Cleaning Management" <lawnmower> (gCore_Settings)
-Group  gCleaning_Vacuum_CommandItem                                 <lawnmower>
-Group  gCleaning_Vacuum_StateItem                                   <lawnmower>
-Group  gCleaning_Vacuum_Clean                                       <lawnmower>
-Switch Cleaning_Vacuum_Clean "House Cleaning" <lawnmower> (gCore_Settings) { synonyms="House cleaning, Hausreinigung", ga="Vacuum" }
+Group gCore_Cleaning_Vacuum_CommandItem                                 <lawnmower>
+Group gCore_Cleaning_Vacuum_StateItem                                   <lawnmower>
+Group gCore_Cleaning_Vacuum_Clean                                       <lawnmower>

@@ -255,7 +255,7 @@ def elapsed_lights(event):
             ))
         ))
 
-    for switchable in get_switchables:
+    for switchable in get_switchables():
         if switchable.getStateAs(OnOffType) == ON:
             location = get_location(switchable)
             if location and location.name in switchOffRoomNames:
@@ -277,7 +277,7 @@ def simulate_presence(event):
         )
     ))
 
-    for switchable in get_switchables:
+    for switchable in get_switchables():
         location = get_location(switchable)
         if location and location.name in simulateLocations and randint(0, 10) <= 2:
             if switchable.getStateAs(OnOffType) == ON:
