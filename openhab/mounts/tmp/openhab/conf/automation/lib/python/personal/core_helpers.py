@@ -124,7 +124,8 @@ def create_helper_item(of, namespace, name, item_type, category, label, groups=[
             METADATA_NAMESPACE,
             namespace,
             'helper-items',
-            name
+            name,
+            helperItem.name
         )
     return helperItem
 
