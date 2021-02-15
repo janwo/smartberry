@@ -40,8 +40,10 @@ def manage_elapsed(event):
             )
 
             Log.logInfo(
-                "manage_elapsed timed outlet",
-                (durationItem, lastUpdate)
+                "manage_elapsed",
+                "timed outlet",
+                "durationItem {} lastUpdate {}".format(
+                    durationItem, lastUpdate)
             )
 
             if not lastUpdate or not durationItem or isinstance(durationItem.state, UnDefType):
@@ -58,8 +60,6 @@ def manage_elapsed(event):
 @when("Item removed")
 @when("Item updated")
 def sync_helper_items(event):
-    Log.logInfo("Added/Removed/Updated item", "item: {0}".format(event))
-
     for outlet in ir.getItem("gCore_TimedOutlets_Switchable").members:
         create_helper_item(
             outlet,

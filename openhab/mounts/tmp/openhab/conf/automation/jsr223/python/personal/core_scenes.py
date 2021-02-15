@@ -82,8 +82,9 @@ def sync_helper_items(event):
         commandDescription = member.getCommandDescription()
 
         Log.logInfo(
-            "Log Scenes",
-            commandDescription
+            "sync_helper_items",
+            "core_scenes",
+            "commandDescription {}".format(commandDescription)
         )
 
         if (
