@@ -114,13 +114,13 @@ def siren_autooff(event):
 
     if (
         isinstance(autoOffTime.state, UnDefType) or
-        autoOffTime.state.intValue() == 0 or
+        autoOffTime.state.floatValue() == 0 or
         ir.getItem("Core_Security_Sirene").state != ON or
         not lastAlarmTime or
         minutes_between(
             lastAlarmTime,
             ZonedDateTime.now()
-        ) > autoOffTime.state.intValue()
+        ) > autoOffTime.state.floatValue()
     ):
         return
 

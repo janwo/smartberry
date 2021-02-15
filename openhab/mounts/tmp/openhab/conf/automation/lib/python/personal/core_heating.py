@@ -3,7 +3,7 @@ from org.openhab.core.types import UnDefType
 from personal.core_helpers import enum
 
 HeatingState = enum(
-    OFF=0,
-    ECO=11,
-    DEFAULT=1
+    OFF=0.0,
+    ECO=11.0,
+    DEFAULT=1.0
 )

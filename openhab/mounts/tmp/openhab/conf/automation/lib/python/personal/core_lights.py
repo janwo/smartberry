@@ -8,17 +8,17 @@ from core.date import hours_between, ZonedDateTime, format_date
 from personal.core_broadcast import BroadcastType, broadcast
 
 LightMode = enum(
-    OFF=0,
-    ON=1,
-    AUTO_ON=2,
-    UNCHANGED=3,
-    SIMULATE=4
+    OFF=0.0,
+    ON=1.0,
+    AUTO_ON=2.0,
+    UNCHANGED=3.0,
+    SIMULATE=4.0
 )
 
 AmbientLightCondition = enum(
-    DARK=0,
-    OBSCURED=1,
-    BRIGHT=2
+    DARK=0.0,
+    OBSCURED=1.0,
+    BRIGHT=2.0
 )
 
 SWITCHABLE_TAGS = [
@@ -36,7 +36,7 @@ def get_light_mode_group():
         AmbientLightCondition.BRIGHT: ir.getItem("gCore_Lights_BrightMode")
     }.get(
         AmbientLightCondition.BRIGHT if isinstance(
-            condition, UnDefType) else condition.intValue(),
+            condition, UnDefType) else condition.floatValue(),
         ir.getItem("gCore_Lights_BrightMode")
     )
 
@@ -60,7 +60,7 @@ def is_elapsed(item):
         return hours_between(
             lastActivation,
             ZonedDateTime.now()
-        ) > durationItem.state.intValue()
+        ) > durationItem.state.floatValue()
 
     return False
 

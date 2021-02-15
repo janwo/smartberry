@@ -6,9 +6,9 @@ from core.date import hours_between, ZonedDateTime, format_date
 from personal.core_broadcast import BroadcastType, broadcast
 
 PresenceState = enum(
-    AWAY_SHORT=0,
-    HOME=1,
-    AWAY_LONG=2
+    AWAY_SHORT=0.0,
+    HOME=1.0,
+    AWAY_LONG=2.0
 )
 
 
@@ -43,13 +43,13 @@ def get_presence(item=None):
     if hours_between(
         lastUpdate,
         ZonedDateTime.now()
-    ) > hours_away_long.state.intValue():
+    ) > hours_away_long.state.floatValue():
         return PresenceState.AWAY_LONG
 
     elif hours_between(
         lastUpdate,
         ZonedDateTime.now()
-    ) > hours_away_short.state.intValue():
+    ) > hours_away_short.state.floatValue():
         return PresenceState.AWAY_SHORT
 
     return PresenceState.HOME

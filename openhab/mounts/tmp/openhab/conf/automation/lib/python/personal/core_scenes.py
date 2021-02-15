@@ -9,7 +9,7 @@ from core.metadata import get_key_value, set_key_value
 
 def get_scene_state(scene):
     if not isinstance(scene.state, UnDefType):
-        return scene.state.intValue()
+        return scene.state.floatValue()
     else:
         description = scene.getCommandDescription()
         if len(description.options) > 0:

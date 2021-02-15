@@ -5,20 +5,20 @@ from core.jsr223.scope import ir
 from org.openhab.core.types import UnDefType
 
 BroadcastType = enum(
-    ATTENTION=1,
-    INFO=0
+    INFO=0.0,
+    ATTENTION=1.0
 )
 
 BroadcastNotificationMode = enum(
-    ATTENTION_ONLY=2,
-    NONE=0,
-    DEFAULT=1
+    NONE=0.0,
+    DEFAULT=1.0,
+    ATTENTION_ONLY=2.0
 )
 
 
 def broadcast(text, broadcast_type=BroadcastType.INFO):
     state = ir.getItem("Core_Broadcast_NotificationMode").state
-    notificationMode = state.intValue() if not isinstance(
+    notificationMode = state.floatValue() if not isinstance(
         state, UnDefType) else BroadcastNotificationMode.DEFAULT
 
     if (

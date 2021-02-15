@@ -117,7 +117,7 @@ def manage_light_state(event):
                 filter(
                     lambda groupMember: (
                         not isinstance(groupMember.state, UnDefType) and
-                        groupMember.state.intValue() in [
+                        groupMember.state.floatValue() in [
                             LightMode.ON
                         ]
                     ),
@@ -136,7 +136,7 @@ def manage_light_state(event):
                 filter(
                     lambda groupMember: (
                         not isinstance(groupMember.state, UnDefType) and
-                        groupMember.state.intValue() in [
+                        groupMember.state.floatValue() in [
                             LightMode.OFF
                         ]
                     ),
@@ -163,7 +163,7 @@ def manage_presence(event):
     for member in lightModeGroup.members:
         if (
             isinstance(member.state, UnDefType) and
-            member.state.intValue() in [
+            member.state.floatValue() in [
                 LightMode.AUTO_ON
             ] and
             has_same_location(member, location)
@@ -205,7 +205,7 @@ def welcome_light(event):
     }
     welcomeLightMode = welcomeLightModeMapping.get(
         AmbientLightCondition.BRIGHT if isinstance(
-            condition, UnDefType) else condition.state.intValue(),
+            condition, UnDefType) else condition.state.floatValue(),
         ir.getItem("Core_Lights_WelcomeLight_BrightMode")
     )
 
@@ -221,7 +221,7 @@ def welcome_light(event):
                         lambda mode: isinstance(
                             mode.state,
                             UnDefType
-                        ) and mode.state.intValue() == LightMode.AUTO_ON,
+                        ) and mode.state.floatValue() == LightMode.AUTO_ON,
                         lightModeGroup.members
                     )
                 )
@@ -249,7 +249,7 @@ def elapsed_lights(event):
                     lambda mode: not isinstance(
                         mode.state,
                         UnDefType
-                    ) and mode.state.intValue() == LightMode.AUTO_ON,
+                    ) and mode.state.floatValue() == LightMode.AUTO_ON,
                     lightModeGroup.members
                 )
             ))
@@ -272,7 +272,7 @@ def simulate_presence(event):
             lambda mode: not isinstance(
                 mode.state,
                 UnDefType
-            ) and mode.state.intValue() == LightMode.SIMULATE,
+            ) and mode.state.floatValue() == LightMode.SIMULATE,
             lightModeGroup.members
         )
     ))

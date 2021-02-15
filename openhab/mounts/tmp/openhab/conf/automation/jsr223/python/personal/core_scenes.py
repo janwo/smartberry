@@ -217,7 +217,7 @@ def activate_scene(event):
 def store_scene(event):
     sceneTrigger = ir.getItem(event.itemName)
     scene = get_item_of_helper_item(sceneTrigger)
-    save_scene_item_states(scene, event.itemState.intValue())
+    save_scene_item_states(scene, event.itemState.floatValue())
 
 
 @rule("Core - Manage gCore_Scenes_StateTriggers to trigger scene.", description="Manage gCore_Scenes_StateTriggers to trigger scene.", tags=['core', 'scenes'])
@@ -235,7 +235,7 @@ def manage_scenetriggers(event):
     if scene and triggerInfo and 'to' in triggerInfo:
         if 'from' in triggerInfo and (
             isinstance(scene.state, UnDefType) or
-            triggerInfo['from'] is not scene.state.intValue()
+            triggerInfo['from'] is not scene.state.floatValue()
         ):
             return
 
