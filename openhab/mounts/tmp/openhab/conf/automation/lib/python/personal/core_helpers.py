@@ -141,6 +141,6 @@ def remove_unlinked_helper_items():
         if not of:
             ir.remove(helper.name)
         try:
-            ir.getItem(of.name)
+            ir.getItem(of)
         except:
             ir.remove(helper.name)
