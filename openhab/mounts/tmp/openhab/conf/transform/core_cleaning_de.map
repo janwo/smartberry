@@ -1,9 +1,0 @@
-IDLE=Bereit
-BUSY=Saugt
-ERROR=Fehler
-INVALID=Ungültig
-PAUSED=Pausiert
-ON=Ja
-OFF=Nein
--=Unbekannt
-NULL=Unbekannt

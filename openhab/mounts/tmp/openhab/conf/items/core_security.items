@@ -30,10 +30,10 @@ Number Core_Security_SireneAutoOff "Sirene: Auto-Off (Minuten) [%d min]" <siren>
     ]
 }
 
-Number Core_Security_OperationState "Angrifferkennung [MAP(core_security_de.map):%s]" <shield> (gCore_Security) ["Point"]  {
+Number Core_Security_OperationState "Angrifferkennung" <shield> (gCore_Security) ["Point"]  {
     stateDescription=""[
         pattern="%d",
-        options="1=An,0=Aus,2=An (Lautlos)"
+        options="1.0=An,0.0=Aus,2.0=An (Lautlos)"
     ],
     cellWidget=""[
         label="\u003ditems.Core_Security_OperationState.title",

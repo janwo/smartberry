@@ -30,7 +30,7 @@ Number Core_Lights_DefaultDuration "Standard Lichtdauer [%d min]" <time> (gCore_
     ]
 }
 
-Number Core_Lights_AmbientLightCondition  "Lichtwert-Einstufung [MAP(core_lights_de.map):%s]" <sun> (gCore_Lights) /*Core_Lights_AmbientLightCondition_LuminanceTreshold as subtitle "Aktueller Lichtwert [%d %%]" */ ["Point"]  {
+Number Core_Lights_AmbientLightCondition  "Lichtwert-Einstufung" <sun> (gCore_Lights) /*Core_Lights_AmbientLightCondition_LuminanceTreshold as subtitle "Aktueller Lichtwert [%d %%]" */ ["Point"]  {
     stateDescription=""[
         pattern="%d%%",
         min="1",

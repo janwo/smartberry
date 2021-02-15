@@ -59,7 +59,7 @@ def sync_helper_items(event):
             "duration-item",
             "Number",
             "time",
-            "Einschaltdauer von ${0} [ % d min]".format(outlet.name),
+            "Einschaltdauer von {0} [ % d min]".format(outlet.label),
             ["gCore_TimedOutlets_ActiveDuration"],
             ["Point"]
         )

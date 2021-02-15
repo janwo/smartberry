@@ -5,17 +5,6 @@ set -eu
 ADDONS_FILE=${OPENHAB_HOME}/conf/services/addons.cfg
 
 if [ -f $ADDONS_FILE ]; then
-    echo "addons.sh: Adjust $ADDONS_FILE..."
-    TRANSFORMATION_LINE="$(grep -E '^[^#]?\s?transformation' ${ADDONS_FILE} || echo '' )"
-    if [ "${TRANSFORMATION_LINE}" != '' ]; then
-        if [[ "${TRANSFORMATION_LINE}" != *"map"* ]]; then
-            sed -n -e 's/transformation\s\?=\s\?/transformation = map,/' ${ADDONS_FILE}
-        fi
-    else
-        ## Just append last line
-        echo "transformation = map" >> ${ADDONS_FILE}
-    fi
-
     MISC_LINE="$(grep -E '^[^#]?\s?misc' ${ADDONS_FILE} || echo '' )"
     if [ "${MISC_LINE}" != '' ]; then
         if [[ "${MISC_LINE}" != *"openhabcloud"* ]]; then
