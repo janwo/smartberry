@@ -19,7 +19,7 @@ Number Core_Lights_DefaultDuration "Standard Lichtdauer [%d min]" <time> (gCore_
 
 Number Core_Lights_AmbientLightCondition  "Lichtwert-Einstufung [MAP(core_lights_de.map):%s]" <sun> (gCore_Lights) /*Core_Lights_AmbientLightCondition_LuminanceTreshold as subtitle "Aktueller Lichtwert [%d %%]" */ ["Point"]  {
     stateDescription=""[
-        pattern="%dh",
+        pattern="%d%%",
         min="1",
         max="100",
         step="1"
@@ -35,7 +35,7 @@ Number Core_Lights_AmbientLightCondition  "Lichtwert-Einstufung [MAP(core_lights
 
 Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured "Lichtwert bis Verdunkelt [%d %%]" <line>  (gCore_Lights) ["Point"]  {
     stateDescription=""[
-        pattern="%dh",
+        pattern="%d%%",
         min="1",
         max="100",
         step="1"
@@ -51,7 +51,7 @@ Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured "Lichtwert b
 
 Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark "Lichtwert bis Dunkel [%d %%]" <line> (gCore_Lights) ["Point"] {
     stateDescription=""[
-        pattern="%dh",
+        pattern="%d%%",
         min="1",
         max="100",
         step="1"

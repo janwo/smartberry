@@ -4,6 +4,8 @@ from core.jsr223.scope import ir
 from org.openhab.core.types import UnDefType
 from personal.core_scenes import apply_context
 from personal.core_helpers import enum
+from personal.core_helpers import METADATA_NAMESPACE
+from core.metadata import set_key_value
 
 DefaultSceneState = enum(
     HOME=0,
@@ -23,3 +25,18 @@ def default_scene_updated(event):
                 for context in contexts:
                     if apply_context(scene, context):
                         break
+
+
+@rule("Core - Add custom-members.", description="Core - Add custom-members.", tags=['core', 'default-scene'])
+@when("System started")
+def sync_helper_items(event):
+    set_key_value(
+        'Core_DefaultScene',
+        METADATA_NAMESPACE,
+        'scenes',
+        'custom-members',
+        [
+            "Core_Security_OperationState",
+            "Core_Heating_Thermostat_ModeDefault"
+        ]
+    )

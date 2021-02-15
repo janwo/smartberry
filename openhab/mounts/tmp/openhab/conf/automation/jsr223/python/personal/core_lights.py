@@ -236,9 +236,7 @@ def welcome_light(event):
 
 @rule("Core - Manage elapsed lights.", description="Manage elapsed lights.", tags=['core', 'lights'])
 @when("Time cron 0 * * ? * * *")
-@when("Item SpecialStateManagement received update")
 @when("Item Core_Lights_DefaultDuration received update")
-@when("Item Core_Lights_SleepDuration received update")
 def elapsed_lights(event):
     lightModeGroup = get_light_mode_group()
     switchOffRoomNames = map(

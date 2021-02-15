@@ -1,11 +1,11 @@
 
 Group gCore_Presence "Anwesenheit" <motion> (gCore_Settings) ["Equipment"] {
-  cellWidget="oh-label-cell"[
-    icon="oh:motion",
-    label="Vor X Tagen",
-    title="\u003ditems.gCore_Presence.title",
-    footer="\u003ditems.gCore_Presence.state"
-  ]
+    cellWidget="oh-label-cell"[
+        icon="oh:motion",
+        label="Vor X Tagen",
+        title="\u003ditems.gCore_Presence.title",
+        footer="\u003ditems.gCore_Presence.state"
+    ]
 }
 
 Group gCore_Presence_PresenceTrigger <motion> (gCore_Presence) ["Point"] {

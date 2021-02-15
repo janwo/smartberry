@@ -9,13 +9,5 @@ Group Core_DefaultScene "Hauptszene" <cinema> (gCore_Home) ["Point"] {
     listWidget=""[
         icon="oh:cinema",
         subtitle="\u003ditems.Core_DefaultScene.displayState"
-    ],
-    core=""[
-        scenes=""[
-            custom-members=""[
-                "Core_Security_OperationState",
-                "Core_Heating_Thermostat_ModeDefault"
-            ]
-        ]
     ]
 }
