@@ -54,7 +54,7 @@ def sync_helper_items(event):
 
     for outlet in ir.getItem("gCore_TimedOutlets_Switchable").members:
         create_helper_item(
-            outlet.name,
+            outlet,
             'timed-outlet',
             "duration-item",
             "Number",
