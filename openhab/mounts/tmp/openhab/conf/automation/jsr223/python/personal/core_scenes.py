@@ -82,8 +82,7 @@ def sync_helper_items(event):
         commandDescription = member.getCommandDescription()
 
         Log.logInfo(
-            "sync_helper_items",
-            "core_scenes",
+            "sync_helper_items core_scenes",
             "commandDescription {}".format(commandDescription)
         )
 

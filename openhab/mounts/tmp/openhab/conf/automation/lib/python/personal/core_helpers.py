@@ -62,8 +62,7 @@ def sync_group_with_tags(group, tags):
 
     for tagItem in tagItems:
         Log.logInfo(
-            "sync_group_with_tags",
-            "core_helpers",
+            "sync_group_with_tags core_helpers",
             " tagItem.name {}".format(tagItem.name)
         )
 

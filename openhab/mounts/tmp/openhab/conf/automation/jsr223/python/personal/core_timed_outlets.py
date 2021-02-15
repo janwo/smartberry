@@ -40,8 +40,7 @@ def manage_elapsed(event):
             )
 
             Log.logInfo(
-                "manage_elapsed",
-                "timed outlet",
+                "manage_elapsed timed outlet",
                 "durationItem {} lastUpdate {}".format(
                     durationItem, lastUpdate)
             )
