@@ -14,7 +14,7 @@ def enum(**enums):
 
 
 def get_location(item):
-    if isinstance(item, str):
+    if isinstance(item, (str, unicode)):
         item = ir.getItem(item)
 
     equipmentName = get_key_value(
