@@ -17,7 +17,7 @@ Switch Core_Security_Sirene "Sirene" <siren> (gCore_Security) ["Point"]
 
 Number Core_Security_SireneAutoOff "Sirene: Auto-Off (Minuten) [%d min]" <siren> (gCore_Security) ["Point"] {
     stateDescription="oh-stepper-item"[
-        pattern="%dh",
+        pattern="%dm",
         min="1",
         max="100",
         step="1"
@@ -32,6 +32,7 @@ Number Core_Security_SireneAutoOff "Sirene: Auto-Off (Minuten) [%d min]" <siren>
 
 Number Core_Security_OperationState "Angrifferkennung [MAP(core_security_de.map):%s]" <shield> (gCore_Security) ["Point"]  {
     stateDescription=""[
+        pattern="%d",
         options="1=An,0=Aus,2=An (Lautlos)"
     ],
     cellWidget=""[

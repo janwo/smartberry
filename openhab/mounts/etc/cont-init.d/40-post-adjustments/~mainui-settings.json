@@ -35,7 +35,7 @@
               "component": "oh-label-cell",
               "config": {
                 "icon": "oh:party",
-                "title": "Szene",
+                "title": "Hauptszene",
                 "item": "Core_DefaultScene",
                 "label": "\u003ditems.Core_DefaultScene.title",
                 "action": "options",

@@ -7,6 +7,7 @@ Group gCore_Broadcast "Benachrichtigungen" <error> (gCore_Settings) ["Equipment"
 
 Number Core_Broadcast_NotificationMode "Benachrichtigungsmodus" <error> (gCore_Broadcast) ["Point"] {
     stateDescription=""[
+        pattern="%d",
         options="0=Aus,1=Standard,2=Nur Dringend"
     ],
     cellWidget=""[

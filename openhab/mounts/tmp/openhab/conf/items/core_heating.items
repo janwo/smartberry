@@ -4,6 +4,7 @@ Group gCore_Heating_ContactSwitchable "Deaktivierende Kontakte" <heating> (gCore
 
 Number Core_Heating_Thermostat_ModeDefault "Temperaturmodus" <heating> (gCore_Heating) ["Point"] {
     stateDescription=""[
+        pattern="%d",
         options="0=Aus,11=Eco-Temperatur,2=Normaltemperatur"
     ],
     cellWidget=""[

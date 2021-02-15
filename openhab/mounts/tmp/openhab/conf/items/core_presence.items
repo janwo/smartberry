@@ -8,7 +8,7 @@ Group gCore_Presence "Anwesenheit" <motion> (gCore_Settings) ["Equipment"] {
     ]
 }
 
-Group gCore_Presence_PresenceTrigger <motion> (gCore_Presence) ["Point"] {
+Group gCore_Presence_PresenceTrigger "Anwesenheitssensoren" <motion> (gCore_Presence) ["Point"] {
     cellWidget=""[
         label="\u003ditems.gCore_Presence_PresenceTrigger.title",
         icon="oh:motion"
@@ -20,6 +20,7 @@ Group gCore_Presence_PresenceTrigger <motion> (gCore_Presence) ["Point"] {
 
 Number Core_Presence "Anwesenheit" <motion> (gCore_Presence) ["Point"] {
     stateDescription=""[
+        pattern="%d",
         options="1=Anwesend,0=Kurz abwesend,2=Lange abwesend"
     ],
     cellWidget=""[

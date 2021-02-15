@@ -15,7 +15,20 @@ Group gCore_Lights_BrightMode "Lichtmodus (Hell)" <sun> (gCore_Lights)
 
 Group gCore_Lights_ObscuredMode "Lichtmodus (Verdunkelt)" <blinds> (gCore_Lights)
 
-Number Core_Lights_DefaultDuration "Standard Lichtdauer [%d min]" <time> (gCore_Lights)
+Number Core_Lights_DefaultDuration "Standard Lichtdauer [%d min]" <time> (gCore_Lights) ["Point"]  {
+    stateDescription=""[
+        pattern="%dm",
+        min="1",
+        max="500",
+        step="1"
+    ],
+    listWidget="oh-stepper-item"[
+        raised="true",
+        round="true",
+        icon="oh:time",
+        subtitle="\u003ditems.Core_Lights_DefaultDuration.displayState"
+    ]
+}
 
 Number Core_Lights_AmbientLightCondition  "Lichtwert-Einstufung [MAP(core_lights_de.map):%s]" <sun> (gCore_Lights) /*Core_Lights_AmbientLightCondition_LuminanceTreshold as subtitle "Aktueller Lichtwert [%d %%]" */ ["Point"]  {
     stateDescription=""[
