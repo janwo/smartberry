@@ -26,7 +26,7 @@ def get_presence(item=None):
         'presence',
         "last-update"
     )
-    if lastUpdate:
+    if not lastUpdate:
         return PresenceState.HOME if presenceProvider.name == "Core_Presence" else get_presence()
 
     hours_away_long = ir.getItem("Core_Presence_HoursUntilAwayLong")
