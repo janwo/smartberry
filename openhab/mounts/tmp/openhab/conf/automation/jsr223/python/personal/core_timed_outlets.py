@@ -34,7 +34,15 @@ def manage_elapsed(event):
                 'last-update'
             )
             durationItem = get_helper_item(
-                switchable, 'timed-outlet', 'duration-item')
+                switchable,
+                'timed-outlet',
+                'duration-item'
+            )
+
+            Log.logInfo(
+                "manage_elapsed timed outlet",
+                (durationItem, lastUpdate)
+            )
 
             if not lastUpdate or not durationItem or isinstance(durationItem.state, UnDefType):
                 broadcast("gCore_TimedOutlets_ActiveDuration not found for outlet {}.".format(

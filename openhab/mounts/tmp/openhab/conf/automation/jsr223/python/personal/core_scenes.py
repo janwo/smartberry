@@ -7,6 +7,7 @@ from core.jsr223.scope import ir, events, OFF, ON
 from core.metadata import set_key_value, get_key_value, set_value
 from org.openhab.core.types import UnDefType
 from core.date import minutes_between, seconds_between, hours_between, format_date, ZonedDateTime
+from org.openhab.core.model.script.actions import Log
 
 
 @rule("Core - Sync helper items", description="Core - Sync helper items", tags=['core', 'scenes'])
@@ -79,6 +80,12 @@ def sync_helper_items(event):
         )
 
         commandDescription = member.getCommandDescription()
+
+        Log.logInfo(
+            "Log Scenes",
+            commandDescription
+        )
+
         if (
             commandDescription and
             'options' in commandDescription and
