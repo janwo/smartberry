@@ -9,11 +9,11 @@ Group gCore_Lights "Lichtsteuerung" <light> (gCore_Settings) ["Equipment"] {
 
 Group gCore_Lights_Switchables
 
-Group gCore_Lights_DarkMode "Lichtmodus (Dunkel)" <moon> (gCore_Lights)
+Group gCore_Lights_DarkMode "Lichtmodus (Dunkel)" <moon> (gCore_Lights) ["Equipment"]
 
-Group gCore_Lights_BrightMode "Lichtmodus (Hell)" <sun> (gCore_Lights)
+Group gCore_Lights_BrightMode "Lichtmodus (Hell)" <sun> (gCore_Lights) ["Equipment"]
 
-Group gCore_Lights_ObscuredMode "Lichtmodus (Verdunkelt)" <blinds> (gCore_Lights)
+Group gCore_Lights_ObscuredMode "Lichtmodus (Verdunkelt)" <blinds> (gCore_Lights) ["Equipment"]
 
 Number Core_Lights_DefaultDuration "Standard Lichtdauer [%d min]" <time> (gCore_Lights) ["Point"]  {
     stateDescription=""[
@@ -33,11 +33,6 @@ Number Core_Lights_AmbientLightCondition  "Lichtwert-Einstufung" <sun> (gCore_Li
      stateDescription=""[
         pattern="%d",
         options="0.0=Dunkel,1.0=Verdunkelt,2.0=Hell"
-    ],
-    listWidget="oh-stepper-item"[
-        raised="true",
-        round="true",
-        icon="oh:light"
     ]
 }
 
@@ -72,11 +67,11 @@ Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark "Lichtwert bis D
 }
 
 
-Switch Core_Lights_WelcomeLight_DarkMode "Begrüßungslicht (Dunkel)" <keyring> (gCore_Lights)
+Switch Core_Lights_WelcomeLight_DarkMode "Begrüßungslicht (Dunkel)" <keyring> (gCore_Lights) ["Point"]
 
-Switch Core_Lights_WelcomeLight_BrightMode "Begrüßungslicht (Hell)" <keyring> (gCore_Lights)
+Switch Core_Lights_WelcomeLight_BrightMode "Begrüßungslicht (Hell)" <keyring> (gCore_Lights) ["Point"]
 
-Switch Core_Lights_WelcomeLight_ObscuredMode "Begrüßungslicht (Verdunkelt)" <keyring> (gCore_Lights)
+Switch Core_Lights_WelcomeLight_ObscuredMode "Begrüßungslicht (Verdunkelt)" <keyring> (gCore_Lights) ["Point"]
 
 /**********************
  * CREATE LIGHT MODES *

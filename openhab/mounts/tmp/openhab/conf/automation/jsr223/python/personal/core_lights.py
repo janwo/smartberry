@@ -61,7 +61,7 @@ def sync_helper_items(event):
                 "Number",
                 icon,
                 label.format(location.label),
-                groups,
+                groups + [location],
                 ["Point"]
             )
 

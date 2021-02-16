@@ -21,7 +21,3 @@ Number Core_Heating_Thermostat_ModeDefault "Temperaturmodus" <heating> (gCore_He
 Group:Number gCore_Heating_Thermostat "Thermostat" <thermostat>
 
 Group:Number gCore_Heating_Thermostat_Mode "Temperatursteuerungsmodus" <temperature>
-
-Group:Number gCore_Heating_Thermostat_EcoTemperature "Zieltemperatur (Eco)" <temperature_cold>
-
-Group:Number gCore_Heating_Thermostat_DefaultTemperature "Zieltemperatur (Normal)" <temperature_hot>
