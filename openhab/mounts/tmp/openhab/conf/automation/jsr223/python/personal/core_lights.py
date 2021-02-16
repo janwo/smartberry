@@ -279,7 +279,7 @@ def manage_presence(event):
 
     for member in lightModeGroup.members:
         if (
-            isinstance(member.state, UnDefType) and
+            not isinstance(member.state, UnDefType) and
             member.state.floatValue() in [
                 LightMode.AUTO_ON
             ] and
