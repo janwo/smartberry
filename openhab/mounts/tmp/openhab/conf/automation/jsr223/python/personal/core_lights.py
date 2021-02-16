@@ -80,6 +80,20 @@ def sync_helper_items(event):
 
             set_key_value(
                 helperItem.name,
+                'cellWidget',
+                'action',
+                'options'
+            )
+
+            set_key_value(
+                helperItem.name,
+                'cellWidget',
+                'actionItem',
+                helperItem.name
+            )
+
+            set_key_value(
+                helperItem.name,
                 'listWidget',
                 'subtitle',
                 '=items.{0}.displayState'.format(helperItem.name)
@@ -94,6 +108,20 @@ def sync_helper_items(event):
 
             set_key_value(
                 helperItem.name,
+                'listWidget',
+                'action',
+                'options'
+            )
+
+            set_key_value(
+                helperItem.name,
+                'listWidget',
+                'actionItem',
+                helperItem.name
+            )
+
+            set_key_value(
+                helperItem.name,
                 'stateDescription',
                 'pattern',
                 '%d'
@@ -103,18 +131,7 @@ def sync_helper_items(event):
                 helperItem.name,
                 'stateDescription',
                 'options',
-                [
-                    {
-                        value: 1.0,
-                        label: "Anwesend"
-                    }, {
-                        value: 0.0,
-                        label: 'Kurz abwesend'
-                    }, {
-                        value: 2.0,
-                        label: 'Lange abwesend'
-                    }
-                ]
+                '1.0=Anwesend,0.0=Kurz abwesend,2.0=Lange abwesend'
             )
 
     remove_unlinked_helper_items()

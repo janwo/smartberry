@@ -67,9 +67,30 @@ def sync_helper_items(event):
 
         set_key_value(
             helper.name,
+            'cellWidget',
+            'action',
+            'options'
+        )
+
+        set_key_value(
+            helper.name,
+            'cellWidget',
+            'actionItem',
+            helper.name
+        )
+
+        set_key_value(
+            helper.name,
             'listWidget',
-            'subtitle',
-            '=items.{0}.displayState'.format(member.name)
+            'action',
+            'options'
+        )
+
+        set_key_value(
+            helper.name,
+            'listWidget',
+            'actionItem',
+            helper.name
         )
 
         set_key_value(
@@ -95,13 +116,22 @@ def sync_helper_items(event):
                 helper.name,
                 'stateDescription',
                 'options',
-                map(
-                    lambda option: {
-                        value: option.getValue(),
-                        label: option.getLabel()
-                    },
-                    commandDescription.options
+                ','.join(
+                    map(
+                        lambda option: "{}={}".format(
+                            option.getValue(),
+                            option.getLabel()
+                        ),
+                        commandDescription.options
+                    )
                 )
+            )
+
+            set_key_value(
+                helper.name,
+                'stateDescription',
+                'pattern',
+                '%d'
             )
 
         # Sync switches for each scene state
