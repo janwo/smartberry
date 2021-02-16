@@ -62,12 +62,11 @@ def sync_group_with_tags(group, tags):
         group.allMembers
     )
 
+    Log.logInfo(
+        "sync_group_with_tags core_helpers",
+        " currentGroupMembers {}".format(currentGroupMembers)
+    )
     for tagItem in tagItems:
-        Log.logInfo(
-            "sync_group_with_tags core_helpers",
-            " tagItem.name {}".format(tagItem.name)
-        )
-
         if tagItem not in currentGroupMembers:
             currentGroupMembers.append(tagItem)
             group.addMember(tagItem)

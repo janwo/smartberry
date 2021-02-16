@@ -11,6 +11,7 @@ from org.openhab.core.types import UnDefType
 from org.openhab.core.library.types import OnOffType
 from core.metadata import set_key_value, get_key_value
 from random import randint
+from org.openhab.core.model.script.actions import Log
 
 
 @rule("Core - Sync helper items", description="Core - Sync helper items", tags=['core', 'lights'])
@@ -131,7 +132,7 @@ def sync_helper_items(event):
                 helperItem.name,
                 'stateDescription',
                 'options',
-                '1.0=Anwesend,0.0=Kurz abwesend,2.0=Lange abwesend'
+                '0.0=Aus,1.0=An,2.0=Auto-An,3.0=Unverändert,4.0=Simulierend'
             )
 
     remove_unlinked_helper_items()
@@ -257,7 +258,11 @@ def manage_light_state(event):
             )
         )
     )
-
+    Log.logInfo(
+        "manage_light_state core_lights",
+        " get_switchables {} switchOffRoomNames {} switchOnRoomNames {}".format(
+            get_switchables(), switchOffRoomNames, switchOnRoomNames)
+    )
     for switchable in get_switchables():
         location = get_location(switchable)
         if location and location.name in switchOnRoomNames:
