@@ -49,25 +49,29 @@ def get_items_of_any_tags(tags=[]):
 
 
 def sync_group_with_tags(group, tags):
-    tagItems = get_items_of_any_tags(tags)
-
-    def mayRemoveFromGroup(groupMember, tagSet, group):
-        if groupMember not in tagSet:
+    def mayRemoveFromGroup(groupMember, group, allowedTags):
+        if len(set(allowedTags).intersection(set(groupMember.getTags()))) == 0:
             group.removeMember(groupMember)
             return True
         return False
 
     currentGroupMembers = filter(
-        lambda member: not mayRemoveFromGroup(member, tagItems, group),
+        lambda member: not mayRemoveFromGroup(member, group, tags),
         group.allMembers
+    )
+
+    currentGroupMemberNames = map(
+        lambda member: member.name,
+        currentGroupMembers
     )
 
     Log.logInfo(
         "sync_group_with_tags core_helpers",
-        " currentGroupMembers {}".format(currentGroupMembers)
+        " currentGroupMembers {}".format(currentGroupMemberNames)
     )
-    for tagItem in tagItems:
-        if tagItem not in currentGroupMembers:
+
+    for tagItem in get_items_of_any_tags(tags):
+        if tagItem.name not in currentGroupMemberNames:
             currentGroupMembers.append(tagItem)
             group.addMember(tagItem)
 

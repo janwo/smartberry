@@ -175,7 +175,7 @@ def check_daylight(event):
                 sensor.state,
                 UnDefType
             ) and isNotActiveRoom(get_location(sensor)),
-            get_switchables()
+            ir.getItemsByTag('Light')
         ),
         key=lambda sensor: sensor.state
     )
