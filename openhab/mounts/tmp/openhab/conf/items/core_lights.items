@@ -66,42 +66,8 @@ Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark "Lichtwert bis D
     ]
 }
 
+Switch Core_Lights_WelcomeLight_DarkMode "Begrueßungslicht (Dunkel)" <keyring> (gCore_Lights) ["Point"]
 
-Switch Core_Lights_WelcomeLight_DarkMode "Begrüßungslicht (Dunkel)" <keyring> (gCore_Lights) ["Point"]
+Switch Core_Lights_WelcomeLight_BrightMode "Begrueßungslicht (Hell)" <keyring> (gCore_Lights) ["Point"]
 
-Switch Core_Lights_WelcomeLight_BrightMode "Begrüßungslicht (Hell)" <keyring> (gCore_Lights) ["Point"]
-
-Switch Core_Lights_WelcomeLight_ObscuredMode "Begrüßungslicht (Verdunkelt)" <keyring> (gCore_Lights) ["Point"]
-
-/**********************
- * CREATE LIGHT MODES *
- **********************
-
-
-    Frame label="Lichtmanagement" icon="lightbulb" {
-        Setpoint item=Core_Lights_DefaultBrightness minValue=5 maxValue=100 step=5
-        Setpoint item=Core_Lights_DefaultDuration minValue=5 maxValue=100 step=5
-        Setpoint item=Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured minValue=5 maxValue=100 step=5
-        Setpoint item=Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark minValue=5 maxValue=100 step=5
-        Text item=Core_Lights_AmbientLightCondition
-
-        Text label="Begrüßungslicht" icon="keyring" {
-            Switch item=Core_Lights_WelcomeLight_DarkMode
-            Switch item=Core_Lights_WelcomeLight_BrightMode
-            Switch item=Core_Lights_WelcomeLight_ObscuredMode
-        }
-    }
-
-
-//     // Add Light Modes [If you do not have Light Conditions, Bright Mode is used.]
-//     Text label="Automatisches An- und Ausschalten" icon="light" {
-//        Selection item=GF_LivingRoom_LightManagement_DarkMode mappings=[0="Aus", 1="An", 5="An (Standardmodus)", 2="Auto-An", 3="Bei Abwesenheit (Standardmodus)", 4="Bei Anwesenheit (Standardmodus)", 5="Ohne Änderung"]
-//        Selection item=GF_LivingRoom_LightManagement_BrightMode mappings=[0="Aus", 1="An", 5="An (Standardmodus)", 2="Auto-An", 3="Bei Abwesenheit (Standardmodus)", 4="Bei Anwesenheit (Standardmodus)", 5="Ohne Änderung"]
-//        Selection item=GF_LivingRoom_LightManagement_ObscuredMode mappings=[0="Aus", 1="An", 5="An (Standardmodus)", 2="Auto-An", 3="Bei Abwesenheit (Standardmodus)", 4="Bei Anwesenheit (Standardmodus)", 5="Ohne Änderung"]
-//     }
-
-
-Number      GF_LivingRoom_LightManagement_DarkMode          "Lichtmodus (Dunkel) in Wohnzimmer"      <moon>         (gCore_Lights_DarkMode)
-Number      GF_LivingRoom_LightManagement_BrightMode        "Lichtmodus (Hell)  in Wohnzimmer"       <sun>          (gCore_Lights_BrightMode)
-Number      GF_LivingRoom_LightManagement_ObscuredMode      "Lichtmodus (Verdunkelt) in Wohnzimmer"  <blinds>       (gCore_Lights_ObscuredMode)
-*/
+Switch Core_Lights_WelcomeLight_ObscuredMode "Begrueßungslicht (Verdunkelt)" <keyring> (gCore_Lights) ["Point"]

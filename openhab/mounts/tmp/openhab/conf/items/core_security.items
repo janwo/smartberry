@@ -7,11 +7,11 @@ Group gCore_Security "Sicherheitssystem" <alarm> (gCore_Settings) ["Equipment"] 
   ]
 }
 
-Group gCore_Security_AssaultTrigger "Auslösende Geräte" <motion> (gCore_Security) ["Equipment"]
+Group gCore_Security_AssaultTrigger "Ausloesende Geraete" <motion> (gCore_Security) ["Equipment"]
 
-Group gCore_Security_AssaultDisarmamer "Entschärfende Geräte" <smiley> (gCore_Security) ["Equipment"]
+Group gCore_Security_AssaultDisarmamer "Entschaerfende Geraete" <smiley> (gCore_Security) ["Equipment"]
 
-Group gCore_Security_LockClosureTrigger "Schlossschließende Geräte" <lock> (gCore_Security) ["Equipment"]
+Group gCore_Security_LockClosureTrigger "Schlossschließende Geraete" <lock> (gCore_Security) ["Equipment"]
 
 Switch Core_Security_Sirene "Sirene" <siren> (gCore_Security) ["Point"]
 

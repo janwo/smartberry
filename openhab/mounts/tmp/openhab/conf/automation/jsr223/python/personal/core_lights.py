@@ -132,7 +132,7 @@ def sync_helper_items(event):
                 helperItem.name,
                 'stateDescription',
                 'options',
-                '0.0=Aus,1.0=An,2.0=Auto-An,3.0=Unverändert,4.0=Simulierend'
+                '0.0=Aus,1.0=An,2.0=Auto-An,3.0=Unveraendert,4.0=Simulierend'
             )
 
     remove_unlinked_helper_items()

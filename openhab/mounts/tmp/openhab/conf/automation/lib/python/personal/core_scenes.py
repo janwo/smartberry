@@ -11,9 +11,10 @@ def get_scene_state(scene):
     if not isinstance(scene.state, UnDefType):
         return scene.state.floatValue()
     else:
-        description = scene.getCommandDescription()
-        if len(description.options) > 0:
-            return description.options[0].getValue()
+        commandDescription = scene.getCommandDescription()
+        commandOptions = commandDescription.getCommandOptions() if commandDescription else []
+        if commandOptions:
+            return commandOptions[0].getValue()
 
     raise Exception("Scene has no command description options!")
 
