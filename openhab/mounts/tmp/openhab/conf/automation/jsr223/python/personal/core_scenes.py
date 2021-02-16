@@ -101,17 +101,8 @@ def sync_helper_items(event):
         )
 
         commandDescription = member.getCommandDescription()
-
-        Log.logInfo(
-            "sync_helper_items core_scenes",
-            "commandDescription {}".format(commandDescription)
-        )
-
-        if (
-            commandDescription and
-            'options' in commandDescription and
-            len(commandDescription.options) > 0
-        ):
+        commandOptions = commandDescription.getCommandOptions() if commandDescription else []
+        if commandOptions:
             set_key_value(
                 helper.name,
                 'stateDescription',
@@ -122,7 +113,7 @@ def sync_helper_items(event):
                             option.getValue(),
                             option.getLabel()
                         ),
-                        commandDescription.options
+                        commandOptions
                     )
                 )
             )
