@@ -3,7 +3,7 @@ from core.rules import rule
 from core.date import minutes_between, ZonedDateTime, format_date
 from personal.core_presence import PresenceState
 from personal.core_scenes import trigger_scene, get_scene_items
-from personal.core_helpers import METADATA_NAMESPACE, get_location, has_same_location, get_item_of_helper_item, get_items_of_any_tags, sync_group_with_tags
+from personal.core_helpers import METADATA_NAMESPACE, get_location, has_same_location, get_item_of_helper_item, get_items_of_any_tags, sync_group_with_tags, create_helper_item, remove_unlinked_helper_items
 from personal.core_lights import SWITCHABLE_TAGS, set_location_as_activated, is_elapsed, LightMode, AmbientLightCondition, get_light_mode_group, turnOn, turnOff, get_switchables
 from personal.core_broadcast import broadcast
 from core.jsr223.scope import ir, events, OFF, ON
@@ -23,6 +23,101 @@ def sync_helper_items(event):
         ir.getItem("gCore_Lights_Switchables"),
         SWITCHABLE_TAGS
     )
+
+    # Get locations
+    locations = set(map(
+        lambda switchable: get_location(switchable),
+        members
+    ))
+
+    # Create helper items for each location
+    items = [
+        (
+            'dark',
+            "Lichtmodus (Dunkel) in {}",
+            ['gCore_Lights_DarkMode'],
+            'moon'
+        ),
+        (
+            'bright',
+            "Lichtmodus (Hell) in {}",
+            ['gCore_Lights_BrightMode'],
+            'sun'
+        ),
+        (
+            'obscured',
+            "Lichtmodus (Verdunkelt) in {}",
+            ['gCore_Lights_ObscuredMode'],
+            'blinds'
+        )
+    ]
+    for location in locations:
+        for suffix, label, groups, icon in items:
+            helperItem = create_helper_item(
+                location,
+                'lights',
+                "light-mode-{}".format(suffix),
+                "Number",
+                icon,
+                label.format(location.label),
+                groups,
+                ["Point"]
+            )
+
+            set_key_value(
+                helperItem.name,
+                'cellWidget',
+                'label',
+                '=items.{0}.title'.format(helperItem.name)
+            )
+
+            set_key_value(
+                helperItem.name,
+                'cellWidget',
+                'icon',
+                'oh:{}'.format(icon)
+            )
+
+            set_key_value(
+                helperItem.name,
+                'listWidget',
+                'subtitle',
+                '=items.{0}.displayState'.format(helperItem.name)
+            )
+
+            set_key_value(
+                helperItem.name,
+                'listWidget',
+                'icon',
+                'oh:{}'.format(icon)
+            )
+
+            set_key_value(
+                helperItem.name,
+                'stateDescription',
+                'pattern',
+                '%d'
+            )
+
+            set_key_value(
+                helperItem.name,
+                'stateDescription',
+                'options',
+                [
+                    {
+                        value: 1.0,
+                        label: "Anwesend"
+                    }, {
+                        value: 0.0,
+                        label: 'Kurz abwesend'
+                    }, {
+                        value: 2.0,
+                        label: 'Lange abwesend'
+                    }
+                ]
+            )
+
+    remove_unlinked_helper_items()
 
 
 @rule("Core - Keep last light activation updated", description="Keep last light activation updated", tags=["core", 'lights'])

@@ -97,8 +97,8 @@ def sync_helper_items(event):
                 'options',
                 map(
                     lambda option: {
-                        'value': option.getValue(),
-                        'label': option.getLabel()
+                        value: option.getValue(),
+                        label: option.getLabel()
                     },
                     commandDescription.options
                 )
