@@ -36,9 +36,11 @@ Number Core_Security_OperationState "Angrifferkennung" <shield> (gCore_Security)
     ],
     cellWidget=""[
         label="\u003ditems.Core_Security_OperationState.title",
-        icon="oh:shield"
+        icon="oh:shield",
+        action="options"
     ],
     listWidget=""[
-        icon="oh:shield"
+        icon="oh:shield",
+        action="options"
     ]
 }

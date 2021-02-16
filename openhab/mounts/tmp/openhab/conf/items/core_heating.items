@@ -9,10 +9,12 @@ Number Core_Heating_Thermostat_ModeDefault "Temperaturmodus" <heating> (gCore_He
     ],
     cellWidget=""[
         label="\u003ditems.Core_Heating_Thermostat_ModeDefault.title",
-        icon="oh:motion"
+        icon="oh:motion",
+        action="options"
     ],
     listWidget=""[
-        icon="oh:motion"
+        icon="oh:motion",
+        action="options"
     ]
 }
 

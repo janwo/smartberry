@@ -1,13 +1,15 @@
-Group Core_DefaultScene "Hauptszene" <cinema> (gCore_Home) ["Point"] {
+Number Core_DefaultScene "Hauptszene" <cinema> (gCore_Home) ["Scene"] {
     stateDescription=""[
         pattern="%d",
         options="0.0=Anwesend,1.0=Abwesend,2.0=Lange abwesend,3.0=Schlafen"
     ],
     cellWidget=""[
         label="\u003ditems.Core_DefaultScene.title",
-        icon="oh:cinema"
+        icon="oh:cinema",
+        action="options"
     ],
     listWidget=""[
-        icon="oh:cinema"
+        icon="oh:cinema",
+        action="options"
     ]
 }

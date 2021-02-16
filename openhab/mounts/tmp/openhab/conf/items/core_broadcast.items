@@ -12,9 +12,11 @@ Number Core_Broadcast_NotificationMode "Benachrichtigungsmodus" <error> (gCore_B
     ],
     cellWidget=""[
         label="\u003ditems.Core_Broadcast_NotificationMode.title",
-        icon="oh:error"
+        icon="oh:error",
+        action="options"
     ],
     listWidget=""[
-        icon="oh:error"
+        icon="oh:error",
+        action="options"
     ]
 }
