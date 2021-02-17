@@ -4,7 +4,7 @@ from core.date import minutes_between, ZonedDateTime, format_date
 from personal.core_presence import PresenceState
 from personal.core_scenes import trigger_scene, get_scene_items
 from personal.core_helpers import METADATA_NAMESPACE, get_location, has_same_location, get_item_of_helper_item, get_items_of_any_tags, sync_group_with_tags, create_helper_item, remove_unlinked_helper_items
-from personal.core_lights import SWITCHABLE_TAGS, set_location_as_activated, is_elapsed, LightMode, AmbientLightCondition, get_light_mode_group, turnOn, turnOff, get_switchables
+from personal.core_lights import get_all_switchable_points, EQUIPMENT_TAGS, set_location_as_activated, is_elapsed, LightMode, AmbientLightCondition, get_light_mode_group, turn_on_switchable_point, turn_off_switchable_point
 from personal.core_broadcast import broadcast
 from core.jsr223.scope import ir, events, OFF, ON
 from org.openhab.core.types import UnDefType
@@ -22,7 +22,7 @@ def sync_helper_items(event):
     # Sync group gCore_Lights_Switchables with switchable items - it's needed to create triggers on it
     members = sync_group_with_tags(
         ir.getItem("gCore_Lights_Switchables"),
-        SWITCHABLE_TAGS
+        EQUIPMENT_TAGS
     )
 
     # Get locations
@@ -152,7 +152,7 @@ def set_last_activation(event):
 def check_daylight(event):
     activeSwitchables = filter(
         lambda switchable: switchable.getStateAs(OnOffType) == ON,
-        get_switchables()
+        get_all_switchable_points()
     )
 
     activeRoomNames = map(
@@ -175,7 +175,7 @@ def check_daylight(event):
                 sensor.state,
                 UnDefType
             ) and isNotActiveRoom(get_location(sensor)),
-            ir.getItemsByTag('Light')
+            ir.getItemsByTag(['Light', 'Measurement'])
         ),
         key=lambda sensor: sensor.state
     )
@@ -260,15 +260,15 @@ def manage_light_state(event):
     )
     Log.logInfo(
         "manage_light_state core_lights",
-        " get_switchables {} switchOffRoomNames {} switchOnRoomNames {}".format(
-            get_switchables(), switchOffRoomNames, switchOnRoomNames)
+        "switchOffRoomNames {} switchOnRoomNames {}".format(
+            switchOffRoomNames, switchOnRoomNames)
     )
-    for switchable in get_switchables():
-        location = get_location(switchable)
+    for point in get_all_switchable_points():
+        location = get_location(point)
         if location and location.name in switchOnRoomNames:
-            turnOn(switchable)
+            turn_on_switchable_point(point)
         if location and location.name in switchOffRoomNames:
-            turnOff(switchable)
+            turn_off_switchable_point(point)
 
 
 @rule("Core - Manage lights on presence.", description="Manage lights on presence.", tags=['core', 'lights'])
@@ -289,6 +289,10 @@ def manage_presence(event):
             scene = next((scene for scene in ir.getItem(
                 'gCore_Scenes').members if has_same_location(scene, location)), None)
             if scene:
+                switchablePointNames = map(
+                    lambda s: s.name,
+                    get_all_switchable_points()
+                )
                 trigger_scene(
                     scene=scene,
                     scene_state=None,
@@ -296,7 +300,7 @@ def manage_presence(event):
                         filter(
                             lambda item: (
                                 not isinstance(item.state, UnDefType) and
-                                set(SWITCHABLE_TAGS).intersection(set(item.getTags())) and
+                                item.name in switchablePointNames and
                                 item.getStateAs(OnOffType) == ON
                             ),
                             get_scene_items(scene)
@@ -304,10 +308,9 @@ def manage_presence(event):
                     ) > 0
                 )
             else:
-                for switchable in get_switchables():
-                    if has_same_location(switchable, location):
-                        turnOn(switchable)
-
+                for point in get_all_switchable_points():
+                    if has_same_location(point, location):
+                        turn_on_switchable_point(point)
             break
 
 
@@ -345,10 +348,10 @@ def welcome_light(event):
             )
         )
 
-        for switchable in get_switchables():
-            location = get_location(switchable)
+        for point in get_all_switchable_points():
+            location = get_location(point)
             if location and location.name in switchOnRoomNames:
-                turnOn(switchable)
+                turn_on_switchable_point(point)
 
 
 @rule("Core - Manage elapsed lights.", description="Manage elapsed lights.", tags=['core', 'lights'])
@@ -372,11 +375,10 @@ def elapsed_lights(event):
             ))
         ))
 
-    for switchable in get_switchables():
-        if switchable.getStateAs(OnOffType) == ON:
-            location = get_location(switchable)
-            if location and location.name in switchOffRoomNames:
-                turnOff(switchable)
+    for point in get_all_switchable_points():
+        location = get_location(point)
+        if location and location.name in switchOffRoomNames:
+            turn_off_switchable_point(point)
 
 
 @rule("Core - Simulate lights.", description="Simulate lights.", tags=['core', 'lights'])
@@ -394,10 +396,10 @@ def simulate_presence(event):
         )
     ))
 
-    for switchable in get_switchables():
-        location = get_location(switchable)
+    for point in get_all_switchable_points():
+        location = get_location(point)
         if location and location.name in simulateLocations and randint(0, 10) <= 2:
-            if switchable.getStateAs(OnOffType) == ON:
-                turnOff(switchable)
+            if point.getStateAs(OnOffType) != ON:
+                turn_on_switchable_point(point)
             else:
-                turnOn(switchable)
+                turn_off_switchable_point(point)

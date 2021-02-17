@@ -45,7 +45,7 @@ def get_random_number(length=10):
 
 
 def get_items_of_any_tags(tags=[]):
-    return reduce(lambda x, y: x + y, map(lambda tag: ir.getItemsByTag(tag),  tags))
+    return set(reduce(lambda x, y: x + y, map(lambda tag: ir.getItemsByTag(tag),  tags)))
 
 
 def sync_group_with_tags(group, tags):
@@ -158,3 +158,7 @@ def remove_unlinked_helper_items():
 
 def get_date(dateString, format_string="yyyy-MM-dd'T'HH:mm:ss.SSxx"):
     return LocalDateTime.parse(dateString, DateTimeFormatter.ofPattern(format_string)).atZone(ZoneId.systemDefault())
+
+
+def intersection_count(set1, set2):
+    return len(set(set1).intersection(set(set2)))

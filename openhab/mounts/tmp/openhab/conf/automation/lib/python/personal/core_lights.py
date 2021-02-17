@@ -1,4 +1,4 @@
-from personal.core_helpers import get_date, enum, get_location, METADATA_NAMESPACE, get_items_of_any_tags
+from personal.core_helpers import intersection_count, get_date, enum, get_location, METADATA_NAMESPACE, get_items_of_any_tags
 from core.jsr223.scope import events, OFF, ON, ir
 from org.openhab.core.model.script.actions import Log
 from org.openhab.core.types import UnDefType
@@ -21,10 +21,14 @@ AmbientLightCondition = enum(
     BRIGHT=2.0
 )
 
-SWITCHABLE_TAGS = [
+EQUIPMENT_TAGS = [
     "Lightbulb",
     "PowerOutlet",
     "WallSwitch"
+]
+
+POINT_TAGS = [
+    "Switch"
 ]
 
 
@@ -39,6 +43,18 @@ def get_light_mode_group():
             condition, UnDefType) else condition.floatValue(),
         ir.getItem("gCore_Lights_BrightMode")
     )
+
+
+def set_location_as_activated(switchable):
+    location = get_location(switchable)
+    if location != None:
+        set_key_value(
+            location.name,
+            METADATA_NAMESPACE,
+            "light",
+            "last-activation",
+            format_date(ZonedDateTime.now())
+        )
 
 
 def is_elapsed(item):
@@ -65,32 +81,35 @@ def is_elapsed(item):
     return False
 
 
-def turnOn(switchable, force=False):
-    if switchable.getStateAs(OnOffType) != ON or force:
-        events.sendCommand(switchable, ON)
+def turn_on_switchable_point(point, force=False):
+    if point.getStateAs(OnOffType) != ON or force:
+        events.sendCommand(point, ON)
     else:
-        events.postUpdate(switchable, switchable.state)
+        events.postUpdate(point, point.state)
 
 
-def set_location_as_activated(switchable):
-    location = get_location(switchable)
+def turn_off_switchable_point(point, force=False):
+    if point.getStateAs(OnOffType) != OFF or force:
+        events.sendCommand(point, OFF)
+    elif point.getStateAs(OnOffType) != OFF:
+        events.sendCommand(point, OFF)
 
-    if location != None:
-        set_key_value(
-            location.name,
-            METADATA_NAMESPACE,
-            "light",
-            "last-activation",
-            format_date(ZonedDateTime.now())
+
+def get_all_switchable_points():
+    switchables = []
+    for equipment in get_items_of_any_tags(EQUIPMENT_TAGS):
+        switchables.extend(get_switchable_points(equipment))
+    return set(switchables)
+
+
+def get_switchable_points(equipment):
+    if intersection_count(equipment.getTags(), EQUIPMENT_TAGS) > 0:
+        return [equipment] if equipment.getType() != 'Group' else filter(
+            lambda point: intersection_count(
+                point.getTags(),
+                POINT_TAGS
+            ) > 0,
+            equipment.allMembers
         )
-
-
-def turnOff(switchable, force=False):
-    if force:
-        events.sendCommand(switchable, OFF)
-    elif switchable.getStateAs(OnOffType) != OFF:
-        events.sendCommand(switchable, OFF)
-
-
-def get_switchables():
-    return get_items_of_any_tags(SWITCHABLE_TAGS)
+    else:
+        return []

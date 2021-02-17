@@ -2,7 +2,6 @@ from core.jsr223.scope import ir, ON, events
 from personal.core_helpers import enum, METADATA_NAMESPACE
 from core.metadata import get_metadata, set_metadata
 from personal.core_helpers import METADATA_NAMESPACE, has_same_location
-from personal.core_lights import get_switchables
 from org.openhab.core.types import UnDefType
 from core.metadata import get_key_value, set_key_value
 
