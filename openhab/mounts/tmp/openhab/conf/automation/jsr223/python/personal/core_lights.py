@@ -3,8 +3,8 @@ from core.rules import rule
 from core.date import minutes_between, ZonedDateTime, format_date
 from personal.core_presence import PresenceState
 from personal.core_scenes import trigger_scene, get_scene_items
-from personal.core_helpers import METADATA_NAMESPACE, get_location, has_same_location, get_item_of_helper_item, get_items_of_any_tags, sync_group_with_tags, create_helper_item, remove_unlinked_helper_items
-from personal.core_lights import get_all_switchable_points, EQUIPMENT_TAGS, set_location_as_activated, is_elapsed, LightMode, AmbientLightCondition, get_light_mode_group, turn_on_switchable_point, turn_off_switchable_point
+from personal.core_helpers import METADATA_NAMESPACE, get_location, has_same_location, get_item_of_helper_item, get_items_of_any_tags, sync_group_with_tags, create_helper_item, remove_unlinked_helper_items, intersection_count
+from personal.core_lights import POINT_TAGS, get_all_switchable_points, EQUIPMENT_TAGS, set_location_as_activated, is_elapsed, LightMode, AmbientLightCondition, get_light_mode_group, turn_on_switchable_point, turn_off_switchable_point
 from personal.core_broadcast import broadcast
 from core.jsr223.scope import ir, events, OFF, ON
 from org.openhab.core.types import UnDefType
@@ -139,10 +139,16 @@ def sync_helper_items(event):
 
 
 @rule("Core - Keep last light activation updated", description="Keep last light activation updated", tags=["core", 'lights'])
-@when("Member of gCore_Lights_Switchables received update ON")
+@when("Descendent of gCore_Lights_Switchables received update ON")
 def set_last_activation(event):
     item = ir.getItem(event.itemName)
-    set_location_as_activated(item)
+    if (
+        # Is target item:
+        'gCore_Lights_Switchables' in item.getGroupNames() or
+        # Is Switch child of target item:
+        intersection_count(item.getTags(), POINT_TAGS) > 0
+    ):
+        set_location_as_activated(item)
 
 
 @rule("Core - Manage daylight status changes.", description="Manage daylight status changes.", tags=["core", 'lights'])

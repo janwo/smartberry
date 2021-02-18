@@ -162,3 +162,41 @@ def get_date(dateString, format_string="yyyy-MM-dd'T'HH:mm:ss.SSxx"):
 
 def intersection_count(set1, set2):
     return len(set(set1).intersection(set(set2)))
+
+
+def get_equipment_points(equipment, equipmentTags, pointTags):
+    if equipment.getType() != 'Group':
+        return [equipment] if not equipmentTags or intersection_count(equipment.getTags(), equipmentTags) > 0 else []
+    else:
+        return filter(
+            lambda point: intersection_count(
+                point.getTags(),
+                pointTags
+            ) > 0,
+            equipment.allMembers
+        )
+
+
+def get_all_equipment_points(equipmentTags, pointTags):
+    points = []
+    for equipment in get_items_of_any_tags(equipmentTags):
+        points.extend(
+            get_equipment_points(equipment, None, pointTags)
+        )
+    return set(points)
+
+
+def get_parent_with_group(item, groupName):
+    if isinstance(item, (str, unicode)):
+        item = ir.getItem(item)
+    groupNames = item.getGroupNames()
+    if not groupNames:
+        return None
+    elif groupName in groupNames:
+        return item
+    else:
+        for _groupName in groupNames:
+            _item = get_parent_with_group(_groupName, groupName)
+            if _item:
+                return _item
+        return None

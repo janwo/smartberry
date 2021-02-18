@@ -1,4 +1,4 @@
-from personal.core_helpers import intersection_count, get_date, enum, get_location, METADATA_NAMESPACE, get_items_of_any_tags
+from personal.core_helpers import get_all_equipment_points, get_date, enum, get_location, METADATA_NAMESPACE
 from core.jsr223.scope import events, OFF, ON, ir
 from org.openhab.core.model.script.actions import Log
 from org.openhab.core.types import UnDefType
@@ -96,20 +96,4 @@ def turn_off_switchable_point(point, force=False):
 
 
 def get_all_switchable_points():
-    switchables = []
-    for equipment in get_items_of_any_tags(EQUIPMENT_TAGS):
-        switchables.extend(get_switchable_points(equipment))
-    return set(switchables)
-
-
-def get_switchable_points(equipment):
-    if intersection_count(equipment.getTags(), EQUIPMENT_TAGS) > 0:
-        return [equipment] if equipment.getType() != 'Group' else filter(
-            lambda point: intersection_count(
-                point.getTags(),
-                POINT_TAGS
-            ) > 0,
-            equipment.allMembers
-        )
-    else:
-        return []
+    return get_all_equipment_points(EQUIPMENT_TAGS, POINT_TAGS)
