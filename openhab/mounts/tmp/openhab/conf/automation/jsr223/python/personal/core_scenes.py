@@ -110,7 +110,7 @@ def sync_helper_items(event):
                 ','.join(
                     map(
                         lambda option: "{}={}".format(
-                            option.getValue(),
+                            option.getCommand(),
                             option.getLabel()
                         ),
                         commandOptions
