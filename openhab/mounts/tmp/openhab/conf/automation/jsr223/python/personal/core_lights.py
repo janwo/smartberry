@@ -26,10 +26,10 @@ def sync_helper_items(event):
     )
 
     # Get locations
-    locations = set(map(
-        lambda switchable: get_location(switchable),
+    locations = set(filter(lambda l: l, map(
+        lambda l: get_location(l),
         members
-    ))
+    )))
 
     # Create helper items for each location
     items = [

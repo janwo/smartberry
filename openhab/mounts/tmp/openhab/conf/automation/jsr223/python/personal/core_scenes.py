@@ -16,16 +16,16 @@ from org.openhab.core.model.script.actions import Log
 @when("Item removed")
 def sync_helper_items(event):
     # Sync group gCore_Scenes with Scene items
-    members = sync_group_with_tags(
+    sceneMembers = sync_group_with_tags(
         ir.getItem("gCore_Scenes"),
         ['Scene']
     )
 
     # Check helper items
-    for member in members:
+    for sceneMember in sceneMembers:
         # check metadata of context states
         contextStates = get_key_value(
-            member.name,
+            sceneMember.name,
             METADATA_NAMESPACE,
             'scenes',
             'context-states'
@@ -41,12 +41,12 @@ def sync_helper_items(event):
 
         # Create scene store trigger
         helper = create_helper_item(
-            member,
+            sceneMember,
             'scenes',
             'store-trigger',
             'Number',
             'settings',
-            "{0}-Szene ueberschreiben".format(member.name),
+            "{0}-Szene ueberschreiben".format(sceneMember.name),
             ['gCore_Scenes_StoreTriggers'],
             ['Point']
         )
@@ -55,7 +55,7 @@ def sync_helper_items(event):
             helper.name,
             'cellWidget',
             'label',
-            '=items.{0}.title'.format(member.name)
+            '=items.{0}.title'.format(sceneMember.name)
         )
 
         set_key_value(
@@ -100,7 +100,7 @@ def sync_helper_items(event):
             'oh:settings'
         )
 
-        commandDescription = member.getCommandDescription()
+        commandDescription = sceneMember.getCommandDescription()
         commandOptions = commandDescription.getCommandOptions() if commandDescription else []
         if commandOptions:
             set_key_value(
@@ -127,11 +127,11 @@ def sync_helper_items(event):
 
         # Sync switches for each scene state
         stateValues = []
-        for value, label in get_scene_states():
+        for value, label in get_scene_states(sceneMember):
             stateValues.append(value)
             stateTriggerLabel = "{0}-Szene".format(label)
             stateTrigger = create_helper_item(
-                member,
+                sceneMember,
                 'scenes',
                 'state-trigger'
                 'Switch',

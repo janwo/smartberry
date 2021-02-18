@@ -1,4 +1,3 @@
-from org.openhab.core.model.script.actions import Log
 from core.jsr223.scope import ir
 from core.metadata import set_key_value, get_key_value
 from core.items import add_item
@@ -63,11 +62,6 @@ def sync_group_with_tags(group, tags):
     currentGroupMemberNames = map(
         lambda member: member.name,
         currentGroupMembers
-    )
-
-    Log.logInfo(
-        "sync_group_with_tags core_helpers",
-        " currentGroupMembers {}".format(currentGroupMemberNames)
     )
 
     for tagItem in get_items_of_any_tags(tags):
