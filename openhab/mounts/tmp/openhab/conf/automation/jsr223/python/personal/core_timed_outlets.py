@@ -41,8 +41,11 @@ def set_last_activation(event):
 @when("Member of gCore_TimedOutlets_ActiveDuration received update")
 def manage_elapsed(event):
     for switchableGroup in ir.getItem("gCore_TimedOutlets_Switchable").members:
-        switchable = get_equipment_points(switchableGroup, None, POINT_TAGS)
-        if switchable.getStateAs(OnOffType) == ON:
+        switchedOnSwitchables = filter(
+            lambda s: s.getStateAs(OnOffType) == ON,
+            get_equipment_points(switchableGroup, None, POINT_TAGS)
+        )
+        if switchedOnSwitchables:
             lastUpdate = get_key_value(
                 switchableGroup.name,
                 METADATA_NAMESPACE,
@@ -61,7 +64,8 @@ def manage_elapsed(event):
                 return
 
             if minutes_between(get_date(lastUpdate), ZonedDateTime.now()) > durationItem.state.floatValue():
-                events.sendCommand(switchable, OFF)
+                for switchable in switchedOnSwitchables:
+                    events.sendCommand(switchable, OFF)
 
 
 @rule("Core - Create timed outlet helper items", description="Create helper items", tags=['core', 'timed-outlets'])
