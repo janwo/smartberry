@@ -8,6 +8,7 @@ from core.metadata import set_key_value, get_key_value, set_value
 from org.openhab.core.types import UnDefType
 from core.date import minutes_between, seconds_between, hours_between, format_date, ZonedDateTime
 from org.openhab.core.model.script.actions import Log
+from __future__ import unicode_literals
 
 
 @rule("Core - Sync helper items", description="Core - Sync helper items", tags=['core', 'scenes'])
@@ -47,7 +48,7 @@ def sync_scene_helpers(event):
             'Number',
             'settings',
             "{0}-Szene ueberschreiben".format(
-                sceneMember.label.encode('utf-8')
+                sceneMember.label
             ),
             ['gCore_Scenes_StoreTriggers'],
             ['Point']

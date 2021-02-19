@@ -6,6 +6,7 @@ from org.openhab.core.types import UnDefType
 from java.time import LocalDateTime, ZonedDateTime
 from java.time import ZoneId, ZoneOffset
 from java.time.format import DateTimeFormatter
+from __future__ import unicode_literals
 
 METADATA_NAMESPACE = "core"
 
@@ -107,7 +108,7 @@ def create_helper_item(of, namespace, name, item_type, category, label, groups=[
         helperItem = add_item(
             "Core_HelperItem{0}_Of_{1}".format(
                 get_random_number(10),
-                of.name.encode('utf-8')
+                of.name
             ),
             item_type=item_type,
             category=category,

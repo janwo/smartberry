@@ -8,6 +8,7 @@ from core.jsr223.scope import ir, events, ON, OFF
 from org.openhab.core.types import UnDefType
 from org.openhab.core.model.script.actions import Log
 from org.openhab.core.library.types import OnOffType
+from __future__ import unicode_literals
 
 POINT_TAGS = [
     "Switch"
@@ -80,7 +81,7 @@ def sync_timed_outlets_helpers(event):
             "duration-item",
             "Number",
             "time",
-            "Einschaltdauer von {0}".format(outlet.label.encode('utf-8')),
+            "Einschaltdauer von {0}".format(outlet.label),
             ["gCore_TimedOutlets_ActiveDuration"],
             ["Point"]
         )

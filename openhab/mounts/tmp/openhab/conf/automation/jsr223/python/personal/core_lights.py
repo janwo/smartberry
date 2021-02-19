@@ -12,6 +12,7 @@ from org.openhab.core.library.types import OnOffType
 from core.metadata import set_key_value, get_key_value
 from random import randint
 from org.openhab.core.model.script.actions import Log
+from __future__ import unicode_literals
 
 
 @rule("Core - Sync helper items", description="Core - Sync helper items", tags=['core', 'lights'])
@@ -70,8 +71,8 @@ def sync_lights_helpers(event):
                 name="light-mode-{}".format(suffix),
                 item_type="Number",
                 category=icon,
-                label=label.format(location.label.encode('utf-8')),
-                groups=groups + [helperGroupItem.name.encode('utf-8')],
+                label=label.format(location.label),
+                groups=groups + [helperGroupItem.name],
                 tags=["Point"]
             )
 
