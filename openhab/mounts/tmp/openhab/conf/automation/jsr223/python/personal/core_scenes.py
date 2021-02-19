@@ -14,7 +14,7 @@ from org.openhab.core.model.script.actions import Log
 @when("Item added")
 @when("Item updated")
 @when("Item removed")
-def sync_helper_items(event):
+def sync_scene_helpers(event):
     # Sync group gCore_Scenes with Scene items
     sceneMembers = sync_group_with_tags(
         ir.getItem("gCore_Scenes"),
@@ -46,7 +46,9 @@ def sync_helper_items(event):
             'store-trigger',
             'Number',
             'settings',
-            "{0}-Szene ueberschreiben".format(sceneMember.label),
+            "{0}-Szene ueberschreiben".format(
+                sceneMember.label.encode('utf-8')
+            ),
             ['gCore_Scenes_StoreTriggers'],
             ['Point']
         )

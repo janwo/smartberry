@@ -72,7 +72,7 @@ def manage_elapsed(event):
 @when("Item added")
 @when("Item removed")
 @when("Item updated")
-def sync_helper_items(event):
+def sync_timed_outlets_helpers(event):
     for outlet in ir.getItem("gCore_TimedOutlets_Switchable").members:
         create_helper_item(
             outlet,
@@ -80,7 +80,7 @@ def sync_helper_items(event):
             "duration-item",
             "Number",
             "time",
-            "Einschaltdauer von {0}".format(outlet.label),
+            "Einschaltdauer von {0}".format(outlet.label.encode('utf-8')),
             ["gCore_TimedOutlets_ActiveDuration"],
             ["Point"]
         )

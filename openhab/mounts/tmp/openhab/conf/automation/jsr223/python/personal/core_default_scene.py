@@ -29,7 +29,7 @@ def default_scene_updated(event):
 
 @rule("Core - Add custom-members.", description="Core - Add custom-members.", tags=['core', 'default-scene'])
 @when("System started")
-def sync_helper_items(event):
+def sync_default_scene_helpers(event):
     set_key_value(
         'Core_DefaultScene',
         METADATA_NAMESPACE,

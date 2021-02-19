@@ -18,7 +18,7 @@ from org.openhab.core.model.script.actions import Log
 @when("Item added")
 @when("Item updated")
 @when("Item removed")
-def sync_helper_items(event):
+def sync_lights_helpers(event):
     # Sync group gCore_Lights_Switchables with switchable items - it's needed to create triggers on it
     members = sync_group_with_tags(
         ir.getItem("gCore_Lights_Switchables"),
@@ -70,8 +70,8 @@ def sync_helper_items(event):
                 name="light-mode-{}".format(suffix),
                 item_type="Number",
                 category=icon,
-                label=label.format(location.label),
-                groups=groups + [helperGroupItem.name],
+                label=label.format(location.label.encode('utf-8')),
+                groups=groups + [helperGroupItem.name.encode('utf-8')],
                 tags=["Point"]
             )
 
