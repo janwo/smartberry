@@ -105,7 +105,7 @@ def create_helper_item(of, namespace, name, item_type, category, label, groups=[
     if not helperItem:
         tags.append('HelperItem')
         helperItem = add_item(
-            "Core_HelperItem{0}_Of_{1}".format(
+            u"Core_HelperItem{0}_Of_{1}".format(
                 get_random_number(10),
                 of.name
             ),

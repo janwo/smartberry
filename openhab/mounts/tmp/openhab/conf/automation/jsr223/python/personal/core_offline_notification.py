@@ -1,27 +1,69 @@
-import functools
 from core.triggers import when
 from core.rules import rule
 from personal.core_broadcast import BroadcastType, broadcast
 from core.jsr223.scope import ir, events, things
-from org.openhab.core.types import UnDefType
+from core.date import days_between, ZonedDateTime
+from personal.core_helpers import get_date
+
+ELAPSED_DAYS = 5
 
 
 @rule("Core - Check things for offline state.", description="Check things for offline state.", tags=['core', 'lights'])
 @when("Time cron 0 0 12 * * ?")
 def offline_check(event):
-    offlineThingsNotifications = filter(lambda thing: (
-        thing.getStatusInfo() != None and
-        thing.getStatusInfo().getStatus().toString() != "ONLINE"
-    ), things.getAll())
-    offlineThingsNotifications = map(lambda thing: ("{0} is {1}".format(
-        thing.getLabel(), thing.getStatusInfo().getStatus()
-    )), offlineThingsNotifications)
+    allThings = things.getAll()
+    offlineThingMessages = map(
+        lambda t: (
+            t.getUID(),
+            "{} is {}!".format(
+                t.getLabel(),
+                t.getStatusInfo().getStatus()
+            )
+        ),
+        filter(
+            lambda t: (
+                t.getStatusInfo() and
+                t.getStatusInfo().getStatus().toString() != "ONLINE"
+            ),
+            allThings
+        )
+    )
 
-    if len(offlineThingsNotifications) > 0:
-        notification = "Some things are not ONLINE:\n{}".format(functools.reduce(
-            lambda a, b: a + "\n" + b,
-            offlineThingsNotifications
+    elapsedThingsMessages = map(
+        lambda t: (
+            t.getUID(),
+            "{} is elapsed for {} day(s)!".format(
+                t.getLabel(),
+                days_between(
+                    get_date(t.getProperties().get("zwave_lastwakeup")),
+                    ZonedDateTime.now()
+                )
+            )
+        ),
+        filter(
+            lambda t: (
+                t.getProperties() and
+                t.getProperties().get("zwave_lastwakeup") and
+                days_between(
+                    get_date(t.getProperties().get("zwave_lastwakeup")),
+                    ZonedDateTime.now()
+                ) > ELAPSED_DAYS
+            ),
+            allThings
+        )
+    )
+
+    thingUids = set()
+    notifications = []
+    for thingUid, message in offlineThingMessages + elapsedThingsMessages:
+        if not thingUid in thingUids:
+            thingUids.add(thingUid)
+            notifications.append(message)
+
+    if notifications:
+        broadcast("Some things are not ONLINE or elapsed:\n{}".format(
+            reduce(
+                lambda a, b: a + "\n" + b,
+                notifications
+            )
         ))
-        broadcast(notification)
-    else:
-        offline_check.log.info("All things are ONLINE!")
