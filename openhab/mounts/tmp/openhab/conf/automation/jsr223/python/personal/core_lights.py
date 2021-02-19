@@ -53,6 +53,16 @@ def sync_helper_items(event):
         )
     ]
     for location in locations:
+        helperGroupItem = create_helper_item(
+            of=location,
+            namespace='lights',
+            name="light-mode-group",
+            item_type="Group",
+            category='colorlight',
+            label="Lichtmodus in {}".format(location.label),
+            groups=[location.name],
+            tags=["Equipment"]
+        )
         for suffix, label, groups, icon in items:
             helperItem = create_helper_item(
                 of=location,
@@ -61,7 +71,7 @@ def sync_helper_items(event):
                 item_type="Number",
                 category=icon,
                 label=label.format(location.label),
-                groups=groups + [location.name],
+                groups=groups + [helperGroupItem.name],
                 tags=["Point"]
             )
 
