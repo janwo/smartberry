@@ -1,6 +1,6 @@
 Group gCore_Heating "Klimaeinstellungen" <heating> (gCore_Settings) ["Equipment"]
-
-Group gCore_Heating_ContactSwitchable "Deaktivierende Kontakte" <heating> (gCore_Settings)
+Group gCore_Heating_ContactSwitchable "Deaktivierende Kontakte" <heating> (gCore_Settings) ["Point"]
+Group gCore_Heating_Thermostat_Mode <temperature>
 
 Number Core_Heating_Thermostat_ModeDefault "Temperaturmodus" <heating> (gCore_Heating) ["Point"] {
     stateDescription=""[
@@ -17,7 +17,3 @@ Number Core_Heating_Thermostat_ModeDefault "Temperaturmodus" <heating> (gCore_He
         action="options"
     ]
 }
-
-Group:Number gCore_Heating_Thermostat "Thermostat" <thermostat>
-
-Group:Number gCore_Heating_Thermostat_Mode "Temperatursteuerungsmodus" <temperature>

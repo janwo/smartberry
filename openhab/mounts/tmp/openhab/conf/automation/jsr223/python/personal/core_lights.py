@@ -55,14 +55,14 @@ def sync_helper_items(event):
     for location in locations:
         for suffix, label, groups, icon in items:
             helperItem = create_helper_item(
-                location,
-                'lights',
-                "light-mode-{}".format(suffix),
-                "Number",
-                icon,
-                label.format(location.label),
-                groups + [location],
-                ["Point"]
+                of=location,
+                namespace='lights',
+                name="light-mode-{}".format(suffix),
+                item_type="Number",
+                category=icon,
+                label=label.format(location.label),
+                groups=groups + [location.name],
+                tags=["Point"]
             )
 
             set_key_value(
@@ -264,6 +264,7 @@ def manage_light_state(event):
             )
         )
     )
+
     Log.logInfo(
         "manage_light_state core_lights",
         "switchOffRoomNames {} switchOnRoomNames {}".format(
