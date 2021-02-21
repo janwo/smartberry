@@ -1,5 +1,4 @@
 from __future__ import unicode_literals
-from builtins import str
 from core.jsr223.scope import ir
 from core.metadata import set_key_value, get_key_value
 from core.items import add_item
@@ -17,7 +16,7 @@ def enum(**enums):
 
 
 def get_location(item):
-    if isinstance(item, str):
+    if isinstance(item, (str, unicode)):
         try:
             item = ir.getItem(item)
         except:

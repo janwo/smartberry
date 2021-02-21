@@ -41,6 +41,7 @@ def sync_default_scene_helpers(event):
             "Core_Heating_Thermostat_ModeDefault",
             "gCore_Lights_DarkMode",
             "gCore_Lights_BrightMode",
-            "gCore_Lights_ObscuredMode"
+            "gCore_Lights_ObscuredMode",
+            "Core_Lights_DefaultDuration"
         ]
     )

@@ -1,5 +1,4 @@
 from __future__ import unicode_literals
-from builtins import str
 from core.jsr223.scope import ir, ON, events
 from personal.core_helpers import enum, METADATA_NAMESPACE
 from core.metadata import get_metadata, set_metadata
@@ -84,7 +83,7 @@ def get_scene_items(scene):
     )
 
     def members(item):
-        if isinstance(item, str):
+        if isinstance(item, (str, unicode)):
             try:
                 item = ir.getItem(item)
             except:
