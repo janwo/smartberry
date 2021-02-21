@@ -68,7 +68,7 @@ services:
       traefik.http.routers.openhab.middlewares: openhab, openhab-auth
       traefik.http.middlewares.openhab.headers.customresponseheaders.Set-Cookie: X-OPENHAB-AUTH-HEADER=true
       traefik.http.middlewares.openhab-auth.basicauth.removeHeader: "true"
-      #traefik.http.middlewares.openhab-auth.basicauth.users: openhab:${}
+      traefik.http.middlewares.openhab-auth.basicauth.users: openhab:${AUTH_OPENHAB_PASSWORD}
 
   bluetooth-beacon:
     image: dominikth/rpi-docker-ibeacon:latest
