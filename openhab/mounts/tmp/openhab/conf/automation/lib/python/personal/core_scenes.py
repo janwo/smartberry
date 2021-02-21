@@ -20,12 +20,13 @@ def get_scene_state(scene):
 
 
 def get_scene_states(scene):
-    description = scene.getCommandDescription()
-    if not description:
-        raise Exception("Scene has no command description options!")
+    commandDescription = scene.getCommandDescription()
+    commandOptions = commandDescription.getCommandOptions() if commandDescription else []
+    if not commandOptions:
+        raise Exception("Scene has no command command description options!")
     return map(
         lambda o: (o.getCommand(), o.getLabel()),
-        description.options
+        commandOptions
     )
 
 
