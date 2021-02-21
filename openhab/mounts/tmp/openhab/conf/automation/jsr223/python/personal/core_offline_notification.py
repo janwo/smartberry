@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from core.triggers import when
 from core.rules import rule
 from personal.core_broadcast import BroadcastType, broadcast

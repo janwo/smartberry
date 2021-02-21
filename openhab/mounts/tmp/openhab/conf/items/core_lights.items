@@ -66,8 +66,8 @@ Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark "Lichtwert bis D
     ]
 }
 
-Switch Core_Lights_WelcomeLight_DarkMode "Begrueßungslicht (Dunkel)" <keyring> (gCore_Lights) ["Point"]
+Switch Core_Lights_WelcomeLight_DarkMode "Begrüßungslicht (Dunkel)" <keyring> (gCore_Lights) ["Point"]
 
-Switch Core_Lights_WelcomeLight_BrightMode "Begrueßungslicht (Hell)" <keyring> (gCore_Lights) ["Point"]
+Switch Core_Lights_WelcomeLight_BrightMode "Begrüßungslicht (Hell)" <keyring> (gCore_Lights) ["Point"]
 
-Switch Core_Lights_WelcomeLight_ObscuredMode "Begrueßungslicht (Verdunkelt)" <keyring> (gCore_Lights) ["Point"]
+Switch Core_Lights_WelcomeLight_ObscuredMode "Begrüßungslicht (Verdunkelt)" <keyring> (gCore_Lights) ["Point"]

@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from core.rules import rule
 from core.triggers import when
 from core.jsr223.scope import ir, events, ON, OFF

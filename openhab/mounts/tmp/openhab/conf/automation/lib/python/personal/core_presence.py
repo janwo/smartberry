@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from personal.core_helpers import get_date, enum, METADATA_NAMESPACE, get_location
 from core.metadata import get_key_value, set_key_value
 from core.jsr223.scope import ir, events

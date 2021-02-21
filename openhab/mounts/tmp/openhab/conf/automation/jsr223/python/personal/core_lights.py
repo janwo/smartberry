@@ -1,9 +1,10 @@
+from __future__ import unicode_literals
 from core.triggers import when
 from core.rules import rule
 from core.date import minutes_between, ZonedDateTime, format_date
 from personal.core_presence import PresenceState
 from personal.core_scenes import trigger_scene, get_scene_items
-from personal.core_helpers import METADATA_NAMESPACE, get_location, has_same_location, get_item_of_helper_item, get_items_of_any_tags, sync_group_with_tags, create_helper_item, remove_unlinked_helper_items, intersection_count
+from personal.core_helpers import METADATA_NAMESPACE, get_location, has_same_location, get_item_of_helper_item, get_items_of_any_tags, sync_group_with_tags, create_helper_item, remove_unlinked_helper_items, intersection_count, remove_invalid_helper_items
 from personal.core_lights import POINT_TAGS, get_all_switchable_points, EQUIPMENT_TAGS, set_location_as_activated, is_elapsed, LightMode, AmbientLightCondition, get_light_mode_group, turn_on_switchable_point, turn_off_switchable_point
 from personal.core_broadcast import broadcast
 from core.jsr223.scope import ir, events, OFF, ON
@@ -12,7 +13,6 @@ from org.openhab.core.library.types import OnOffType
 from core.metadata import set_key_value, get_key_value
 from random import randint
 from org.openhab.core.model.script.actions import Log
-from __future__ import unicode_literals
 
 
 @rule("Core - Sync helper items", description="Core - Sync helper items", tags=['core', 'lights'])
@@ -147,6 +147,7 @@ def sync_lights_helpers(event):
             )
 
     remove_unlinked_helper_items()
+    remove_invalid_helper_items()
 
 
 @rule("Core - Keep last light activation updated", description="Keep last light activation updated", tags=["core", 'lights'])

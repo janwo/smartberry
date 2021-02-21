@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+from builtins import str
 from core.jsr223.scope import ir
 from core.metadata import set_key_value, get_key_value
 from core.items import add_item
@@ -6,7 +8,6 @@ from org.openhab.core.types import UnDefType
 from java.time import LocalDateTime, ZonedDateTime
 from java.time import ZoneId, ZoneOffset
 from java.time.format import DateTimeFormatter
-from __future__ import unicode_literals
 
 METADATA_NAMESPACE = "core"
 
@@ -16,8 +17,11 @@ def enum(**enums):
 
 
 def get_location(item):
-    if isinstance(item, (str, unicode)):
-        item = ir.getItem(item)
+    if isinstance(item, str):
+        try:
+            item = ir.getItem(item)
+        except:
+            return None
 
     equipmentName = get_key_value(
         item.name,
@@ -78,8 +82,8 @@ def get_helper_item(of, namespace, name):
         meta = get_key_value(
             of.name,
             METADATA_NAMESPACE,
-            namespace,
             'helper-items',
+            namespace,
             name
         )
         if meta:
@@ -127,8 +131,8 @@ def create_helper_item(of, namespace, name, item_type, category, label, groups=[
         set_key_value(
             of.name,
             METADATA_NAMESPACE,
-            namespace,
             'helper-items',
+            namespace,
             name,
             helperItem.name
         )
@@ -149,6 +153,31 @@ def remove_unlinked_helper_items():
             ir.getItem(of)
         except:
             ir.remove(helper.name)
+
+
+def remove_invalid_helper_items():
+    for item in ir.getItems():
+        meta = get_key_value(
+            item.name,
+            METADATA_NAMESPACE,
+            'helper-items'
+        )
+
+        if meta and isinstance(meta, dict):
+            for namespace, namespaceDictionary in meta.items():
+                if isinstance(namespaceDictionary, dict):
+                    for helperName, helperItemName in namespaceDictionary.items():
+                        try:
+                            ir.getItem(helperItemName)
+                        except:
+                            del meta[namespace][helperName]
+
+        set_key_value(
+            item.name,
+            METADATA_NAMESPACE,
+            'helper-items',
+            meta
+        )
 
 
 def get_date(dateString, format_string="yyyy-MM-dd'T'HH:mm:ss.SSxx"):
@@ -182,7 +211,7 @@ def get_all_equipment_points(equipmentTags, pointTags):
 
 
 def get_parent_with_group(item, groupName):
-    if isinstance(item, (str, unicode)):
+    if isinstance(item, (unicode)):
         item = ir.getItem(item)
     groupNames = item.getGroupNames()
     if not groupNames:

@@ -1,6 +1,7 @@
+from __future__ import unicode_literals
 from core.triggers import when
 from core.rules import rule
-from personal.core_helpers import get_equipment_points, get_parent_with_group, intersection_count, get_date, METADATA_NAMESPACE, create_helper_item, get_helper_item, remove_unlinked_helper_items
+from personal.core_helpers import get_equipment_points, get_parent_with_group, intersection_count, get_date, METADATA_NAMESPACE, create_helper_item, get_helper_item, remove_unlinked_helper_items, remove_invalid_helper_items
 from core.date import minutes_between, format_date, ZonedDateTime
 from personal.core_broadcast import broadcast
 from core.metadata import set_key_value, get_key_value
@@ -8,7 +9,6 @@ from core.jsr223.scope import ir, events, ON, OFF
 from org.openhab.core.types import UnDefType
 from org.openhab.core.model.script.actions import Log
 from org.openhab.core.library.types import OnOffType
-from __future__ import unicode_literals
 
 POINT_TAGS = [
     "Switch"
@@ -87,3 +87,4 @@ def sync_timed_outlets_helpers(event):
         )
 
     remove_unlinked_helper_items()
+    remove_invalid_helper_items()

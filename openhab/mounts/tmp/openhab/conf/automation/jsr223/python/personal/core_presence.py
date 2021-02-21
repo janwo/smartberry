@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from core.rules import rule
 from core.triggers import when
 from personal.core_presence import PresenceState, trigger_presence, get_presence

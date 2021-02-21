@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from personal.core_helpers import get_date, get_items_of_any_tags, has_same_location, METADATA_NAMESPACE
 from core.triggers import when
 from core.rules import rule

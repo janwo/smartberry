@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+from builtins import str
 from core.jsr223.scope import ir, ON, events
 from personal.core_helpers import enum, METADATA_NAMESPACE
 from core.metadata import get_metadata, set_metadata
@@ -81,17 +83,42 @@ def get_scene_items(scene):
         'custom-members'
     )
 
-    if customMembers:
-        return filter(
-            lambda item: item,
-            map(
-                lambda member: ir.getItem(member),
-                customMembers
-            )
+    def members(item):
+        if isinstance(item, str):
+            try:
+                item = ir.getItem(item)
+            except:
+                return []
+
+        if item.getType() != 'Group':
+            return [item]
+
+        groupMembers = reduce(
+            lambda memberList, newMember: memberList + members(newMember),
+            ir.getItem(item).members,
+            []
         )
 
-    return filter(
-        lambda item: has_same_location(item, scene),
+        def check_duplicate(m, checkedList):
+            if m.name not in checkedList:
+                checkedList.append(m.name)
+                return True
+            return False
+
+        checkedGroupMemberNames = []
+        return filter(
+            lambda m: check_duplicate(m, checkedGroupMemberNames),
+            groupMembers
+        )
+
+    if customMembers:
+        return map(
+            lambda member: members(member),
+            customMembers
+        )
+
+    return map(
+        lambda item: item.getType() != 'Group' and has_same_location(item, scene),
         ir.getItems()
     )
 

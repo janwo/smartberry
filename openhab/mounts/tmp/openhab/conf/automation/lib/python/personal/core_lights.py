@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from personal.core_helpers import get_all_equipment_points, get_date, enum, get_location, METADATA_NAMESPACE
 from core.jsr223.scope import events, OFF, ON, ir
 from org.openhab.core.model.script.actions import Log

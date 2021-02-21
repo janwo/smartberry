@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from core.triggers import when
 from core.rules import rule
 from core.jsr223.scope import ir
@@ -37,6 +38,9 @@ def sync_default_scene_helpers(event):
         'custom-members',
         [
             "Core_Security_OperationState",
-            "Core_Heating_Thermostat_ModeDefault"
+            "Core_Heating_Thermostat_ModeDefault",
+            "gCore_Lights_DarkMode",
+            "gCore_Lights_BrightMode",
+            "gCore_Lights_ObscuredMode"
         ]
     )
