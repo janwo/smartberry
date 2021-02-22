@@ -9,9 +9,7 @@ networks:
 
 services:
   samba:
-    build:
-      context: ./samba
-      dockerfile: Dockerfile.template
+    image: dperson/samba:latest
     ports:
       - "445:445/udp"
       - "139:139/udp"
@@ -28,19 +26,7 @@ services:
       USERID: 9001
       GROUPID: 9001
       SHARE: openhab;/mount;yes;no;no;openhab
-
-  traefik:
-    build:
-      context: ./traefik
-      dockerfile: Dockerfile.template
-    ports:
-      - 80:80
-      - 8080:8080
-    networks:
-      - smartberry
-    restart: unless-stopped
-    labels:
-      io.balena.features.balena-socket: true
+      USER: openhab;${AUTH_SAMBA_PASSWORD}
 
   openhab:
     build:
@@ -49,8 +35,8 @@ services:
     networks:
       - smartberry
     restart: unless-stopped
-    expose:
-      - 8080
+    ports: :
+      - 80
     privileged: true
     volumes:
       - openhab-addons:/openhab/addons
@@ -59,16 +45,7 @@ services:
     environment:
       AUTH_OPENHAB_UUID:
       AUTH_OPENHAB_SECRET:
-    labels:
-      traefik.enable: "true"
-      traefik.http.routers.openhab.rule: PathPrefix(`/`)
-      traefik.http.routers.openhab.entrypoints: web
-      traefik.http.routers.openhab.service: openhab
-      traefik.http.services.openhab.loadbalancer.server.port: 8080
-      traefik.http.routers.openhab.middlewares: openhab, openhab-auth
-      traefik.http.middlewares.openhab.headers.customresponseheaders.Set-Cookie: X-OPENHAB-AUTH-HEADER=true
-      traefik.http.middlewares.openhab-auth.basicauth.removeHeader: "true"
-      traefik.http.middlewares.openhab-auth.basicauth.users: openhab:${AUTH_OPENHAB_PASSWORD}
+      OPENHAB_HTTP_PORT: 80
 
   bluetooth-beacon:
     image: dominikth/rpi-docker-ibeacon:latest

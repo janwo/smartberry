@@ -1,4 +1,0 @@
-FROM dperson/samba:latest
-COPY ./pre-samba.sh /usr/bin/pre-samba.sh
-RUN chmod +x /usr/bin/pre-samba.sh
-ENTRYPOINT ["/usr/bin/pre-samba.sh"]

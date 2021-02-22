@@ -1,4 +1,0 @@
-FROM traefik:latest
-RUN apk add --update --no-cache openssl
-COPY ./traefik.toml /etc/traefik/traefik.toml
-CMD ["traefik"]
