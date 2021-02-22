@@ -36,7 +36,7 @@ services:
       - smartberry
     restart: unless-stopped
     ports:
-      - 80:80
+      - 8080:8080
     privileged: true
     volumes:
       - openhab-addons:/openhab/addons
@@ -45,7 +45,6 @@ services:
     environment:
       AUTH_OPENHAB_UUID:
       AUTH_OPENHAB_SECRET:
-      OPENHAB_HTTP_PORT: 80
 
   bluetooth-beacon:
     image: dominikth/rpi-docker-ibeacon:latest

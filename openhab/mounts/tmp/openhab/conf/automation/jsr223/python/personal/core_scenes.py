@@ -136,7 +136,7 @@ def sync_scene_helpers(event):
             stateTrigger = create_helper_item(
                 sceneMember,
                 'scenes',
-                'state-trigger'
+                'trigger-state-{}'.format(value),
                 'Switch',
                 'party',
                 stateTriggerLabel,
@@ -152,12 +152,12 @@ def sync_scene_helpers(event):
                 'Scene'
             )
 
-            set_key_value(
-                stateTrigger.name,
-                'ga',
-                'sceneReversible',
-                False
-            )
+            # set_key_value(
+            #    stateTrigger.name,
+            #    'ga',
+            #    'sceneReversible',
+            #    False
+            # )
 
             set_key_value(
                 stateTrigger.name,
@@ -169,31 +169,31 @@ def sync_scene_helpers(event):
             )
 
             set_key_value(
-                helper.name,
+                stateTrigger.name,
                 'cellWidget',
                 'label',
                 '=items.{0}.title'.format(stateTrigger.name)
             )
 
             set_key_value(
-                helper.name,
+                stateTrigger.name,
                 'cellWidget',
                 'icon',
-                'oh:settings'
+                'oh:party'
             )
 
             set_key_value(
-                helper.name,
+                stateTrigger.name,
                 'listWidget',
                 'subtitle',
                 '=items.{0}.displayState'.format(stateTrigger.name)
             )
 
             set_key_value(
-                helper.name,
+                stateTrigger.name,
                 'listWidget',
                 'icon',
-                'oh:settings'
+                'oh:party'
             )
 
         for stateTrigger in ir.getItem('gCore_Scenes_StateTriggers').members:
