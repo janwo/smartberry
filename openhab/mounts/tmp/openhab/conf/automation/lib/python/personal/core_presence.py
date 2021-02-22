@@ -12,6 +12,14 @@ PresenceState = enum(
     AWAY_LONG=2.0
 )
 
+POINT_TAGS = [
+    "Presence"
+]
+
+EQUIPMENT_TAGS = [
+    "MotionDetector"
+]
+
 
 def get_presence(item=None):
     if item == None:

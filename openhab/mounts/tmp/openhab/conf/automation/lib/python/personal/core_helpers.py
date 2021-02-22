@@ -107,7 +107,7 @@ def get_item_of_helper_item(helperItem):
 def create_helper_item(of, namespace, name, item_type, category, label, groups=[], tags=[]):
     helperItem = get_helper_item(of, namespace, name)
     if not helperItem:
-        tags.append('HelperItem')
+        tags.append('Core-HelperItem')
         helperItem = add_item(
             "Core_HelperItem{0}_Of_{1}".format(
                 get_random_number(10),
@@ -139,7 +139,7 @@ def create_helper_item(of, namespace, name, item_type, category, label, groups=[
 
 
 def remove_unlinked_helper_items():
-    for helper in ir.getItemsByTag('HelperItem'):
+    for helper in ir.getItemsByTag('Core-HelperItem'):
         of = get_key_value(
             helper.name,
             METADATA_NAMESPACE,
