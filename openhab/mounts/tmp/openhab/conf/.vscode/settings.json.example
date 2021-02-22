@@ -6,5 +6,5 @@
     "openhab.host": "smartberry",
     "openhab.port": 80,
     "openhab.username": "openhab",
-    "openhab.password": "AUTH_OPENHAB_PASSWORD"
+    "openhab.password": "your password"
 }
