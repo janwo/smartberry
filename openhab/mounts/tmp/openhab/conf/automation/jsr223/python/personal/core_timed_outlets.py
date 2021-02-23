@@ -88,5 +88,5 @@ def sync_timed_outlets_helpers(event):
             ["Point"]
         )
 
-    remove_unlinked_helper_items()
-    remove_invalid_helper_items()
+    #remove_unlinked_helper_items()
+    #remove_invalid_helper_items()
