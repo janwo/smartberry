@@ -107,7 +107,7 @@ def get_item_of_helper_item(helperItem):
 def create_helper_item(of, namespace, name, item_type, category, label, groups=[], tags=[]):
     helperItem = get_helper_item(of, namespace, name)
     if not helperItem:
-        tags.append('Core-HelperItem')
+        tags.append('CoreHelperItem')
         helperItem = add_item(
             "Core_HelperItem{0}_Of_{1}".format(
                 get_random_number(10),
@@ -139,7 +139,7 @@ def create_helper_item(of, namespace, name, item_type, category, label, groups=[
 
 
 def remove_unlinked_helper_items():
-    for helper in ir.getItemsByTag('Core-HelperItem'):
+    for helper in ir.getItemsByTag('CoreHelperItem'):
         of = get_key_value(
             helper.name,
             METADATA_NAMESPACE,
@@ -187,39 +187,95 @@ def intersection_count(set1, set2):
     return len(set(set1).intersection(set(set2)))
 
 
-def get_equipment_points(equipment, equipmentTags, pointTags):
-    if equipment.getType() != 'Group':
-        return [equipment] if not equipmentTags or intersection_count(equipment.getTags(), equipmentTags) > 0 else []
-    else:
-        return filter(
-            lambda point: intersection_count(
-                point.getTags(),
-                pointTags
-            ) > 0,
-            equipment.allMembers
-        )
+def get_equipment_points(rootItem, equipmentTags, pointTags):
+    pointScopes = get_childs_with_condition(
+        rootItem,
+        condition=lambda item: intersection_count(
+            item.getTags(), equipmentTags
+        ) > 0
+    ) if equipmentTags else [rootItem]
+
+    points = reduce(
+        lambda pointsList, newPointScope: pointsList +
+        get_childs_with_condition(
+            newPointScope,
+            condition=lambda item: intersection_count(
+                item.getTags(), pointTags
+            ) > 0
+        ),
+        pointScopes,
+        []
+    )
+
+    return unique_items(points)
 
 
 def get_all_equipment_points(equipmentTags, pointTags):
-    points = []
-    for equipment in get_items_of_any_tags(equipmentTags):
-        points.extend(
-            get_equipment_points(equipment, None, pointTags)
-        )
-    return set(points)
+    points = reduce(
+        lambda pointsList, newEquipment: pointsList +
+        get_equipment_points(newEquipment, None, pointTags),
+        get_items_of_any_tags(equipmentTags),
+        []
+    )
+
+    return unique_items(points)
 
 
-def get_parent_with_group(item, groupName):
-    if isinstance(item, (unicode)):
-        item = ir.getItem(item)
-    groupNames = item.getGroupNames()
-    if not groupNames:
-        return None
-    elif groupName in groupNames:
-        return item
-    else:
-        for _groupName in groupNames:
-            _item = get_parent_with_group(_groupName, groupName)
-            if _item:
-                return _item
-        return None
+def get_parents_with_condition(item, condition=lambda item: True):
+    if isinstance(item, (str, unicode)):
+        try:
+            item = ir.getItem(item)
+        except:
+            return []
+
+    if condition(item):
+        return [item]
+
+    if not item.getGroupNames():
+        return []
+
+    groupMembers = reduce(
+        lambda memberList, newMember: memberList +
+        get_parents_with_condition(newMember),
+        item.getGroupNames(),
+        []
+    )
+
+    return unique_items(groupMembers)
+
+
+def get_childs_with_condition(item, condition=lambda item: True):
+    if isinstance(item, (str, unicode)):
+        try:
+            item = ir.getItem(item)
+        except:
+            return []
+
+    if condition(item):
+        return [item]
+
+    if item.getType() != 'Group':
+        return []
+
+    groupMembers = reduce(
+        lambda memberList, newMember: memberList +
+        get_childs_with_condition(newMember),
+        item.members,
+        []
+    )
+
+    return unique_items(groupMembers)
+
+
+def unique_items(items):
+    def check_duplicate(m, checkedList):
+        if m.name not in checkedList:
+            checkedList.append(m.name)
+            return True
+        return False
+
+    checkedGroupMemberNames = []
+    return filter(
+        lambda m: check_duplicate(m, checkedGroupMemberNames),
+        items
+    )

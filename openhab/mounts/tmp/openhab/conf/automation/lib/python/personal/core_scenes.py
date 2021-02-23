@@ -2,9 +2,13 @@ from __future__ import unicode_literals
 from core.jsr223.scope import ir, ON, events
 from personal.core_helpers import enum, METADATA_NAMESPACE
 from core.metadata import get_metadata, set_metadata
-from personal.core_helpers import METADATA_NAMESPACE, has_same_location
+from personal.core_helpers import METADATA_NAMESPACE, has_same_location, get_childs_with_condition
 from org.openhab.core.types import UnDefType
 from core.metadata import get_key_value, set_key_value
+
+SCENE_TAGS = [
+    'Scene'
+]
 
 
 def get_scene_state(scene):
@@ -83,38 +87,12 @@ def get_scene_items(scene):
         'custom-members'
     )
 
-    def members(item):
-        if isinstance(item, (str, unicode)):
-            try:
-                item = ir.getItem(item)
-            except:
-                return []
-
-        if item.getType() != 'Group':
-            return [item]
-
-        groupMembers = reduce(
-            lambda memberList, newMember: memberList + members(newMember),
-            ir.getItem(item).members,
-            []
-        )
-
-        def check_duplicate(m, checkedList):
-            if m.name not in checkedList:
-                checkedList.append(m.name)
-                return True
-            return False
-
-        checkedGroupMemberNames = []
-        return filter(
-            lambda m: check_duplicate(m, checkedGroupMemberNames),
-            groupMembers
-        )
-
     if customMembers:
-        return map(
-            lambda member: members(member),
-            customMembers
+        return reduce(
+            lambda customMemberList, newMember: customMemberList +
+            get_childs_with_condition(newMember),
+            customMembers,
+            []
         )
 
     return map(

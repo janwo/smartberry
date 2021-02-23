@@ -8,3 +8,20 @@ HeatingState = enum(
     ECO=11.0,
     DEFAULT=1.0
 )
+
+OPEN_CONTACT_EQUIPMENT_TAGS = [
+    "Door",
+    "Window"
+]
+
+OPEN_CONTACT_POINT_TAGS = [
+    "OpenState"
+]
+
+HEATING_EQUIPMENT_TAGS = [
+    "RadiatorControl"
+]
+
+HEATING_POINT_TAGS = [
+    "SetPoint"
+]

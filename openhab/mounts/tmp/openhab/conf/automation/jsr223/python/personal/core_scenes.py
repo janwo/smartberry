@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from personal.core_helpers import get_date, get_location, sync_group_with_tags, has_same_location, METADATA_NAMESPACE, get_random_number, get_items_of_any_tags, create_helper_item, get_item_of_helper_item, remove_unlinked_helper_items, remove_invalid_helper_items
-from personal.core_scenes import get_scene_item_states, save_scene_item_states, trigger_scene, get_scene_states
+from personal.core_scenes import SCENE_TAGS, get_scene_item_states, save_scene_item_states, trigger_scene, get_scene_states
 from core.triggers import when
 from core.rules import rule
 from core.date import ZonedDateTime, format_date
@@ -19,7 +19,7 @@ def sync_scene_helpers(event):
     # Sync group gCore_Scenes with Scene items
     sceneMembers = sync_group_with_tags(
         ir.getItem("gCore_Scenes"),
-        ['Scene']
+        SCENE_TAGS
     )
 
     # Check helper items

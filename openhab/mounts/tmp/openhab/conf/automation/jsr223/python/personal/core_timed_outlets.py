@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from core.triggers import when
 from core.rules import rule
-from personal.core_helpers import get_equipment_points, get_parent_with_group, intersection_count, get_date, METADATA_NAMESPACE, create_helper_item, get_helper_item, remove_unlinked_helper_items, remove_invalid_helper_items
+from personal.core_helpers import get_equipment_points, get_parents_with_condition, intersection_count, get_date, METADATA_NAMESPACE, create_helper_item, get_helper_item, remove_unlinked_helper_items, remove_invalid_helper_items
 from core.date import minutes_between, format_date, ZonedDateTime
 from personal.core_broadcast import broadcast
 from core.metadata import set_key_value, get_key_value
@@ -25,11 +25,13 @@ def set_last_activation(event):
         # Is Switch child of target item:
         intersection_count(item.getTags(), POINT_TAGS) > 0
     ):
+        parentOutlet = get_parents_with_condition(
+            item,
+            lambda item: item.getGroupNames(
+            ) and 'gCore_TimedOutlets_Switchable' in item.getGroupNames()
+        )[0]
         set_key_value(
-            get_parent_with_group(
-                item,
-                'gCore_TimedOutlets_Switchable'
-            ).name,
+            parentOutlet.name,
             METADATA_NAMESPACE,
             'timed-outlet',
             "last-update",

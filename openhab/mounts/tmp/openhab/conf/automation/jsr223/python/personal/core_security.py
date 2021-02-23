@@ -1,20 +1,14 @@
 from __future__ import unicode_literals
-from personal.core_helpers import sync_group_with_tags, get_date, get_items_of_any_tags, has_same_location, METADATA_NAMESPACE
+from personal.core_helpers import get_equipment_points, get_childs_with_condition, intersection_count, sync_group_with_tags, get_date, get_items_of_any_tags, has_same_location, METADATA_NAMESPACE
 from core.triggers import when
 from core.rules import rule
 from personal.core_presence import PresenceState, get_presence
-from personal.core_security import OperationState, is_security_state
+from personal.core_security import OperationState, is_security_state, ASSAULT_TRIGGER_EQUIPMENT_TAGS, ASSAULT_TRIGGER_POINT_TAGS, ASSAULT_DISARMER_EQUIPMENT_TAGS, ASSAULT_DISARMER_POINT_TAGS, LOCK_CLOSURE_EQUIPMENT_TAGS, LOCK_CLOSURE_POINT_TAGS
 from core.date import minutes_between, ZonedDateTime, format_date
 from personal.core_broadcast import BroadcastType, broadcast
 from core.jsr223.scope import ir, events, ON, OFF, OPEN
 from org.openhab.core.types import UnDefType
 from core.metadata import get_key_value, set_key_value
-
-TAGS = {
-    "assault-trigger": ["Core-Security-AssaultTrigger"],
-    "assault-disarmer": ["Core-Security-Disarmer"],
-    "lock-closure-trigger": ["Core-Security-LockClosureTrigger"],
-}
 
 
 @rule("Core - Sync helper items", description="Core - Sync helper items", tags=['core', 'security'])
@@ -25,19 +19,19 @@ def sync_security_helpers(event):
     # Sync group gCore_Security_AssaultTrigger with assault items - it's needed to create triggers on it
     sync_group_with_tags(
         ir.getItem("gCore_Security_AssaultTrigger"),
-        TAGS['assault-trigger']
+        ASSAULT_TRIGGER_EQUIPMENT_TAGS
     )
 
     # Sync group gCore_Security_AssaultDisarmamer with disarmer items - it's needed to create triggers on it
     sync_group_with_tags(
         ir.getItem("gCore_Security_AssaultDisarmamer"),
-        TAGS['assault-disarmer']
+        ASSAULT_DISARMER_EQUIPMENT_TAGS
     )
 
     # Sync group gCore_Security_LockClosureTrigger with closure items - it's needed to create triggers on it
     sync_group_with_tags(
         ir.getItem("gCore_Security_LockClosureTrigger"),
-        TAGS['lock-closure-trigger']
+        LOCK_CLOSURE_EQUIPMENT_TAGS
     )
 
 
@@ -48,21 +42,27 @@ def assault_trigger(event):
     if is_security_state(OperationState.OFF):
         return
 
-    set_key_value(
-        'Core_Security_OperationState',
-        METADATA_NAMESPACE,
-        'security',
-        'last-alarm',
-        format_date(ZonedDateTime.now())
-    )
+    item = ir.getItem(event.itemName)
+    if (
+        # Is target item:
+        'gCore_Security_AssaultTrigger' in item.getGroupNames() or
+        # Is Switch child of target item:
+        intersection_count(item.getTags(), ASSAULT_TRIGGER_POINT_TAGS) > 0
+    ):
+        set_key_value(
+            'Core_Security_OperationState',
+            METADATA_NAMESPACE,
+            'security',
+            'last-alarm',
+            format_date(ZonedDateTime.now())
+        )
 
-    label = ir.getItem(event.itemName).label
-    message = "Silent alarm was triggered by {}!".format(label)
-    if is_security_state(OperationState.ON):
-        message = "Striking alarm was triggered by {}!".format(label)
-        events.sendCommand(ir.getItem("Core_Security_Sirene"), ON)
+        message = "Silent alarm was triggered by {}!".format(item.label)
+        if is_security_state(OperationState.ON):
+            message = "Striking alarm was triggered by {}!".format(item.label)
+            events.sendCommand(ir.getItem("Core_Security_Sirene"), ON)
 
-    broadcast(message, BroadcastType.ATTENTION)
+        broadcast(message, BroadcastType.ATTENTION)
 
 
 @rule("Core - Core_Security System - Check Armament", description="Core_Security System - Check Armament", tags=['core', 'security'])
@@ -70,8 +70,16 @@ def assault_trigger(event):
 @when("Item Core_Security_OperationState received update {0}".format(OperationState.SILENTLY))
 def armament(event):
     blockingAssaultTriggers = filter(
-        lambda trigger: trigger.state == OPEN or trigger.state == ON,
-        ir.getItem("gCore_Security_AssaultTrigger").members
+        lambda point: point.state == OPEN or point.state == ON,
+        reduce(
+            lambda pointsList, newMember: pointsList + get_equipment_points(
+                newMember,
+                ASSAULT_TRIGGER_EQUIPMENT_TAGS,
+                ASSAULT_TRIGGER_POINT_TAGS
+            ),
+            ir.getItem("gCore_Security_AssaultTrigger").members,
+            []
+        )
     )
 
     set_key_value(
@@ -101,27 +109,40 @@ def armament(event):
 @rule("Core - Core_Security System - Disarmament-Management", description="Core_Security System - Disarmament-Management", tags=['core', 'security'])
 @when("Member of gCore_Security_AssaultDisarmamer received update")
 def disarmament(event):
-    events.postUpdate(
-        ir.getItem("Core_Security_OperationState"),
-        OperationState.OFF
-    )
+    item = ir.getItem(event.itemName)
+    if (
+        # Is target item:
+        'gCore_Security_AssaultDisarmamer' in item.getGroupNames() or
+        # Is Switch child of target item:
+        intersection_count(item.getTags(), ASSAULT_DISARMER_POINT_TAGS) > 0
+    ):
+        events.postUpdate(
+            ir.getItem("Core_Security_OperationState"),
+            OperationState.OFF
+        )
 
 
 @rule("Core - Core_Security System - Lock Closure-Management", description="Core_Security System - Lock Closure-Management", tags=['core', 'security'])
 @when("Member of gCore_Security_LockClosureTrigger received update CLOSED")
 @when("Member of gCore_Security_LockClosureTrigger received update OFF")
 def lock_closure(event):
-    triggerItem = ir.getItem(event.itemName)
-    locks = get_items_of_any_tags(['Lock'])
-    lock = next(
-        (lock for lock in locks if has_same_location(triggerItem, lock)),
-        None
-    )
+    item = ir.getItem(event.itemName)
+    if (
+        # Is target item:
+        'gCore_Security_LockClosureTrigger' in item.getGroupNames() or
+        # Is Switch child of target item:
+        intersection_count(item.getTags(), LOCK_CLOSURE_POINT_TAGS) > 0
+    ):
+        locks = get_equipment_points(item, ['Lock'], ['OpenState'])
+        lock = next(
+            (lock for lock in locks if has_same_location(item, lock)),
+            None
+        )
 
-    if lock != None:
-        events.sendCommand(lock, ON)
-    else:
-        broadcast("Lock not found for item {}.".format(triggerItem.name))
+        if lock != None:
+            events.sendCommand(lock, ON)
+        else:
+            broadcast("Lock not found for item {}.".format(item.name))
 
 
 @rule("Core - Core_Security System - Turn off siren after Core_Security_OperationState update", description="Core_Security System - Turn off siren after Core_Security_OperationState update", tags=['core', 'security'])

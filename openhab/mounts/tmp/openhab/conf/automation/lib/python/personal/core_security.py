@@ -9,6 +9,37 @@ OperationState = enum(
     SILENTLY=2.0
 )
 
+ASSAULT_TRIGGER_EQUIPMENT_TAGS = [
+    "Window",
+    "Door",
+    "CoreAssaultTrigger"
+]
+
+ASSAULT_TRIGGER_POINT_TAGS = [
+    "OpenState",
+    "Switch"
+]
+
+ASSAULT_DISARMER_EQUIPMENT_TAGS = [
+    "CoreAssaultDisarmer"
+]
+
+ASSAULT_DISARMER_POINT_TAGS = [
+    "OpenState",
+    "Switch"
+]
+
+LOCK_CLOSURE_EQUIPMENT_TAGS = [
+    "Window",
+    "Door",
+    "CoreLockClosure"
+]
+
+LOCK_CLOSURE_POINT_TAGS = [
+    "OpenState",
+    "Switch"
+]
+
 
 def is_security_state(state=OperationState.OFF):
     actualState = ir.getItem("Core_Security_OperationState").state
