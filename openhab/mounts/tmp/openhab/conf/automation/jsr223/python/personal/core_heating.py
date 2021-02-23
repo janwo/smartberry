@@ -23,12 +23,19 @@ def sync_heating_helpers(event):
 @when("Member of gCore_Heating_ContactSwitchable received update")
 @when("Item Core_Heating_Thermostat_ModeDefault received update")
 def update_heater_on_contact_trigger(event):
+    heaterState = ir.getItem("Core_Heating_Thermostat_ModeDefault").state
     for point in get_all_equipment_points(HEATING_EQUIPMENT_TAGS, HEATING_POINT_TAGS):
         if any((
             contact.state == OPEN and
             has_same_location(contact, point)
         ) for contact in get_all_equipment_points(OPEN_CONTACT_EQUIPMENT_TAGS, OPEN_CONTACT_POINT_TAGS)):
-            events.sendCommand(point, int(HeatingState.OFF))
-        else:
-            state = ir.getItem("Core_Heating_Thermostat_ModeDefault").state
-            events.sendCommand(point, state.intValue())
+            events.sendCommand(
+                point,
+                int(HeatingState.OFF)
+            )
+
+        elif not isinstance(heaterState, UnDefType):
+            events.sendCommand(
+                point,
+                heaterState.intValue()
+            )

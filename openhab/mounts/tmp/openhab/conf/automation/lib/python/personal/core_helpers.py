@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from core.jsr223.scope import ir
-from core.metadata import set_key_value, get_key_value
+from core.metadata import set_key_value, get_key_value, remove_key_value
 from core.items import add_item
 from random import randint
 from org.openhab.core.types import UnDefType
@@ -165,18 +165,17 @@ def remove_invalid_helper_items():
         if meta and isinstance(meta, dict):
             for namespace, namespaceDictionary in meta.items():
                 if isinstance(namespaceDictionary, dict):
-                    for helperName, helperItemName in namespaceDictionary.items():
+                    for name, itemName in namespaceDictionary.items():
                         try:
-                            ir.getItem(helperItemName)
+                            ir.getItem(itemName)
                         except:
-                            del meta[namespace][helperName]
-
-        set_key_value(
-            item.name,
-            METADATA_NAMESPACE,
-            'helper-items',
-            meta
-        )
+                            remove_key_value(
+                                item.name,
+                                METADATA_NAMESPACE,
+                                'helper-items',
+                                namespace,
+                                name
+                            )
 
 
 def get_date(dateString, format_string="yyyy-MM-dd'T'HH:mm:ss.SSxx"):

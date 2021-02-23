@@ -146,8 +146,8 @@ def sync_lights_helpers(event):
                 '0.0=Aus,1.0=An,2.0=Auto-An,3.0=Unveraendert,4.0=Simulierend'
             )
 
-    #remove_unlinked_helper_items()
-    #remove_invalid_helper_items()
+    remove_unlinked_helper_items()
+    # remove_invalid_helper_items()
 
 
 @rule("Core - Keep last light activation updated", description="Keep last light activation updated", tags=["core", 'lights'])
