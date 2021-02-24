@@ -343,7 +343,7 @@ def welcome_light(event):
         AmbientLightCondition.BRIGHT: ir.getItem("Core_Lights_WelcomeLight_BrightMode")
     }
     welcomeLightMode = welcomeLightModeMapping.get(
-        AmbientLightCondition.BRIGHT if not isinstance(
+        AmbientLightCondition.BRIGHT if isinstance(
             condition.state, UnDefType) else condition.state.floatValue(),
         ir.getItem("Core_Lights_WelcomeLight_BrightMode")
     )
