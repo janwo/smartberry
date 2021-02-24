@@ -152,12 +152,12 @@ def sync_scene_helpers(event):
                 'Scene'
             )
 
-            # set_key_value(
-            #    stateTrigger.name,
-            #    'ga',
-            #    'sceneReversible',
-            #    False
-            # )
+            set_key_value(
+                stateTrigger.name,
+                'ga',
+                'sceneReversible',
+                False
+            )
 
             set_key_value(
                 stateTrigger.name,
@@ -206,15 +206,17 @@ def sync_scene_helpers(event):
                 'to'
             )
 
+            Log.logInfo("sync_scene_helpers", "state is {} {}".format(
+                state, 'truthy' if state else 'falsy'))
+
             if state and scene:
-                try:
-                    sceneStateValues = map(
-                        lambda value, label: value,
-                        get_scene_states(scene)
-                    )
-                    if state not in sceneStateValues:
-                        ir.remove(stateTrigger.name)
-                except:
+                sceneStateValues = map(
+                    lambda value, label: value,
+                    get_scene_states(scene)
+                )
+                if state not in sceneStateValues:
+                    Log.logInfo("sync_scene_helpers", "state not in statevalues {} {}".format(
+                        state, ",".join(sceneStateValues)))
                     ir.remove(stateTrigger.name)
             else:
                 ir.remove(stateTrigger.name)

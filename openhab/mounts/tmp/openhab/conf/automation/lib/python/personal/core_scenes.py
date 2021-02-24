@@ -27,7 +27,7 @@ def get_scene_states(scene):
     commandDescription = scene.getCommandDescription()
     commandOptions = commandDescription.getCommandOptions() if commandDescription else []
     if not commandOptions:
-        raise Exception("Scene has no command command description options!")
+        return []
     return map(
         lambda o: (o.getCommand(), o.getLabel()),
         commandOptions
