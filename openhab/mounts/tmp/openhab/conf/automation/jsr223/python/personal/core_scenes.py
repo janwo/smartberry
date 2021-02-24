@@ -40,6 +40,14 @@ def sync_scene_helpers(event):
             if context not in contextStates:
                 contextStates[context] = state
 
+        set_key_value(
+            sceneMember.name,
+            METADATA_NAMESPACE,
+            'scenes',
+            'context-states',
+            contextStates
+        )
+
         # Create scene store trigger
         helper = create_helper_item(
             sceneMember,
@@ -211,8 +219,6 @@ def sync_scene_helpers(event):
                     lambda (value, label): value,
                     get_scene_states(scene)
                 )
-                Log.logInfo("sync_scene_helpers", "in there: {} : state {} statevalues {}".format(
-                    state in sceneStateValues,  state, ",".join(sceneStateValues)))
                 if state not in sceneStateValues:
                     ir.remove(stateTrigger.name)
             else:
