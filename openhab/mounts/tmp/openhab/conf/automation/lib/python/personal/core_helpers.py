@@ -149,12 +149,14 @@ def remove_unlinked_helper_items():
 
         if not of:
             # ir.remove(helper.name)
-            Log.logInfo("remove_unlinked_helper_items", "not of")
+            Log.logInfo("remove_unlinked_helper_items",
+                        "not of {}".format(helper.name))
+            continue
         try:
             ir.getItem(of)
         except:
             Log.logInfo("remove_unlinked_helper_items",
-                        "helper.name does not exist")
+                        "helper.name does not exist {}".format(helper.name))
             # ir.remove(helper.name)
 
 
