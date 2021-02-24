@@ -220,7 +220,7 @@ def sync_scene_helpers(event):
                 ir.remove(stateTrigger.name)
 
     remove_unlinked_helper_items()
-    # remove_invalid_helper_items()
+    remove_invalid_helper_items()
 
 
 @rule("Core - Activate scene.", description="Activate scene.", tags=['core', 'scenes'])

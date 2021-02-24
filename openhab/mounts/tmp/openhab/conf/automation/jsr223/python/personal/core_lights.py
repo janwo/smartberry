@@ -147,7 +147,7 @@ def sync_lights_helpers(event):
             )
 
     remove_unlinked_helper_items()
-    # remove_invalid_helper_items()
+    remove_invalid_helper_items()
 
 
 @rule("Core - Keep last light activation updated", description="Keep last light activation updated", tags=["core", 'lights'])

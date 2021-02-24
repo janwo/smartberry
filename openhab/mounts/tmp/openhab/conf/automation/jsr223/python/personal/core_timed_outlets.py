@@ -89,4 +89,4 @@ def sync_timed_outlets_helpers(event):
         )
 
     remove_unlinked_helper_items()
-    # remove_invalid_helper_items()
+    remove_invalid_helper_items()
