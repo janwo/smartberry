@@ -206,17 +206,14 @@ def sync_scene_helpers(event):
                 'to'
             )
 
-            Log.logInfo("sync_scene_helpers", "state is {} {}".format(
-                state, 'truthy' if state else 'falsy'))
-
             if state and scene:
                 sceneStateValues = map(
                     lambda (value, label): value,
                     get_scene_states(scene)
                 )
+                Log.logInfo("sync_scene_helpers", "in there: {} : state {} statevalues {}".format(
+                    state in sceneStateValues,  state, ",".join(sceneStateValues)))
                 if state not in sceneStateValues:
-                    Log.logInfo("sync_scene_helpers", "state not in statevalues {} {}".format(
-                        state, ",".join(sceneStateValues)))
                     ir.remove(stateTrigger.name)
             else:
                 ir.remove(stateTrigger.name)

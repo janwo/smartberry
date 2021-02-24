@@ -20,7 +20,7 @@ def get_scene_state(scene):
         if commandOptions:
             return commandOptions[0].getCommand()
 
-    raise Exception("Scene has no command description options!")
+    return None
 
 
 def get_scene_states(scene):
@@ -46,19 +46,21 @@ def trigger_scene(scene, scene_state=None, poke_only=False):
 def save_scene_item_states(scene, scene_state=None):
     items = get_scene_items(scene)
     scene_state = get_scene_state(
-        scene_state) if scene_state == None else scene_state
-    store = {}
-    for item in items:
-        store[item.name] = item.state.toString()
+        scene) if scene_state == None else scene_state
 
-    set_key_value(
-        scene.name,
-        METADATA_NAMESPACE,
-        'scenes',
-        'states',
-        scene_state,
-        store
-    )
+    if scene_state is not None:
+        store = {}
+        for item in items:
+            store[item.name] = item.state.toString()
+
+        set_key_value(
+            scene.name,
+            METADATA_NAMESPACE,
+            'scenes',
+            'states',
+            scene_state,
+            store
+        )
 
 
 def apply_context(scene, context):
@@ -105,6 +107,9 @@ def get_scene_item_states(scene, scene_state=None):
     scene_state = get_scene_state(
         scene) if scene_state == None else scene_state
 
+    if scene_state is None:
+        return []
+
     states = get_key_value(
         scene.name,
         METADATA_NAMESPACE,
@@ -117,6 +122,9 @@ def get_scene_item_states(scene, scene_state=None):
         lambda item: (
             item,
             states[item.name]
-        ) if states and item.name in states else None,
+        ) if states and item.name in states else(
+            item,
+            None
+        ),
         get_scene_items(scene)
     )

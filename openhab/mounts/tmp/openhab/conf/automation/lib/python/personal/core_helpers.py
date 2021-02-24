@@ -5,7 +5,7 @@ from core.items import add_item
 from random import randint
 from org.openhab.core.types import UnDefType
 from java.time import LocalDateTime, ZonedDateTime
-from java.time import ZoneId, ZoneOffset
+from java.time import ZoneId
 from java.time.format import DateTimeFormatter
 from org.openhab.core.model.script.actions import Log
 
@@ -148,16 +148,25 @@ def remove_unlinked_helper_items():
         )
 
         if not of:
-            # ir.remove(helper.name)
-            Log.logInfo("remove_unlinked_helper_items",
-                        "not of {}".format(helper.name))
+            Log.logInfo(
+                "remove_unlinked_helper_items",
+                "Remove invalid helper item {}: There is no targeted item set in metadata.".format(
+                    helper.name
+                )
+            )
+
+            ir.remove(helper.name)
             continue
         try:
             ir.getItem(of)
         except:
-            Log.logInfo("remove_unlinked_helper_items",
-                        "helper.name does not exist {}".format(helper.name))
-            # ir.remove(helper.name)
+            Log.logInfo(
+                "remove_unlinked_helper_items",
+                "Remove invalid helper item {}: The targeted item {} does not exist.".format(
+                    helper.name, of
+                )
+            )
+            ir.remove(helper.name)
 
 
 def remove_invalid_helper_items():
@@ -175,20 +184,22 @@ def remove_invalid_helper_items():
                         try:
                             ir.getItem(itemName)
                         except:
-                            Log.logInfo("remove_invalid_helper_items", "namespace {} name {} itemName {}".format(
-                                namespace, name, itemName
-                            ))
-                            # remove_key_value(
-                            #     item.name,
-                            #     METADATA_NAMESPACE,
-                            #     'helper-items',
-                            #     namespace,
-                            #     name
-                            # )
+                            Log.logInfo(
+                                "remove_invalid_helper_items",
+                                "Remove invalid metadata of item {}: {} [{}] is no valid helper item for .".format(
+                                    item.name, name, namespace
+                                ))
+                            remove_key_value(
+                                item.name,
+                                METADATA_NAMESPACE,
+                                'helper-items',
+                                namespace,
+                                name
+                            )
 
 
-def get_date(dateString, format_string="yyyy-MM-dd'T'HH:mm:ss.SSxx"):
-    return LocalDateTime.parse(dateString, DateTimeFormatter.ofPattern(format_string)).atZone(ZoneId.systemDefault())
+def get_date(dateString):
+    return ZonedDateTime.parse(dateString).withZoneSameInstant(ZoneId.systemDefault())
 
 
 def intersection_count(set1, set2):
