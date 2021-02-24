@@ -71,7 +71,7 @@ def apply_context(scene, context):
     )
 
     if contextState in map(
-        lambda state, label: state,
+        lambda (state, label): state,
         get_scene_states(scene)
     ):
         events.sendCommand(scene, contextState)

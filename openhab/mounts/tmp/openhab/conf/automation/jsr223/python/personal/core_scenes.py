@@ -211,7 +211,7 @@ def sync_scene_helpers(event):
 
             if state and scene:
                 sceneStateValues = map(
-                    lambda value, label: value,
+                    lambda (value, label): value,
                     get_scene_states(scene)
                 )
                 if state not in sceneStateValues:
