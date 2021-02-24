@@ -7,6 +7,7 @@ from org.openhab.core.types import UnDefType
 from java.time import LocalDateTime, ZonedDateTime
 from java.time import ZoneId, ZoneOffset
 from java.time.format import DateTimeFormatter
+from org.openhab.core.model.script.actions import Log
 
 METADATA_NAMESPACE = "core"
 
@@ -163,19 +164,22 @@ def remove_invalid_helper_items():
         )
 
         if meta and isinstance(meta, dict):
-            for namespace, namespaceDictionary in meta.items():
+            for namespace, namespaceDictionary in meta.iteritems():
                 if isinstance(namespaceDictionary, dict):
-                    for name, itemName in namespaceDictionary.items():
+                    for name, itemName in namespaceDictionary.iteritems():
                         try:
                             ir.getItem(itemName)
                         except:
-                            remove_key_value(
-                                item.name,
-                                METADATA_NAMESPACE,
-                                'helper-items',
-                                namespace,
-                                name
-                            )
+                            Log.logInfo("remove_invalid_helper_items", "namespace {} name {} itemName {}".format(
+                                namespace, name, itemName
+                            ))
+                            # remove_key_value(
+                            #     item.name,
+                            #     METADATA_NAMESPACE,
+                            #     'helper-items',
+                            #     namespace,
+                            #     name
+                            # )
 
 
 def get_date(dateString, format_string="yyyy-MM-dd'T'HH:mm:ss.SSxx"):
