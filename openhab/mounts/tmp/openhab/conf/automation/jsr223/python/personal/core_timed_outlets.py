@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
 from core.triggers import when
 from core.rules import rule
-from personal.core_helpers import get_equipment_points, get_parents_with_condition, intersection_count, get_date, METADATA_NAMESPACE, create_helper_item, get_helper_item, remove_unlinked_helper_items, remove_invalid_helper_items
-from core.date import minutes_between, format_date, ZonedDateTime
+from personal.core_helpers import get_date_string, get_equipment_points, get_parents_with_condition, intersection_count, get_date, METADATA_NAMESPACE, create_helper_item, get_helper_item
+from core.date import minutes_between, ZonedDateTime
 from personal.core_broadcast import broadcast
 from core.metadata import set_key_value, get_key_value
 from core.jsr223.scope import ir, events, ON, OFF
@@ -35,7 +35,7 @@ def set_last_activation(event):
             METADATA_NAMESPACE,
             'timed-outlet',
             "last-update",
-            format_date(ZonedDateTime.now())
+            get_date_string(ZonedDateTime.now())
         )
 
 
@@ -87,6 +87,3 @@ def sync_timed_outlets_helpers(event):
             ["gCore_TimedOutlets_ActiveDuration"],
             ["Point"]
         )
-
-    remove_unlinked_helper_items()
-    remove_invalid_helper_items()

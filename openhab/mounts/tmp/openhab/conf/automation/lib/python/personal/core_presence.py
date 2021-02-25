@@ -1,9 +1,9 @@
 from __future__ import unicode_literals
-from personal.core_helpers import get_date, enum, METADATA_NAMESPACE, get_location
+from personal.core_helpers import get_date, enum, METADATA_NAMESPACE, get_location, get_date_string
 from core.metadata import get_key_value, set_key_value
 from core.jsr223.scope import ir, events
 from org.openhab.core.types import UnDefType
-from core.date import hours_between, ZonedDateTime, format_date
+from core.date import hours_between, ZonedDateTime
 from personal.core_broadcast import BroadcastType, broadcast
 
 PresenceState = enum(
@@ -73,15 +73,17 @@ def trigger_presence(item):
             METADATA_NAMESPACE,
             "presence",
             "last-update",
-            format_date(ZonedDateTime.now())
+            get_date_string(ZonedDateTime.now())
         )
 
     presenceManagement = ir.getItem("Core_Presence")
-    events.postUpdate(presenceManagement, PresenceState.HOME)
+
     set_key_value(
         presenceManagement.name,
         METADATA_NAMESPACE,
         "presence",
         "last-update",
-        format_date(ZonedDateTime.now())
+        get_date_string(ZonedDateTime.now())
     )
+
+    events.postUpdate(presenceManagement, PresenceState.HOME)

@@ -1,13 +1,12 @@
 from __future__ import unicode_literals
-from personal.core_helpers import get_date, get_location, sync_group_with_tags, has_same_location, METADATA_NAMESPACE, get_random_number, get_items_of_any_tags, create_helper_item, get_item_of_helper_item, remove_unlinked_helper_items, remove_invalid_helper_items
+from personal.core_helpers import get_date_string, get_date, get_location, sync_group_with_tags, has_same_location, METADATA_NAMESPACE, get_random_number, get_items_of_any_tags, create_helper_item, get_item_of_helper_item
 from personal.core_scenes import SCENE_TAGS, get_scene_item_states, save_scene_item_states, trigger_scene, get_scene_states
 from core.triggers import when
 from core.rules import rule
-from core.date import ZonedDateTime, format_date
 from core.jsr223.scope import ir, events, OFF, ON
 from core.metadata import set_key_value, get_key_value, set_value
 from org.openhab.core.types import UnDefType
-from core.date import minutes_between, seconds_between, hours_between, format_date, ZonedDateTime
+from core.date import minutes_between, seconds_between, hours_between, ZonedDateTime
 from org.openhab.core.model.script.actions import Log
 
 
@@ -224,9 +223,6 @@ def sync_scene_helpers(event):
             else:
                 ir.remove(stateTrigger.name)
 
-    remove_unlinked_helper_items()
-    remove_invalid_helper_items()
-
 
 @rule("Core - Activate scene.", description="Activate scene.", tags=['core', 'scenes'])
 @when("Member of gCore_Scenes received command")
@@ -236,7 +232,7 @@ def activate_scene(event):
         METADATA_NAMESPACE,
         'scenes',
         "last-activation",
-        format_date(ZonedDateTime.now())
+        get_date_string(ZonedDateTime.now())
     )
 
     trigger_scene(ir.getItem(event.itemName), event.itemState)

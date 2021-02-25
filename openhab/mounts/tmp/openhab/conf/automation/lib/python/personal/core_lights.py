@@ -1,11 +1,11 @@
 from __future__ import unicode_literals
-from personal.core_helpers import get_all_equipment_points, get_date, enum, get_location, METADATA_NAMESPACE
+from personal.core_helpers import get_date_string, get_all_equipment_points, get_date, enum, get_location, METADATA_NAMESPACE
 from core.jsr223.scope import events, OFF, ON, ir
 from org.openhab.core.model.script.actions import Log
 from org.openhab.core.types import UnDefType
 from org.openhab.core.library.types import OnOffType
 from core.metadata import get_key_value, set_key_value
-from core.date import hours_between, ZonedDateTime, format_date
+from core.date import hours_between, ZonedDateTime
 from personal.core_broadcast import BroadcastType, broadcast
 
 LightMode = enum(
@@ -54,7 +54,7 @@ def set_location_as_activated(switchable):
             METADATA_NAMESPACE,
             "light",
             "last-activation",
-            format_date(ZonedDateTime.now())
+            get_date_string(ZonedDateTime.now())
         )
 
 
