@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from personal.core_helpers import get_date_string, get_all_equipment_points, get_date, enum, get_location, METADATA_NAMESPACE
+from personal.core_helpers import get_date_string, get_all_semantic_items, get_date, enum, get_location, METADATA_NAMESPACE
 from core.jsr223.scope import events, OFF, ON, ir
 from org.openhab.core.model.script.actions import Log
 from org.openhab.core.types import UnDefType
@@ -94,7 +94,3 @@ def turn_off_switchable_point(point, force=False):
         events.sendCommand(point, OFF)
     elif point.getStateAs(OnOffType) != OFF:
         events.sendCommand(point, OFF)
-
-
-def get_all_switchable_points():
-    return get_all_equipment_points(EQUIPMENT_TAGS, POINT_TAGS)

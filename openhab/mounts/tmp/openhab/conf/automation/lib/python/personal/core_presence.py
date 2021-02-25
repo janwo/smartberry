@@ -12,12 +12,12 @@ PresenceState = enum(
     AWAY_LONG=2.0
 )
 
-POINT_TAGS = [
-    "Presence"
-]
-
 EQUIPMENT_TAGS = [
     "MotionDetector"
+]
+
+POINT_TAGS = [
+    "Presence"
 ]
 
 

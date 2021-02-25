@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from core.triggers import when
 from core.rules import rule
-from personal.core_helpers import has_same_location, sync_group_with_tags, get_items_of_any_tags, get_all_equipment_points
+from personal.core_helpers import has_same_location, sync_group_with_tags, get_items_of_any_tags, get_all_semantic_items
 from personal.core_heating import OPEN_CONTACT_EQUIPMENT_TAGS, OPEN_CONTACT_POINT_TAGS, HEATING_EQUIPMENT_TAGS, HEATING_POINT_TAGS, HeatingState
 from core.jsr223.scope import ir, UnDefType, events, OPEN
 
@@ -24,11 +24,11 @@ def sync_heating_helpers(event):
 @when("Item Core_Heating_Thermostat_ModeDefault received update")
 def update_heater_on_contact_trigger(event):
     heaterState = ir.getItem("Core_Heating_Thermostat_ModeDefault").state
-    for point in get_all_equipment_points(HEATING_EQUIPMENT_TAGS, HEATING_POINT_TAGS):
+    for point in get_all_semantic_items(HEATING_EQUIPMENT_TAGS, HEATING_POINT_TAGS):
         if any((
             contact.state == OPEN and
             has_same_location(contact, point)
-        ) for contact in get_all_equipment_points(OPEN_CONTACT_EQUIPMENT_TAGS, OPEN_CONTACT_POINT_TAGS)):
+        ) for contact in get_all_semantic_items(OPEN_CONTACT_EQUIPMENT_TAGS, OPEN_CONTACT_POINT_TAGS)):
             events.sendCommand(
                 point,
                 int(HeatingState.OFF)

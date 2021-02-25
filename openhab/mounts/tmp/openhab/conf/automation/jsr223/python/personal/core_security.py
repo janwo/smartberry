@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from personal.core_helpers import get_date_string, get_equipment_points, get_childs_with_condition, intersection_count, sync_group_with_tags, get_date, get_items_of_any_tags, has_same_location, METADATA_NAMESPACE
+from personal.core_helpers import get_date_string, get_semantic_items, get_childs_with_condition, intersection_count, sync_group_with_tags, get_date, get_items_of_any_tags, has_same_location, METADATA_NAMESPACE
 from core.triggers import when
 from core.rules import rule
 from personal.core_presence import PresenceState, get_presence
@@ -72,7 +72,7 @@ def armament(event):
     blockingAssaultTriggers = filter(
         lambda point: point.state == OPEN or point.state == ON,
         reduce(
-            lambda pointsList, newMember: pointsList + get_equipment_points(
+            lambda pointsList, newMember: pointsList + get_semantic_items(
                 newMember,
                 ASSAULT_TRIGGER_EQUIPMENT_TAGS,
                 ASSAULT_TRIGGER_POINT_TAGS
@@ -133,7 +133,7 @@ def lock_closure(event):
         # Is Switch child of target item:
         intersection_count(item.getTags(), LOCK_CLOSURE_POINT_TAGS) > 0
     ):
-        for lock in get_equipment_points(item, LOCK_EQUIPMENT_TAGS, LOCK_POINT_TAGS):
+        for lock in get_semantic_items(item, LOCK_EQUIPMENT_TAGS, LOCK_POINT_TAGS):
             if has_same_location(item, lock):
                 events.sendCommand(lock, ON)
                 return

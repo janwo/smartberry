@@ -211,33 +211,36 @@ def intersection_count(set1, set2):
     return len(set(set1).intersection(set(set2)))
 
 
-def get_equipment_points(rootItem, equipmentTags, pointTags):
-    pointScopes = get_childs_with_condition(
+def get_semantic_items(rootItem, equipmentTags, pointTags):
+    equipments = get_childs_with_condition(
         rootItem,
         condition=lambda item: intersection_count(
             item.getTags(), equipmentTags
         ) > 0
     ) if equipmentTags else [rootItem]
 
+    if not pointTags:
+        return equipments
+
     points = reduce(
-        lambda pointsList, newPointScope: pointsList +
+        lambda pointsList, newEquipment: pointsList +
         get_childs_with_condition(
-            newPointScope,
+            newEquipment,
             condition=lambda item: intersection_count(
                 item.getTags(), pointTags
             ) > 0
         ),
-        pointScopes,
+        equipments,
         []
     )
 
     return unique_items(points)
 
 
-def get_all_equipment_points(equipmentTags, pointTags):
+def get_all_semantic_items(equipmentTags, pointTags):
     points = reduce(
         lambda pointsList, newEquipment: pointsList +
-        get_equipment_points(newEquipment, None, pointTags),
+        get_semantic_items(newEquipment, None, pointTags),
         get_items_of_any_tags(equipmentTags),
         []
     )

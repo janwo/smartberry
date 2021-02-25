@@ -3,8 +3,8 @@ from core.triggers import when
 from core.rules import rule
 from personal.core_presence import PresenceState
 from personal.core_scenes import trigger_scene, get_scene_items
-from personal.core_helpers import METADATA_NAMESPACE, get_location, has_same_location, get_item_of_helper_item, get_items_of_any_tags, sync_group_with_tags, create_helper_item, intersection_count
-from personal.core_lights import POINT_TAGS, get_all_switchable_points, EQUIPMENT_TAGS, set_location_as_activated, is_elapsed, LightMode, AmbientLightCondition, get_light_mode_group, turn_on_switchable_point, turn_off_switchable_point
+from personal.core_helpers import METADATA_NAMESPACE, get_location, has_same_location, get_item_of_helper_item, get_items_of_any_tags, sync_group_with_tags, create_helper_item, intersection_count, get_all_semantic_items
+from personal.core_lights import POINT_TAGS, EQUIPMENT_TAGS, set_location_as_activated, is_elapsed, LightMode, AmbientLightCondition, get_light_mode_group, turn_on_switchable_point, turn_off_switchable_point
 from personal.core_broadcast import broadcast
 from core.jsr223.scope import ir, events, OFF, ON
 from org.openhab.core.types import UnDefType
@@ -166,7 +166,7 @@ def set_last_activation(event):
 def check_daylight(event):
     activeSwitchables = filter(
         lambda switchable: switchable.getStateAs(OnOffType) == ON,
-        get_all_switchable_points()
+        get_all_semantic_items(EQUIPMENT_TAGS, POINT_TAGS)
     )
 
     activeRoomNames = map(
@@ -278,7 +278,7 @@ def manage_light_state(event):
         "switchOffRoomNames {} switchOnRoomNames {}".format(
             switchOffRoomNames, switchOnRoomNames)
     )
-    for point in get_all_switchable_points():
+    for point in get_all_semantic_items(EQUIPMENT_TAGS, POINT_TAGS):
         location = get_location(point)
         if location and location.name in switchOnRoomNames:
             turn_on_switchable_point(point)
@@ -306,7 +306,7 @@ def manage_presence(event):
             if scene:
                 switchablePointNames = map(
                     lambda s: s.name,
-                    get_all_switchable_points()
+                    get_all_semantic_items(EQUIPMENT_TAGS, POINT_TAGS)
                 )
                 trigger_scene(
                     scene=scene,
@@ -323,7 +323,7 @@ def manage_presence(event):
                     ) > 0
                 )
             else:
-                for point in get_all_switchable_points():
+                for point in get_all_semantic_items(EQUIPMENT_TAGS, POINT_TAGS):
                     if has_same_location(point, location):
                         turn_on_switchable_point(point)
             break
@@ -363,7 +363,7 @@ def welcome_light(event):
             )
         )
 
-        for point in get_all_switchable_points():
+        for point in get_all_semantic_items(EQUIPMENT_TAGS, POINT_TAGS):
             location = get_location(point)
             if location and location.name in switchOnRoomNames:
                 turn_on_switchable_point(point)
@@ -390,7 +390,7 @@ def elapsed_lights(event):
             ))
         ))
 
-    for point in get_all_switchable_points():
+    for point in get_all_semantic_items(EQUIPMENT_TAGS, POINT_TAGS):
         location = get_location(point)
         if location and location.name in switchOffRoomNames:
             turn_off_switchable_point(point)
@@ -411,7 +411,7 @@ def simulate_presence(event):
         )
     ))
 
-    for point in get_all_switchable_points():
+    for point in get_all_semantic_items(EQUIPMENT_TAGS, POINT_TAGS):
         location = get_location(point)
         if location and location.name in simulateLocations and randint(0, 10) <= 2:
             if point.getStateAs(OnOffType) != ON:

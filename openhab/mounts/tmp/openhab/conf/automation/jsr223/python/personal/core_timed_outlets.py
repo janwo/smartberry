@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from core.triggers import when
 from core.rules import rule
-from personal.core_helpers import get_date_string, get_equipment_points, get_parents_with_condition, intersection_count, get_date, METADATA_NAMESPACE, create_helper_item, get_helper_item
+from personal.core_helpers import sync_group_with_tags, get_date_string, get_semantic_items, get_parents_with_condition, intersection_count, get_date, METADATA_NAMESPACE, create_helper_item, get_helper_item
 from core.date import minutes_between, ZonedDateTime
 from personal.core_broadcast import broadcast
 from core.metadata import set_key_value, get_key_value
@@ -10,9 +10,38 @@ from org.openhab.core.types import UnDefType
 from org.openhab.core.model.script.actions import Log
 from org.openhab.core.library.types import OnOffType
 
+
+EQUIPMENT_TAGS = [
+    "CoreTimedOutlet"
+]
+
 POINT_TAGS = [
     "Switch"
 ]
+
+
+@rule("Core - Create timed outlet helper items", description="Create helper items", tags=['core', 'timed-outlets'])
+@when("Item added")
+@when("Item removed")
+@when("Item updated")
+def sync_timed_outlets_helpers(event):
+    # Sync group gCore_TimedOutlets_Switchable with outlet items
+    outletMembers = sync_group_with_tags(
+        ir.getItem("gCore_TimedOutlets_Switchable"),
+        EQUIPMENT_TAGS
+    )
+
+    for outlet in outletMembers:
+        create_helper_item(
+            outlet,
+            'timed-outlet',
+            "duration-item",
+            "Number",
+            "time",
+            "Einschaltdauer von {0}".format(outlet.label),
+            ["gCore_TimedOutlets_ActiveDuration"],
+            ["Point"]
+        )
 
 
 @rule("Core - Keep last timed outlet activation updated", description="Keep last timed outlet activation updated.", tags=['core', 'timed-outlets'])
@@ -46,7 +75,7 @@ def manage_elapsed(event):
     for switchableGroup in ir.getItem("gCore_TimedOutlets_Switchable").members:
         switchedOnSwitchables = filter(
             lambda s: s.getStateAs(OnOffType) == ON,
-            get_equipment_points(switchableGroup, None, POINT_TAGS)
+            get_semantic_items(switchableGroup, None, POINT_TAGS)
         )
         if switchedOnSwitchables:
             lastUpdate = get_key_value(
@@ -69,21 +98,3 @@ def manage_elapsed(event):
             if minutes_between(get_date(lastUpdate), ZonedDateTime.now()) > durationItem.state.floatValue():
                 for switchable in switchedOnSwitchables:
                     events.sendCommand(switchable, OFF)
-
-
-@rule("Core - Create timed outlet helper items", description="Create helper items", tags=['core', 'timed-outlets'])
-@when("Item added")
-@when("Item removed")
-@when("Item updated")
-def sync_timed_outlets_helpers(event):
-    for outlet in ir.getItem("gCore_TimedOutlets_Switchable").members:
-        create_helper_item(
-            outlet,
-            'timed-outlet',
-            "duration-item",
-            "Number",
-            "time",
-            "Einschaltdauer von {0}".format(outlet.label),
-            ["gCore_TimedOutlets_ActiveDuration"],
-            ["Point"]
-        )
