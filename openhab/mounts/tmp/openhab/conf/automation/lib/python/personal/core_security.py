@@ -40,6 +40,15 @@ LOCK_CLOSURE_POINT_TAGS = [
     "Switch"
 ]
 
+LOCK_EQUIPMENT_TAGS = [
+    "Lock"
+]
+
+LOCK_POINT_TAGS = [
+    "OpenState",
+    "Switch"
+]
+
 
 def is_security_state(state=OperationState.OFF):
     actualState = ir.getItem("Core_Security_OperationState").state

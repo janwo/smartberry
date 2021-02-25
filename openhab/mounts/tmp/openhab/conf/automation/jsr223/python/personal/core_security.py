@@ -3,7 +3,7 @@ from personal.core_helpers import get_date_string, get_equipment_points, get_chi
 from core.triggers import when
 from core.rules import rule
 from personal.core_presence import PresenceState, get_presence
-from personal.core_security import OperationState, is_security_state, ASSAULT_TRIGGER_EQUIPMENT_TAGS, ASSAULT_TRIGGER_POINT_TAGS, ASSAULT_DISARMER_EQUIPMENT_TAGS, ASSAULT_DISARMER_POINT_TAGS, LOCK_CLOSURE_EQUIPMENT_TAGS, LOCK_CLOSURE_POINT_TAGS
+from personal.core_security import OperationState, is_security_state, ASSAULT_TRIGGER_EQUIPMENT_TAGS, ASSAULT_TRIGGER_POINT_TAGS, ASSAULT_DISARMER_EQUIPMENT_TAGS, ASSAULT_DISARMER_POINT_TAGS, LOCK_CLOSURE_EQUIPMENT_TAGS, LOCK_CLOSURE_POINT_TAGS, LOCK_EQUIPMENT_TAGS, LOCK_POINT_TAGS
 from core.date import minutes_between, ZonedDateTime
 from personal.core_broadcast import BroadcastType, broadcast
 from core.jsr223.scope import ir, events, ON, OFF, OPEN
@@ -36,8 +36,8 @@ def sync_security_helpers(event):
 
 
 @rule("Core - Core_Security System - Trigger-Management", description="Core_Security System - Trigger-Management", tags=['core', 'security'])
-@when("Member of gCore_Security_AssaultTrigger received update OPEN")
-@when("Member of gCore_Security_AssaultTrigger received update ON")
+@when("Descendant of gCore_Security_AssaultTrigger received update OPEN")
+@when("Descendant of gCore_Security_AssaultTrigger received update ON")
 def assault_trigger(event):
     if is_security_state(OperationState.OFF):
         return
@@ -107,7 +107,7 @@ def armament(event):
 
 
 @rule("Core - Core_Security System - Disarmament-Management", description="Core_Security System - Disarmament-Management", tags=['core', 'security'])
-@when("Member of gCore_Security_AssaultDisarmamer received update")
+@when("Descendant of gCore_Security_AssaultDisarmamer received update")
 def disarmament(event):
     item = ir.getItem(event.itemName)
     if (
@@ -123,8 +123,8 @@ def disarmament(event):
 
 
 @rule("Core - Core_Security System - Lock Closure-Management", description="Core_Security System - Lock Closure-Management", tags=['core', 'security'])
-@when("Member of gCore_Security_LockClosureTrigger received update CLOSED")
-@when("Member of gCore_Security_LockClosureTrigger received update OFF")
+@when("Descendant of gCore_Security_LockClosureTrigger received update CLOSED")
+@when("Descendant of gCore_Security_LockClosureTrigger received update OFF")
 def lock_closure(event):
     item = ir.getItem(event.itemName)
     if (
@@ -133,16 +133,12 @@ def lock_closure(event):
         # Is Switch child of target item:
         intersection_count(item.getTags(), LOCK_CLOSURE_POINT_TAGS) > 0
     ):
-        locks = get_equipment_points(item, ['Lock'], ['OpenState'])
-        lock = next(
-            (lock for lock in locks if has_same_location(item, lock)),
-            None
-        )
+        for lock in get_equipment_points(item, LOCK_EQUIPMENT_TAGS, LOCK_POINT_TAGS):
+            if has_same_location(item, lock):
+                events.sendCommand(lock, ON)
+                return
 
-        if lock != None:
-            events.sendCommand(lock, ON)
-        else:
-            broadcast("Lock not found for item {}.".format(item.name))
+        broadcast("Lock not found for item {}.".format(item.name))
 
 
 @rule("Core - Core_Security System - Turn off siren after Core_Security_OperationState update", description="Core_Security System - Turn off siren after Core_Security_OperationState update", tags=['core', 'security'])
