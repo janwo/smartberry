@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from core.jsr223.scope import ir
-from core.metadata import set_key_value, get_key_value, remove_key_value
+from core.metadata import set_key_value, get_key_value, remove_key_value, get_value
 from core.items import add_item
 from random import randint
 from org.openhab.core.types import UnDefType
@@ -23,6 +23,14 @@ def get_location(item):
             item = ir.getItem(item)
         except:
             return None
+
+    semanticsValue = get_value(
+        item.name,
+        'semantics'
+    )
+
+    if semanticsValue and semanticsValue.startswith('Location'):
+        return item
 
     equipmentName = get_key_value(
         item.name,
