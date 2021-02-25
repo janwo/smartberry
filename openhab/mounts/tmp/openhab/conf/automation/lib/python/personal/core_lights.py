@@ -5,7 +5,7 @@ from org.openhab.core.model.script.actions import Log
 from org.openhab.core.types import UnDefType
 from org.openhab.core.library.types import OnOffType
 from core.metadata import get_key_value, set_key_value
-from core.date import hours_between, ZonedDateTime
+from core.date import minutes_between, ZonedDateTime
 from personal.core_broadcast import BroadcastType, broadcast
 
 LightMode = enum(
@@ -48,11 +48,11 @@ def get_light_mode_group():
 
 def set_location_as_activated(switchable):
     location = get_location(switchable)
-    if location != None:
+    if location:
         set_key_value(
             location.name,
             METADATA_NAMESPACE,
-            "light",
+            'lights',
             "last-activation",
             get_date_string(ZonedDateTime.now())
         )
@@ -60,24 +60,23 @@ def set_location_as_activated(switchable):
 
 def is_elapsed(item):
     location = get_location(item)
+    if location:
+        lastActivation = get_key_value(
+            location.name,
+            METADATA_NAMESPACE,
+            'lights',
+            "last-activation"
+        )
+        if lastActivation:
+            durationItem = ir.getItem("Core_Lights_DefaultDuration")
+            if isinstance(durationItem.state, UnDefType):
+                broadcast("No value for {} is set.".format(durationItem.name))
+                return False
 
-    lastActivation = None if not location else get_key_value(
-        location.name,
-        METADATA_NAMESPACE,
-        'light',
-        "last-activation"
-    )
-    if lastActivation:
-        durationItem = ir.getItem("Core_Lights_DefaultDuration")
-        if isinstance(durationItem.state, UnDefType):
-            text = "No value for {} is set.".format(durationItem.name)
-            broadcast(text)
-            return False
-
-        return hours_between(
-            get_date(lastActivation),
-            ZonedDateTime.now()
-        ) > durationItem.state.floatValue()
+            return minutes_between(
+                get_date(lastActivation),
+                ZonedDateTime.now()
+            ) > durationItem.state.floatValue()
 
     return False
 
