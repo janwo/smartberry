@@ -86,11 +86,20 @@ def sync_timed_outlets_helpers(event):
         set_key_value(
             helperItem.name,
             'stateDescription',
-            {
-                'pattern': '%dm',
-                'min': 0,
-                'step': 15
-            }
+            'pattern',
+            '%dm'
+        )
+        set_key_value(
+            helperItem.name,
+            'stateDescription',
+            'min',
+            0
+        )
+        set_key_value(
+            helperItem.name,
+            'stateDescription',
+            'step',
+            15
         )
 
 
