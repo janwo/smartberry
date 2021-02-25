@@ -36,8 +36,8 @@ def sync_security_helpers(event):
 
 
 @rule("Core - Core_Security System - Trigger-Management", description="Core_Security System - Trigger-Management", tags=['core', 'security'])
-@when("Descendant of gCore_Security_AssaultTrigger received update OPEN")
-@when("Descendant of gCore_Security_AssaultTrigger received update ON")
+@when("Descendent of gCore_Security_AssaultTrigger received update OPEN")
+@when("Descendent of gCore_Security_AssaultTrigger received update ON")
 def assault_trigger(event):
     if is_security_state(OperationState.OFF):
         return
@@ -107,7 +107,7 @@ def armament(event):
 
 
 @rule("Core - Core_Security System - Disarmament-Management", description="Core_Security System - Disarmament-Management", tags=['core', 'security'])
-@when("Descendant of gCore_Security_AssaultDisarmamer received update")
+@when("Descendent of gCore_Security_AssaultDisarmamer received update")
 def disarmament(event):
     item = ir.getItem(event.itemName)
     if (
@@ -123,8 +123,8 @@ def disarmament(event):
 
 
 @rule("Core - Core_Security System - Lock Closure-Management", description="Core_Security System - Lock Closure-Management", tags=['core', 'security'])
-@when("Descendant of gCore_Security_LockClosureTrigger received update CLOSED")
-@when("Descendant of gCore_Security_LockClosureTrigger received update OFF")
+@when("Descendent of gCore_Security_LockClosureTrigger received update CLOSED")
+@when("Descendent of gCore_Security_LockClosureTrigger received update OFF")
 def lock_closure(event):
     item = ir.getItem(event.itemName)
     if (
