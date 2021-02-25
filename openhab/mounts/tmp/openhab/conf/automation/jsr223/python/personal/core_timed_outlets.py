@@ -4,7 +4,7 @@ from core.rules import rule
 from personal.core_helpers import sync_group_with_tags, get_date_string, get_semantic_items, get_parents_with_condition, intersection_count, get_date, METADATA_NAMESPACE, create_helper_item, get_helper_item
 from core.date import minutes_between, ZonedDateTime
 from personal.core_broadcast import broadcast
-from core.metadata import set_key_value, get_key_value
+from core.metadata import set_key_value, get_key_value, set_value
 from core.jsr223.scope import ir, events, ON, OFF
 from org.openhab.core.types import UnDefType
 from org.openhab.core.model.script.actions import Log
@@ -32,7 +32,7 @@ def sync_timed_outlets_helpers(event):
     )
 
     for outlet in outletMembers:
-        create_helper_item(
+        helperItem = create_helper_item(
             outlet,
             'timed-outlet',
             "duration-item",
@@ -41,6 +41,56 @@ def sync_timed_outlets_helpers(event):
             "Einschaltdauer von {0}".format(outlet.label),
             ["gCore_TimedOutlets_ActiveDuration"],
             ["Point"]
+        )
+
+        set_value(
+            helperItem.name,
+            'cellWidget',
+            'oh-knob-cell'
+        )
+
+        set_key_value(
+            helperItem.name,
+            'cellWidget',
+            'label',
+            '=items.{0}.title'.format(helperItem.name)
+        )
+
+        set_key_value(
+            helperItem.name,
+            'cellWidget',
+            'icon',
+            'oh:time'
+        )
+
+        set_value(
+            helperItem.name,
+            'listWidget',
+            'oh-stepper-item'
+        )
+
+        set_key_value(
+            helperItem.name,
+            'listWidget',
+            'subtitle',
+            '=items.{0}.displayState'.format(helperItem.name)
+        )
+
+        set_key_value(
+            helperItem.name,
+            'listWidget',
+            'icon',
+            'oh:time'
+        )
+
+        set_key_value(
+            helperItem.name,
+            'stateDescription',
+            {
+                'pattern': '%dm',
+                'min': 0,
+                'step': 15
+            }
         )
 
 
