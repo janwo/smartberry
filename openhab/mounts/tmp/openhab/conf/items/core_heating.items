@@ -4,7 +4,6 @@ Group gCore_Heating_Thermostat_Mode
 
 Number Core_Heating_Thermostat_ModeDefault "Temperaturmodus" <heating> (gCore_Heating) ["Point"] {
     stateDescription=""[
-        pattern="%d",
         options="0.0=Aus,11.0=Eco-Temperatur,1.0=Normaltemperatur,15.0=Heizen"
     ],
     cellWidget=""[

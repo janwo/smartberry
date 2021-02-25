@@ -31,7 +31,6 @@ Number Core_Lights_DefaultDuration "Standard Lichtdauer [%d min]" <time> (gCore_
 
 Number Core_Lights_AmbientLightCondition  "Lichtwert-Einstufung" <sun> (gCore_Lights) /*Core_Lights_AmbientLightCondition_LuminanceTreshold as subtitle "Aktueller Lichtwert [%d %%]" */ ["Point"]  {
      stateDescription=""[
-        pattern="%d",
         options="0.0=Dunkel,1.0=Verdunkelt,2.0=Hell"
     ]
 }

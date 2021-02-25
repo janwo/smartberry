@@ -12,7 +12,6 @@ Group gCore_Presence_PresenceTrigger
 
 Number Core_Presence "Anwesenheit" <motion> (gCore_Presence) ["Point"] {
     stateDescription=""[
-        pattern="%d",
         options="1.0=Anwesend,0.0=Kurz abwesend,2.0=Lange abwesend"
     ],
     cellWidget=""[
