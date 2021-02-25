@@ -273,11 +273,6 @@ def manage_light_state(event):
         )
     )
 
-    Log.logInfo(
-        "manage_light_state core_lights",
-        "switchOffRoomNames {} switchOnRoomNames {}".format(
-            switchOffRoomNames, switchOnRoomNames)
-    )
     for point in get_all_semantic_items(EQUIPMENT_TAGS, POINT_TAGS):
         location = get_location(point)
         if location and location.name in switchOnRoomNames:

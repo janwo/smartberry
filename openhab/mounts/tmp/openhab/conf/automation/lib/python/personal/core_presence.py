@@ -13,7 +13,9 @@ PresenceState = enum(
 )
 
 EQUIPMENT_TAGS = [
-    "MotionDetector"
+    "MotionDetector",
+    "Sensor",
+    "Camera"
 ]
 
 POINT_TAGS = [
