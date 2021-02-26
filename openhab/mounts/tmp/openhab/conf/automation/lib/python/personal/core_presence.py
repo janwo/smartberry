@@ -12,12 +12,6 @@ PresenceState = enum(
     AWAY_LONG=2.0
 )
 
-EQUIPMENT_TAGS = [
-    "MotionDetector",
-    "Sensor",
-    "Camera"
-]
-
 POINT_TAGS = [
     "Presence"
 ]

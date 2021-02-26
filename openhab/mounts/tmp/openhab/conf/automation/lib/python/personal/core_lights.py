@@ -22,14 +22,18 @@ AmbientLightCondition = enum(
     BRIGHT=2.0
 )
 
-EQUIPMENT_TAGS = [
+LIGHTS_EQUIPMENT_TAGS = [
     "Lightbulb",
     "PowerOutlet",
     "WallSwitch"
 ]
 
-POINT_TAGS = [
+LIGHTS_POINT_TAGS = [
     "Switch"
+]
+
+LIGHT_MEASUREMENT_POINT_TAGS = [
+    ['Light', 'Measurement']
 ]
 
 
