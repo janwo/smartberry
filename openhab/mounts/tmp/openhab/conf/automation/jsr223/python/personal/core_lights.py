@@ -349,7 +349,7 @@ def welcome_light(event):
                 map(
                     lambda mode: get_location(mode),
                     filter(
-                        lambda mode: isinstance(
+                        lambda mode: not isinstance(
                             mode.state,
                             UnDefType
                         ) and mode.state.floatValue() == LightMode.AUTO_ON,

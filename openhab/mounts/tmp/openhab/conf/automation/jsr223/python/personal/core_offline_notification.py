@@ -36,7 +36,9 @@ def offline_check(event):
             "{} is elapsed for {} day(s)!".format(
                 t.getLabel(),
                 days_between(
-                    get_date(t.getProperties().get("zwave_lastwakeup")),
+                    get_date(
+                        t.getProperties().get("zwave_lastheal"),
+                        "yyyy-MM-dd'T'HH:mm:ss'Z'"),
                     ZonedDateTime.now()
                 )
             )
@@ -44,9 +46,12 @@ def offline_check(event):
         filter(
             lambda t: (
                 t.getProperties() and
-                t.getProperties().get("zwave_lastwakeup") and
+                t.getProperties().get("zwave_lastheal") and
                 days_between(
-                    get_date(t.getProperties().get("zwave_lastwakeup")),
+                    get_date(
+                        t.getProperties().get("zwave_lastheal"),
+                        "yyyy-MM-dd'T'HH:mm:ss'Z'"
+                    ),
                     ZonedDateTime.now()
                 ) > ELAPSED_DAYS
             ),

@@ -9,6 +9,7 @@ from personal.core_broadcast import BroadcastType, broadcast
 from core.jsr223.scope import ir, events, ON, OFF, OPEN
 from org.openhab.core.types import UnDefType
 from core.metadata import get_key_value, set_key_value
+from org.openhab.core.model.script.actions import Log
 
 
 @rule("Core - Sync helper items", description="Core - Sync helper items", tags=['core', 'security'])
@@ -134,11 +135,11 @@ def lock_closure(event):
         intersection_count(item.getTags(), LOCK_CLOSURE_POINT_TAGS) > 0
     ):
         for lock in get_semantic_items(item, LOCK_EQUIPMENT_TAGS, LOCK_POINT_TAGS):
+            Log.logInfo("lock_closure", "lock {} item {}".format(
+                lock.name, item.name))
             if has_same_location(item, lock):
                 events.sendCommand(lock, ON)
-                return
-
-        broadcast("Lock not found for item {}.".format(item.name))
+                break
 
 
 @rule("Core - Core_Security System - Turn off siren after Core_Security_OperationState update", description="Core_Security System - Turn off siren after Core_Security_OperationState update", tags=['core', 'security'])
