@@ -38,7 +38,7 @@ def offline_check(event):
                 days_between(
                     get_date(
                         t.getProperties().get("zwave_lastheal"),
-                        "yyyy-MM-dd'T'HH:mm:ss'Z'"),
+                        "yyyy-MM-dd'T'HH:mm:ssX"),
                     ZonedDateTime.now()
                 )
             )
@@ -50,7 +50,7 @@ def offline_check(event):
                 days_between(
                     get_date(
                         t.getProperties().get("zwave_lastheal"),
-                        "yyyy-MM-dd'T'HH:mm:ss'Z'"
+                        "yyyy-MM-dd'T'HH:mm:ssX"
                     ),
                     ZonedDateTime.now()
                 ) > ELAPSED_DAYS

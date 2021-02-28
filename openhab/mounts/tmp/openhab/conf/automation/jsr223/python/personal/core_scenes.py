@@ -49,16 +49,16 @@ def sync_scene_helpers(event):
 
         # Create scene store trigger
         helper = create_helper_item(
-            sceneMember,
-            'scenes',
-            'store-trigger',
-            'Number',
-            'settings',
-            "{0}-Szene überschreiben".format(
+            of=sceneMember,
+            namespace='scenes',
+            name='store-trigger',
+            item_type='Number',
+            category='settings',
+            label="{0} überschreiben".format(
                 sceneMember.label
             ),
-            ['gCore_Scenes_StoreTriggers'],
-            ['Point']
+            groups=['gCore_Scenes_StoreTriggers'],
+            tags=['Point']
         )
 
         set_key_value(
@@ -141,13 +141,13 @@ def sync_scene_helpers(event):
             stateValues.append(value)
             stateTriggerLabel = "{0}-Szene".format(label)
             stateTrigger = create_helper_item(
-                sceneMember,
-                'scenes',
-                'trigger-state-{}'.format(value),
-                'Switch',
-                'party',
-                stateTriggerLabel,
-                ['gCore_Scenes_StateTriggers']
+                of=sceneMember,
+                namespace='scenes',
+                name='trigger-state-{}'.format(value),
+                item_type='Switch',
+                category='party',
+                label=stateTriggerLabel,
+                groups=['gCore_Scenes_StateTriggers']
             )
 
             if stateTrigger.getLabel() != stateTriggerLabel:

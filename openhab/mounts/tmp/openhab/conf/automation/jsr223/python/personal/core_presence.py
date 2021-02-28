@@ -2,7 +2,6 @@ from __future__ import unicode_literals
 from core.rules import rule
 from core.triggers import when
 from personal.core_presence import POINT_TAGS, PresenceState, trigger_presence, get_presence
-from personal.core_broadcast import BroadcastType, broadcast
 from core.jsr223.scope import ir, events, OFF, ON
 from org.openhab.core.types import UnDefType
 from personal.core_helpers import sync_group_with_tags, intersection_count

@@ -33,14 +33,14 @@ def sync_timed_outlets_helpers(event):
 
     for outlet in outletMembers:
         helperItem = create_helper_item(
-            outlet,
-            'timed-outlet',
-            "duration-item",
-            "Number",
-            "time",
-            "Einschaltdauer von {0}".format(outlet.label),
-            ["gCore_TimedOutlets_ActiveDuration"],
-            ["Point"]
+            of=outlet,
+            namespace='timed-outlet',
+            name="duration-item",
+            item_type="Number",
+            category="time",
+            label="Einschaltdauer von {0}".format(outlet.label),
+            groups=["gCore_TimedOutlets_ActiveDuration"],
+            tags=["Point"]
         )
 
         set_value(
@@ -87,7 +87,7 @@ def sync_timed_outlets_helpers(event):
             helperItem.name,
             'stateDescription',
             'pattern',
-            '%dm'
+            '%dmin'
         )
 
         set_key_value(
@@ -95,6 +95,13 @@ def sync_timed_outlets_helpers(event):
             'stateDescription',
             'min',
             0
+        )
+
+        set_key_value(
+            helperItem.name,
+            'stateDescription',
+            'max',
+            10080
         )
 
         set_key_value(

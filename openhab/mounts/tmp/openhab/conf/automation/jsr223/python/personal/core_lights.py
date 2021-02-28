@@ -5,7 +5,6 @@ from personal.core_presence import PresenceState
 from personal.core_scenes import trigger_scene, get_scene_items
 from personal.core_helpers import METADATA_NAMESPACE, get_location, has_same_location, get_item_of_helper_item, get_items_of_any_tags, sync_group_with_tags, create_helper_item, intersection_count, get_all_semantic_items
 from personal.core_lights import LIGHT_MEASUREMENT_POINT_TAGS, LIGHTS_POINT_TAGS, LIGHTS_EQUIPMENT_TAGS, set_location_as_activated, is_elapsed, LightMode, AmbientLightCondition, get_light_mode_group, turn_on_switchable_point, turn_off_switchable_point
-from personal.core_broadcast import broadcast
 from core.jsr223.scope import ir, events, OFF, ON
 from org.openhab.core.types import UnDefType
 from org.openhab.core.library.types import OnOffType
@@ -52,6 +51,7 @@ def sync_lights_helpers(event):
             'blinds'
         )
     ]
+
     for location in locations:
         helperGroupItem = create_helper_item(
             of=location,
@@ -63,6 +63,7 @@ def sync_lights_helpers(event):
             groups=[location.name],
             tags=["Equipment"]
         )
+
         for suffix, label, groups, icon in items:
             helperItem = create_helper_item(
                 of=location,
@@ -74,6 +75,9 @@ def sync_lights_helpers(event):
                 groups=groups + [helperGroupItem.name],
                 tags=["Point"]
             )
+
+            if helperGroupItem.name not in helperItem.getGroupNames():
+                helperItem.addGroupName(helperGroupItem.name)
 
             set_key_value(
                 helperItem.name,
