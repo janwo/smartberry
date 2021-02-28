@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 from core.triggers import when
 from core.rules import rule
 from personal.core_helpers import has_same_location, sync_group_with_tags, get_items_of_any_tags, get_all_semantic_items
-from personal.core_heating import OPEN_CONTACT_EQUIPMENT_TAGS, OPEN_CONTACT_POINT_TAGS, HEATING_EQUIPMENT_TAGS, HEATING_POINT_TAGS, HeatingState
+from personal.core_heating import TEMPERATURE_MEASUREMENT_POINT_TAGS, OPEN_CONTACT_EQUIPMENT_TAGS, OPEN_CONTACT_POINT_TAGS, HEATING_EQUIPMENT_TAGS, HEATING_POINT_TAGS, HeatingState
 from core.jsr223.scope import ir, UnDefType, events, OPEN
 
 
@@ -15,6 +15,13 @@ def sync_heating_helpers(event):
     sync_group_with_tags(
         ir.getItem("gCore_Heating_ContactSwitchable"),
         OPEN_CONTACT_EQUIPMENT_TAGS
+    )
+
+    # Sync group gCore_Heating_Temperature with temperature items.
+    sync_group_with_tags(
+        ir.getItem("gCore_Heating_Temperature"),
+        TEMPERATURE_MEASUREMENT_POINT_TAGS,
+        matchAll=True
     )
 
 

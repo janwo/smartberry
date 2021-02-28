@@ -61,9 +61,12 @@ def get_items_of_any_tags(tags=[]):
     return set(reduce(lambda x, y: x + y, map(lambda tag: ir.getItemsByTag(tag),  tags)))
 
 
-def sync_group_with_tags(group, tags):
+def sync_group_with_tags(group, tags, matchAll=False):
     def mayRemoveFromGroup(groupMember, group, allowedTags):
-        if len(set(allowedTags).intersection(set(groupMember.getTags()))) == 0:
+        matchedTagsCount = len(
+            set(allowedTags).intersection(set(groupMember.getTags()))
+        )
+        if matchedTagsCount == 0 or (matchAll and len(tags) > matchedTagsCount):
             group.removeMember(groupMember)
             return True
         return False

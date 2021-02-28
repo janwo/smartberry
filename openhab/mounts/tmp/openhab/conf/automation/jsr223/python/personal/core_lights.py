@@ -231,7 +231,7 @@ def check_daylight(event):
         events.postUpdate(conditionItem, condition)
 
 
-@rule("Core - Manage lights according to respective modes among special states, nighttime and daytime.", description="Manage lights according to respective modes among special states, nighttime and daytime.", tags=['core', 'lights'])
+@rule("Core - Manage lights according to light conditions.", description="Manage lights according to light conditions.", tags=['core', 'lights'])
 @when("Member of gCore_Lights_DarkMode received update")
 @when("Member of gCore_Lights_BrightMode received update")
 @when("Member of gCore_Lights_ObscuredMode received update")
@@ -306,7 +306,8 @@ def manage_presence(event):
                 switchablePointNames = map(
                     lambda s: s.name,
                     get_all_semantic_items(
-                        LIGHTS_EQUIPMENT_TAGS, LIGHTS_POINT_TAGS)
+                        LIGHTS_EQUIPMENT_TAGS, LIGHTS_POINT_TAGS
+                    )
                 )
                 trigger_scene(
                     scene=scene,

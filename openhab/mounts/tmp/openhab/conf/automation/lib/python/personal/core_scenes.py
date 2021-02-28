@@ -2,9 +2,10 @@ from __future__ import unicode_literals
 from core.jsr223.scope import ir, ON, events
 from personal.core_helpers import enum, METADATA_NAMESPACE
 from core.metadata import get_metadata, set_metadata
-from personal.core_helpers import METADATA_NAMESPACE, has_same_location, get_childs_with_condition
+from personal.core_helpers import get_all_semantic_items, METADATA_NAMESPACE, has_same_location, get_childs_with_condition
 from org.openhab.core.types import UnDefType
 from core.metadata import get_key_value, set_key_value
+from personal.core_lights import LIGHTS_POINT_TAGS, LIGHTS_EQUIPMENT_TAGS
 
 SCENE_TAGS = [
     'Scene'
@@ -97,9 +98,10 @@ def get_scene_items(scene):
             []
         )
 
+    # Use lights as default items in list.
     return filter(
         lambda item: item.getType() != 'Group' and has_same_location(item, scene),
-        ir.getItems()
+        get_all_semantic_items(LIGHTS_EQUIPMENT_TAGS, LIGHTS_POINT_TAGS)
     )
 
 

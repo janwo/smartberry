@@ -1,7 +1,7 @@
 {
   "component": "oh-block",
   "config": {
-    "title": "Einstellungen"
+    "title": "Übersicht"
   },
   "slots": {
     "default": [
@@ -59,7 +59,8 @@
                 "action": "options",
                 "actionItem": "Core_Heating_Thermostat_ModeDefault",
                 "stateAsHeader": true,
-                "expandable": false
+                "expandable": false,
+                "trendItem": "gCore_Heating_Temperature"
               }
             }
           ]

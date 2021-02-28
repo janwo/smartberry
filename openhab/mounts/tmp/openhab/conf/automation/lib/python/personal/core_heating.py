@@ -25,3 +25,7 @@ HEATING_EQUIPMENT_TAGS = [
 HEATING_POINT_TAGS = [
     "SetPoint"
 ]
+
+TEMPERATURE_MEASUREMENT_POINT_TAGS = [
+    ["Measurement", "Temperature"]
+]
