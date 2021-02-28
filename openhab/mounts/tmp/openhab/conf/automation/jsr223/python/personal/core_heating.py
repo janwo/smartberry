@@ -20,8 +20,7 @@ def sync_heating_helpers(event):
     # Sync group gCore_Heating_Temperature with temperature items.
     sync_group_with_tags(
         ir.getItem("gCore_Heating_Temperature"),
-        TEMPERATURE_MEASUREMENT_POINT_TAGS,
-        matchAll=True
+        TEMPERATURE_MEASUREMENT_POINT_TAGS
     )
 
 
