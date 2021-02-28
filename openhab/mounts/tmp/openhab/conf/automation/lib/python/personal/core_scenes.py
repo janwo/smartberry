@@ -97,7 +97,7 @@ def get_scene_items(scene):
             []
         )
 
-    return map(
+    return filter(
         lambda item: item.getType() != 'Group' and has_same_location(item, scene),
         ir.getItems()
     )
