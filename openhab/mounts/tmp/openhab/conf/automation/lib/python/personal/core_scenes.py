@@ -6,6 +6,7 @@ from personal.core_helpers import get_all_semantic_items, METADATA_NAMESPACE, ha
 from org.openhab.core.types import UnDefType
 from core.metadata import get_key_value, set_key_value
 from personal.core_lights import LIGHTS_POINT_TAGS, LIGHTS_EQUIPMENT_TAGS
+from org.openhab.core.model.script.actions import Log
 
 SCENE_TAGS = [
     'Scene'
@@ -53,6 +54,10 @@ def save_scene_item_states(scene, scene_state=None):
         store = {}
         for item in items:
             store[item.name] = item.state.toString()
+            Log.logInfo("save_scene_item_states", "{}: Save state {}".format(
+                item.name,
+                item.state
+            ))
 
         set_key_value(
             scene.name,

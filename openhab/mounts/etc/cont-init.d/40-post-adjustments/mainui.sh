@@ -10,7 +10,7 @@ if [ -f $TARGET_JSON ] && [ -f $REPLACEMENT_JSON ]; then
     echo "mainui-settings.sh: Adjust $TARGET_JSON with $REPLACEMENT_JSON..."
 
     jq --slurpfile REPLACEMENT ${REPLACEMENT_JSON} \
-    '(del(.overview.value.slots.default[]|select(.config.title=="Einstellungen")).overview.value.slots.default+$REPLACEMENT) as $array|.overview.value.slots.default=$array' \
+    '(del(.overview.value.slots.default[]|select(.config.title=="Schnelleinstellungen")).overview.value.slots.default+$REPLACEMENT) as $array|.overview.value.slots.default=$array' \
     ${TARGET_JSON} > ${TMP_JSON} && chown -R openhab:openhab ${TMP_JSON} && mv ${TMP_JSON} ${TARGET_JSON}
     # Wanna try this in jqplay? See https://jqplay.org/s/HSLvRn81xq
 else
