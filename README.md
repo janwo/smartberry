@@ -1,5 +1,5 @@
-#<center>SmartBerry 🍓 - Smart Home 🏡</center>
-<center>*SmartBerry is an openHAB environment providing multiple extensions to simplify the configuration of scenes, climate and security management.*</center>
+# <center>SmartBerry 🍓 - Smart Home 🏡</center>
+*<center>SmartBerry is an openHAB environment providing multiple extensions to simplify the configuration of scenes, climate and security management.</center>*
 
 ## Documentation
 Get started with SmartBerry and start to learn the fundamentals.
