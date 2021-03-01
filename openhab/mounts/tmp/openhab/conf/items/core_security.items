@@ -11,9 +11,7 @@ Group gCore_Security_AssaultTrigger
 Group gCore_Security_AssaultDisarmamer
 Group gCore_Security_LockClosureTrigger
 
-Switch Core_Security_Sirene "Sirene" <siren> (gCore_Security) ["Point"]
-
-Number Core_Security_SireneAutoOff "Sirene: Auto-Off (Minuten) [%d min]" <siren> (gCore_Security) ["Point"] {
+Number Core_Security_SireneAutoOff "Sirene: Auto-Off (Minuten)" <siren> (gCore_Security) ["Point"] {
     stateDescription="oh-stepper-item"[
         pattern="%dm",
         min="1",

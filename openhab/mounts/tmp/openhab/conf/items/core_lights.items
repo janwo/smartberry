@@ -15,7 +15,7 @@ Group gCore_Lights_BrightMode "Lichtmodus (Hell)" <sun> (gCore_Lights) ["Equipme
 
 Group gCore_Lights_ObscuredMode "Lichtmodus (Verdunkelt)" <blinds> (gCore_Lights) ["Equipment"]
 
-Number Core_Lights_DefaultDuration "Standard Lichtdauer [%d min]" <time> (gCore_Lights) ["Point"]  {
+Number Core_Lights_DefaultDuration "Standard Lichtdauer" <time> (gCore_Lights) ["Point"]  {
     stateDescription=""[
         pattern="%dm",
         min="1",
@@ -29,14 +29,14 @@ Number Core_Lights_DefaultDuration "Standard Lichtdauer [%d min]" <time> (gCore_
     ]
 }
 
-Number Core_Lights_AmbientLightCondition  "Lichtwert-Einstufung" <sun> (gCore_Lights) /*Core_Lights_AmbientLightCondition_LuminanceTreshold as subtitle "Aktueller Lichtwert [%d %%]" */ ["Point"]  {
+Number Core_Lights_AmbientLightCondition "Lichtwert-Einstufung" <sun> (gCore_Lights) /*Core_Lights_AmbientLightCondition_LuminanceTreshold as subtitle "Aktueller Lichtwert" */ ["Point"]  {
      stateDescription=""[
         options="0.0=Dunkel,1.0=Verdunkelt,2.0=Hell"
     ]
 }
 
 
-Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured "Lichtwert bis Verdunkelt [%d %%]" <line>  (gCore_Lights) ["Point"]  {
+Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured "Lichtwert bis Verdunkelt" <line>  (gCore_Lights) ["Point"]  {
     stateDescription=""[
         pattern="%d%%",
         min="1",
@@ -51,7 +51,7 @@ Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured "Lichtwert b
 }
 
 
-Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark "Lichtwert bis Dunkel [%d %%]" <line> (gCore_Lights) ["Point"] {
+Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark "Lichtwert bis Dunkel" <line> (gCore_Lights) ["Point"] {
     stateDescription=""[
         pattern="%d%%",
         min="1",

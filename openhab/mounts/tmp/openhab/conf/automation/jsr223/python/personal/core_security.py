@@ -9,6 +9,7 @@ from core.jsr223.scope import ir, events, ON, OFF, OPEN
 from org.openhab.core.types import UnDefType
 from core.metadata import get_key_value, set_key_value
 from org.openhab.core.model.script.actions import Log
+from org.openhab.core.library.types import OnOffType
 
 
 @rule("Core - Sync helper items", description="Core - Sync helper items", tags=['core', 'security'])
@@ -60,7 +61,8 @@ def assault_trigger(event):
         message = "Silent alarm was triggered by {}!".format(item.label)
         if is_security_state(OperationState.ON):
             message = "Striking alarm was triggered by {}!".format(item.label)
-            events.sendCommand(ir.getItem("Core_Security_Sirene"), ON)
+            for alarm in ir.getItemsByTag("Alarm"):
+                events.sendCommand(alarm, ON)
 
         broadcast(message, BroadcastType.ATTENTION)
 
@@ -144,8 +146,9 @@ def lock_closure(event):
 @rule("Core - Core_Security System - Turn off siren after Core_Security_OperationState update", description="Core_Security System - Turn off siren after Core_Security_OperationState update", tags=['core', 'security'])
 @when("Item Core_Security_OperationState received update")
 def siren_off(event):
-    if ir.getItem("Core_Security_Sirene").state == ON:
-        events.sendCommand(ir.getItem("Core_Security_Sirene"), OFF)
+    for alarm in ir.getItemsByTag("Alarm"):
+        if alarm.getStateAs(OnOffType) == ON:
+            events.sendCommand(alarm, OFF)
 
 
 @rule("Core - Core_Security System - Turn off siren after X minutes", description="Core_Security System - Turn off siren after X minutes", tags=['core', 'security'])
@@ -163,7 +166,6 @@ def siren_autooff(event):
     if (
         isinstance(autoOffTime.state, UnDefType) or
         autoOffTime.state.floatValue() == 0 or
-        ir.getItem("Core_Security_Sirene").state != ON or
         not lastAlarmTime or
         minutes_between(
             get_date(lastAlarmTime),
@@ -172,10 +174,13 @@ def siren_autooff(event):
     ):
         return
 
-    events.sendCommand(ir.getItem("Core_Security_Sirene"), OFF)
-    message = "Alarm was automatically disabled after {} minutes.".format(
-        autoOffTime.state)
-    broadcast(
-        message,
-        BroadcastType.ATTENTION
-    )
+    for alarm in ir.getItemsByTag("Alarm"):
+        if alarm.getStateAs(OnOffType) == ON:
+            events.sendCommand(alarm, OFF)
+            broadcast(
+                "Alarm item {} was automatically disabled after {} minutes.".format(
+                    alarm.label,
+                    autoOffTime.state
+                ),
+                BroadcastType.ATTENTION
+            )

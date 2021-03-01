@@ -17,7 +17,7 @@ Number Core_Presence "Anwesenheit" <motion> (gCore_Presence) ["Point"] {
     ]
 }
 
-Number Core_Presence_HoursUntilAwayShort "Stunden bis kurze Abwesenheit [%d h]" <light> (gCore_Presence) ["Point"] {
+Number Core_Presence_HoursUntilAwayShort "Stunden bis kurze Abwesenheit" <light> (gCore_Presence) ["Point"] {
     stateDescription="oh-stepper-item"[
         pattern="%dh",
         min="1",
@@ -31,7 +31,7 @@ Number Core_Presence_HoursUntilAwayShort "Stunden bis kurze Abwesenheit [%d h]" 
     ]
 }
 
-Number Core_Presence_HoursUntilAwayLong "Stunden bis lange Abwesenheit [%d h]" <light> (gCore_Presence) ["Point"] {
+Number Core_Presence_HoursUntilAwayLong "Stunden bis lange Abwesenheit" <light> (gCore_Presence) ["Point"] {
     stateDescription=""[
         pattern="%dh",
         min="1",
