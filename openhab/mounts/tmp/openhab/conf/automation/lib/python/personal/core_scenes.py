@@ -15,7 +15,7 @@ SCENE_TAGS = [
 
 def get_scene_state(scene):
     if not isinstance(scene.state, UnDefType):
-        return scene.state.floatValue()
+        return scene.state.toString()
     else:
         commandDescription = scene.getCommandDescription()
         commandOptions = commandDescription.getCommandOptions() if commandDescription else []
@@ -52,12 +52,15 @@ def save_scene_item_states(scene, scene_state=None):
 
     if scene_state is not None:
         store = {}
+        Log.logInfo("save_scene_item_states", "scene_state = {}".format(
+            scene_state
+        ))
         for item in items:
-            store[item.name] = item.state.toString()
             Log.logInfo("save_scene_item_states", "{}: Save state {}".format(
                 item.name,
                 item.state
             ))
+            store[item.name] = item.state.toString()
 
         set_key_value(
             scene.name,
