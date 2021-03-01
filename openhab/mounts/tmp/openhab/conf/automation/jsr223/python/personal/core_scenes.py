@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from personal.core_helpers import get_date_string, get_date, get_location, sync_group_with_tags, has_same_location, METADATA_NAMESPACE, get_random_number, get_items_of_any_tags, create_helper_item, get_item_of_helper_item
-from personal.core_scenes import SCENE_TAGS, get_scene_item_states, save_scene_item_states, trigger_scene, get_scene_states
+from personal.core_scenes import SCENE_TAGS, get_scene_item_states, save_scene_item_states, trigger_scene_items, get_scene_states
 from core.triggers import when
 from core.rules import rule
 from core.jsr223.scope import ir, events, OFF, ON
@@ -227,15 +227,16 @@ def sync_scene_helpers(event):
 @rule("Core - Activate scene.", description="Activate scene.", tags=['core', 'scenes'])
 @when("Member of gCore_Scenes received command")
 def activate_scene(event):
+    sceneItem = ir.getItem(event.itemName)
     set_key_value(
-        event.itemName,
+        sceneItem.name,
         METADATA_NAMESPACE,
         'scenes',
         "last-activation",
         get_date_string(ZonedDateTime.now())
     )
 
-    trigger_scene(ir.getItem(event.itemName), event.itemState)
+    trigger_scene_items(sceneItem, sceneItem.state)
 
 
 @rule("Core - Store scene.", description="Store scene.", tags=['core', 'scenes'])
