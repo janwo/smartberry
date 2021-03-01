@@ -6,12 +6,12 @@ Get started with SmartBerry and start to learn the fundamentals.
 
 * [Getting Started](#getting-started)
 * [Configuration](#configuration)
-	* [Lights](#lights) 💡
-	* [Heating](#heating) 🔥
-	* [Presence](#presence) 👋
-	* [Scenes](#scenes) 🎬
-	* [Security](#security) 🔒
-	* [Timed Outlets](#timed-outlets) ⏱️
+	* [Lights](#lights-) 💡
+	* [Heating](#heating-) 🔥
+	* [Presence](#presence-) 👋
+	* [Scenes](#scenes-) 🎬
+	* [Security](#security-) 🔒
+	* [Timed Outlets](#timed-outlets-) ⏱️
 
 ### Getting Started
 ### Configuration
