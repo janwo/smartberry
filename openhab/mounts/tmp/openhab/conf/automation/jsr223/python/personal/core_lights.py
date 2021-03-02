@@ -152,20 +152,23 @@ def sync_lights_helpers(event):
 
 @rule("Core - Keep last light activation updated", description="Keep last light activation updated", tags=["core", 'lights'])
 @when("Descendent of gCore_Lights_Switchables received update")
+@when("Descendent of gCore_Lights_Switchables received command")
 def set_last_activation(event):
     item = ir.getItem(event.itemName)
-    if item.getStateAs(OnOffType) == ON:
-        Log.logInfo(
-            "set_last_activation",
-            "Descendent {} received update. Tags: {}".format(
-                item.name,
-                intersection_count(item.getTags(), LIGHTS_POINT_TAGS)
-            )
+    Log.logInfo(
+        "set_last_activation",
+        "Descendent {} received update. Tags matched: {} state as OnOff: {}, event: {}".format(
+            item.name,
+            intersection_count(item.getTags(), LIGHTS_POINT_TAGS),
+            item.getStateAs(OnOffType) == ON,
+            event
         )
+    )
+    if item.getStateAs(OnOffType) == ON:
         if (
-            # Is target item:
-            'gCore_Lights_Switchables' in item.getGroupNames() or
-            # Is Switch child of target item:
+                # Is target item:
+                'gCore_Lights_Switchables' in item.getGroupNames() or
+                # Is Switch child of target item:
             intersection_count(item.getTags(), LIGHTS_POINT_TAGS) > 0
         ):
             Log.logInfo(
