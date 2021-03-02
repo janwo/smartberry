@@ -155,12 +155,25 @@ def sync_lights_helpers(event):
 def set_last_activation(event):
     item = ir.getItem(event.itemName)
     if item.getStateAs(OnOffType) == ON:
+        Log.logInfo(
+            "set_last_activation",
+            "Descendent {} received update. Tags: {}".format(
+                item.name,
+                intersection_count(item.getTags(), LIGHTS_POINT_TAGS)
+            )
+        )
         if (
             # Is target item:
             'gCore_Lights_Switchables' in item.getGroupNames() or
             # Is Switch child of target item:
             intersection_count(item.getTags(), LIGHTS_POINT_TAGS) > 0
         ):
+            Log.logInfo(
+                "set_last_activation",
+                "Descendent {} triggered location activation".format(
+                    item.name
+                )
+            )
             set_location_as_activated(item)
 
 
