@@ -15,7 +15,7 @@ SCENE_TAGS = [
 
 def get_scene_state(scene):
     if not isinstance(scene.state, UnDefType):
-        return scene.state.toString()
+        return scene.state.toFullString()
     else:
         commandDescription = scene.getCommandDescription()
         commandOptions = commandDescription.getCommandOptions() if commandDescription else []
@@ -92,7 +92,7 @@ def save_scene_item_states(scene, scene_state=None):
     if scene_state is not None:
         store = {}
         for item in items:
-            store[item.name] = item.state.toString()
+            store[item.name] = item.state.toFullString()
 
         set_key_value(
             scene.name,
@@ -110,8 +110,9 @@ def trigger_scene_items(scene, scene_state=None, poke_only=False):
         if poke_only:
             events.postUpdate(item, item.state)
         elif state is not None:
-            Log.logInfo("trigger_scene_items", "{}: Send command {}".format(
-                item.name,
+            Log.logInfo("trigger_scene_items", "{}: Accepted types: {} Command: {}".format(
+                item,
+                item.getAcceptedCommandTypes(),
                 state
             ))
             events.sendCommand(item, state)

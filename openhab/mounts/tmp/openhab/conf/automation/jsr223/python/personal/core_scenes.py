@@ -244,7 +244,7 @@ def activate_scene(event):
 def store_scene(event):
     sceneTrigger = ir.getItem(event.itemName)
     scene = get_item_of_helper_item(sceneTrigger)
-    save_scene_item_states(scene, event.itemState.toString())
+    save_scene_item_states(scene, event.itemState.toFullString())
 
 
 @rule("Core - Manage gCore_Scenes_StateTriggers to trigger scene.", description="Manage gCore_Scenes_StateTriggers to trigger scene.", tags=['core', 'scenes'])
