@@ -313,8 +313,7 @@ def manage_presence(event):
                         )
                     )
                     trigger_scene_items(
-                        scene=scene,
-                        scene_state=None,
+                        scene,
                         poke_only=len(
                             filter(
                                 lambda item: (

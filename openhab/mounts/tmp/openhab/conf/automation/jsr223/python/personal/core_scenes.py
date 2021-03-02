@@ -228,16 +228,16 @@ def sync_scene_helpers(event):
 @rule("Core - Activate scene.", description="Activate scene.", tags=['core', 'scenes'])
 @when("Member of gCore_Scenes received command")
 def activate_scene(event):
-    sceneItem = ir.getItem(event.itemName)
+    scene = ir.getItem(event.itemName)
     set_key_value(
-        sceneItem.name,
+        scene.name,
         METADATA_NAMESPACE,
         'scenes',
         "last-activation",
         get_date_string(ZonedDateTime.now())
     )
 
-    trigger_scene_items(sceneItem)
+    trigger_scene_items(scene)
 
 
 @rule("Core - Store scene.", description="Store scene.", tags=['core', 'scenes'])
