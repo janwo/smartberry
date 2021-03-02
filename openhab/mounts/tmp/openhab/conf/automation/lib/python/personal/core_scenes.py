@@ -36,56 +36,6 @@ def get_scene_states(scene):
     )
 
 
-def trigger_scene_items(scene, scene_state=None, poke_only=False):
-    item_states = get_scene_item_states(scene, scene_state)
-    for item, state in item_states:
-        if poke_only:
-            events.postUpdate(item, item.state)
-        elif state is not None:
-            Log.logInfo("trigger_scene_items", "{}: Send command {}".format(
-                item.name,
-                state
-            ))
-            events.sendCommand(item, state)
-
-
-def save_scene_item_states(scene, scene_state=None):
-    items = get_scene_items(scene)
-    scene_state = scene_state or get_scene_state(scene)
-
-    if scene_state is not None:
-        store = {}
-        for item in items:
-            store[item.name] = item.state.toString()
-
-        set_key_value(
-            scene.name,
-            METADATA_NAMESPACE,
-            'scenes',
-            'states',
-            scene_state,
-            store
-        )
-
-
-def apply_context(scene, context):
-    contextState = get_key_value(
-        scene.name,
-        METADATA_NAMESPACE,
-        'scenes',
-        'context-states',
-        context
-    )
-
-    if contextState in map(
-        lambda (state, label): state,
-        get_scene_states(scene)
-    ):
-        events.sendCommand(scene, contextState)
-        return True
-    return False
-
-
 def get_scene_items(scene):
     customMembers = get_key_value(
         scene.name,
@@ -133,3 +83,53 @@ def get_scene_item_states(scene, scene_state=None):
         ),
         get_scene_items(scene)
     )
+
+
+def save_scene_item_states(scene, scene_state=None):
+    items = get_scene_items(scene)
+    scene_state = scene_state or get_scene_state(scene)
+
+    if scene_state is not None:
+        store = {}
+        for item in items:
+            store[item.name] = item.state.toString()
+
+        set_key_value(
+            scene.name,
+            METADATA_NAMESPACE,
+            'scenes',
+            'states',
+            scene_state,
+            store
+        )
+
+
+def trigger_scene_items(scene, scene_state=None, poke_only=False):
+    item_states = get_scene_item_states(scene, scene_state)
+    for item, state in item_states:
+        if poke_only:
+            events.postUpdate(item, item.state)
+        elif state is not None:
+            Log.logInfo("trigger_scene_items", "{}: Send command {}".format(
+                item.name,
+                state
+            ))
+            events.sendCommand(item, state)
+
+
+def apply_context(scene, context):
+    contextState = get_key_value(
+        scene.name,
+        METADATA_NAMESPACE,
+        'scenes',
+        'context-states',
+        context
+    )
+
+    if contextState in map(
+        lambda (state, label): state,
+        get_scene_states(scene)
+    ):
+        events.sendCommand(scene, contextState)
+        return True
+    return False
