@@ -151,16 +151,17 @@ def sync_lights_helpers(event):
 
 
 @rule("Core - Keep last light activation updated", description="Keep last light activation updated", tags=["core", 'lights'])
-@when("Descendent of gCore_Lights_Switchables received update ON")
+@when("Descendent of gCore_Lights_Switchables received update")
 def set_last_activation(event):
     item = ir.getItem(event.itemName)
-    if (
-        # Is target item:
-        'gCore_Lights_Switchables' in item.getGroupNames() or
-        # Is Switch child of target item:
-        intersection_count(item.getTags(), LIGHTS_POINT_TAGS) > 0
-    ):
-        set_location_as_activated(item)
+    if item.getStateAs(OnOffType) == ON:
+        if (
+            # Is target item:
+            'gCore_Lights_Switchables' in item.getGroupNames() or
+            # Is Switch child of target item:
+            intersection_count(item.getTags(), LIGHTS_POINT_TAGS) > 0
+        ):
+            set_location_as_activated(item)
 
 
 @rule("Core - Manage daylight status changes.", description="Manage daylight status changes.", tags=["core", 'lights'])
@@ -286,48 +287,50 @@ def manage_light_state(event):
 
 
 @rule("Core - Manage lights on presence.", description="Manage lights on presence.", tags=['core', 'lights'])
-@when("Member of gCore_Presence_PresenceTrigger received update ON")
+@when("Member of gCore_Presence_PresenceTrigger received update")
 def manage_presence(event):
-    location = get_location(event.itemName)
-    lightModeGroup = get_light_mode_group()
+    item = ir.getItem(event.itemName)
+    if item.getStateAs(OnOffType) == ON:
+        location = get_location(item)
+        lightModeGroup = get_light_mode_group()
 
-    for member in lightModeGroup.members:
-        if (
-            not isinstance(member.state, UnDefType) and
-            member.state.floatValue() in [
-                LightMode.AUTO_ON
-            ] and
-            has_same_location(member, location)
-        ):
+        for member in lightModeGroup.members:
+            if (
+                not isinstance(member.state, UnDefType) and
+                member.state.floatValue() in [
+                    LightMode.AUTO_ON
+                ] and
+                has_same_location(member, location)
+            ):
 
-            scene = next((scene for scene in ir.getItem(
-                'gCore_Scenes').members if has_same_location(scene, location)), None)
-            if scene:
-                switchablePointNames = map(
-                    lambda s: s.name,
-                    get_all_semantic_items(
-                        LIGHTS_EQUIPMENT_TAGS, LIGHTS_POINT_TAGS
-                    )
-                )
-                trigger_scene_items(
-                    scene=scene,
-                    scene_state=None,
-                    poke_only=len(
-                        filter(
-                            lambda item: (
-                                not isinstance(item.state, UnDefType) and
-                                item.name in switchablePointNames and
-                                item.getStateAs(OnOffType) == ON
-                            ),
-                            get_scene_items(scene)
+                scene = next((scene for scene in ir.getItem(
+                    'gCore_Scenes').members if has_same_location(scene, location)), None)
+                if scene:
+                    switchablePointNames = map(
+                        lambda s: s.name,
+                        get_all_semantic_items(
+                            LIGHTS_EQUIPMENT_TAGS, LIGHTS_POINT_TAGS
                         )
-                    ) > 0
-                )
-            else:
-                for point in get_all_semantic_items(LIGHTS_EQUIPMENT_TAGS, LIGHTS_POINT_TAGS):
-                    if has_same_location(point, location):
-                        turn_on_switchable_point(point)
-            break
+                    )
+                    trigger_scene_items(
+                        scene=scene,
+                        scene_state=None,
+                        poke_only=len(
+                            filter(
+                                lambda item: (
+                                    not isinstance(item.state, UnDefType) and
+                                    item.name in switchablePointNames and
+                                    item.getStateAs(OnOffType) == ON
+                                ),
+                                get_scene_items(scene)
+                            )
+                        ) > 0
+                    )
+                else:
+                    for point in get_all_semantic_items(LIGHTS_EQUIPMENT_TAGS, LIGHTS_POINT_TAGS):
+                        if has_same_location(point, location):
+                            turn_on_switchable_point(point)
+                break
 
 
 @rule("Core - Manage lights when come back home.", description="Manage lights when come back home.", tags=['core', 'lights'])

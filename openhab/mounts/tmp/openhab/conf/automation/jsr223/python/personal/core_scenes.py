@@ -8,6 +8,7 @@ from core.metadata import set_key_value, get_key_value, set_value
 from org.openhab.core.types import UnDefType
 from core.date import minutes_between, seconds_between, hours_between, ZonedDateTime
 from org.openhab.core.model.script.actions import Log
+from org.openhab.core.library.types import OnOffType
 
 
 @rule("Core - Sync helper items", description="Core - Sync helper items", tags=['core', 'scenes'])
@@ -248,47 +249,48 @@ def store_scene(event):
 
 
 @rule("Core - Manage gCore_Scenes_StateTriggers to trigger scene.", description="Manage gCore_Scenes_StateTriggers to trigger scene.", tags=['core', 'scenes'])
-@when("Member of gCore_Scenes_StateTriggers received update ON")
-@when("Member of gCore_Scenes_StateTriggers received update OPEN")
+@when("Member of gCore_Scenes_StateTriggers received update")
 def manage_scenetriggers(event):
-    scene = get_item_of_helper_item(ir.getItem(event.itemName))
-    triggerInfo = get_key_value(
-        event.itemName,
-        METADATA_NAMESPACE,
-        'scenes',
-        'trigger-state'
-    )
-
-    if scene and triggerInfo and 'to' in triggerInfo:
-        if 'from' in triggerInfo and (
-            isinstance(scene.state, UnDefType) or
-            triggerInfo['from'] is not scene.state.floatValue()
-        ):
-            return
-
-        lastActivation = get_key_value(
-            scene.name,
+    item = ir.getItem(event.itemName)
+    if item.getStateAs(OnOffType) == ON:
+        scene = get_item_of_helper_item(item)
+        triggerInfo = get_key_value(
+            event.itemName,
             METADATA_NAMESPACE,
             'scenes',
-            'last-activation'
+            'trigger-state'
         )
 
-        if ('hours-until-active' in triggerInfo and (
-            not lastActivation or hours_between(
-                get_date(lastActivation),
-                ZonedDateTime.now()
-            ) < triggerInfo['hours-until-active']
-        )) or ('minutes-until-active' in triggerInfo and (
-            not lastActivation or minutes_between(
-                get_date(lastActivation),
-                ZonedDateTime.now()
-            ) < triggerInfo['minutes-until-active']
-        )) or ('seconds-until-active' in triggerInfo and (
-            not lastActivation or seconds_between(
-                get_date(lastActivation),
-                ZonedDateTime.now()
-            ) < triggerInfo['seconds-until-active']
-        )):
-            return
+        if scene and triggerInfo and 'to' in triggerInfo:
+            if 'from' in triggerInfo and (
+                isinstance(scene.state, UnDefType) or
+                triggerInfo['from'] is not scene.state.floatValue()
+            ):
+                return
 
-        events.sendCommand(scene, triggerInfo['to'])
+            lastActivation = get_key_value(
+                scene.name,
+                METADATA_NAMESPACE,
+                'scenes',
+                'last-activation'
+            )
+
+            if ('hours-until-active' in triggerInfo and (
+                not lastActivation or hours_between(
+                    get_date(lastActivation),
+                    ZonedDateTime.now()
+                ) < triggerInfo['hours-until-active']
+            )) or ('minutes-until-active' in triggerInfo and (
+                not lastActivation or minutes_between(
+                    get_date(lastActivation),
+                    ZonedDateTime.now()
+                ) < triggerInfo['minutes-until-active']
+            )) or ('seconds-until-active' in triggerInfo and (
+                not lastActivation or seconds_between(
+                    get_date(lastActivation),
+                    ZonedDateTime.now()
+                ) < triggerInfo['seconds-until-active']
+            )):
+                return
+
+            events.sendCommand(scene, triggerInfo['to'])

@@ -110,11 +110,6 @@ def trigger_scene_items(scene, scene_state=None, poke_only=False):
         if poke_only:
             events.postUpdate(item, item.state)
         elif state is not None:
-            Log.logInfo("trigger_scene_items", "{}: Accepted types: {} Command: {}".format(
-                item,
-                item.getAcceptedCommandTypes(),
-                state
-            ))
             events.sendCommand(item, state)
 
 

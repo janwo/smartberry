@@ -5,6 +5,7 @@ from personal.core_presence import POINT_TAGS, PresenceState, trigger_presence, 
 from core.jsr223.scope import ir, events, OFF, ON
 from org.openhab.core.types import UnDefType
 from personal.core_helpers import sync_group_with_tags, intersection_count
+from org.openhab.core.library.types import OnOffType
 
 
 @rule("Core - Sync helper items", description="Core - Sync helper items", tags=['core', 'presence'])
@@ -20,10 +21,11 @@ def sync_presence_helpers(event):
 
 
 @rule("Core - Trigger presence on motion.", description="Trigger presence on motion.", tags=['core', 'presence'])
-@when("Member of gCore_Presence_PresenceTrigger received update ON")
+@when("Member of gCore_Presence_PresenceTrigger received update")
 def trigger_presence_on_motion(event):
     item = ir.getItem(event.itemName)
-    trigger_presence(item)
+    if item.getStateAs(OnOffType) == ON:
+        trigger_presence(item)
 
 
 @rule("Core - Check presence state and update Core_Presence", description="Check presence state and update Core_Presence", tags=['core', 'presence'])
