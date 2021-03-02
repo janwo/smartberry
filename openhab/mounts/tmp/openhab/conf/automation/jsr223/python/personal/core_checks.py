@@ -69,7 +69,7 @@ def offline_check(event):
     if notifications:
         broadcast("Some things are not ONLINE or elapsed:\n{}".format(
             reduce(
-                lambda (a, b): a + "\n" + b,
+                lambda a, b: a + "\n" + b,
                 notifications
             )
         ))

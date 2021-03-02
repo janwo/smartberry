@@ -236,7 +236,7 @@ def activate_scene(event):
         get_date_string(ZonedDateTime.now())
     )
 
-    trigger_scene_items(sceneItem, sceneItem.state)
+    trigger_scene_items(sceneItem, sceneItem.state.toString())
 
 
 @rule("Core - Store scene.", description="Store scene.", tags=['core', 'scenes'])
@@ -244,7 +244,7 @@ def activate_scene(event):
 def store_scene(event):
     sceneTrigger = ir.getItem(event.itemName)
     scene = get_item_of_helper_item(sceneTrigger)
-    save_scene_item_states(scene, event.itemState.floatValue())
+    save_scene_item_states(scene, event.itemState.toString())
 
 
 @rule("Core - Manage gCore_Scenes_StateTriggers to trigger scene.", description="Manage gCore_Scenes_StateTriggers to trigger scene.", tags=['core', 'scenes'])
