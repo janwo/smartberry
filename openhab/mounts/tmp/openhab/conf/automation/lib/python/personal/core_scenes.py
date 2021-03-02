@@ -39,13 +39,13 @@ def get_scene_states(scene):
 def trigger_scene_items(scene, scene_state=None, poke_only=False):
     item_states = get_scene_item_states(scene, scene_state)
     for item, state in item_states:
-        Log.logInfo("trigger_scene_items", "{}: Save state {}".format(
-            item.name,
-            state is not None
-        ))
         if poke_only:
             events.postUpdate(item, item.state)
         elif state is not None:
+            Log.logInfo("trigger_scene_items", "{}: Send command {}".format(
+                item.name,
+                state
+            ))
             events.sendCommand(item, state)
 
 

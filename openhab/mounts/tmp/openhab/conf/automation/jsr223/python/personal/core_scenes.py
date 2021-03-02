@@ -236,7 +236,7 @@ def activate_scene(event):
         get_date_string(ZonedDateTime.now())
     )
 
-    trigger_scene_items(sceneItem, sceneItem.state.toString())
+    trigger_scene_items(sceneItem)
 
 
 @rule("Core - Store scene.", description="Store scene.", tags=['core', 'scenes'])
