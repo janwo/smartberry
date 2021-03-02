@@ -38,11 +38,18 @@ def get_scene_states(scene):
 
 def trigger_scene_items(scene, scene_state=None, poke_only=False):
     item_states = get_scene_item_states(scene, scene_state)
+    Log.logInfo("trigger_scene_items", "poke_only = {}".format(
+        poke_only
+    ))
     for item, state in item_states:
+        Log.logInfo("trigger_scene_items", "{}: Save state {}".format(
+            item.name,
+            item.state
+        ))
         if poke_only:
             events.postUpdate(item, item.state)
-        elif state != None:
-            events.sendCommand(item, str(state))
+        elif state is not None:
+            events.sendCommand(item, state)
 
 
 def save_scene_item_states(scene, scene_state=None):
@@ -52,14 +59,7 @@ def save_scene_item_states(scene, scene_state=None):
 
     if scene_state is not None:
         store = {}
-        Log.logInfo("save_scene_item_states", "scene_state = {}".format(
-            scene_state
-        ))
         for item in items:
-            Log.logInfo("save_scene_item_states", "{}: Save state {}".format(
-                item.name,
-                item.state
-            ))
             store[item.name] = item.state.toString()
 
         set_key_value(
