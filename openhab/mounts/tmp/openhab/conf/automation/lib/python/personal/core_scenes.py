@@ -47,7 +47,10 @@ def get_scene_items(scene):
     if customMembers:
         return reduce(
             lambda customMemberList, newMember: customMemberList +
-            get_childs_with_condition(newMember),
+            get_childs_with_condition(
+                newMember,
+                lambda item: item.getType() != 'Group'
+            ),
             customMembers,
             []
         )

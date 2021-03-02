@@ -279,7 +279,7 @@ def get_parents_with_condition(item, condition=lambda item: True):
 
     groupMembers = reduce(
         lambda memberList, newMember: memberList +
-        get_parents_with_condition(newMember),
+        get_parents_with_condition(newMember, condition),
         item.getGroupNames(),
         []
     )
@@ -302,7 +302,7 @@ def get_childs_with_condition(item, condition=lambda item: True):
 
     groupMembers = reduce(
         lambda memberList, newMember: memberList +
-        get_childs_with_condition(newMember),
+        get_childs_with_condition(newMember, condition),
         item.members,
         []
     )
