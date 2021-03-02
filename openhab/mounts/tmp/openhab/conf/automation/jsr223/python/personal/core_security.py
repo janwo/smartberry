@@ -95,7 +95,7 @@ def armament(event):
     )
 
     if blockingAssaultTriggers:
-        events.sendCommand(
+        events.postUpdate(
             ir.getItem('Core_Security_OperationState'),
             OperationState.OFF
         )

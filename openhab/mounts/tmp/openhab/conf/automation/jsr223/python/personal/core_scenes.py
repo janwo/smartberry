@@ -24,6 +24,9 @@ def sync_scene_helpers(event):
 
     # Check helper items
     for sceneMember in sceneMembers:
+        # get scene location
+        sceneLocation = get_location(sceneMember)
+
         # check metadata of context states
         contextStates = get_key_value(
             sceneMember.name,
@@ -136,7 +139,7 @@ def sync_scene_helpers(event):
                 '%d'
             )
 
-        # Sync switches for each scene state
+        # Sync (Add) switches for each scene state
         stateValues = []
         for value, label in get_scene_states(sceneMember):
             stateValues.append(value)
@@ -154,6 +157,15 @@ def sync_scene_helpers(event):
             if stateTrigger.getLabel() != stateTriggerLabel:
                 stateTrigger.setLabel(stateTriggerLabel)
 
+            set_key_value(
+                stateTrigger.name,
+                METADATA_NAMESPACE,
+                'scenes',
+                'trigger-state',
+                'to',
+                value
+            )
+
             set_value(
                 stateTrigger.name,
                 'ga',
@@ -167,14 +179,16 @@ def sync_scene_helpers(event):
                 False
             )
 
-            set_key_value(
-                stateTrigger.name,
-                METADATA_NAMESPACE,
-                'scenes',
-                'trigger-state',
-                'to',
-                value
-            )
+            if sceneLocation:
+                set_key_value(
+                    stateTrigger.name,
+                    'ga',
+                    'synonyms',
+                    '{} in {}'.format(
+                        stateTriggerLabel,
+                        sceneLocation.label
+                    )
+                )
 
             set_key_value(
                 stateTrigger.name,
@@ -204,6 +218,7 @@ def sync_scene_helpers(event):
                 'oh:party'
             )
 
+        # Sync (Remove) switches for each scene state
         for stateTrigger in ir.getItem('gCore_Scenes_StateTriggers').members:
             scene = get_item_of_helper_item(stateTrigger)
             state = get_key_value(
@@ -226,7 +241,7 @@ def sync_scene_helpers(event):
 
 
 @rule("Core - Activate scene.", description="Activate scene.", tags=['core', 'scenes'])
-@when("Member of gCore_Scenes received command")
+@when("Member of gCore_Scenes received update")
 def activate_scene(event):
     scene = ir.getItem(event.itemName)
     set_key_value(
@@ -293,4 +308,4 @@ def manage_scenetriggers(event):
             )):
                 return
 
-            events.sendCommand(scene, triggerInfo['to'])
+            events.postUpdate(scene, triggerInfo['to'])

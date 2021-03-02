@@ -6,7 +6,7 @@ from org.openhab.core.types import UnDefType
 
 
 @rule("Core - Start or stop house cleaning", description="Start or stop house cleaning", tags=["core", "cleaning"])
-@when("Member of gCore_Cleaning_Vacuum_Clean received command")
+@when("Member of gCore_Cleaning_Vacuum_Clean received update")
 def manage_house_cleaning(event):
     command = 'clean' if event.itemCommand is ON else 'dock'
     for item in ir.getItem("gCore_Cleaning_Vacuum_CommandItem").members:

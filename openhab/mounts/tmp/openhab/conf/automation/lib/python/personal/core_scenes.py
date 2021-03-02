@@ -110,6 +110,7 @@ def trigger_scene_items(scene, poke_only=False):
         if poke_only:
             events.postUpdate(item, item.state)
         elif state is not None:
+            events.postUpdate(item, state)
             events.sendCommand(item, state)
 
 
@@ -126,6 +127,6 @@ def apply_context(scene, context):
         lambda (state, label): state,
         get_scene_states(scene)
     ):
-        events.sendCommand(scene, contextState)
+        events.postUpdate(scene, contextState)
         return True
     return False
