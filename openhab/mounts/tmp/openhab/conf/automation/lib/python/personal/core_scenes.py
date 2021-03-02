@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from core.jsr223.scope import ir, ON, events
-from personal.core_helpers import enum, METADATA_NAMESPACE
+from personal.core_helpers import METADATA_NAMESPACE
 from core.metadata import get_metadata, set_metadata
 from personal.core_helpers import get_all_semantic_items, METADATA_NAMESPACE, has_same_location, get_childs_with_condition
 from org.openhab.core.types import UnDefType

@@ -9,10 +9,10 @@ from personal.core_helpers import enum, METADATA_NAMESPACE
 from core.metadata import set_key_value
 
 DefaultSceneState = enum(
-    HOME=0,
-    AWAY_SHORT=1,
-    AWAY_LONG=2,
-    SLEEP=3
+    HOME=0.0,
+    AWAY_SHORT=1.0,
+    AWAY_LONG=2.0,
+    SLEEP=3.0
 )
 
 
