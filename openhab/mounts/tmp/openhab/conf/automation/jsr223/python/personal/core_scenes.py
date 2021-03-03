@@ -251,7 +251,6 @@ def activate_scene(event):
         "last-activation",
         get_date_string(ZonedDateTime.now())
     )
-
     trigger_scene_items(scene)
 
 
