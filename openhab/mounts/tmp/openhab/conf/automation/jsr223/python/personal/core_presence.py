@@ -28,10 +28,19 @@ def trigger_presence_on_motion(event):
         trigger_presence(item)
 
 
-@rule("Core - Check presence state and update Core_Presence", description="Check presence state and update Core_Presence", tags=['core', 'presence'])
+@rule("Core - Check for an absence presence state and update Core_Presence", description="Check presence state and update Core_Presence", tags=['core', 'presence'])
 @when("Time cron 0 0 * ? * * *")
 def check_presence(event):
     presenceManagement = ir.getItem("Core_Presence")
     presence = get_presence()
-    if isinstance(presenceManagement.state, UnDefType) or presence != presenceManagement.state.floatValue():
+
+    if isinstance(presenceManagement.state, UnDefType):
+        events.postUpdate(presenceManagement, presence)
+
+    # Do not update to HOME as we only want to update to absence presence states.
+    if presence is PresenceState.HOME:
+        return
+
+    # Update presence state, if it changed.
+    if presence is not presenceManagement.state.floatValue():
         events.postUpdate(presenceManagement, presence)
