@@ -7,6 +7,7 @@ from personal.core_scenes import apply_context
 from personal.core_presence import get_presence, PresenceState
 from personal.core_helpers import enum, METADATA_NAMESPACE
 from core.metadata import set_key_value
+from org.openhab.core.model.script.actions import Log
 
 DefaultSceneState = enum(
     HOME=0.0,
@@ -36,6 +37,12 @@ def presence_updated(event):
         PresenceState.AWAY_SHORT: DefaultSceneState.AWAY_SHORT,
         PresenceState.AWAY_LONG: DefaultSceneState.AWAY_LONG
     }
+
+    Log.logInfo("presence_updated", "Update Core_DefaultScene to {} as Core_Presence received {}. Mapping: {}".format(
+        defaultSceneMapping.get(get_presence()),
+        get_presence(),
+        defaultSceneMapping
+    ))
 
     events.postUpdate(
         ir.getItem('Core_DefaultScene'),
