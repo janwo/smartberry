@@ -110,11 +110,6 @@ def save_scene_item_states(scene, scene_state=None):
 def trigger_scene_items(scene, poke_only=False):
     item_states = get_scene_item_states(scene)
     for item, state in item_states:
-        Log.logInfo("trigger_scene_items", "{} item {} via scene {}.".format(
-            "Poke" if poke_only else "Trigger",
-            item.name,
-            scene.name
-        ))
         if poke_only:
             events.postUpdate(item, item.state)
         elif state is not None:

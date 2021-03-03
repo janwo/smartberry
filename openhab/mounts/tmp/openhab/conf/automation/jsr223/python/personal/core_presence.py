@@ -32,6 +32,6 @@ def trigger_presence_on_motion(event):
 @when("Time cron 0 0 * ? * * *")
 def check_presence(event):
     presenceManagement = ir.getItem("Core_Presence")
-    state = get_presence(presenceManagement)
-    if isinstance(presenceManagement.state, UnDefType) or state != presenceManagement.state.floatValue():
-        events.postUpdate(presenceManagement, state)
+    presence = get_presence()
+    if isinstance(presenceManagement.state, UnDefType) or presence != presenceManagement.state.floatValue():
+        events.postUpdate(presenceManagement, presence)

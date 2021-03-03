@@ -30,19 +30,13 @@ def default_scene_updated(event):
 
 
 @rule("Core - Adjust default scene on presence changes.", description="Adjust default scene on presence changes.", tags=["core", "default-scene"])
-@when("Item Core_Presence received update")
+@when("Item Core_Presence changed")
 def presence_updated(event):
     defaultSceneMapping = {
         PresenceState.HOME: DefaultSceneState.HOME,
         PresenceState.AWAY_SHORT: DefaultSceneState.AWAY_SHORT,
         PresenceState.AWAY_LONG: DefaultSceneState.AWAY_LONG
     }
-
-    Log.logInfo("presence_updated", "Update Core_DefaultScene to {} as Core_Presence received {}. Mapping: {}".format(
-        defaultSceneMapping.get(get_presence()),
-        get_presence(),
-        defaultSceneMapping
-    ))
 
     events.postUpdate(
         ir.getItem('Core_DefaultScene'),
