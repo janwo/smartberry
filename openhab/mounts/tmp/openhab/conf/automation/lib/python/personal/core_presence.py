@@ -39,8 +39,7 @@ def get_presence(item=None):
         broadcast("No value set for {}.".format(hours_away_long.name))
         return PresenceState.HOME
 
-    hours_away_short = ir.getItem(
-        "Core_Presence_HoursUntilAwayShort")
+    hours_away_short = ir.getItem("Core_Presence_HoursUntilAwayShort")
     if isinstance(hours_away_short.state, UnDefType):
         broadcast("No value set for {}.".format(hours_away_short.name))
         return PresenceState.HOME
