@@ -65,8 +65,8 @@ def trigger_presence_on_motion(event):
 @rule("Core - Check for an absence presence state and update Core_Presence", description="Check presence state and update Core_Presence", tags=['core', 'presence'])
 @when("Time cron 0 0 * ? * * *")
 def check_presence(event):
-    presenceManagement = ir.getItem("Core_Presence")
     presence = get_presence()
+    presenceManagement = ir.getItem("Core_Presence")
 
     if isinstance(presenceManagement.state, UnDefType):
         events.postUpdate(presenceManagement, presence)

@@ -36,32 +36,43 @@ def get_presence(item=None):
         'presence',
         "last-update"
     )
-    if not lastUpdate:
-        return PresenceState.HOME if presenceProvider.name == "Core_Presence" else get_presence()
+    if lastUpdate:
+        skipExpireCheck = True
+        hours_away_long = ir.getItem("Core_Presence_HoursUntilAwayLong")
+        if (
+            not isinstance(hours_away_long.state, UnDefType) and
+            hours_away_long.state.floatValue() > 0
+        ):
+            skipExpireCheck = False
+            if hours_between(
+                get_date(lastUpdate),
+                ZonedDateTime.now()
+            ) > hours_away_long.state.floatValue():
+                return PresenceState.AWAY_LONG
 
-    hours_away_long = ir.getItem("Core_Presence_HoursUntilAwayLong")
-    if isinstance(hours_away_long.state, UnDefType):
-        broadcast("No value set for {}.".format(hours_away_long.name))
-        return PresenceState.HOME
+        hours_away_short = ir.getItem("Core_Presence_HoursUntilAwayShort")
+        if (
+            not isinstance(hours_away_short.state, UnDefType) and
+            hours_away_short.state.floatValue() > 0
+        ):
+            skipExpireCheck = False
+            if hours_between(
+                get_date(lastUpdate),
+                ZonedDateTime.now()
+            ) > hours_away_short.state.floatValue():
+                return PresenceState.AWAY_SHORT
 
-    hours_away_short = ir.getItem("Core_Presence_HoursUntilAwayShort")
-    if isinstance(hours_away_short.state, UnDefType):
-        broadcast("No value set for {}.".format(hours_away_short.name))
-        return PresenceState.HOME
+        if not skipExpireCheck:
+            return PresenceState.HOME
 
-    if hours_between(
-        get_date(lastUpdate),
-        ZonedDateTime.now()
-    ) > hours_away_long.state.floatValue():
-        return PresenceState.AWAY_LONG
-
-    elif hours_between(
-        get_date(lastUpdate),
-        ZonedDateTime.now()
-    ) > hours_away_short.state.floatValue():
-        return PresenceState.AWAY_SHORT
-
-    return PresenceState.HOME
+    if presenceProvider.name == "Core_Presence":
+        if isinstance(presenceProvider.state, UnDefType):
+            return PresenceState.HOME
+        else:
+            return presenceProvider.state.floatValue()
+    else:
+        # Try again with root presence item.
+        return get_presence()
 
 
 def trigger_presence(item):

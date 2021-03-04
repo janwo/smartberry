@@ -78,9 +78,9 @@ Presence items can also trigger absence events. To do so, add the desired state 
 ````
 presence:
 	absence-states: (optional, states that trigger absence)
-		- OFF
+		- "OFF"
 	presence-states: (optional, states that trigger presence)
-		- ON
+		- "ON"
 ````
 
 #### Scenes 🎬
