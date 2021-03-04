@@ -7,6 +7,7 @@ from org.openhab.core.types import UnDefType
 from personal.core_helpers import sync_group_with_tags, intersection_count, METADATA_NAMESPACE
 from org.openhab.core.library.types import OnOffType
 from core.metadata import set_key_value, get_key_value
+from org.openhab.core.model.script.actions import Log
 
 
 @rule("Core - Sync helper items", description="Core - Sync helper items", tags=['core', 'presence'])
@@ -55,6 +56,14 @@ def trigger_presence_on_motion(event):
     if not presenceStates and not absenceStates:
         if item.getStateAs(OnOffType) == ON:
             trigger_presence(item)
+
+    Log.logInfo("trigger_presence_on_motion", "itemState: {} ps: {} in ps: {} as: {} in as: {} ".format(
+        item.state.toFullString(),
+        presenceStates,
+        item.state.toFullString() in presenceStates,
+        absenceStates,
+        item.state.toFullString() in absenceStates
+    ))
 
 
 @rule("Core - Check for an absence presence state and update Core_Presence", description="Check presence state and update Core_Presence", tags=['core', 'presence'])
