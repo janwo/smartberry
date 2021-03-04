@@ -41,23 +41,18 @@ def trigger_presence_on_motion(event):
 
     if (
         presenceStates and
-        isinstance(presenceStates, list) and
-        item.state in presenceStates
+        item.state.toFullString() in presenceStates
     ):
         trigger_presence(item)
 
     if (
         absenceStates and
-        isinstance(absenceStates, list) and
-        item.state in absenceStates
+        item.state.toFullString() in absenceStates
     ):
         trigger_absence(item)
 
     # Default, if no metadata is given.
-    if (
-        (not presenceStates and not isinstance(presenceStates, list)) or
-        (not absenceStates and not isinstance(absenceStates, list))
-    ):
+    if not presenceStates and not absenceStates:
         if item.getStateAs(OnOffType) == ON:
             trigger_presence(item)
 
