@@ -4,7 +4,7 @@ from core.rules import rule
 from core.jsr223.scope import ir, events
 from org.openhab.core.types import UnDefType
 from personal.core_scenes import apply_context
-from personal.core_presence import get_presence, PresenceState
+from personal.core_presence import PresenceState
 from personal.core_helpers import enum, METADATA_NAMESPACE
 from core.metadata import set_key_value
 from org.openhab.core.model.script.actions import Log
@@ -30,7 +30,7 @@ def default_scene_updated(event):
 
 
 @rule("Core - Adjust default scene on presence changes.", description="Adjust default scene on presence changes.", tags=["core", "default-scene"])
-@when("Item Core_Presence received update")
+@when("Item Core_Presence changed")
 def presence_updated(event):
     defaultSceneMapping = {
         PresenceState.HOME: DefaultSceneState.HOME,

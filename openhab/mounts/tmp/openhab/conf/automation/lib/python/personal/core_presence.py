@@ -17,14 +17,19 @@ POINT_TAGS = [
 ]
 
 
-def get_presence(item=None):
-    if item == None:
-        presenceProvider = ir.getItem("Core_Presence")
-    else:
-        location = get_location(item)
-        presenceProvider = ir.getItem(
-            "Core_Presence") if location == None else location
+def get_presence_provider_item(item=None):
+    if item is None:
+        return ir.getItem("Core_Presence")
 
+    location = get_location(item)
+    if location is None:
+        return ir.getItem("Core_Presence")
+
+    return location
+
+
+def get_presence(item=None):
+    presenceProvider = get_presence_provider_item(item)
     lastUpdate = get_key_value(
         presenceProvider.name,
         METADATA_NAMESPACE,
@@ -60,25 +65,29 @@ def get_presence(item=None):
 
 
 def trigger_presence(item):
-    location = get_location(item)
-
-    if location != None:
-        set_key_value(
-            location.name,
-            METADATA_NAMESPACE,
-            "presence",
-            "last-update",
-            get_date_string(ZonedDateTime.now())
-        )
-
-    presenceManagement = ir.getItem("Core_Presence")
-
+    presenceProvider = get_presence_provider_item(item)
     set_key_value(
-        presenceManagement.name,
+        presenceProvider.name,
         METADATA_NAMESPACE,
         "presence",
         "last-update",
         get_date_string(ZonedDateTime.now())
     )
 
-    events.postUpdate(presenceManagement, PresenceState.HOME)
+    if presenceProvider.name is not 'Core_Presence':
+        presenceProvider = ir.getItem("Core_Presence")
+        set_key_value(
+            presenceProvider.name,
+            METADATA_NAMESPACE,
+            "presence",
+            "last-update",
+            get_date_string(ZonedDateTime.now())
+        )
+
+    events.postUpdate(presenceProvider, PresenceState.HOME)
+
+
+def trigger_absence(item):
+    if get_presence() is PresenceState.HOME:
+        presenceProvider = ir.getItem("Core_Presence")
+        events.postUpdate(presenceProvider, PresenceState.AWAY_SHORT)

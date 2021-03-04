@@ -140,29 +140,31 @@ def set_last_activation(event):
 @when("Time cron 0 * * ? * * *")
 @when("Member of gCore_TimedOutlets_ActiveDuration received update")
 def manage_elapsed(event):
-    for switchableGroup in ir.getItem("gCore_TimedOutlets_Switchable").members:
-        switchedOnSwitchables = filter(
+    for timedOutletGroup in ir.getItem("gCore_TimedOutlets_Switchable").members:
+        activatedTimedOutletPoints = filter(
             lambda s: s.getStateAs(OnOffType) == ON,
-            get_semantic_items(switchableGroup, None, POINT_TAGS)
+            get_semantic_items(timedOutletGroup, None, POINT_TAGS)
         )
-        if switchedOnSwitchables:
+        if activatedTimedOutletPoints:
             lastUpdate = get_key_value(
-                switchableGroup.name,
+                timedOutletGroup.name,
                 METADATA_NAMESPACE,
                 'timed-outlet',
                 'last-update'
             )
             durationItem = get_helper_item(
-                switchableGroup,
+                timedOutletGroup,
                 'timed-outlet',
                 'duration-item'
             )
 
-            if not lastUpdate or not durationItem or isinstance(durationItem.state, UnDefType):
-                broadcast("gCore_TimedOutlets_ActiveDuration not found for outlet {}.".format(
-                    switchableGroup.name))
-                return
-
-            if minutes_between(get_date(lastUpdate), ZonedDateTime.now()) > durationItem.state.floatValue():
-                for switchable in switchedOnSwitchables:
-                    events.sendCommand(switchable, OFF)
+            if (
+                lastUpdate and
+                durationItem and
+                minutes_between(
+                    get_date(lastUpdate),
+                    ZonedDateTime.now()
+                ) > durationItem.state.floatValue()
+            ):
+                for activatedTimedOutletPoint in activatedTimedOutletPoints:
+                    events.sendCommand(activatedTimedOutletPoint, OFF)

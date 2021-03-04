@@ -267,14 +267,16 @@ def store_scene(event):
 def manage_scenetriggers(event):
     item = ir.getItem(event.itemName)
     if item.getStateAs(OnOffType) == ON:
-        scene = get_item_of_helper_item(item)
         triggerInfo = get_key_value(
-            event.itemName,
+            item.name,
             METADATA_NAMESPACE,
             'scenes',
             'trigger-state'
         )
 
+        scene = ir.getItem(triggerInfo['target-scene']) if (
+            'target-scene' in 'triggerInfo'
+        ) else get_item_of_helper_item(item)
         if scene and triggerInfo and 'to' in triggerInfo:
             if 'from' in triggerInfo and (
                 isinstance(scene.state, UnDefType) or
