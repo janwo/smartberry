@@ -280,7 +280,7 @@ def manage_scenetriggers(event):
         if scene and triggerInfo and 'to' in triggerInfo:
             if 'from' in triggerInfo and (
                 isinstance(scene.state, UnDefType) or
-                triggerInfo['from'] is not scene.state.floatValue()
+                triggerInfo['from'] is not scene.state.toFullString()
             ):
                 return
 
@@ -291,22 +291,25 @@ def manage_scenetriggers(event):
                 'last-activation'
             )
 
-            if ('hours-until-active' in triggerInfo and (
-                not lastActivation or hours_between(
-                    get_date(lastActivation),
-                    ZonedDateTime.now()
-                ) < triggerInfo['hours-until-active']
-            )) or ('minutes-until-active' in triggerInfo and (
-                not lastActivation or minutes_between(
-                    get_date(lastActivation),
-                    ZonedDateTime.now()
-                ) < triggerInfo['minutes-until-active']
-            )) or ('seconds-until-active' in triggerInfo and (
-                not lastActivation or seconds_between(
-                    get_date(lastActivation),
-                    ZonedDateTime.now()
-                ) < triggerInfo['seconds-until-active']
-            )):
+            try:
+                if ('hours-until-active' in triggerInfo and (
+                    not lastActivation or hours_between(
+                        get_date(lastActivation),
+                        ZonedDateTime.now()
+                    ) < float(triggerInfo['hours-until-active'])
+                )) or ('minutes-until-active' in triggerInfo and (
+                    not lastActivation or minutes_between(
+                        get_date(lastActivation),
+                        ZonedDateTime.now()
+                    ) < float(triggerInfo['minutes-until-active'])
+                )) or ('seconds-until-active' in triggerInfo and (
+                    not lastActivation or seconds_between(
+                        get_date(lastActivation),
+                        ZonedDateTime.now()
+                    ) < float(triggerInfo['seconds-until-active'])
+                )):
+                    return
+            except:
                 return
 
             events.postUpdate(scene, triggerInfo['to'])

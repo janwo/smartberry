@@ -32,6 +32,13 @@ def default_scene_updated(event):
 @rule("Core - Adjust default scene on presence changes.", description="Adjust default scene on presence changes.", tags=["core", "default-scene"])
 @when("Item Core_Presence changed")
 def presence_updated(event):
+    scene = ir.getItem('Core_DefaultScene')
+    if (
+        isinstance(scene.state, UnDefType) or
+        scene.state.floatValue() == DefaultSceneState.SLEEP
+    ):
+        return
+
     defaultSceneMapping = {
         PresenceState.HOME: DefaultSceneState.HOME,
         PresenceState.AWAY_SHORT: DefaultSceneState.AWAY_SHORT,
