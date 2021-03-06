@@ -12,6 +12,10 @@ SCENE_TAGS = [
     'Scene'
 ]
 
+SCENE_TRIGGER_TAGS = [
+    'CoreSceneTrigger'
+]
+
 
 def get_scene_state(scene):
     if not isinstance(scene.state, UnDefType):

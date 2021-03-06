@@ -1,5 +1,5 @@
 Strategies {
-  everyMinute : "0 * * * * ?"
+  everyMinute : "0 0/30 * * * ?"
 }
 
 Items {

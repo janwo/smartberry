@@ -127,7 +127,13 @@ def disarmament(event):
 @when("Descendent of gCore_Security_LockClosureTrigger received update")
 def lock_closure(event):
     item = ir.getItem(event.itemName)
+    Log.logInfo("lock_closure", "trigger {} state {}".format(
+        item.name, item.getStateAs(OnOffType) == OFF))
     if item.getStateAs(OnOffType) == OFF:
+        Log.logInfo("lock_closure", "trigger in group {} trigger in tags {}".format(
+            'gCore_Security_LockClosureTrigger' in item.getGroupNames(),
+            intersection_count(item.getTags(), LOCK_CLOSURE_POINT_TAGS) > 0
+        ))
         if (
             # Is target item:
             'gCore_Security_LockClosureTrigger' in item.getGroupNames() or

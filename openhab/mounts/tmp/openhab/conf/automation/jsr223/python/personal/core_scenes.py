@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from personal.core_helpers import get_date_string, get_date, get_location, sync_group_with_tags, has_same_location, METADATA_NAMESPACE, get_random_number, get_items_of_any_tags, create_helper_item, get_item_of_helper_item
-from personal.core_scenes import SCENE_TAGS, get_scene_item_states, save_scene_item_states, trigger_scene_items, get_scene_states
+from personal.core_scenes import SCENE_TAGS, get_scene_item_states, save_scene_item_states, trigger_scene_items, get_scene_states, SCENE_TRIGGER_TAGS
 from core.triggers import when
 from core.rules import rule
 from core.jsr223.scope import ir, events, OFF, ON
@@ -16,7 +16,13 @@ from org.openhab.core.library.types import OnOffType
 @when("Item updated")
 @when("Item removed")
 def sync_scene_helpers(event):
-    # Sync group gCore_Scenes with Scene items
+    # Sync group gCore_Scenes_StateTriggers with scene trigger items
+    sync_group_with_tags(
+        ir.getItem("gCore_Scenes_StateTriggers"),
+        SCENE_TRIGGER_TAGS
+    )
+
+    # Sync group gCore_Scenes with scene items
     sceneMembers = sync_group_with_tags(
         ir.getItem("gCore_Scenes"),
         SCENE_TAGS
@@ -151,7 +157,8 @@ def sync_scene_helpers(event):
                 item_type='Switch',
                 category='party',
                 label=stateTriggerLabel,
-                groups=['gCore_Scenes_StateTriggers']
+                groups=['gCore_Scenes_StateTriggers'],
+                tags=SCENE_TRIGGER_TAGS
             )
 
             if stateTrigger.getLabel() != stateTriggerLabel:
@@ -164,6 +171,24 @@ def sync_scene_helpers(event):
                 'trigger-state',
                 'to',
                 value
+            )
+
+            set_key_value(
+                stateTrigger.name,
+                METADATA_NAMESPACE,
+                'scenes',
+                'trigger-state',
+                'target-scene',
+                sceneMember.name
+            )
+
+            set_key_value(
+                stateTrigger.name,
+                METADATA_NAMESPACE,
+                'scenes',
+                'trigger-state',
+                'generated',
+                True
             )
 
             set_value(
@@ -220,24 +245,28 @@ def sync_scene_helpers(event):
 
         # Sync (Remove) switches for each scene state
         for stateTrigger in ir.getItem('gCore_Scenes_StateTriggers').members:
-            scene = get_item_of_helper_item(stateTrigger)
-            state = get_key_value(
+            triggerInfo = get_key_value(
                 stateTrigger.name,
                 METADATA_NAMESPACE,
                 'scenes',
-                'trigger-state',
-                'to'
+                'trigger-state'
             )
 
-            if state and scene:
-                sceneStateValues = map(
-                    lambda (value, label): value,
-                    get_scene_states(scene)
-                )
-                if state not in sceneStateValues:
-                    ir.remove(stateTrigger.name)
-            else:
-                ir.remove(stateTrigger.name)
+            # Do not remove manual created items that are just tagged wrong as it could be added manually to an existing (important) item.
+            if not triggerInfo or 'generated' not in triggerInfo or triggerInfo['generated'] is False:
+                continue
+
+            if 'to' in triggerInfo and 'target-scene' in triggerInfo:
+                try:
+                    scene = ir.getItem(triggerInfo['target-scene'])
+                    if scene and triggerInfo['to'] in map(
+                        lambda (value, label): value,
+                        get_scene_states(scene)
+                    ):
+                        continue
+                except:
+                    pass
+            ir.remove(stateTrigger.name)
 
 
 @rule("Core - Activate scene.", description="Activate scene.", tags=['core', 'scenes'])
@@ -274,13 +303,16 @@ def manage_scenetriggers(event):
             'trigger-state'
         )
 
-        scene = ir.getItem(triggerInfo['target-scene']) if (
-            'target-scene' in 'triggerInfo'
-        ) else get_item_of_helper_item(item)
-        if scene and triggerInfo and 'to' in triggerInfo:
-            if 'from' in triggerInfo and (
-                isinstance(scene.state, UnDefType) or
-                triggerInfo['from'] is not scene.state.toFullString()
+        if 'to' in triggerInfo and 'target-scene' in triggerInfo:
+            try:
+                scene = ir.getItem(triggerInfo['target-scene'])
+            except:
+                return
+            if not scene or (
+                'from' in triggerInfo and (
+                    isinstance(scene.state, UnDefType) or
+                    triggerInfo['from'] is not scene.state.toFullString()
+                )
             ):
                 return
 
@@ -310,6 +342,6 @@ def manage_scenetriggers(event):
                 )):
                     return
             except:
-                return
+                pass
 
             events.postUpdate(scene, triggerInfo['to'])

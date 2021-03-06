@@ -30,8 +30,6 @@ ASSAULT_DISARMER_POINT_TAGS = [
 ]
 
 LOCK_CLOSURE_EQUIPMENT_TAGS = [
-    "Window",
-    "Door",
     "CoreLockClosure"
 ]
 

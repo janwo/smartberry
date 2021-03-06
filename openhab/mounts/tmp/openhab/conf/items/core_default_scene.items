@@ -1,4 +1,4 @@
-Number Core_DefaultScene "Hauptszene" <cinema> (gCore_Home, gCore_Scenes) ["Status", "Scene"] {
+Number Core_DefaultScene "Hauptszene" <cinema> (gCore_Home, gCore_Scenes) ["Status", "CoreScene"] {
     stateDescription=""[
         options="0.0=Anwesend,1.0=Kurz Abwesend,2.0=Lange abwesend,3.0=Schlafen"
     ],
