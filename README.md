@@ -14,7 +14,25 @@ Get started with SmartBerry and start to learn the fundamentals.
 	* [Timed Outlets](#timed-outlets-) ⏱️
 
 ### Getting Started
+It is recommend to use SmartBerry in a docker container. The easiest way to do so, is a deployment of SmartBerry via [balenaCloud](https://www.balena.io/cloud/). Just add the project to your balena applications and select a supported device. You also like to change the hostname of your device to `smartberry` - to do so, study these [notes](https://www.balena.io/docs/learn/develop/runtime/#change-the-device-hostname).
+
+[![balena deploy button](https://www.balena.io/deploy.svg)](https://dashboard.balena-cloud.com/deploy?repoUrl=https%3A//github.com/janwo/smartberry)
+
+In order to adjust general settings of your SmartBerry instance, you may add the following environment variables.
+
+Environment variable|Description
+:---|:---
+`SAMBA_PASSWORD` (mandatory)|Define the default password in order to access `smb://smartberry`
+`OPENHAB_HOSTKEY` (optional)|Set the hostkey to keep the device in the *known* host on your computer.
+`OPENHAB_UUID` (optional)|Set your openhab uuid for [`myopenhab.org`cloud service](https://myopenhab.org/).
+`OPENHAB_SECRET` (optional)|Set your openhab secret for [`myopenhab.org`cloud service](https://myopenhab.org/).
+`BLUETOOTH_BEACON_UUID` (optional)|For locks or smartphone apps it may be useful for you to work with [iBeacons](https://de.wikipedia.org/wiki/IBeacon). If supported by your hardware, you can define a constant bluetooth beacon uuid.
+
+If you have any questions, just let them know in the *Issues*.
+
 ### Configuration
+To make SmartBerry manage your home in its full potential, some configuration is needed. Please also refer to the documentation of [openHAB](https://www.openhab.org/docs/).
+
 #### Lights 💡
 Lights are triggered automatically in dependence to daylight and presence changes. The following equipments and points are used for a proper lights configuration.
 
@@ -131,6 +149,9 @@ scenes:
 		target-scene: >>sceneItemName<<
 		from: >>initialState<< (optional, only triggers if scene is in that state)
 		to: >>newState<<
+		states:  (optional)
+			- "ON"
+			- "OPENED"
 ````
 
 #### Security 🔒
@@ -138,9 +159,9 @@ The security system protects your home and responds to any unauthorized activity
 
 Role|Needed equipment tags|Needed point tags|Needed custom tags|Description
 :---|:---|:---|:---|:---
-Assault trigger items|`Window` **or** `Door` **or** `CoreAssaultTrigger`|`OpenState` **or** `Switch`||Items that trigger the alarm, if assault detection is activated
-Assault Disarmer items|`CoreAssaultDisarmer `|`OpenState` **or** `Switch`||Items that disarm the assault detection, if item state updated to `ON ` or `OPENED`
-Lock closure items|`Window` **or** `Door` **or** `CoreLockClosure `|`OpenState` **or** `Switch`||Items that close a lock item within the same location
+Assault trigger items|`Window` **or** `Door`|`OpenState` **or** `Switch`|`CoreAssaultTrigger`|Items that trigger the alarm, if assault detection is activated
+Assault Disarmer items||`OpenState` **or** `Switch`|`CoreAssaultDisarmer `|Items that disarm the assault detection, if item state updated to `ON ` or `OPENED`
+Lock closure items||`OpenState` **or** `Switch`|`CoreLockClosure`|Items that close a lock item within the same location, reacts to `OFF ` or `CLOSED`
 Lock items|`Lock`|`OpenState` **or** `Switch`||Lock items that may be closed by a door or window contact
 Sirene items||`Alarm`||Items that are triggered after an assault detection, if assault detection is activated
 

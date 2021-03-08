@@ -2,10 +2,10 @@ from __future__ import unicode_literals
 from core.rules import rule
 from core.triggers import when
 from personal.core_presence import POINT_TAGS, PresenceState, trigger_presence, get_presence, trigger_absence
-from core.jsr223.scope import ir, events, OFF, ON
+from core.jsr223.scope import ir, events, OFF, ON, OPENED
 from org.openhab.core.types import UnDefType
 from personal.core_helpers import sync_group_with_tags, intersection_count, METADATA_NAMESPACE
-from org.openhab.core.library.types import OnOffType
+from org.openhab.core.library.types import OnOffType, OpenClosedType
 from core.metadata import set_key_value, get_key_value
 from org.openhab.core.model.script.actions import Log
 
@@ -54,7 +54,10 @@ def trigger_presence_on_motion(event):
 
     # Default, if no metadata is given.
     if not presenceStates and not absenceStates:
-        if item.getStateAs(OnOffType) == ON:
+        if (
+            item.getStateAs(OnOffType) is ON or
+            item.getStateAs(OpenClosedType) is OPENED
+        ):
             trigger_presence(item)
 
 

@@ -295,53 +295,58 @@ def store_scene(event):
 @when("Member of gCore_Scenes_StateTriggers received update")
 def manage_scenetriggers(event):
     item = ir.getItem(event.itemName)
-    if item.getStateAs(OnOffType) == ON:
-        triggerInfo = get_key_value(
-            item.name,
+    triggerInfo = get_key_value(
+        item.name,
+        METADATA_NAMESPACE,
+        'scenes',
+        'trigger-state'
+    )
+
+    if (
+        'states' in triggerInfo and
+        item.state.toFullString() not in triggerInfo['states']
+    ):
+        return
+
+    if 'to' in triggerInfo and 'target-scene' in triggerInfo:
+        try:
+            scene = ir.getItem(triggerInfo['target-scene'])
+        except:
+            return
+        if not scene or (
+            'from' in triggerInfo and (
+                isinstance(scene.state, UnDefType) or
+                triggerInfo['from'] is not scene.state.toFullString()
+            )
+        ):
+            return
+
+        lastActivation = get_key_value(
+            scene.name,
             METADATA_NAMESPACE,
             'scenes',
-            'trigger-state'
+            'last-activation'
         )
 
-        if 'to' in triggerInfo and 'target-scene' in triggerInfo:
-            try:
-                scene = ir.getItem(triggerInfo['target-scene'])
-            except:
+        try:
+            if ('hours-until-active' in triggerInfo and (
+                not lastActivation or hours_between(
+                    get_date(lastActivation),
+                    ZonedDateTime.now()
+                ) < float(triggerInfo['hours-until-active'])
+            )) or ('minutes-until-active' in triggerInfo and (
+                not lastActivation or minutes_between(
+                    get_date(lastActivation),
+                    ZonedDateTime.now()
+                ) < float(triggerInfo['minutes-until-active'])
+            )) or ('seconds-until-active' in triggerInfo and (
+                not lastActivation or seconds_between(
+                    get_date(lastActivation),
+                    ZonedDateTime.now()
+                ) < float(triggerInfo['seconds-until-active'])
+            )):
                 return
-            if not scene or (
-                'from' in triggerInfo and (
-                    isinstance(scene.state, UnDefType) or
-                    triggerInfo['from'] is not scene.state.toFullString()
-                )
-            ):
-                return
+        except:
+            pass
 
-            lastActivation = get_key_value(
-                scene.name,
-                METADATA_NAMESPACE,
-                'scenes',
-                'last-activation'
-            )
-
-            try:
-                if ('hours-until-active' in triggerInfo and (
-                    not lastActivation or hours_between(
-                        get_date(lastActivation),
-                        ZonedDateTime.now()
-                    ) < float(triggerInfo['hours-until-active'])
-                )) or ('minutes-until-active' in triggerInfo and (
-                    not lastActivation or minutes_between(
-                        get_date(lastActivation),
-                        ZonedDateTime.now()
-                    ) < float(triggerInfo['minutes-until-active'])
-                )) or ('seconds-until-active' in triggerInfo and (
-                    not lastActivation or seconds_between(
-                        get_date(lastActivation),
-                        ZonedDateTime.now()
-                    ) < float(triggerInfo['seconds-until-active'])
-                )):
-                    return
-            except:
-                pass
-
-            events.postUpdate(scene, triggerInfo['to'])
+        events.postUpdate(scene, triggerInfo['to'])

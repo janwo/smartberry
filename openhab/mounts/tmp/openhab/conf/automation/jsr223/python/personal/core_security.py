@@ -5,11 +5,11 @@ from core.rules import rule
 from personal.core_security import OperationState, is_security_state, ASSAULT_TRIGGER_EQUIPMENT_TAGS, ASSAULT_TRIGGER_POINT_TAGS, ASSAULT_DISARMER_EQUIPMENT_TAGS, ASSAULT_DISARMER_POINT_TAGS, LOCK_CLOSURE_EQUIPMENT_TAGS, LOCK_CLOSURE_POINT_TAGS, LOCK_EQUIPMENT_TAGS, LOCK_POINT_TAGS
 from core.date import minutes_between, ZonedDateTime
 from personal.core_broadcast import BroadcastType, broadcast
-from core.jsr223.scope import ir, events, ON, OFF, OPEN
+from core.jsr223.scope import ir, events, ON, OFF, OPENED, CLOSED
 from org.openhab.core.types import UnDefType
 from core.metadata import get_key_value, set_key_value
 from org.openhab.core.model.script.actions import Log
-from org.openhab.core.library.types import OnOffType
+from org.openhab.core.library.types import OnOffType, OpenClosedType
 
 
 @rule("Core - Sync helper items", description="Core - Sync helper items", tags=['core', 'security'])
@@ -40,7 +40,11 @@ def sync_security_helpers(event):
 @when("Descendent of gCore_Security_AssaultTrigger received update")
 def assault_trigger(event):
     item = ir.getItem(event.itemName)
-    if item.getStateAs(OnOffType) == OFF or is_security_state(OperationState.OFF):
+    if (
+        item.getStateAs(OnOffType) is OFF or
+        item.getStateAs(OpenClosedType) is CLOSED or
+        is_security_state(OperationState.OFF)
+    ):
         return
 
     if (
@@ -71,7 +75,7 @@ def assault_trigger(event):
 @when("Item Core_Security_OperationState received update {0}".format(OperationState.SILENTLY))
 def armament(event):
     blockingAssaultTriggers = filter(
-        lambda point: point.state == OPEN or point.state == ON,
+        lambda point: point.state is OPENED or point.state is ON,
         reduce(
             lambda pointsList, newMember: pointsList + get_semantic_items(
                 newMember,
@@ -127,13 +131,10 @@ def disarmament(event):
 @when("Descendent of gCore_Security_LockClosureTrigger received update")
 def lock_closure(event):
     item = ir.getItem(event.itemName)
-    Log.logInfo("lock_closure", "trigger {} state {}".format(
-        item.name, item.getStateAs(OnOffType) == OFF))
-    if item.getStateAs(OnOffType) == OFF:
-        Log.logInfo("lock_closure", "trigger in group {} trigger in tags {}".format(
-            'gCore_Security_LockClosureTrigger' in item.getGroupNames(),
-            intersection_count(item.getTags(), LOCK_CLOSURE_POINT_TAGS) > 0
-        ))
+    if (
+        item.getStateAs(OnOffType) is ON or
+        item.getStateAs(OpenClosedType) is OPENED
+    ):
         if (
             # Is target item:
             'gCore_Security_LockClosureTrigger' in item.getGroupNames() or
@@ -141,8 +142,6 @@ def lock_closure(event):
             intersection_count(item.getTags(), LOCK_CLOSURE_POINT_TAGS) > 0
         ):
             for lock in get_semantic_items(item, LOCK_EQUIPMENT_TAGS, LOCK_POINT_TAGS):
-                Log.logInfo("lock_closure", "lock {} item {}".format(
-                    lock.name, item.name))
                 if has_same_location(item, lock):
                     events.sendCommand(lock, ON)
                     break
@@ -152,7 +151,7 @@ def lock_closure(event):
 @when("Item Core_Security_OperationState received update")
 def siren_off(event):
     for alarm in ir.getItemsByTag("Alarm"):
-        if alarm.getStateAs(OnOffType) == ON:
+        if alarm.getStateAs(OnOffType) is not OFF:
             events.sendCommand(alarm, OFF)
 
 
@@ -170,7 +169,7 @@ def siren_autooff(event):
 
     if (
         isinstance(autoOffTime.state, UnDefType) or
-        autoOffTime.state.floatValue() == 0 or
+        autoOffTime.state.floatValue() is 0 or
         not lastAlarmTime or
         minutes_between(
             get_date(lastAlarmTime),
@@ -180,7 +179,7 @@ def siren_autooff(event):
         return
 
     for alarm in ir.getItemsByTag("Alarm"):
-        if alarm.getStateAs(OnOffType) == ON:
+        if alarm.getStateAs(OnOffType) is not OFF:
             events.sendCommand(alarm, OFF)
             broadcast(
                 "Alarm item {} was automatically disabled after {} minutes.".format(

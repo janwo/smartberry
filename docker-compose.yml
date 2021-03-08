@@ -22,11 +22,10 @@ services:
       - openhab-userdata:/mount/userdata
     restart: unless-stopped
     environment:
-      AUTH_SAMBA_PASSWORD:
       USERID: 9001
       GROUPID: 9001
       SHARE: openhab;/mount;yes;no;no;openhab
-      USER: openhab;${AUTH_SAMBA_PASSWORD}
+      USER: openhab;${SAMBA_PASSWORD}
 
   openhab:
     build:
@@ -43,14 +42,15 @@ services:
       - openhab-conf:/openhab/conf
       - openhab-userdata:/openhab/userdata
     environment:
-      AUTH_OPENHAB_UUID:
-      AUTH_OPENHAB_SECRET:
+      OPENHAB_HOSTKEY:
+      OPENHAB_UUID:
+      OPENHAB_SECRET:
 
   bluetooth-beacon:
     image: dominikth/rpi-docker-ibeacon:latest
     network_mode: host
     restart: unless-stopped
     environment:
-      UUID: 88BCBF76-F2B4-4BB0-A982-906C16121FF7
+      UUID: ${BLUETOOTH_BEACON_UUID:-88BCBF76-F2B4-4BB0-A982-906C16121FF7}
       MINOR: 0
       MAJOR: 0

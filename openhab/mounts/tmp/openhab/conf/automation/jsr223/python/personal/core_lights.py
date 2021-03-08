@@ -5,9 +5,9 @@ from personal.core_presence import PresenceState
 from personal.core_scenes import trigger_scene_items, get_scene_items
 from personal.core_helpers import METADATA_NAMESPACE, get_location, has_same_location, get_item_of_helper_item, get_items_of_any_tags, sync_group_with_tags, create_helper_item, intersection_count, get_all_semantic_items
 from personal.core_lights import LIGHT_MEASUREMENT_POINT_TAGS, LIGHTS_POINT_TAGS, LIGHTS_EQUIPMENT_TAGS, set_location_as_activated, is_elapsed, LightMode, AmbientLightCondition, get_light_mode_group, turn_on_switchable_point, turn_off_switchable_point
-from core.jsr223.scope import ir, events, OFF, ON
+from core.jsr223.scope import ir, events, OFF, ON, OPENED
 from org.openhab.core.types import UnDefType
-from org.openhab.core.library.types import OnOffType
+from org.openhab.core.library.types import OnOffType, OpenClosedType
 from core.metadata import set_key_value, get_key_value
 from random import randint
 from org.openhab.core.model.script.actions import Log
@@ -154,7 +154,7 @@ def sync_lights_helpers(event):
 @when("Descendent of gCore_Lights_Switchables received update")
 def set_last_activation(event):
     item = ir.getItem(event.itemName)
-    if item.getStateAs(OnOffType) == ON:
+    if item.getStateAs(OnOffType) is ON:
         if (
             # Is target item:
             'gCore_Lights_Switchables' in item.getGroupNames() or
@@ -170,7 +170,7 @@ def set_last_activation(event):
 @when("Item Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured changed")
 def check_daylight(event):
     activeSwitchables = filter(
-        lambda switchable: switchable.getStateAs(OnOffType) == ON,
+        lambda switchable: switchable.getStateAs(OnOffType) is ON,
         get_all_semantic_items(LIGHTS_EQUIPMENT_TAGS, LIGHTS_POINT_TAGS)
     )
 
@@ -204,7 +204,7 @@ def check_daylight(event):
     obscuredTresholdItem = ir.getItem(
         "Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured")
 
-    if len(sensorsOfInactiveRooms) == 0:
+    if len(sensorsOfInactiveRooms) is 0:
         return
 
     medianSensorItem = sensorsOfInactiveRooms[len(sensorsOfInactiveRooms) / 2]
@@ -290,7 +290,10 @@ def manage_light_state(event):
 @when("Member of gCore_Presence_PresenceTrigger received update")
 def manage_presence(event):
     item = ir.getItem(event.itemName)
-    if item.getStateAs(OnOffType) == ON:
+    if (
+        item.getStateAs(OnOffType) is ON or
+        item.getStateAs(OpenClosedType) is OPENED
+    ):
         location = get_location(item)
         lightModeGroup = get_light_mode_group()
 
@@ -319,7 +322,7 @@ def manage_presence(event):
                                 lambda item: (
                                     not isinstance(item.state, UnDefType) and
                                     item.name in switchablePointNames and
-                                    item.getStateAs(OnOffType) == ON
+                                    item.getStateAs(OnOffType) is ON
                                 ),
                                 get_scene_items(scene)
                             )
@@ -347,7 +350,7 @@ def welcome_light(event):
         ir.getItem("Core_Lights_WelcomeLight_BrightMode")
     )
 
-    if welcomeLightMode.state == ON:
+    if welcomeLightMode.state is ON:
         lightModeGroup = get_light_mode_group()
         switchOnRoomNames = map(
             lambda r: r.name,
@@ -359,7 +362,7 @@ def welcome_light(event):
                         lambda mode: not isinstance(
                             mode.state,
                             UnDefType
-                        ) and mode.state.floatValue() == LightMode.AUTO_ON,
+                        ) and mode.state.floatValue() is LightMode.AUTO_ON,
                         lightModeGroup.members
                     )
                 )
@@ -387,7 +390,7 @@ def elapsed_lights(event):
                     lambda mode: not isinstance(
                         mode.state,
                         UnDefType
-                    ) and mode.state.floatValue() == LightMode.AUTO_ON,
+                    ) and mode.state.floatValue() is LightMode.AUTO_ON,
                     lightModeGroup.members
                 )
             ))
@@ -409,7 +412,7 @@ def simulate_presence(event):
             lambda mode: not isinstance(
                 mode.state,
                 UnDefType
-            ) and mode.state.floatValue() == LightMode.SIMULATE,
+            ) and mode.state.floatValue() is LightMode.SIMULATE,
             lightModeGroup.members
         )
     ))
@@ -417,7 +420,7 @@ def simulate_presence(event):
     for point in get_all_semantic_items(LIGHTS_EQUIPMENT_TAGS, LIGHTS_POINT_TAGS):
         location = get_location(point)
         if location and location.name in simulateLocations and randint(0, 10) <= 2:
-            if point.getStateAs(OnOffType) != ON:
+            if point.getStateAs(OnOffType) is not ON:
                 turn_on_switchable_point(point)
             else:
                 turn_off_switchable_point(point)

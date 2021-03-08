@@ -50,4 +50,4 @@ LOCK_POINT_TAGS = [
 
 def is_security_state(state=OperationState.OFF):
     actualState = ir.getItem("Core_Security_OperationState").state
-    return not isinstance(actualState, UnDefType) and actualState.floatValue() == state
+    return not isinstance(actualState, UnDefType) and actualState.floatValue() is state

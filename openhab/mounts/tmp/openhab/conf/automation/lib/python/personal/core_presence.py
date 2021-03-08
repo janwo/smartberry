@@ -65,7 +65,7 @@ def get_presence(item=None):
         if not skipExpireCheck:
             return PresenceState.HOME
 
-    if presenceProvider.name == "Core_Presence":
+    if presenceProvider.name is "Core_Presence":
         if isinstance(presenceProvider.state, UnDefType):
             return PresenceState.HOME
         else:

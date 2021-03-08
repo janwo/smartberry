@@ -8,6 +8,7 @@ from java.time import LocalDateTime, ZonedDateTime, ZoneId
 from core.date import format_date
 from java.time.format import DateTimeFormatter
 from org.openhab.core.model.script.actions import Log
+from core.actions import Semantics
 
 METADATA_NAMESPACE = "core"
 DATE_STRING = "yyyy-MM-dd'T'HH:mm:ss.SSxx"
@@ -24,33 +25,13 @@ def get_location(item):
         except:
             return None
 
-    semanticsValue = get_value(
-        item.name,
-        'semantics'
-    )
-
-    if semanticsValue and semanticsValue.startswith('Location'):
-        return item
-
-    equipmentName = get_key_value(
-        item.name,
-        'semantics',
-        'isPointOf'
-    )
-
-    locationName = get_key_value(
-        equipmentName if equipmentName else item.name,
-        'semantics',
-        'hasLocation'
-    )
-
-    return ir.getItem(locationName) if locationName else None
+    return Semantics.getLocation(item)
 
 
 def has_same_location(item1, item2):
-    locationItem1 = None if item1 == None else get_location(item1)
-    locationItem2 = None if item2 == None else get_location(item2)
-    return locationItem1 != None and locationItem2 != None and locationItem1.name == locationItem2.name
+    locationItem1 = None if item1 is None else get_location(item1)
+    locationItem2 = None if item2 is None else get_location(item2)
+    return locationItem1 is not None and locationItem2 is not None and locationItem1.name is locationItem2.name
 
 
 def get_random_number(length=10):
@@ -68,7 +49,7 @@ def sync_group_with_tags(group, tags):
                 matchedTags = set(allowedTag).intersection(
                     set(groupMember.getTags())
                 )
-                if len(allowedTag) == len(matchedTags):
+                if len(allowedTag) is len(matchedTags):
                     return False
             elif allowedTag in groupMember.getTags():
                 return False
