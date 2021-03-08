@@ -21,7 +21,7 @@ DefaultSceneState = enum(
 @when("Item Core_DefaultScene received update")
 def default_scene_updated(event):
     if not isinstance(event.itemState, UnDefType):
-        if event.itemState.floatValue() is DefaultSceneState.SLEEP:
+        if event.itemState.floatValue() == DefaultSceneState.SLEEP:
             for scene in ir.getItem("gCore_Scenes").members:
                 contexts = ['sleep', 'reset']
                 for context in contexts:
@@ -35,7 +35,7 @@ def presence_updated(event):
     scene = ir.getItem('Core_DefaultScene')
     if (
         isinstance(scene.state, UnDefType) or
-        scene.state.floatValue() is DefaultSceneState.SLEEP
+        scene.state.floatValue() == DefaultSceneState.SLEEP
     ):
         return
 

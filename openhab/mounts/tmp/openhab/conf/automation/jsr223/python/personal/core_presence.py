@@ -55,8 +55,8 @@ def trigger_presence_on_motion(event):
     # Default, if no metadata is given.
     if not presenceStates and not absenceStates:
         if (
-            item.getStateAs(OnOffType) is ON or
-            item.getStateAs(OpenClosedType) is OPENED
+            item.getStateAs(OnOffType) == ON or
+            item.getStateAs(OpenClosedType) == OPENED
         ):
             trigger_presence(item)
 
@@ -71,9 +71,9 @@ def check_presence(event):
         events.postUpdate(presenceManagement, presence)
 
     # Do not update to HOME as we only want to update to absence presence states.
-    if presence is PresenceState.HOME:
+    if presence == PresenceState.HOME:
         return
 
     # Update presence state, if it changed.
-    if presence is not presenceManagement.state.floatValue():
+    if presence != presenceManagement.state.floatValue():
         events.postUpdate(presenceManagement, presence)

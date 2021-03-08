@@ -253,7 +253,7 @@ def sync_scene_helpers(event):
             )
 
             # Do not remove manual created items that are just tagged wrong as it could be added manually to an existing (important) item.
-            if not triggerInfo or 'generated' not in triggerInfo or triggerInfo['generated'] is False:
+            if not triggerInfo or 'generated' not in triggerInfo or not triggerInfo['generated']:
                 continue
 
             if 'to' in triggerInfo and 'target-scene' in triggerInfo:
@@ -316,7 +316,7 @@ def manage_scenetriggers(event):
         if not scene or (
             'from' in triggerInfo and (
                 isinstance(scene.state, UnDefType) or
-                triggerInfo['from'] is not scene.state.toFullString()
+                triggerInfo['from'] != scene.state.toFullString()
             )
         ):
             return

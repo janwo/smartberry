@@ -32,7 +32,7 @@ def update_heater_on_contact_trigger(event):
     heaterState = ir.getItem("Core_Heating_Thermostat_ModeDefault").state
     for point in get_all_semantic_items(HEATING_EQUIPMENT_TAGS, HEATING_POINT_TAGS):
         if any((
-            contact.state is OPENED and
+            contact.state == OPENED and
             has_same_location(contact, point)
         ) for contact in get_all_semantic_items(OPEN_CONTACT_EQUIPMENT_TAGS, OPEN_CONTACT_POINT_TAGS)):
             events.sendCommand(

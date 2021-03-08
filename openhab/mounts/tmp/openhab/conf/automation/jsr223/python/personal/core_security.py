@@ -41,13 +41,13 @@ def sync_security_helpers(event):
 def assault_trigger(event):
     item = ir.getItem(event.itemName)
     Log.logInfo("assault_trigger", "{} {} {}".format(
-        item.getStateAs(OnOffType) is OFF,
-        item.getStateAs(OpenClosedType) is CLOSED,
+        item.getStateAs(OnOffType) == OFF,
+        item.getStateAs(OpenClosedType) == CLOSED,
         is_security_state(OperationState.OFF)
     ))
     if (
-        item.getStateAs(OnOffType) is OFF or
-        item.getStateAs(OpenClosedType) is CLOSED or
+        item.getStateAs(OnOffType) == OFF or
+        item.getStateAs(OpenClosedType) == CLOSED or
         is_security_state(OperationState.OFF)
     ):
         return
@@ -80,7 +80,7 @@ def assault_trigger(event):
 @when("Item Core_Security_OperationState received update {0}".format(OperationState.SILENTLY))
 def armament(event):
     blockingAssaultTriggers = filter(
-        lambda point: point.state is OPENED or point.state is ON,
+        lambda point: point.state == OPENED or point.state == ON,
         reduce(
             lambda pointsList, newMember: pointsList + get_semantic_items(
                 newMember,
@@ -137,8 +137,8 @@ def disarmament(event):
 def lock_closure(event):
     item = ir.getItem(event.itemName)
     if (
-        item.getStateAs(OnOffType) is ON or
-        item.getStateAs(OpenClosedType) is OPENED
+        item.getStateAs(OnOffType) == ON or
+        item.getStateAs(OpenClosedType) == OPENED
     ):
         if (
             # Is target item:
@@ -156,7 +156,7 @@ def lock_closure(event):
 @when("Item Core_Security_OperationState received update")
 def siren_off(event):
     for alarm in ir.getItemsByTag("Alarm"):
-        if alarm.getStateAs(OnOffType) is not OFF:
+        if alarm.getStateAs(OnOffType) != OFF:
             events.sendCommand(alarm, OFF)
 
 
@@ -174,7 +174,7 @@ def siren_autooff(event):
 
     if (
         isinstance(autoOffTime.state, UnDefType) or
-        autoOffTime.state.floatValue() is 0 or
+        autoOffTime.state.floatValue() == 0 or
         not lastAlarmTime or
         minutes_between(
             get_date(lastAlarmTime),
@@ -184,7 +184,7 @@ def siren_autooff(event):
         return
 
     for alarm in ir.getItemsByTag("Alarm"):
-        if alarm.getStateAs(OnOffType) is not OFF:
+        if alarm.getStateAs(OnOffType) != OFF:
             events.sendCommand(alarm, OFF)
             broadcast(
                 "Alarm item {} was automatically disabled after {} minutes.".format(

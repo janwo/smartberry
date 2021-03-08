@@ -29,9 +29,9 @@ def get_location(item):
 
 
 def has_same_location(item1, item2):
-    locationItem1 = None if item1 is None else get_location(item1)
-    locationItem2 = None if item2 is None else get_location(item2)
-    return locationItem1 is not None and locationItem2 is not None and locationItem1.name is locationItem2.name
+    locationItem1 = get_location(item1) if item1 else None
+    locationItem2 = get_location(item2) if item2 else None
+    return locationItem1 and locationItem2 and locationItem1.name == locationItem2.name
 
 
 def get_random_number(length=10):
@@ -49,7 +49,7 @@ def sync_group_with_tags(group, tags):
                 matchedTags = set(allowedTag).intersection(
                     set(groupMember.getTags())
                 )
-                if len(allowedTag) is len(matchedTags):
+                if len(allowedTag) == len(matchedTags):
                     return False
             elif allowedTag in groupMember.getTags():
                 return False

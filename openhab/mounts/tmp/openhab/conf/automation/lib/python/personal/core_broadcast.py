@@ -23,12 +23,12 @@ def broadcast(text, broadcast_type=BroadcastType.INFO):
         state, UnDefType) else BroadcastNotificationMode.DEFAULT
 
     if (
-        broadcast_type is BroadcastType.INFO and
-        notificationMode is BroadcastNotificationMode.DEFAULT
+        broadcast_type == BroadcastType.INFO and
+        notificationMode == BroadcastNotificationMode.DEFAULT
     ) or (
-        broadcast_type is BroadcastType.ATTENTION and (
-            notificationMode is BroadcastNotificationMode.DEFAULT or
-            notificationMode is BroadcastNotificationMode.ATTENTION_ONLY
+        broadcast_type == BroadcastType.ATTENTION and (
+            notificationMode == BroadcastNotificationMode.DEFAULT or
+            notificationMode == BroadcastNotificationMode.ATTENTION_ONLY
         )
     ):
         NotificationAction.sendBroadcastNotification(text)

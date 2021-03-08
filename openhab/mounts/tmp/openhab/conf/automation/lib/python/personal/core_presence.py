@@ -18,11 +18,11 @@ POINT_TAGS = [
 
 
 def get_presence_provider_item(item=None):
-    if item is None:
+    if not item:
         return ir.getItem("Core_Presence")
 
     location = get_location(item)
-    if location is None:
+    if not location:
         return ir.getItem("Core_Presence")
 
     return location
@@ -65,7 +65,7 @@ def get_presence(item=None):
         if not skipExpireCheck:
             return PresenceState.HOME
 
-    if presenceProvider.name is "Core_Presence":
+    if presenceProvider.name == "Core_Presence":
         if isinstance(presenceProvider.state, UnDefType):
             return PresenceState.HOME
         else:
@@ -85,7 +85,7 @@ def trigger_presence(item):
         get_date_string(ZonedDateTime.now())
     )
 
-    if presenceProvider.name is not 'Core_Presence':
+    if presenceProvider.name != 'Core_Presence':
         presenceProvider = ir.getItem("Core_Presence")
         set_key_value(
             presenceProvider.name,
@@ -99,6 +99,6 @@ def trigger_presence(item):
 
 
 def trigger_absence(item):
-    if get_presence() is PresenceState.HOME:
+    if get_presence() == PresenceState.HOME:
         presenceProvider = ir.getItem("Core_Presence")
         events.postUpdate(presenceProvider, PresenceState.AWAY_SHORT)

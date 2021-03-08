@@ -53,8 +53,8 @@ def is_security_state(state=OperationState.OFF):
     actualState = ir.getItem("Core_Security_OperationState").state
     Log.logInfo("is_security_state", "{} {} {} {}".format(
         not isinstance(actualState, UnDefType),
-        actualState.floatValue() is state,
+        actualState.floatValue() == state,
         actualState.floatValue(),
         state
     ))
-    return not isinstance(actualState, UnDefType) and actualState.floatValue() is state
+    return not isinstance(actualState, UnDefType) and actualState.floatValue() == state
