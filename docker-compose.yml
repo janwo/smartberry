@@ -51,6 +51,6 @@ services:
     network_mode: host
     restart: unless-stopped
     environment:
-      UUID: ${BLUETOOTH_BEACON_UUID:-88BCBF76-F2B4-4BB0-A982-906C16121FF7}
+      UUID: ${BLUETOOTH_BEACON_UUID:-"88BCBF76-F2B4-4BB0-A982-906C16121FF7"}
       MINOR: 0
       MAJOR: 0
