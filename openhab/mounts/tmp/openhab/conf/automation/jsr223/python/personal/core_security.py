@@ -132,7 +132,7 @@ def disarmament(event):
 def lock_closure(event):
     item = ir.getItem(event.itemName)
     Log.logInfo("lock_closure", "{} {}".format(
-        item.getStateAs(OnOffType) == OFF or
+        item.getStateAs(OnOffType) == OFF,
         item.getStateAs(OpenClosedType) == CLOSED
     ))
     if (
