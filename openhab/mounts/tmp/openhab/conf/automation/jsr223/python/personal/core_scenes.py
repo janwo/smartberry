@@ -328,25 +328,25 @@ def manage_scenetriggers(event):
             'last-activation'
         )
 
-        try:
-            if ('hours-until-active' in triggerInfo and (
-                not lastActivation or hours_between(
-                    get_date(lastActivation),
-                    ZonedDateTime.now()
-                ) < float(triggerInfo['hours-until-active'])
-            )) or ('minutes-until-active' in triggerInfo and (
-                not lastActivation or minutes_between(
-                    get_date(lastActivation),
-                    ZonedDateTime.now()
-                ) < float(triggerInfo['minutes-until-active'])
-            )) or ('seconds-until-active' in triggerInfo and (
-                not lastActivation or seconds_between(
-                    get_date(lastActivation),
-                    ZonedDateTime.now()
-                ) < float(triggerInfo['seconds-until-active'])
-            )):
-                return
-        except:
-            pass
+        if not lastActivation or (
+            'hours-until-active' in triggerInfo and
+            hours_between(
+                get_date(lastActivation),
+                ZonedDateTime.now()
+            ) < float(triggerInfo['hours-until-active'])
+        ) or (
+            'minutes-until-active' in triggerInfo and
+            minutes_between(
+                get_date(lastActivation),
+                ZonedDateTime.now()
+            ) < float(triggerInfo['minutes-until-active'])
+        ) or (
+            'seconds-until-active' in triggerInfo and
+            seconds_between(
+                get_date(lastActivation),
+                ZonedDateTime.now()
+            ) < float(triggerInfo['seconds-until-active'])
+        ):
+            return
 
         events.postUpdate(scene, triggerInfo['to'])

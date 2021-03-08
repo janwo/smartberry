@@ -40,6 +40,11 @@ def sync_security_helpers(event):
 @when("Descendent of gCore_Security_AssaultTrigger received update")
 def assault_trigger(event):
     item = ir.getItem(event.itemName)
+    Log.logInfo("assault_trigger", "{} {} {}".format(
+        item.getStateAs(OnOffType) is OFF,
+        item.getStateAs(OpenClosedType) is CLOSED,
+        is_security_state(OperationState.OFF)
+    ))
     if (
         item.getStateAs(OnOffType) is OFF or
         item.getStateAs(OpenClosedType) is CLOSED or
