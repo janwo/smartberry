@@ -142,7 +142,7 @@ def set_last_activation(event):
 def manage_elapsed(event):
     for timedOutletGroup in ir.getItem("gCore_TimedOutlets_Switchable").members:
         activatedTimedOutletPoints = filter(
-            lambda s: s.getStateAs(OnOffType) is ON,
+            lambda s: s.getStateAs(OnOffType) == ON,
             get_semantic_items(timedOutletGroup, None, POINT_TAGS)
         )
         if activatedTimedOutletPoints:

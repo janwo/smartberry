@@ -26,7 +26,7 @@ def sync_heating_helpers(event):
 
 @rule("Core - Check conditions to update heater values", description="Check conditions to update heater values", tags=['core', 'heating'])
 @when("Time cron 0 0 * ? * * *")
-@when("Member of gCore_Heating_ContactSwitchable received update")
+@when("Descendent of gCore_Heating_ContactSwitchable received update")
 @when("Item Core_Heating_Thermostat_ModeDefault received update")
 def update_heater_on_contact_trigger(event):
     heaterState = ir.getItem("Core_Heating_Thermostat_ModeDefault").state

@@ -290,10 +290,7 @@ def manage_light_state(event):
 @when("Member of gCore_Presence_PresenceTrigger received update")
 def manage_presence(event):
     item = ir.getItem(event.itemName)
-    if (
-        item.getStateAs(OnOffType) == ON or
-        item.getStateAs(OpenClosedType) == OPENED
-    ):
+    if item.getStateAs(OnOffType) in [ON, OPENED]:
         location = get_location(item)
         lightModeGroup = get_light_mode_group()
 
@@ -362,7 +359,9 @@ def welcome_light(event):
                         lambda mode: not isinstance(
                             mode.state,
                             UnDefType
-                        ) and mode.state.floatValue() == LightMode.AUTO_ON,
+                        ) and mode.state.floatValue() in [
+                            LightMode.AUTO_ON
+                        ],
                         lightModeGroup.members
                     )
                 )
@@ -390,7 +389,10 @@ def elapsed_lights(event):
                     lambda mode: not isinstance(
                         mode.state,
                         UnDefType
-                    ) and mode.state.floatValue() == LightMode.AUTO_ON,
+                    ) and mode.state.floatValue() in [
+                        LightMode.AUTO_ON,
+                        LightMode.OFF
+                    ],
                     lightModeGroup.members
                 )
             ))

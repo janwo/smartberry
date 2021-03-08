@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from personal.core_helpers import get_date_string, get_semantic_items, intersection_count, sync_group_with_tags, get_date, has_same_location, METADATA_NAMESPACE
+from personal.core_helpers import get_date_string, get_all_semantic_items, get_semantic_items, intersection_count, sync_group_with_tags, get_date, has_same_location, METADATA_NAMESPACE
 from core.triggers import when
 from core.rules import rule
 from personal.core_security import OperationState, is_security_state, ASSAULT_TRIGGER_EQUIPMENT_TAGS, ASSAULT_TRIGGER_POINT_TAGS, ASSAULT_DISARMER_EQUIPMENT_TAGS, ASSAULT_DISARMER_POINT_TAGS, LOCK_CLOSURE_EQUIPMENT_TAGS, LOCK_CLOSURE_POINT_TAGS, LOCK_EQUIPMENT_TAGS, LOCK_POINT_TAGS
@@ -41,8 +41,7 @@ def sync_security_helpers(event):
 def assault_trigger(event):
     item = ir.getItem(event.itemName)
     if (
-        item.getStateAs(OnOffType) == OFF or
-        item.getStateAs(OpenClosedType) == CLOSED or
+        item.getStateAs(OnOffType) in [OFF, CLOSED] or
         is_security_state(OperationState.OFF)
     ):
         return
@@ -131,14 +130,11 @@ def disarmament(event):
 @when("Descendent of gCore_Security_LockClosureTrigger received update")
 def lock_closure(event):
     item = ir.getItem(event.itemName)
-    if (
-        item.getStateAs(OnOffType) == OFF or
-        item.getStateAs(OpenClosedType) == CLOSED
-    ):
+    if item.getStateAs(OnOffType) in [OFF, CLOSED]:
         Log.logInfo("lock_closure", "{} {} {}".format(
             'gCore_Security_LockClosureTrigger' in item.getGroupNames(),
             intersection_count(item.getTags(), LOCK_CLOSURE_POINT_TAGS) > 0,
-            get_semantic_items(item, LOCK_EQUIPMENT_TAGS, LOCK_POINT_TAGS)
+            get_all_semantic_items(LOCK_EQUIPMENT_TAGS, LOCK_POINT_TAGS)
         ))
         if (
             # Is target item:
@@ -146,7 +142,7 @@ def lock_closure(event):
             # Is Switch child of target item:
             intersection_count(item.getTags(), LOCK_CLOSURE_POINT_TAGS) > 0
         ):
-            for lock in get_semantic_items(item, LOCK_EQUIPMENT_TAGS, LOCK_POINT_TAGS):
+            for lock in get_all_semantic_items(LOCK_EQUIPMENT_TAGS, LOCK_POINT_TAGS):
                 if has_same_location(item, lock):
                     events.sendCommand(lock, ON)
                     break
