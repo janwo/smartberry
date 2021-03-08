@@ -5,7 +5,7 @@ from personal.core_presence import PresenceState
 from personal.core_scenes import trigger_scene_items, get_scene_items
 from personal.core_helpers import METADATA_NAMESPACE, get_location, has_same_location, get_item_of_helper_item, get_items_of_any_tags, sync_group_with_tags, create_helper_item, intersection_count, get_all_semantic_items
 from personal.core_lights import LIGHT_MEASUREMENT_POINT_TAGS, LIGHTS_POINT_TAGS, LIGHTS_EQUIPMENT_TAGS, set_location_as_activated, is_elapsed, LightMode, AmbientLightCondition, get_light_mode_group, turn_on_switchable_point, turn_off_switchable_point
-from core.jsr223.scope import ir, events, OFF, ON, OPENED
+from core.jsr223.scope import ir, events, OFF, ON, OPEN
 from org.openhab.core.types import UnDefType
 from org.openhab.core.library.types import OnOffType, OpenClosedType
 from core.metadata import set_key_value, get_key_value
@@ -290,7 +290,7 @@ def manage_light_state(event):
 @when("Member of gCore_Presence_PresenceTrigger received update")
 def manage_presence(event):
     item = ir.getItem(event.itemName)
-    if item.getStateAs(OnOffType) in [ON, OPENED]:
+    if item.getStateAs(OnOffType) in [ON, OPEN]:
         location = get_location(item)
         lightModeGroup = get_light_mode_group()
 

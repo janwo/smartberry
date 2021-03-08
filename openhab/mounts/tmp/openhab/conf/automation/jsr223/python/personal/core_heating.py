@@ -3,7 +3,7 @@ from core.triggers import when
 from core.rules import rule
 from personal.core_helpers import has_same_location, sync_group_with_tags, get_items_of_any_tags, get_all_semantic_items
 from personal.core_heating import TEMPERATURE_MEASUREMENT_POINT_TAGS, OPEN_CONTACT_EQUIPMENT_TAGS, OPEN_CONTACT_POINT_TAGS, HEATING_EQUIPMENT_TAGS, HEATING_POINT_TAGS, HeatingState
-from core.jsr223.scope import ir, UnDefType, events, OPENED
+from core.jsr223.scope import ir, UnDefType, events, OPEN
 
 
 @rule("Core - Sync helper items", description="Core - Sync helper items", tags=['core', 'heating'])
@@ -32,7 +32,7 @@ def update_heater_on_contact_trigger(event):
     heaterState = ir.getItem("Core_Heating_Thermostat_ModeDefault").state
     for point in get_all_semantic_items(HEATING_EQUIPMENT_TAGS, HEATING_POINT_TAGS):
         if any((
-            contact.state == OPENED and
+            contact.state == OPEN and
             has_same_location(contact, point)
         ) for contact in get_all_semantic_items(OPEN_CONTACT_EQUIPMENT_TAGS, OPEN_CONTACT_POINT_TAGS)):
             events.sendCommand(

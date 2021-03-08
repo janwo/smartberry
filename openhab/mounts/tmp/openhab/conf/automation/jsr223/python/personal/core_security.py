@@ -5,7 +5,7 @@ from core.rules import rule
 from personal.core_security import OperationState, is_security_state, ASSAULT_TRIGGER_EQUIPMENT_TAGS, ASSAULT_TRIGGER_POINT_TAGS, ASSAULT_DISARMER_EQUIPMENT_TAGS, ASSAULT_DISARMER_POINT_TAGS, LOCK_CLOSURE_EQUIPMENT_TAGS, LOCK_CLOSURE_POINT_TAGS, LOCK_EQUIPMENT_TAGS, LOCK_POINT_TAGS
 from core.date import minutes_between, ZonedDateTime
 from personal.core_broadcast import BroadcastType, broadcast
-from core.jsr223.scope import ir, events, ON, OFF, OPENED, CLOSED
+from core.jsr223.scope import ir, events, ON, OFF, OPEN, CLOSED
 from org.openhab.core.types import UnDefType
 from core.metadata import get_key_value, set_key_value
 from org.openhab.core.model.script.actions import Log
@@ -74,7 +74,7 @@ def assault_trigger(event):
 @when("Item Core_Security_OperationState received update {0}".format(OperationState.SILENTLY))
 def armament(event):
     blockingAssaultTriggers = filter(
-        lambda point: point.state == OPENED or point.state == ON,
+        lambda point: point.state in [OPEN, ON],
         reduce(
             lambda pointsList, newMember: pointsList + get_semantic_items(
                 newMember,
@@ -102,7 +102,7 @@ def armament(event):
             ir.getItem('Core_Security_OperationState'),
             OperationState.OFF
         )
-        broadcast("{} is in an opened state. No initiation into assault detection.".format(
+        broadcast("{} is in an OPEN state. No initiation into assault detection.".format(
             ", ".join(map(
                 lambda trigger: trigger.label,
                 blockingAssaultTriggers
@@ -131,10 +131,11 @@ def disarmament(event):
 def lock_closure(event):
     item = ir.getItem(event.itemName)
     if item.getStateAs(OnOffType) in [OFF, CLOSED]:
-        Log.logInfo("lock_closure", "{} {} {}".format(
-            'gCore_Security_LockClosureTrigger' in item.getGroupNames(),
-            intersection_count(item.getTags(), LOCK_CLOSURE_POINT_TAGS) > 0,
-            get_all_semantic_items(LOCK_EQUIPMENT_TAGS, LOCK_POINT_TAGS)
+        Log.logInfo("lock_closure", "{} {} {} {}".format(
+            item.name,
+            item.getTags(),
+            LOCK_CLOSURE_POINT_TAGS
+            intersection_count(item.getTags(), LOCK_CLOSURE_POINT_TAGS)
         ))
         if (
             # Is target item:

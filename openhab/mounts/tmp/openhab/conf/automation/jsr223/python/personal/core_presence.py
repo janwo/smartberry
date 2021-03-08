@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 from core.rules import rule
 from core.triggers import when
 from personal.core_presence import POINT_TAGS, PresenceState, trigger_presence, get_presence, trigger_absence
-from core.jsr223.scope import ir, events, OFF, ON, OPENED
+from core.jsr223.scope import ir, events, OFF, ON, OPEN
 from org.openhab.core.types import UnDefType
 from personal.core_helpers import sync_group_with_tags, intersection_count, METADATA_NAMESPACE
 from org.openhab.core.library.types import OnOffType, OpenClosedType
@@ -54,7 +54,7 @@ def trigger_presence_on_motion(event):
 
     # Default, if no metadata is given.
     if not presenceStates and not absenceStates:
-        if item.getStateAs(OnOffType) in [ON, OPENED]:
+        if item.getStateAs(OnOffType) in [ON, OPEN]:
             trigger_presence(item)
 
 
