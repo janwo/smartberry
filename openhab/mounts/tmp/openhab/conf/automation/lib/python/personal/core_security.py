@@ -2,7 +2,6 @@ from __future__ import unicode_literals
 from core.jsr223.scope import ir
 from personal.core_helpers import enum
 from org.openhab.core.types import UnDefType
-from org.openhab.core.model.script.actions import Log
 
 OperationState = enum(
     OFF=0.0,
@@ -51,10 +50,4 @@ LOCK_POINT_TAGS = [
 
 def is_security_state(state=OperationState.OFF):
     actualState = ir.getItem("Core_Security_OperationState").state
-    Log.logInfo("is_security_state", "{} {} {} {}".format(
-        not isinstance(actualState, UnDefType),
-        actualState.floatValue() == state,
-        actualState.floatValue(),
-        state
-    ))
     return not isinstance(actualState, UnDefType) and actualState.floatValue() == state
