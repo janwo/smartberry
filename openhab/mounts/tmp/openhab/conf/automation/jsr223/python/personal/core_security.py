@@ -40,18 +40,14 @@ def sync_security_helpers(event):
 @when("Descendent of gCore_Security_AssaultTrigger received update")
 def assault_trigger(event):
     item = ir.getItem(event.itemName)
-    if (
-        item.getStateAs(OnOffType) == OFF or
-        item.getStateAs(OpenClosedType) == CLOSED or
-        is_security_state(OperationState.OFF)
-    ):
-        return
-
-    if (
+    if not is_security_state(OperationState.OFF) and (
         # Is target item:
         'gCore_Security_AssaultTrigger' in item.getGroupNames() or
         # Is Switch child of target item:
         intersection_count(item.getTags(), ASSAULT_TRIGGER_POINT_TAGS) > 0
+    ) and (
+        item.getStateAs(OnOffType) == OFF or
+        item.getStateAs(OpenClosedType) == CLOSED
     ):
         set_key_value(
             'Core_Security_OperationState',
@@ -132,25 +128,18 @@ def disarmament(event):
 def lock_closure(event):
     item = ir.getItem(event.itemName)
     if (
+        # Is target item:
+        'gCore_Security_LockClosureTrigger' in item.getGroupNames() or
+        # Is Switch child of target item:
+        intersection_count(item.getTags(), LOCK_CLOSURE_POINT_TAGS) > 0
+    ) and (
         item.getStateAs(OnOffType) == OFF or
         item.getStateAs(OpenClosedType) == CLOSED
     ):
-        Log.logInfo("lock_closure", "{} {} {} {}".format(
-            item.name,
-            item.getTags(),
-            LOCK_CLOSURE_POINT_TAGS,
-            intersection_count(item.getTags(), LOCK_CLOSURE_POINT_TAGS)
-        ))
-        if (
-            # Is target item:
-            'gCore_Security_LockClosureTrigger' in item.getGroupNames() or
-            # Is Switch child of target item:
-            intersection_count(item.getTags(), LOCK_CLOSURE_POINT_TAGS) > 0
-        ):
-            for lock in get_all_semantic_items(LOCK_EQUIPMENT_TAGS, LOCK_POINT_TAGS):
-                if has_same_location(item, lock):
-                    events.sendCommand(lock, ON)
-                    break
+        for lock in get_all_semantic_items(LOCK_EQUIPMENT_TAGS, LOCK_POINT_TAGS):
+            if has_same_location(item, lock):
+                events.sendCommand(lock, ON)
+                break
 
 
 @rule("Core - Core_Security System - Turn off siren after Core_Security_OperationState update", description="Core_Security System - Turn off siren after Core_Security_OperationState update", tags=['core', 'security'])

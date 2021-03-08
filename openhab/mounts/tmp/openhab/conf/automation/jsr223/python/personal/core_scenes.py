@@ -313,11 +313,10 @@ def manage_scenetriggers(event):
             scene = ir.getItem(triggerInfo['target-scene'])
         except:
             return
-        if not scene or (
-            'from' in triggerInfo and (
-                isinstance(scene.state, UnDefType) or
-                triggerInfo['from'] != scene.state.toFullString()
-            )
+        if (
+            'from' in triggerInfo and
+            not isinstance(scene.state, UnDefType) and
+            triggerInfo['from'] != scene.state.toFullString()
         ):
             return
 

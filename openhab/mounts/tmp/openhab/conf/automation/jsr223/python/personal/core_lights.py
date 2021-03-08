@@ -154,14 +154,13 @@ def sync_lights_helpers(event):
 @when("Descendent of gCore_Lights_Switchables received update")
 def set_last_activation(event):
     item = ir.getItem(event.itemName)
-    if item.getStateAs(OnOffType) == ON:
-        if (
-            # Is target item:
-            'gCore_Lights_Switchables' in item.getGroupNames() or
-            # Is Switch child of target item:
-            intersection_count(item.getTags(), LIGHTS_POINT_TAGS) > 0
-        ):
-            set_location_as_activated(item)
+    if item.getStateAs(OnOffType) == ON and (
+        # Is target item:
+        'gCore_Lights_Switchables' in item.getGroupNames() or
+        # Is Switch child of target item:
+        intersection_count(item.getTags(), LIGHTS_POINT_TAGS) > 0
+    ):
+        set_location_as_activated(item)
 
 
 @rule("Core - Manage daylight status changes.", description="Manage daylight status changes.", tags=["core", 'lights'])
@@ -291,8 +290,8 @@ def manage_light_state(event):
 def manage_presence(event):
     item = ir.getItem(event.itemName)
     if (
-            item.getStateAs(OnOffType) == ON or
-            item.getStateAs(OpenClosedType) == OPEN
+        item.getStateAs(OnOffType) == ON or
+        item.getStateAs(OpenClosedType) == OPEN
     ):
         location = get_location(item)
         lightModeGroup = get_light_mode_group()
