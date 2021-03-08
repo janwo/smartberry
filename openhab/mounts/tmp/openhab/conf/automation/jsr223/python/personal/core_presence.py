@@ -54,7 +54,10 @@ def trigger_presence_on_motion(event):
 
     # Default, if no metadata is given.
     if not presenceStates and not absenceStates:
-        if item.getStateAs(OnOffType) in [ON, OPEN]:
+        if(
+            item.getStateAs(OnOffType) == ON or
+            item.getStateAs(OpenClosedType) == OPEN
+        ):
             trigger_presence(item)
 
 

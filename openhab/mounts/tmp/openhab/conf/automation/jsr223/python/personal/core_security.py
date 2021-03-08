@@ -41,7 +41,8 @@ def sync_security_helpers(event):
 def assault_trigger(event):
     item = ir.getItem(event.itemName)
     if (
-        item.getStateAs(OnOffType) in [OFF, CLOSED] or
+        item.getStateAs(OnOffType) == OFF or
+        item.getStateAs(OpenClosedType) == CLOSED or
         is_security_state(OperationState.OFF)
     ):
         return
@@ -130,11 +131,14 @@ def disarmament(event):
 @when("Descendent of gCore_Security_LockClosureTrigger received update")
 def lock_closure(event):
     item = ir.getItem(event.itemName)
-    if item.getStateAs(OnOffType) in [OFF, CLOSED]:
+    if (
+        item.getStateAs(OnOffType) == OFF or
+        item.getStateAs(OpenClosedType) == CLOSED
+    ):
         Log.logInfo("lock_closure", "{} {} {} {}".format(
             item.name,
             item.getTags(),
-            LOCK_CLOSURE_POINT_TAGS
+            LOCK_CLOSURE_POINT_TAGS,
             intersection_count(item.getTags(), LOCK_CLOSURE_POINT_TAGS)
         ))
         if (

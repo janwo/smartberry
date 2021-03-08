@@ -290,7 +290,10 @@ def manage_light_state(event):
 @when("Member of gCore_Presence_PresenceTrigger received update")
 def manage_presence(event):
     item = ir.getItem(event.itemName)
-    if item.getStateAs(OnOffType) in [ON, OPEN]:
+    if (
+            item.getStateAs(OnOffType) == ON or
+            item.getStateAs(OpenClosedType) == OPEN
+    ):
         location = get_location(item)
         lightModeGroup = get_light_mode_group()
 
