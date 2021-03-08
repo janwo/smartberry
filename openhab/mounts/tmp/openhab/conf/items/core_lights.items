@@ -8,12 +8,9 @@ Group gCore_Lights "Lichtsteuerung" <light> (gCore_Settings) ["Equipment"] {
 }
 
 Group gCore_Lights_Switchables
-
-Group gCore_Lights_DarkMode "Lichtmodus (Dunkel)" <moon> (gCore_Lights) ["Equipment"]
-
-Group gCore_Lights_BrightMode "Lichtmodus (Hell)" <sun> (gCore_Lights) ["Equipment"]
-
-Group gCore_Lights_ObscuredMode "Lichtmodus (Verdunkelt)" <blinds> (gCore_Lights) ["Equipment"]
+Group gCore_Lights_DarkMode
+Group gCore_Lights_BrightMode
+Group gCore_Lights_ObscuredMode
 
 Number Core_Lights_DefaultDuration "Standard Lichtdauer" <time> (gCore_Lights) ["Point"]  {
     stateDescription=""[
