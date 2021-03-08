@@ -60,6 +60,14 @@ def trigger_presence_on_motion(event):
         ):
             trigger_presence(item)
 
+    Log.logInfo("trigger_presence_on_motion", "itemState: {} ps: {} in ps: {} as: {} in as: {} ".format(
+        item.state.toFullString(),
+        presenceStates,
+        item.state.toFullString() in presenceStates,
+        absenceStates,
+        item.state.toFullString() in absenceStates
+    ))
+
 
 @rule("Core - Check for an absence presence state and update Core_Presence", description="Check presence state and update Core_Presence", tags=['core', 'presence'])
 @when("Time cron 0 0 * ? * * *")
