@@ -9,7 +9,7 @@ from personal.core_lights import LIGHTS_POINT_TAGS, LIGHTS_EQUIPMENT_TAGS
 from org.openhab.core.model.script.actions import Log
 
 SCENE_TAGS = [
-    'Scene'
+    'CoreScene'
 ]
 
 SCENE_TRIGGER_TAGS = [

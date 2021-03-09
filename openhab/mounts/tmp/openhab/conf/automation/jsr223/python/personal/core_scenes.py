@@ -332,19 +332,19 @@ def manage_scenetriggers(event):
             hours_between(
                 get_date(lastActivation),
                 ZonedDateTime.now()
-            ) < float(triggerInfo['hours-until-active'])
+            ) <= triggerInfo['hours-until-active']
         ) or (
             'minutes-until-active' in triggerInfo and
             minutes_between(
                 get_date(lastActivation),
                 ZonedDateTime.now()
-            ) < float(triggerInfo['minutes-until-active'])
+            ) <= triggerInfo['minutes-until-active']
         ) or (
             'seconds-until-active' in triggerInfo and
             seconds_between(
                 get_date(lastActivation),
                 ZonedDateTime.now()
-            ) < float(triggerInfo['seconds-until-active'])
+            ) <= triggerInfo['seconds-until-active']
         ):
             return
 
