@@ -63,6 +63,13 @@ def sync_timed_outlets_helpers(event):
             'oh:time'
         )
 
+        set_key_value(
+            helperItem.name,
+            'cellWidget',
+            'max',
+            10080
+        )
+
         set_value(
             helperItem.name,
             'listWidget',
@@ -81,6 +88,13 @@ def sync_timed_outlets_helpers(event):
             'listWidget',
             'icon',
             'oh:time'
+        )
+
+        set_key_value(
+            helperItem.name,
+            'listWidget',
+            'max',
+            10080
         )
 
         set_key_value(
@@ -113,27 +127,26 @@ def sync_timed_outlets_helpers(event):
 
 
 @rule("Core - Keep last timed outlet activation updated", description="Keep last timed outlet activation updated.", tags=['core', 'timed-outlets'])
-@when("Descendent of gCore_TimedOutlets_Switchable changed to ON")
+@when("Descendent of gCore_TimedOutlets_Switchable received update")
 def set_last_activation(event):
     item = ir.getItem(event.itemName)
-    if (
+    if item.getStateAs(OnOffType) == ON and (
         # Is target item:
         'gCore_TimedOutlets_Switchable' in item.getGroupNames() or
         # Is Switch child of target item:
         intersection_count(item.getTags(), POINT_TAGS) > 0
     ):
-        parentOutlet = get_parents_with_condition(
+        for parentOutlet in get_parents_with_condition(
             item,
-            lambda item: item.getGroupNames(
-            ) and 'gCore_TimedOutlets_Switchable' in item.getGroupNames()
-        )[0]
-        set_key_value(
-            parentOutlet.name,
-            METADATA_NAMESPACE,
-            'timed-outlet',
-            "last-update",
-            get_date_string(ZonedDateTime.now())
-        )
+            lambda item: 'gCore_TimedOutlets_Switchable' in item.getGroupNames()
+        ):
+            set_key_value(
+                parentOutlet.name,
+                METADATA_NAMESPACE,
+                'timed-outlet',
+                "last-update",
+                get_date_string(ZonedDateTime.now())
+            )
 
 
 @rule("Core - Manage elapsed outlets", description="Manage elapsed outlets", tags=['core', 'timed-outlets'])
