@@ -83,8 +83,8 @@ heating:
 	command-map:
 		"0.0": "0" [Send "0" to the thermostat mode item, if heating mode is OFF (0.0)]
 		"1.0": "1"
-		"2.0": "11.0"
-		"3.0": "15.0"
+		"2.0": "11"
+		"3.0": "15"
 ````
 
 #### Presence 👋

@@ -54,16 +54,19 @@ def update_heater_on_contact_trigger(event):
     for point in get_all_semantic_items(HEATING_EQUIPMENT_TAGS, HEATING_POINT_TAGS):
         location = get_location(point)
         if location:
-            state = HeatingState.OFF if location.name in openContactLocations else heaterMode.state.floatValue()
+            state = heaterMode.state.toFullString()
+            if location.name in openContactLocations:
+                state = str(HeatingState.OFF)
             pointCommandMap = get_key_value(
                 heaterMode.name,
                 METADATA_NAMESPACE,
                 'heating',
                 'command-map'
             )
-            mappedState = pointCommandMap[state] if pointCommandMap and state in pointCommandMap else state
-            if isinstance(point.state, UnDefType) or point.state.toFullString() != mappedState:
+            if pointCommandMap and state in pointCommandMap:
+                state = pointCommandMap[state]
+            if isinstance(point.state, UnDefType) or point.state.toFullString() != state:
                 events.sendCommand(
                     point,
-                    mappedState
+                    state
                 )
