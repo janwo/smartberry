@@ -62,7 +62,7 @@ Core\_Lights\_WelcomeLight\_ObscuredMode|Turn this on to turn on all light switc
 Core\_Lights\_WelcomeLight\_BrightMode|Turn this on to turn on all light switchables in `AUTO_ON` mode during *bright* light conditions when come back home
 
 #### Heating 🔥
-Heating items are turned off automatically, if any Contact item is set to `ON` or `OPENED`.
+Heating items are turned off automatically, if any Contact item is set to `ON` or `OPEN`. Additionally you can change all thermostats at once or via the default scene, see [default scene](#the-default-scene).
 
 Role|Needed equipment tags|Needed point tags|Needed custom tags
 :---|:---|:---|:---
@@ -74,7 +74,18 @@ To adjust the heating management configuration, you can adjust the following ite
 
 Item name|Description
 :---|:---
-Core\_Heating\_Thermostat\_ModeDefault|Set the heating mode. Current choices are `OFF`(0.0), `ON `(1.0), `ECO` (11.0) or `POWER` (15.0)
+Core\_Heating\_Thermostat\_ModeDefault|Set the heating mode. Current choices are `OFF`(0.0), `ON `(1.0), `ECO` (2.0) or `POWER` (3.0)
+
+In order to use a different command mapping for your thermostat, add the following metadata via `core` namespace to the thermostat mode item:
+
+````
+heating:
+	command-map:
+		"0.0": "0" [Send "0" to the thermostat mode item, if heating mode is OFF (0.0)]
+		"1.0": "1"
+		"2.0": "11.0"
+		"3.0": "15.0"
+````
 
 #### Presence 👋
 The presence management will automatically adjust the presence state in dependence to the last presence detection events. The following items are scoped.
@@ -95,9 +106,9 @@ Presence items can also trigger absence events. To do so, add the desired state 
 
 ````
 presence:
-	absence-states: (optional, states that trigger absence)
+	absence-states: [optional, states that trigger absence]
 		- "OFF"
-	presence-states: (optional, states that trigger presence)
+	presence-states: [optional, states that trigger presence]
 		- "ON"
 ````
 
@@ -147,11 +158,11 @@ All needed scene trigger items are created by default. However, you can define c
 scenes:
 	trigger-state:
 		target-scene: >>sceneItemName<<
-		from: >>initialState<< (optional, only triggers if scene is in that state)
+		from: >>initialState<< [optional, only triggers if scene is in that state]
 		to: >>newState<<
-		states:  (optional)
+		states:  [optional]
 			- "ON"
-			- "OPENED"
+			- "OPEN"
 ````
 
 #### Security 🔒
@@ -160,7 +171,7 @@ The security system protects your home and responds to any unauthorized activity
 Role|Needed equipment tags|Needed point tags|Needed custom tags|Description
 :---|:---|:---|:---|:---
 Assault trigger items|`Window` **or** `Door`|`OpenState` **or** `Switch`|`CoreAssaultTrigger`|Items that trigger the alarm, if assault detection is activated
-Assault Disarmer items||`OpenState` **or** `Switch`|`CoreAssaultDisarmer `|Items that disarm the assault detection, if item state updated to `ON ` or `OPENED`
+Assault Disarmer items||`OpenState` **or** `Switch`|`CoreAssaultDisarmer `|Items that disarm the assault detection, if item state updated to `ON ` or `OPEN`
 Lock closure items||`OpenState` **or** `Switch`|`CoreLockClosure`|Items that close a lock item within the same location, reacts to `OFF ` or `CLOSED`
 Lock items|`Lock`|`OpenState` **or** `Switch`||Lock items that may be closed by a door or window contact
 Sirene items||`Alarm`||Items that are triggered after an assault detection, if assault detection is activated

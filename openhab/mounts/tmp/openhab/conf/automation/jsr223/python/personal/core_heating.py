@@ -1,9 +1,10 @@
 from __future__ import unicode_literals
 from core.triggers import when
 from core.rules import rule
-from personal.core_helpers import has_same_location, sync_group_with_tags, get_items_of_any_tags, get_all_semantic_items
+from personal.core_helpers import METADATA_NAMESPACE, get_location, sync_group_with_tags, get_items_of_any_tags, get_all_semantic_items
 from personal.core_heating import TEMPERATURE_MEASUREMENT_POINT_TAGS, OPEN_CONTACT_EQUIPMENT_TAGS, OPEN_CONTACT_POINT_TAGS, HEATING_EQUIPMENT_TAGS, HEATING_POINT_TAGS, HeatingState
 from core.jsr223.scope import ir, UnDefType, events, OPEN
+from core.metadata import set_key_value, get_key_value
 
 
 @rule("Core - Sync helper items", description="Core - Sync helper items", tags=['core', 'heating'])
@@ -30,18 +31,39 @@ def sync_heating_helpers(event):
 @when("Item Core_Heating_Thermostat_ModeDefault received update")
 def update_heater_on_contact_trigger(event):
     heaterState = ir.getItem("Core_Heating_Thermostat_ModeDefault").state
-    for point in get_all_semantic_items(HEATING_EQUIPMENT_TAGS, HEATING_POINT_TAGS):
-        if any((
-            contact.state == OPEN and
-            has_same_location(contact, point)
-        ) for contact in get_all_semantic_items(OPEN_CONTACT_EQUIPMENT_TAGS, OPEN_CONTACT_POINT_TAGS)):
-            events.sendCommand(
-                point,
-                int(HeatingState.OFF)
-            )
+    if isinstance(heaterState, UnDefType):
+        return
 
-        elif not isinstance(heaterState, UnDefType):
-            events.sendCommand(
-                point,
-                heaterState.intValue()
+    openContactLocations = map(
+        lambda r: r.name,
+        filter(
+            lambda r: r,
+            map(
+                lambda contact: get_location(contact),
+                filter(
+                    lambda contact: contact.state == OPEN,
+                    get_all_semantic_items(
+                        OPEN_CONTACT_EQUIPMENT_TAGS,
+                        OPEN_CONTACT_POINT_TAGS
+                    )
+                )
             )
+        )
+    )
+
+    for point in get_all_semantic_items(HEATING_EQUIPMENT_TAGS, HEATING_POINT_TAGS):
+        location = get_location(point)
+        if location:
+            state = HeatingState.OFF if location.name in openContactLocations else heaterState.floatValue()
+            pointCommandMap = get_key_value(
+                heaterState.name,
+                METADATA_NAMESPACE,
+                'heating',
+                'command-map'
+            )
+            mappedState = pointCommandMap[state] if pointCommandMap and state in pointCommandMap else state
+            if isinstance(point.state, UnDefType) or point.state.toFullString() != mappedState:
+                events.sendCommand(
+                    point,
+                    mappedState
+                )

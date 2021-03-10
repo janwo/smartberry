@@ -5,8 +5,9 @@ from personal.core_helpers import enum
 
 HeatingState = enum(
     OFF=0.0,
-    ECO=11.0,
-    DEFAULT=1.0
+    DEFAULT=1.0,
+    ECO=2.0,
+    POWER=3.0
 )
 
 OPEN_CONTACT_EQUIPMENT_TAGS = [

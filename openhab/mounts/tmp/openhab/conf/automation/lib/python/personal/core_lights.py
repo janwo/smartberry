@@ -45,8 +45,7 @@ def get_light_mode_group():
         AmbientLightCondition.BRIGHT: ir.getItem("gCore_Lights_BrightMode")
     }.get(
         AmbientLightCondition.BRIGHT if isinstance(
-            condition, UnDefType) else condition.floatValue(),
-        ir.getItem("gCore_Lights_BrightMode")
+            condition, UnDefType) else condition.floatValue()
     )
 
 
@@ -96,4 +95,4 @@ def turn_off_switchable_point(point, force=False):
     if point.getStateAs(OnOffType) != OFF or force:
         events.sendCommand(point, OFF)
     elif point.getStateAs(OnOffType) != OFF:
-        events.sendCommand(point, OFF)
+        events.postUpdate(point, OFF)
