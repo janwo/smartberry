@@ -30,8 +30,8 @@ def sync_heating_helpers(event):
 @when("Descendent of gCore_Heating_ContactSwitchable received update")
 @when("Item Core_Heating_Thermostat_ModeDefault received update")
 def update_heater_on_contact_trigger(event):
-    heaterState = ir.getItem("Core_Heating_Thermostat_ModeDefault").state
-    if isinstance(heaterState, UnDefType):
+    heaterMode = ir.getItem("Core_Heating_Thermostat_ModeDefault")
+    if isinstance(heaterMode.state, UnDefType):
         return
 
     openContactLocations = map(
@@ -54,9 +54,9 @@ def update_heater_on_contact_trigger(event):
     for point in get_all_semantic_items(HEATING_EQUIPMENT_TAGS, HEATING_POINT_TAGS):
         location = get_location(point)
         if location:
-            state = HeatingState.OFF if location.name in openContactLocations else heaterState.floatValue()
+            state = HeatingState.OFF if location.name in openContactLocations else heaterMode.state.floatValue()
             pointCommandMap = get_key_value(
-                heaterState.name,
+                heaterMode.name,
                 METADATA_NAMESPACE,
                 'heating',
                 'command-map'
