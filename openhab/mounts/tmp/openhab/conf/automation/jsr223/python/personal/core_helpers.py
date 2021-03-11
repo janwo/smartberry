@@ -8,6 +8,6 @@ from personal.core_helpers import remove_unlinked_helper_items, remove_invalid_h
 @when("Item added")
 @when("Item removed")
 @when("Item updated")
-def sync_timed_outlets_helpers(event):
+def remove_unlinked_or_invalid_helper_items(event):
     remove_unlinked_helper_items()
     remove_invalid_helper_items()

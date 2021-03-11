@@ -128,7 +128,7 @@ def sync_timed_outlets_helpers(event):
 
 @rule("Core - Keep last timed outlet activation updated", description="Keep last timed outlet activation updated.", tags=['core', 'timed-outlets'])
 @when("Descendent of gCore_TimedOutlets_Switchable received update")
-def set_last_activation(event):
+def set_last_outlet_activation(event):
     item = ir.getItem(event.itemName)
     if item.getStateAs(OnOffType) == ON and (
         # Is target item:
