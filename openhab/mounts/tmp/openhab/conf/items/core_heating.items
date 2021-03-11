@@ -5,7 +5,7 @@ Group:Number:AVG gCore_Heating_Temperature
 
 Number Core_Heating_Thermostat_ModeDefault "Temperaturmodus" <heating> (gCore_Heating) ["Point"] {
     stateDescription=""[
-        options="0.0=Aus,11.0=Eco-Temperatur,1.0=Normaltemperatur,15.0=Heizen"
+        options="0.0=Aus,2.0=Eco-Temperatur,1.0=Normaltemperatur,3.0=Heizen"
     ],
     cellWidget=""[
         label="\u003ditems.Core_Heating_Thermostat_ModeDefault.title",

@@ -57,8 +57,9 @@ def update_heater_on_contact_trigger(event):
             state = heaterMode.state.toFullString()
             if location.name in openContactLocations:
                 state = str(HeatingState.OFF)
+
             pointCommandMap = get_key_value(
-                heaterMode.name,
+                point.name,
                 METADATA_NAMESPACE,
                 'heating',
                 'command-map'
