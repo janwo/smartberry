@@ -152,6 +152,7 @@ def sync_lights_helpers(event):
 
 @rule("Core - Keep last light activation updated", description="Keep last light activation updated", tags=["core", 'lights'])
 @when("Descendent of gCore_Lights_Switchables received update")
+@when("Descendent of gCore_Lights_Switchables received command")
 def set_last_light_activation(event):
     item = ir.getItem(event.itemName)
     if item.getStateAs(OnOffType) == ON and (
