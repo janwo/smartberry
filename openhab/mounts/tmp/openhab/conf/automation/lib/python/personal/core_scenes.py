@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 from core.jsr223.scope import ir, ON, events
 from personal.core_helpers import METADATA_NAMESPACE
 from core.metadata import get_metadata, set_metadata
-from personal.core_helpers import get_all_semantic_items, METADATA_NAMESPACE, has_same_location, get_childs_with_condition
+from personal.core_helpers import get_items_of_any_tags, unique_items, get_all_semantic_items, METADATA_NAMESPACE, has_same_location, get_childs_with_condition
 from org.openhab.core.types import UnDefType
 from core.metadata import get_key_value, set_key_value
 from personal.core_lights import LIGHTS_POINT_TAGS, LIGHTS_EQUIPMENT_TAGS
@@ -41,28 +41,45 @@ def get_scene_states(scene):
 
 
 def get_scene_items(scene):
-    customMembers = get_key_value(
+    sceneMembers = get_key_value(
         scene.name,
         METADATA_NAMESPACE,
         'scenes',
         'custom-members'
-    )
+    ) or [
+        'default:true'
+    ]
 
-    if customMembers:
-        return reduce(
-            lambda customMemberList, newMember: customMemberList +
-            get_childs_with_condition(
-                newMember,
-                lambda item: item.getType() != 'Group'
-            ),
-            customMembers,
-            []
+    def handleMember(member):
+        if member.startswith('tag:'):
+            return filter(
+                scene,
+                lambda item: item.getType() != 'Group' and has_same_location(item, scene),
+                get_items_of_any_tags([member[4:]])
+            )
+
+        # Use lights as default items in list.
+        if member.startswith('default:'):
+            if member == 'default:true':
+                return filter(
+                    lambda item: item.getType() != 'Group' and has_same_location(item, scene),
+                    get_all_semantic_items(
+                        LIGHTS_EQUIPMENT_TAGS,
+                        LIGHTS_POINT_TAGS
+                    )
+                )
+
+        return get_childs_with_condition(
+            member,
+            lambda item: item.getType() != 'Group'
         )
 
-    # Use lights as default items in list.
-    return filter(
-        lambda item: item.getType() != 'Group' and has_same_location(item, scene),
-        get_all_semantic_items(LIGHTS_EQUIPMENT_TAGS, LIGHTS_POINT_TAGS)
+    return unique_items(
+        reduce(
+            lambda memberList, newMember: memberList + handleMember(newMember),
+            sceneMembers,
+            []
+        )
     )
 
 
