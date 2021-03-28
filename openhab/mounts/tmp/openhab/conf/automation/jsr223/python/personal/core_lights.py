@@ -3,7 +3,7 @@ from core.triggers import when
 from core.rules import rule
 from personal.core_presence import PresenceState
 from personal.core_scenes import trigger_scene_items, get_scene_items
-from personal.core_helpers import METADATA_NAMESPACE, get_location, has_same_location, get_item_of_helper_item, get_items_of_any_tags, sync_group_with_tags, create_helper_item, intersection_count, get_all_semantic_items
+from personal.core_helpers import METADATA_NAMESPACE, get_location, get_childs_with_condition, has_same_location, get_item_of_helper_item, get_items_of_any_tags, sync_group_with_tags, create_helper_item, intersection_count, get_all_semantic_items
 from personal.core_lights import LIGHT_MEASUREMENT_POINT_TAGS, LIGHTS_POINT_TAGS, LIGHTS_EQUIPMENT_TAGS, set_location_as_activated, is_elapsed, LightMode, AmbientLightCondition, get_light_mode_group, turn_on_switchable_point, turn_off_switchable_point
 from core.jsr223.scope import ir, events, OFF, ON, OPEN
 from org.openhab.core.types import UnDefType
@@ -152,7 +152,6 @@ def sync_lights_helpers(event):
 
 @rule("Core - Keep last light activation updated", description="Keep last light activation updated", tags=["core", 'lights'])
 @when("Descendent of gCore_Lights_Switchables received update")
-@when("Descendent of gCore_Lights_Switchables received command")
 def set_last_light_activation(event):
     item = ir.getItem(event.itemName)
     if item.getStateAs(OnOffType) == ON and (
@@ -296,6 +295,17 @@ def manage_presence(event):
     ):
         location = get_location(item)
         lightModeGroup = get_light_mode_group()
+        switchOnSwitchableNames = map(
+            lambda s: s.name,
+            filter(
+                lambda item: not isinstance(item.state, UnDefType) and
+                item.getStateAs(OnOffType) == ON,
+                get_all_semantic_items(
+                    LIGHTS_EQUIPMENT_TAGS,
+                    LIGHTS_POINT_TAGS
+                )
+            )
+        )
 
         for member in lightModeGroup.members:
             if (
@@ -305,30 +315,20 @@ def manage_presence(event):
                 ] and
                 has_same_location(member, location)
             ):
-
                 scene = next((scene for scene in ir.getItem(
                     'gCore_Scenes').members if has_same_location(scene, location)), None)
                 if scene:
-                    switchablePointNames = map(
-                        lambda s: s.name,
-                        get_all_semantic_items(
-                            LIGHTS_EQUIPMENT_TAGS, LIGHTS_POINT_TAGS
-                        )
-                    )
                     trigger_scene_items(
                         scene,
-                        poke_only=len(
-                            filter(
-                                lambda item: (
-                                    not isinstance(item.state, UnDefType) and
-                                    item.name in switchablePointNames and
-                                    item.getStateAs(OnOffType) == ON
-                                ),
-                                get_scene_items(scene)
-                            )
-                        ) > 0
+                        poke_only=len(filter(
+                            lambda item: item.name in switchOnSwitchableNames,
+                            get_scene_items(scene)
+                        )) > 0
                     )
-                else:
+                elif len(get_childs_with_condition(
+                    location,
+                    lambda point: point.name in switchOnSwitchableNames
+                )) == 0:
                     for point in get_all_semantic_items(LIGHTS_EQUIPMENT_TAGS, LIGHTS_POINT_TAGS):
                         if has_same_location(point, location):
                             turn_on_switchable_point(point)

@@ -87,6 +87,7 @@ def is_elapsed(item):
 def turn_on_switchable_point(point, force=False):
     if point.getStateAs(OnOffType) != ON or force:
         events.sendCommand(point, ON)
+        events.postUpdate(point, ON)
     else:
         events.postUpdate(point, point.state)
 
@@ -94,5 +95,6 @@ def turn_on_switchable_point(point, force=False):
 def turn_off_switchable_point(point, force=False):
     if point.getStateAs(OnOffType) != OFF or force:
         events.sendCommand(point, OFF)
-    elif point.getStateAs(OnOffType) != OFF:
         events.postUpdate(point, OFF)
+    else:
+        events.postUpdate(point, point.state)
