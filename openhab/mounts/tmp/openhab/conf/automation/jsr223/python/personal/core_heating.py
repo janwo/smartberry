@@ -11,6 +11,7 @@ from core.metadata import set_key_value, get_key_value
 @when("Item added")
 @when("Item updated")
 @when("Item removed")
+@when("System started")
 def sync_heating_helpers(event):
     # Sync group gCore_Heating_ContactSwitchable with contact items - it's needed to create triggers on it
     sync_group_with_tags(

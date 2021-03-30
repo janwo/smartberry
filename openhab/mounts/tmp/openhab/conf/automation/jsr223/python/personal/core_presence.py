@@ -14,6 +14,7 @@ from org.openhab.core.model.script.actions import Log
 @when("Item added")
 @when("Item updated")
 @when("Item removed")
+@when("System started")
 def sync_presence_helpers(event):
     # Sync group gCore_Presence_PresenceTrigger with presence items - it's needed to create triggers on it
     sync_group_with_tags(

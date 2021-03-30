@@ -24,6 +24,7 @@ POINT_TAGS = [
 @when("Item added")
 @when("Item removed")
 @when("Item updated")
+@when("System started")
 def sync_timed_outlets_helpers(event):
     # Sync group gCore_TimedOutlets_Switchable with outlet items
     outletMembers = sync_group_with_tags(

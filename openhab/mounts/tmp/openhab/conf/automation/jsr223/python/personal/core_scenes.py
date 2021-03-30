@@ -15,6 +15,7 @@ from org.openhab.core.library.types import OnOffType
 @when("Item added")
 @when("Item updated")
 @when("Item removed")
+@when("System started")
 def sync_scene_helpers(event):
     # Sync group gCore_Scenes_StateTriggers with scene trigger items
     sync_group_with_tags(

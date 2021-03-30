@@ -17,6 +17,7 @@ from org.openhab.core.model.script.actions import Log
 @when("Item added")
 @when("Item updated")
 @when("Item removed")
+@when("System started")
 def sync_lights_helpers(event):
     # Sync group gCore_Lights_Switchables with switchable items - it's needed to create triggers on it
     members = sync_group_with_tags(

@@ -16,6 +16,7 @@ from org.openhab.core.library.types import OnOffType, OpenClosedType
 @when("Item added")
 @when("Item updated")
 @when("Item removed")
+@when("System started")
 def sync_security_helpers(event):
     # Sync group gCore_Security_AssaultTrigger with assault items - it's needed to create triggers on it
     sync_group_with_tags(
