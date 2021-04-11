@@ -17,7 +17,7 @@ DefaultSceneState = enum(
 )
 
 
-@rule("Core - Manage changes of default scene.", description="Manage changes of default scene.", tags=["core", "default-scene"])
+@rule("Core - Manage changes of default scene.", description="Manage changes of default scene.", tags=["core", "core-default-scene"])
 @when("Item Core_DefaultScene received update")
 def default_scene_updated(event):
     if not isinstance(event.itemState, UnDefType):
@@ -29,7 +29,7 @@ def default_scene_updated(event):
                         break
 
 
-@rule("Core - Adjust default scene on presence changes.", description="Adjust default scene on presence changes.", tags=["core", "default-scene"])
+@rule("Core - Adjust default scene on presence changes.", description="Adjust default scene on presence changes.", tags=["core", "core-default-scene"])
 @when("Item Core_Presence changed")
 def presence_updated(event):
     scene = ir.getItem('Core_DefaultScene')
@@ -51,7 +51,7 @@ def presence_updated(event):
     )
 
 
-@rule("Core - Add custom-members.", description="Core - Add custom-members.", tags=['core', 'default-scene'])
+@rule("Core - Add custom-members.", description="Core - Add custom-members.", tags=['core', 'core-default-scene'])
 @when("Item added")
 @when("Item updated")
 @when("Item removed")

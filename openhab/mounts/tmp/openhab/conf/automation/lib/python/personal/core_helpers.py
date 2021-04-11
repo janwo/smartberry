@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from core.jsr223.scope import ir
+from core.jsr223.scope import ir, scriptExtension
 from core.metadata import set_key_value, get_key_value, remove_key_value, get_value
 from core.items import add_item
 from random import randint
@@ -9,6 +9,8 @@ from core.date import format_date
 from java.time.format import DateTimeFormatter
 from org.openhab.core.model.script.actions import Log
 from core.actions import Semantics
+scriptExtension.importPreset("RuleSupport")
+from core.jsr223.scope import ruleRegistry
 
 METADATA_NAMESPACE = "core"
 DATE_STRING = "yyyy-MM-dd'T'HH:mm:ss.SSxx"
@@ -17,6 +19,10 @@ DATE_STRING = "yyyy-MM-dd'T'HH:mm:ss.SSxx"
 def enum(**enums):
     return type('Enum', (), enums)
 
+def reload_rules(tags=['core-reload']):
+    for rule in ruleRegistry.getByTags(tags):
+        uid = getattr(rule, "UID", None)
+        ruleRegistry.remove(uid)
 
 def get_location(item):
     if isinstance(item, (str, unicode)):

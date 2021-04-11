@@ -3,7 +3,7 @@ from core.triggers import when
 from core.rules import rule
 from personal.core_presence import PresenceState
 from personal.core_scenes import trigger_scene_items, get_scene_items
-from personal.core_helpers import METADATA_NAMESPACE, get_location, get_childs_with_condition, has_same_location, get_item_of_helper_item, get_items_of_any_tags, sync_group_with_tags, create_helper_item, intersection_count, get_all_semantic_items
+from personal.core_helpers import reload_rules, METADATA_NAMESPACE, get_location, get_childs_with_condition, has_same_location, get_item_of_helper_item, get_items_of_any_tags, sync_group_with_tags, create_helper_item, intersection_count, get_all_semantic_items
 from personal.core_lights import LIGHT_MEASUREMENT_POINT_TAGS, LIGHTS_POINT_TAGS, LIGHTS_EQUIPMENT_TAGS, set_location_as_activated, is_elapsed, LightMode, AmbientLightCondition, get_light_mode_group, turn_on_switchable_point, turn_off_switchable_point
 from core.jsr223.scope import ir, events, OFF, ON, OPEN
 from org.openhab.core.types import UnDefType
@@ -13,7 +13,7 @@ from random import randint
 from org.openhab.core.model.script.actions import Log
 
 
-@rule("Core - Sync helper items", description="Core - Sync helper items", tags=['core', 'lights'])
+@rule("Core - Sync helper items of lights", description="Core - Sync helper items", tags=['core', 'core-lights'])
 @when("Item added")
 @when("Item updated")
 @when("Item removed")
@@ -150,8 +150,11 @@ def sync_lights_helpers(event):
                 '0.0=Aus,1.0=An,2.0=Auto-An,3.0=Unveraendert,4.0=Simulierend'
             )
 
+    # Reload rules
+    reload_rules(['core-lights', 'core-reload'])
 
-@rule("Core - Keep last light activation updated", description="Keep last light activation updated", tags=["core", 'lights'])
+
+@rule("Core - Keep last light activation updated", description="Keep last light activation updated", tags=["core", 'core-lights', 'core-reload'])
 @when("Descendent of gCore_Lights_Switchables received update")
 def set_last_light_activation(event):
     item = ir.getItem(event.itemName)
@@ -164,7 +167,7 @@ def set_last_light_activation(event):
         set_location_as_activated(item)
 
 
-@rule("Core - Manage daylight status changes.", description="Manage daylight status changes.", tags=["core", 'lights'])
+@rule("Core - Manage daylight status changes.", description="Manage daylight status changes.", tags=["core", 'core-lights'])
 @when("Time cron 0 0/5 * ? * * *")
 @when("Item Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark changed")
 @when("Item Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured changed")
@@ -232,7 +235,7 @@ def check_daylight(event):
         events.postUpdate(conditionItem, condition)
 
 
-@rule("Core - Manage lights according to light conditions.", description="Manage lights according to light conditions.", tags=['core', 'lights'])
+@rule("Core - Manage lights according to light conditions.", description="Manage lights according to light conditions.", tags=['core', 'core-lights', 'core-reload'])
 @when("Member of gCore_Lights_DarkMode received update")
 @when("Member of gCore_Lights_BrightMode received update")
 @when("Member of gCore_Lights_ObscuredMode received update")
@@ -286,7 +289,7 @@ def manage_light_state(event):
             turn_off_switchable_point(point)
 
 
-@rule("Core - Manage lights on presence.", description="Manage lights on presence.", tags=['core', 'lights'])
+@rule("Core - Manage lights on presence.", description="Manage lights on presence.", tags=['core', 'core-lights', 'core-presence', 'core-reload'])
 @when("Member of gCore_Presence_PresenceTrigger received update")
 def manage_presence(event):
     item = ir.getItem(event.itemName)
@@ -336,7 +339,7 @@ def manage_presence(event):
                 break
 
 
-@rule("Core - Manage lights when come back home.", description="Manage lights when come back home.", tags=['core', 'lights'])
+@rule("Core - Manage lights when come back home.", description="Manage lights when come back home.", tags=['core', 'core-lights'])
 @when("Item Core_Presence changed to {}".format(PresenceState.HOME))
 def welcome_light(event):
     condition = ir.getItem("Core_Lights_AmbientLightCondition")
@@ -377,7 +380,7 @@ def welcome_light(event):
                 turn_on_switchable_point(point)
 
 
-@rule("Core - Manage elapsed lights.", description="Manage elapsed lights.", tags=['core', 'lights'])
+@rule("Core - Manage elapsed lights.", description="Manage elapsed lights.", tags=['core', 'core-lights'])
 @when("Time cron 0 * * ? * * *")
 @when("Item Core_Lights_DefaultDuration received update")
 def elapsed_lights(event):
@@ -407,7 +410,7 @@ def elapsed_lights(event):
             turn_off_switchable_point(point)
 
 
-@rule("Core - Simulate lights.", description="Simulate lights.", tags=['core', 'lights'])
+@rule("Core - Simulate lights.", description="Simulate lights.", tags=['core', 'core-lights'])
 @when("Time cron 0 0/5 0 ? * * *")
 def simulate_presence(event):
     lightModeGroup = get_light_mode_group()

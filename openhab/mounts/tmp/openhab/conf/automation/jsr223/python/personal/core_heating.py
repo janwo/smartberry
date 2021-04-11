@@ -1,13 +1,13 @@
 from __future__ import unicode_literals
 from core.triggers import when
 from core.rules import rule
-from personal.core_helpers import METADATA_NAMESPACE, get_location, sync_group_with_tags, get_items_of_any_tags, get_all_semantic_items
+from personal.core_helpers import reload_rules, METADATA_NAMESPACE, get_location, sync_group_with_tags, get_items_of_any_tags, get_all_semantic_items
 from personal.core_heating import TEMPERATURE_MEASUREMENT_POINT_TAGS, OPEN_CONTACT_EQUIPMENT_TAGS, OPEN_CONTACT_POINT_TAGS, HEATING_EQUIPMENT_TAGS, HEATING_POINT_TAGS, HeatingState
 from core.jsr223.scope import ir, UnDefType, events, OPEN
 from core.metadata import set_key_value, get_key_value
 
 
-@rule("Core - Sync helper items", description="Core - Sync helper items", tags=['core', 'heating'])
+@rule("Core - Sync helper items of heating", description="Core - Sync helper items", tags=['core', 'core-heating'])
 @when("Item added")
 @when("Item updated")
 @when("Item removed")
@@ -24,9 +24,12 @@ def sync_heating_helpers(event):
         ir.getItem("gCore_Heating_Temperature"),
         TEMPERATURE_MEASUREMENT_POINT_TAGS
     )
+    
+    # Reload rules
+    reload_rules(['core-heating', 'core-reload'])
 
 
-@rule("Core - Check conditions to update heater values", description="Check conditions to update heater values", tags=['core', 'heating'])
+@rule("Core - Check conditions to update heater values", description="Check conditions to update heater values", tags=['core', 'core-heating', 'core-reload'])
 @when("Time cron 0 0 * ? * * *")
 @when("Descendent of gCore_Heating_ContactSwitchable received update")
 @when("Item Core_Heating_Thermostat_ModeDefault received update")

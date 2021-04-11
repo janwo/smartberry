@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from personal.core_helpers import get_date_string, get_date, get_location, sync_group_with_tags, has_same_location, METADATA_NAMESPACE, get_random_number, get_items_of_any_tags, create_helper_item, get_item_of_helper_item
+from personal.core_helpers import reload_rules, get_date_string, get_date, get_location, sync_group_with_tags, has_same_location, METADATA_NAMESPACE, get_random_number, get_items_of_any_tags, create_helper_item, get_item_of_helper_item
 from personal.core_scenes import SCENE_TAGS, get_scene_item_states, save_scene_item_states, trigger_scene_items, get_scene_states, SCENE_TRIGGER_TAGS
 from core.triggers import when
 from core.rules import rule
@@ -11,12 +11,12 @@ from org.openhab.core.model.script.actions import Log
 from org.openhab.core.library.types import OnOffType
 
 
-@rule("Core - Sync helper items", description="Core - Sync helper items", tags=['core', 'scenes'])
+@rule("Core - Sync helper items of scenes", description="Core - Sync helper items", tags=['core', 'core-scenes'])
 @when("Item added")
 @when("Item updated")
 @when("Item removed")
 @when("System started")
-def sync_scene_helpers(event):
+def sync_scenes_helpers(event):
     # Sync group gCore_Scenes_StateTriggers with scene trigger items
     sync_group_with_tags(
         ir.getItem("gCore_Scenes_StateTriggers"),
@@ -269,8 +269,11 @@ def sync_scene_helpers(event):
                     pass
             ir.remove(stateTrigger.name)
 
+    # Reload rules
+    reload_rules(['core-scenes', 'core-reload'])
 
-@rule("Core - Activate scene.", description="Activate scene.", tags=['core', 'scenes'])
+
+@rule("Core - Activate scene.", description="Activate scene.", tags=['core', 'core-scenes', 'core-reload'])
 @when("Member of gCore_Scenes received update")
 def activate_scene(event):
     scene = ir.getItem(event.itemName)
@@ -284,7 +287,7 @@ def activate_scene(event):
     trigger_scene_items(scene)
 
 
-@rule("Core - Store scene.", description="Store scene.", tags=['core', 'scenes'])
+@rule("Core - Store scene.", description="Store scene.", tags=['core', 'core-scenes', 'core-reload'])
 @when("Member of gCore_Scenes_StoreTriggers received update")
 def store_scene(event):
     sceneTrigger = ir.getItem(event.itemName)
@@ -292,7 +295,7 @@ def store_scene(event):
     save_scene_item_states(scene, event.itemState.toFullString())
 
 
-@rule("Core - Manage gCore_Scenes_StateTriggers to trigger scene.", description="Manage gCore_Scenes_StateTriggers to trigger scene.", tags=['core', 'scenes'])
+@rule("Core - Manage gCore_Scenes_StateTriggers to trigger scene.", description="Manage gCore_Scenes_StateTriggers to trigger scene.", tags=['core', 'core-scenes', 'core-reload'])
 @when("Member of gCore_Scenes_StateTriggers received update")
 def manage_scenetriggers(event):
     item = ir.getItem(event.itemName)

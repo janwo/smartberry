@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from personal.core_helpers import get_date_string, get_all_semantic_items, get_semantic_items, intersection_count, sync_group_with_tags, get_date, has_same_location, METADATA_NAMESPACE
+from personal.core_helpers import reload_rules, get_date_string, get_all_semantic_items, get_semantic_items, intersection_count, sync_group_with_tags, get_date, has_same_location, METADATA_NAMESPACE
 from core.triggers import when
 from core.rules import rule
 from personal.core_security import OperationState, is_security_state, ASSAULT_TRIGGER_EQUIPMENT_TAGS, ASSAULT_TRIGGER_POINT_TAGS, ASSAULT_DISARMER_EQUIPMENT_TAGS, ASSAULT_DISARMER_POINT_TAGS, LOCK_CLOSURE_EQUIPMENT_TAGS, LOCK_CLOSURE_POINT_TAGS, LOCK_EQUIPMENT_TAGS, LOCK_POINT_TAGS
@@ -12,7 +12,7 @@ from org.openhab.core.model.script.actions import Log
 from org.openhab.core.library.types import OnOffType, OpenClosedType
 
 
-@rule("Core - Sync helper items", description="Core - Sync helper items", tags=['core', 'security'])
+@rule("Core - Sync helper items of security", description="Core - Sync helper items", tags=['core', 'core-security'])
 @when("Item added")
 @when("Item updated")
 @when("Item removed")
@@ -36,9 +36,12 @@ def sync_security_helpers(event):
         LOCK_CLOSURE_EQUIPMENT_TAGS
     )
 
+    # Reload rules
+    reload_rules(['core-security', 'core-reload'])
 
-@rule("Core - Core_Security System - Trigger-Management", description="Core_Security System - Trigger-Management", tags=['core', 'security'])
-@when("Descendent of gCore_Security_AssaultTrigger received update")
+
+@rule("Core - Core_Security System - Trigger-Management", description="Core_Security System - Trigger-Management", tags=['core', 'core-security', 'core-reload'])
+@when("Descendent of gCore_Security_AssaultTrigger changed")
 def assault_trigger(event):
     item = ir.getItem(event.itemName)
     if not is_security_state(OperationState.OFF) and (
@@ -46,9 +49,6 @@ def assault_trigger(event):
         'gCore_Security_AssaultTrigger' in item.getGroupNames() or
         # Is Switch child of target item:
         intersection_count(item.getTags(), ASSAULT_TRIGGER_POINT_TAGS) > 0
-    ) and (
-        item.getStateAs(OnOffType) == OFF or
-        item.getStateAs(OpenClosedType) == CLOSED
     ):
         set_key_value(
             'Core_Security_OperationState',
@@ -67,7 +67,7 @@ def assault_trigger(event):
         broadcast(message, BroadcastType.ATTENTION)
 
 
-@rule("Core - Core_Security System - Check Armament", description="Core_Security System - Check Armament", tags=['core', 'security'])
+@rule("Core - Core_Security System - Check Armament", description="Core_Security System - Check Armament", tags=['core', 'core-security'])
 @when("Item Core_Security_OperationState received update {0}".format(OperationState.ON))
 @when("Item Core_Security_OperationState received update {0}".format(OperationState.SILENTLY))
 def armament(event):
@@ -108,8 +108,8 @@ def armament(event):
         ))
 
 
-@rule("Core - Core_Security System - Disarmament-Management", description="Core_Security System - Disarmament-Management", tags=['core', 'security'])
-@when("Descendent of gCore_Security_AssaultDisarmamer received update")
+@rule("Core - Core_Security System - Disarmament-Management", description="Core_Security System - Disarmament-Management", tags=['core', 'core-security', 'core-reload'])
+@when("Descendent of gCore_Security_AssaultDisarmamer changed")
 def disarmament(event):
     item = ir.getItem(event.itemName)
     if (
@@ -117,6 +117,9 @@ def disarmament(event):
         'gCore_Security_AssaultDisarmamer' in item.getGroupNames() or
         # Is Switch child of target item:
         intersection_count(item.getTags(), ASSAULT_DISARMER_POINT_TAGS) > 0
+    ) and (
+        item.getStateAs(OnOffType) == ON or
+        item.getStateAs(OpenClosedType) == OPEN
     ):
         events.postUpdate(
             ir.getItem("Core_Security_OperationState"),
@@ -124,8 +127,8 @@ def disarmament(event):
         )
 
 
-@rule("Core - Core_Security System - Lock Closure-Management", description="Core_Security System - Lock Closure-Management", tags=['core', 'security'])
-@when("Descendent of gCore_Security_LockClosureTrigger received update")
+@rule("Core - Core_Security System - Lock Closure-Management", description="Core_Security System - Lock Closure-Management", tags=['core', 'core-security', 'core-reload'])
+@when("Descendent of gCore_Security_LockClosureTrigger changed")
 def lock_closure(event):
     item = ir.getItem(event.itemName)
     if (
@@ -143,7 +146,7 @@ def lock_closure(event):
                 break
 
 
-@rule("Core - Core_Security System - Turn off siren after Core_Security_OperationState update", description="Core_Security System - Turn off siren after Core_Security_OperationState update", tags=['core', 'security'])
+@rule("Core - Core_Security System - Turn off siren after Core_Security_OperationState update", description="Core_Security System - Turn off siren after Core_Security_OperationState update", tags=['core', 'core-security'])
 @when("Item Core_Security_OperationState received update")
 def siren_off(event):
     for alarm in ir.getItemsByTag("Alarm"):
@@ -151,7 +154,7 @@ def siren_off(event):
             events.sendCommand(alarm, OFF)
 
 
-@rule("Core - Core_Security System - Turn off siren after X minutes", description="Core_Security System - Turn off siren after X minutes", tags=['core', 'security'])
+@rule("Core - Core_Security System - Turn off siren after X minutes", description="Core_Security System - Turn off siren after X minutes", tags=['core', 'core-security'])
 @when("Time cron 0 * * ? * * *")
 def siren_autooff(event):
     autoOffTime = ir.getItem("Core_Security_SireneAutoOff")
