@@ -21,8 +21,11 @@ def enum(**enums):
 
 def reload_rules(tags=['core-reload']):
     for rule in ruleRegistry.getByTags(tags):
-        uid = getattr(rule, "UID", None)
+        #name = rule.getName()
+        #description = rule.getDescription()
+        uid = rule.getUID()
         ruleRegistry.remove(uid)
+        ruleRegistry.add(rule)
 
 def get_location(item):
     if isinstance(item, (str, unicode)):

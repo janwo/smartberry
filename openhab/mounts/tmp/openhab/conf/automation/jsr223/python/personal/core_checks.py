@@ -9,7 +9,7 @@ from personal.core_helpers import get_date
 ELAPSED_DAYS = 5
 
 
-@rule("Core - Check things for offline state.", description="Check things for offline state.", tags=['core', 'lights'])
+@rule("Core - Check things for offline state.", description="Check things for offline state.", tags=['core', 'core-checks'])
 @when("Time cron 0 0 12 * * ?")
 def offline_check(event):
     allThings = things.getAll()
