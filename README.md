@@ -120,7 +120,7 @@ Role|Needed equipment tags|Needed point tags|Needed custom tags|Description
 Scene item|||`CoreScene`|Add `options` to metadata via namespace `stateDescription` to add scene states, e.g. `options="0.0=Chillout,1.0=Party"`.
 Scene trigger item|||`CoreSceneTrigger`|Manually changes the state of a given scene.
 
-A scene saves all light switchable items within the same location (as defined in [lights](#lights)). You can change this behavior and use custom scene members by adding the list of items or groups to the metadata object of the scene item via namespace `core` and key `customMembers`.
+A scene saves all light switchable items within the same location (as defined in [lights](#lights)). You can change this behavior and use custom scene members by adding the list of items or groups to the metadata object of the scene item via namespace `core` and key `custom-members`. You can add `default:true` to include all default light switchable items.
 
 To change the items states of the scene, each scene item has the following configuration items.
 
