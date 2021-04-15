@@ -23,9 +23,18 @@ def sync_presence_helpers(event):
     )
 
     # Reload rules
-    reload_rules(['core-presence', 'core-reload'])
+    reload_rules(
+        ['core-presence', 'core-reload-trigger_presence_on_motion'],
+        trigger_presence_on_motion_triggers
+    )
 
-@rule("Core - Trigger presence on motion.", description="Trigger presence on motion.", tags=['core', 'core-presence', 'core-reload'])
+
+trigger_presence_on_motion_triggers = [
+    "Member of gCore_Presence_PresenceTrigger received update"
+]
+
+
+@rule("Core - Trigger presence on motion.", description="Trigger presence on motion.", tags=['core', 'core-presence', 'core-reload-trigger_presence_on_motion'])
 @when("Member of gCore_Presence_PresenceTrigger received update")
 def trigger_presence_on_motion(event):
     item = ir.getItem(event.itemName)

@@ -37,10 +37,26 @@ def sync_security_helpers(event):
     )
 
     # Reload rules
-    reload_rules(['core-security', 'core-reload'])
+    reload_rules(
+        ['core-security', 'core-reload-assault_trigger'],
+        assault_trigger_triggers
+    )
+    reload_rules(
+        ['core-security', 'core-reload-disarmament'],
+        disarmament_triggers
+    )
+    reload_rules(
+        ['core-security', 'core-reload-lock_closure'],
+        lock_closure_triggers
+    )
 
 
-@rule("Core - Core_Security System - Trigger-Management", description="Core_Security System - Trigger-Management", tags=['core', 'core-security', 'core-reload'])
+assault_trigger_triggers = [
+    "Descendent of gCore_Security_AssaultTrigger changed"
+]
+
+
+@rule("Core - Core_Security System - Trigger-Management", description="Core_Security System - Trigger-Management", tags=['core', 'core-security', 'core-reload-assault_trigger'])
 @when("Descendent of gCore_Security_AssaultTrigger changed")
 def assault_trigger(event):
     item = ir.getItem(event.itemName)
@@ -108,7 +124,12 @@ def armament(event):
         ))
 
 
-@rule("Core - Core_Security System - Disarmament-Management", description="Core_Security System - Disarmament-Management", tags=['core', 'core-security', 'core-reload'])
+disarmament_triggers = [
+    "Descendent of gCore_Security_AssaultDisarmamer changed"
+]
+
+
+@rule("Core - Core_Security System - Disarmament-Management", description="Core_Security System - Disarmament-Management", tags=['core', 'core-security', 'core-reload-disarmament'])
 @when("Descendent of gCore_Security_AssaultDisarmamer changed")
 def disarmament(event):
     item = ir.getItem(event.itemName)
@@ -127,7 +148,12 @@ def disarmament(event):
         )
 
 
-@rule("Core - Core_Security System - Lock Closure-Management", description="Core_Security System - Lock Closure-Management", tags=['core', 'core-security', 'core-reload'])
+lock_closure_triggers = [
+    "Descendent of gCore_Security_LockClosureTrigger changed"
+]
+
+
+@rule("Core - Core_Security System - Lock Closure-Management", description="Core_Security System - Lock Closure-Management", tags=['core', 'core-security', 'core-reload-lock_closure'])
 @when("Descendent of gCore_Security_LockClosureTrigger changed")
 def lock_closure(event):
     item = ir.getItem(event.itemName)

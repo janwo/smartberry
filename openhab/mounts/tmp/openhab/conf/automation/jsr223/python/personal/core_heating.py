@@ -24,15 +24,25 @@ def sync_heating_helpers(event):
         ir.getItem("gCore_Heating_Temperature"),
         TEMPERATURE_MEASUREMENT_POINT_TAGS
     )
-    
+
     # Reload rules
-    reload_rules(['core-heating', 'core-reload'])
+    reload_rules(
+        ['core-heating', 'core-reload-update_heater_on_contact_trigger'],
+        update_heater_on_contact_trigger_triggers
+    )
 
 
-@rule("Core - Check conditions to update heater values", description="Check conditions to update heater values", tags=['core', 'core-heating', 'core-reload'])
-@when("Time cron 0 0 * ? * * *")
-@when("Descendent of gCore_Heating_ContactSwitchable received update")
-@when("Item Core_Heating_Thermostat_ModeDefault received update")
+update_heater_on_contact_trigger_triggers = [
+    "Time cron 0 0 * ? * * *",
+    "Descendent of gCore_Heating_ContactSwitchable received update",
+    "Item Core_Heating_Thermostat_ModeDefault received update"
+]
+
+
+@ rule("Core - Check conditions to update heater values", description="Check conditions to update heater values", tags=['core', 'core-heating', 'core-reload-update_heater_on_contact_trigger'])
+@ when("Time cron 0 0 * ? * * *")
+@ when("Descendent of gCore_Heating_ContactSwitchable received update")
+@ when("Item Core_Heating_Thermostat_ModeDefault received update")
 def update_heater_on_contact_trigger(event):
     heaterMode = ir.getItem("Core_Heating_Thermostat_ModeDefault")
     if isinstance(heaterMode.state, UnDefType):

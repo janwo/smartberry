@@ -9,6 +9,8 @@ from core.date import format_date
 from java.time.format import DateTimeFormatter
 from org.openhab.core.model.script.actions import Log
 from core.actions import Semantics
+from core.rules import rule
+from core.triggers import when
 scriptExtension.importPreset("RuleSupport")
 from core.jsr223.scope import ruleRegistry
 
@@ -19,13 +21,25 @@ DATE_STRING = "yyyy-MM-dd'T'HH:mm:ss.SSxx"
 def enum(**enums):
     return type('Enum', (), enums)
 
-def reload_rules(tags=['core-reload']):
-    for rule in ruleRegistry.getByTags(tags):
-        #name = rule.getName()
-        #description = rule.getDescription()
-        uid = rule.getUID()
-        ruleRegistry.remove(uid)
-        ruleRegistry.add(rule)
+
+def reload_rules(tags=['core-reload'], triggers=[]):
+    if len(triggers):
+        for _rule in ruleRegistry.getByTags(tags):
+            ruleRegistry.remove(_rule.getUID())
+            _rule.triggers = []
+            for trigger in triggers:
+                when(trigger)(_rule)
+            rule(
+                _rule.getName(),
+                _rule.getDescription(),
+                _rule.getTags()
+            )(_rule)
+    else:
+        Log.logError(
+            'reload_rules',
+            'Could not reload rule with tags {}'.format(tags)
+        )
+
 
 def get_location(item):
     if isinstance(item, (str, unicode)):

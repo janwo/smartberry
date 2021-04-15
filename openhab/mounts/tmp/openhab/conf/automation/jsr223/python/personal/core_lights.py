@@ -151,10 +151,26 @@ def sync_lights_helpers(event):
             )
 
     # Reload rules
-    reload_rules(['core-lights', 'core-reload'])
+    reload_rules(
+        ['core-lights', 'core-reload-set_last_light_activation'],
+        set_last_light_activation_triggers
+    )
+    reload_rules(
+        ['core-lights', 'core-reload-manage_light_state'],
+        manage_light_state_triggers
+    )
+    reload_rules(
+        ['core-lights', 'core-reload-manage_presence'],
+        manage_presence_triggers
+    )
 
 
-@rule("Core - Keep last light activation updated", description="Keep last light activation updated", tags=["core", 'core-lights', 'core-reload'])
+set_last_light_activation_triggers = [
+    "Descendent of gCore_Lights_Switchables received update"
+]
+
+
+@rule("Core - Keep last light activation updated", description="Keep last light activation updated", tags=["core", 'core-lights', 'core-reload-set_last_light_activation'])
 @when("Descendent of gCore_Lights_Switchables received update")
 def set_last_light_activation(event):
     item = ir.getItem(event.itemName)
@@ -235,7 +251,16 @@ def check_daylight(event):
         events.postUpdate(conditionItem, condition)
 
 
-@rule("Core - Manage lights according to light conditions.", description="Manage lights according to light conditions.", tags=['core', 'core-lights', 'core-reload'])
+manage_light_state_triggers = [
+    "Member of gCore_Lights_DarkMode received update",
+    "Member of gCore_Lights_BrightMode received update",
+    "Member of gCore_Lights_ObscuredMode received update",
+    "Item Core_Lights_AmbientLightCondition received update",
+    "Item Core_Presence received update"
+]
+
+
+@rule("Core - Manage lights according to light conditions.", description="Manage lights according to light conditions.", tags=['core', 'core-lights', 'core-reload-manage_light_state'])
 @when("Member of gCore_Lights_DarkMode received update")
 @when("Member of gCore_Lights_BrightMode received update")
 @when("Member of gCore_Lights_ObscuredMode received update")
@@ -289,8 +314,13 @@ def manage_light_state(event):
             turn_off_switchable_point(point)
 
 
-@rule("Core - Manage lights on presence.", description="Manage lights on presence.", tags=['core', 'core-lights', 'core-presence', 'core-reload'])
-@when("Member of gCore_Presence_PresenceTrigger received update")
+manage_presence_triggers = [
+    "Member of gCore_Presence_PresenceTrigger received update"
+]
+
+
+@ rule("Core - Manage lights on presence.", description="Manage lights on presence.", tags=['core', 'core-lights', 'core-presence', 'core-reload-manage_presence'])
+@ when("Member of gCore_Presence_PresenceTrigger received update")
 def manage_presence(event):
     item = ir.getItem(event.itemName)
     if (
@@ -346,7 +376,9 @@ def welcome_light(event):
     welcomeLightModeMapping = {
         AmbientLightCondition.DARK: ir.getItem("Core_Lights_WelcomeLight_DarkMode"),
         AmbientLightCondition.OBSCURED: ir.getItem("Core_Lights_WelcomeLight_ObscuredMode"),
-        AmbientLightCondition.BRIGHT: ir.getItem("Core_Lights_WelcomeLight_BrightMode")
+        AmbientLightCondition.BRIGHT: ir.getItem(
+            "Core_Lights_WelcomeLight_BrightMode"
+        )
     }
     welcomeLightMode = welcomeLightModeMapping.get(
         AmbientLightCondition.BRIGHT if isinstance(

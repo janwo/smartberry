@@ -127,10 +127,22 @@ def sync_timed_outlets_helpers(event):
         )
 
     # Reload rules
-    reload_rules(['core-timed-outlets', 'core-reload'])
+    reload_rules(
+        ['core-timed-outlets', 'core-reload-set_last_outlet_activation'],
+        set_last_outlet_activation_triggers
+    )
+    reload_rules(
+        ['core-timed-outlets', 'core-reload-manage_elapsed'],
+        manage_elapsed_triggers
+    )
 
 
-@rule("Core - Keep last timed outlet activation updated", description="Keep last timed outlet activation updated.", tags=['core', 'core-timed-outlets', 'core-reload'])
+set_last_outlet_activation_triggers = [
+    "Descendent of gCore_TimedOutlets_Switchable received update"
+]
+
+
+@rule("Core - Keep last timed outlet activation updated", description="Keep last timed outlet activation updated.", tags=['core', 'core-timed-outlets', 'core-reload-set_last_outlet_activation'])
 @when("Descendent of gCore_TimedOutlets_Switchable received update")
 def set_last_outlet_activation(event):
     item = ir.getItem(event.itemName)
@@ -153,7 +165,13 @@ def set_last_outlet_activation(event):
             )
 
 
-@rule("Core - Manage elapsed outlets", description="Manage elapsed outlets", tags=['core', 'core-timed-outlets', 'core-reload'])
+manage_elapsed_triggers = [
+    "Time cron 0 * * ? * * *",
+    "Member of gCore_TimedOutlets_ActiveDuration received update"
+]
+
+
+@rule("Core - Manage elapsed outlets", description="Manage elapsed outlets", tags=['core', 'core-timed-outlets', 'core-reload-manage_elapsed'])
 @when("Time cron 0 * * ? * * *")
 @when("Member of gCore_TimedOutlets_ActiveDuration received update")
 def manage_elapsed(event):

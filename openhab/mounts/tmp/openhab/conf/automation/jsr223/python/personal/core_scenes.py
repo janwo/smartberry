@@ -270,10 +270,26 @@ def sync_scenes_helpers(event):
             ir.remove(stateTrigger.name)
 
     # Reload rules
-    reload_rules(['core-scenes', 'core-reload'])
+    reload_rules(
+        ['core-scenes', 'core-reload-activate_scene'],
+        activate_scene_triggers
+    )
+    reload_rules(
+        ['core-scenes', 'core-reload-store_scene'],
+        store_scene_triggers
+    )
+    reload_rules(
+        ['core-scenes', 'core-reload-manage_scenetriggers'],
+        manage_scenetriggers_triggers
+    )
 
 
-@rule("Core - Activate scene.", description="Activate scene.", tags=['core', 'core-scenes', 'core-reload'])
+activate_scene_triggers = [
+    "Member of gCore_Scenes received update"
+]
+
+
+@rule("Core - Activate scene.", description="Activate scene.", tags=['core', 'core-scenes', 'core-reload-activate_scene'])
 @when("Member of gCore_Scenes received update")
 def activate_scene(event):
     scene = ir.getItem(event.itemName)
@@ -287,7 +303,12 @@ def activate_scene(event):
     trigger_scene_items(scene)
 
 
-@rule("Core - Store scene.", description="Store scene.", tags=['core', 'core-scenes', 'core-reload'])
+store_scene_triggers = [
+    "Member of gCore_Scenes_StoreTriggers received update"
+]
+
+
+@rule("Core - Store scene.", description="Store scene.", tags=['core', 'core-scenes', 'core-reload-store_scene'])
 @when("Member of gCore_Scenes_StoreTriggers received update")
 def store_scene(event):
     sceneTrigger = ir.getItem(event.itemName)
@@ -295,7 +316,12 @@ def store_scene(event):
     save_scene_item_states(scene, event.itemState.toFullString())
 
 
-@rule("Core - Manage gCore_Scenes_StateTriggers to trigger scene.", description="Manage gCore_Scenes_StateTriggers to trigger scene.", tags=['core', 'core-scenes', 'core-reload'])
+manage_scenetriggers_triggers = [
+    "Member of gCore_Scenes_StateTriggers received update"
+]
+
+
+@rule("Core - Manage gCore_Scenes_StateTriggers to trigger scene.", description="Manage gCore_Scenes_StateTriggers to trigger scene.", tags=['core', 'core-scenes', 'core-reload-manage_scenetriggers'])
 @when("Member of gCore_Scenes_StateTriggers received update")
 def manage_scenetriggers(event):
     item = ir.getItem(event.itemName)
