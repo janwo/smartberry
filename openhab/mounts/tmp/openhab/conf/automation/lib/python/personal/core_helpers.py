@@ -26,8 +26,12 @@ def reload_rules(tags=['core-reload'], triggers=[]):
     if len(triggers):
         for _rule in ruleRegistry.getByTags(tags):
             ruleRegistry.remove(_rule.getUID())
-            _rule.triggers = []
+            del _rule.UID, _rule.triggers
             for trigger in triggers:
+                Log.logError(
+                    'reload_rules',
+                    'Add trigger {} to rule {}'.format(trigger, _rule.getName())
+                )
                 when(trigger)(_rule)
             rule(
                 _rule.getName(),
