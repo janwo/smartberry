@@ -27,7 +27,6 @@ def sync_heating_helpers(event):
 
     # Reload rules
     reload_rules(
-        ['core-heating', 'core-reload-update_heater_on_contact_trigger'],
         update_heater_on_contact_trigger_triggers,
         update_heater_on_contact_trigger
     )

@@ -152,17 +152,14 @@ def sync_lights_helpers(event):
 
     # Reload rules
     reload_rules(
-        ['core-lights', 'core-reload-set_last_light_activation'],
         set_last_light_activation_triggers,
         set_last_light_activation
     )
     reload_rules(
-        ['core-lights', 'core-reload-manage_light_state'],
         manage_light_state_triggers,
         manage_light_state
     )
     reload_rules(
-        ['core-lights', 'core-reload-manage_presence'],
         manage_presence_triggers,
         manage_presence
     )

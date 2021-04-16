@@ -38,17 +38,14 @@ def sync_security_helpers(event):
 
     # Reload rules
     reload_rules(
-        ['core-security', 'core-reload-assault_trigger'],
         assault_trigger_triggers,
         assault_trigger
     )
     reload_rules(
-        ['core-security', 'core-reload-disarmament'],
         disarmament_triggers,
         disarmament
     )
     reload_rules(
-        ['core-security', 'core-reload-lock_closure'],
         lock_closure_triggers,
         lock_closure
     )

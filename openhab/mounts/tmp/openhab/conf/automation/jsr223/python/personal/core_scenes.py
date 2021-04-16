@@ -271,17 +271,14 @@ def sync_scenes_helpers(event):
 
     # Reload rules
     reload_rules(
-        ['core-scenes', 'core-reload-activate_scene'],
         activate_scene_triggers,
         activate_scene
     )
     reload_rules(
-        ['core-scenes', 'core-reload-store_scene'],
         store_scene_triggers,
         store_scene
     )
     reload_rules(
-        ['core-scenes', 'core-reload-manage_scenetriggers'],
         manage_scenetriggers_triggers,
         manage_scenetriggers
     )
