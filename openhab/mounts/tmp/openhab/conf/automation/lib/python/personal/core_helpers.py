@@ -30,7 +30,7 @@ def reload_rules(triggers, target):
         )
         return
 
-    UID​ ​=​ ​getattr​(​target​, ​"UID"​, ​None​)
+    UID = getattr(target, "UID", None)
     if not UID:
         Log.logError(
             'reload_rules',
@@ -39,7 +39,7 @@ def reload_rules(triggers, target):
         return
 
     r = ruleRegistry.get(UID)
-    ​if​ not r:
+    if not r:
         Log.logError(
             'reload_rules',
             'Could not reload rule - uid {} was not found!'.format(UID)
@@ -50,7 +50,7 @@ def reload_rules(triggers, target):
     for t in triggers:
         when(t)(target)
 
-    ​ruleRegistry​.​remove​(​UID​)
+    ruleRegistry.remove(UID)
     del UID, target.UID
     rule(
         r.getName(),
