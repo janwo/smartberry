@@ -23,7 +23,7 @@ def enum(**enums):
 
 
 def reload_rules(triggers, target):
-     if not len(triggers) or not target:
+    if not len(triggers) or not target:
         Log.logError(
             'reload_rules',
             'Could not reload rule without triggers, target!'
@@ -45,7 +45,7 @@ def reload_rules(triggers, target):
             'Could not reload rule - uid {} was not found!'.format(UID)
         )
         return
-    
+
     del target.triggers
     for t in triggers:
         when(t)(target)
@@ -57,7 +57,8 @@ def reload_rules(triggers, target):
         r.getDescription(),
         r.getTags()
     )(target)
-    
+
+
 def get_location(item):
     if isinstance(item, (str, unicode)):
         try:
