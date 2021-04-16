@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+from core.jsr223.scope import ruleRegistry
 from core.jsr223.scope import ir, scriptExtension
 from core.metadata import set_key_value, get_key_value, remove_key_value, get_value
 from core.items import add_item
@@ -12,7 +13,6 @@ from core.actions import Semantics
 from core.rules import rule
 from core.triggers import when
 scriptExtension.importPreset("RuleSupport")
-from core.jsr223.scope import ruleRegistry
 
 METADATA_NAMESPACE = "core"
 DATE_STRING = "yyyy-MM-dd'T'HH:mm:ss.SSxx"
@@ -57,8 +57,7 @@ def reload_rules(triggers, target):
         r.getDescription(),
         r.getTags()
     )(target)
-
-
+    
 def get_location(item):
     if isinstance(item, (str, unicode)):
         try:
