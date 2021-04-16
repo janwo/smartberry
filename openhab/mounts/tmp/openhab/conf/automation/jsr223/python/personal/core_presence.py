@@ -25,7 +25,8 @@ def sync_presence_helpers(event):
     # Reload rules
     reload_rules(
         ['core-presence', 'core-reload-trigger_presence_on_motion'],
-        trigger_presence_on_motion_triggers
+        trigger_presence_on_motion_triggers,
+        trigger_presence_on_motion
     )
 
 

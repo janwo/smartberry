@@ -129,11 +129,13 @@ def sync_timed_outlets_helpers(event):
     # Reload rules
     reload_rules(
         ['core-timed-outlets', 'core-reload-set_last_outlet_activation'],
-        set_last_outlet_activation_triggers
+        set_last_outlet_activation_triggers,
+        set_last_outlet_activation
     )
     reload_rules(
         ['core-timed-outlets', 'core-reload-manage_elapsed'],
-        manage_elapsed_triggers
+        manage_elapsed_triggers,
+        manage_elapsed
     )
 
 

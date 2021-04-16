@@ -22,26 +22,41 @@ def enum(**enums):
     return type('Enum', (), enums)
 
 
-def reload_rules(tags=['core-reload'], triggers=[]):
-    if len(triggers):
-        for _rule in ruleRegistry.getByTags(tags):
-            ruleRegistry.remove(_rule.getUID())
-            for trigger in triggers:
-                Log.logError(
-                    'reload_rules',
-                    'Add trigger {} to rule {}'.format(trigger, _rule.getName())
-                )
-                when(trigger)(_rule)
-            rule(
-                _rule.getName(),
-                _rule.getDescription(),
-                _rule.getTags()
-            )(_rule)
-    else:
+def reload_rules(triggers, target):
+     if not len(triggers) or not target:
         Log.logError(
             'reload_rules',
-            'Could not reload rule with tags {}'.format(tags)
+            'Could not reload rule without triggers, target!'
         )
+        return
+
+    UID​ ​=​ ​getattr​(​target​, ​"UID"​, ​None​)
+    if not UID:
+        Log.logError(
+            'reload_rules',
+            'Could not reload rule without UID in target object!'
+        )
+        return
+
+    r = ruleRegistry.get(UID)
+    ​if​ not r:
+        Log.logError(
+            'reload_rules',
+            'Could not reload rule - uid {} was not found!'.format(UID)
+        )
+        return
+    
+    del target.triggers
+    for t in triggers:
+        when(t)(target)
+
+    ​ruleRegistry​.​remove​(​UID​)
+    del UID, target.UID
+    rule(
+        r.getName(),
+        r.getDescription(),
+        r.getTags()
+    )(target)
 
 
 def get_location(item):
