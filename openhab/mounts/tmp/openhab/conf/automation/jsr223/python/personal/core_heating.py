@@ -1,10 +1,11 @@
 from __future__ import unicode_literals
 from core.triggers import when
 from core.rules import rule
-from personal.core_helpers import reload_rules, METADATA_NAMESPACE, get_location, sync_group_with_tags, get_items_of_any_tags, get_all_semantic_items
+from personal.core_helpers import get_date, get_date_string, reload_rules, METADATA_NAMESPACE, get_location, sync_group_with_tags, get_items_of_any_tags, get_all_semantic_items
 from personal.core_heating import TEMPERATURE_MEASUREMENT_POINT_TAGS, OPEN_CONTACT_EQUIPMENT_TAGS, OPEN_CONTACT_POINT_TAGS, HEATING_EQUIPMENT_TAGS, HEATING_POINT_TAGS, HeatingState
 from core.jsr223.scope import ir, UnDefType, events, OPEN
-from core.metadata import set_key_value, get_key_value
+from core.metadata import set_key_value, get_key_value, remove_key_value
+from core.date import minutes_between, ZonedDateTime
 
 
 @rule("Core - Sync helper items of heating", description="Core - Sync helper items", tags=['core', 'core-heating'])
@@ -65,11 +66,42 @@ def update_heater_on_contact_trigger(event):
         )
     )
 
+    shutdownHeating = False
+    if len(openContactLocations):
+        contactSince = get_key_value(
+            heaterMode.name,
+            METADATA_NAMESPACE,
+            'heating',
+            'open-contact-since'
+        )
+
+        if not contactSince:
+            contactSince = get_date_string(ZonedDateTime.now())
+            set_key_value(
+                heaterMode.name,
+                METADATA_NAMESPACE,
+                'heating',
+                'open-contact-since',
+                contactSince
+            )
+
+        shutdownHeating = minutes_between(
+            get_date(contactSince),
+            ZonedDateTime.now()
+        ) > 30
+    else:
+        remove_key_value(
+            heaterMode.name,
+            METADATA_NAMESPACE,
+            'heating',
+            'open-contact-since'
+        )
+
     for point in get_all_semantic_items(HEATING_EQUIPMENT_TAGS, HEATING_POINT_TAGS):
         location = get_location(point)
         if location:
             state = heaterMode.state.toFullString()
-            if location.name in openContactLocations:
+            if shutdownHeating or location.name in openContactLocations:
                 state = str(HeatingState.OFF)
 
             pointCommandMap = get_key_value(
@@ -81,7 +113,4 @@ def update_heater_on_contact_trigger(event):
             if pointCommandMap and state in pointCommandMap:
                 state = pointCommandMap[state]
             if isinstance(point.state, UnDefType) or point.state.toFullString() != state:
-                events.sendCommand(
-                    point,
-                    state
-                )
+                events.sendCommand(point, state)

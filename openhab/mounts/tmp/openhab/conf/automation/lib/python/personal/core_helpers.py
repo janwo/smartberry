@@ -26,7 +26,7 @@ def reload_rules(triggers, target):
     if not len(triggers) or not target:
         Log.logError(
             'reload_rules',
-            'Could not reload rule without triggers, target!'
+            'Could not reload rule without triggers or target!'
         )
         return
 
@@ -226,8 +226,11 @@ def remove_invalid_helper_items():
                             Log.logInfo(
                                 "remove_invalid_helper_items",
                                 "Remove invalid metadata of item {}: {} [{}] is no valid helper item for .".format(
-                                    item.name, name, namespace
-                                ))
+                                    item.name,
+                                    name,
+                                    namespace
+                                )
+                            )
                             remove_key_value(
                                 item.name,
                                 METADATA_NAMESPACE,
