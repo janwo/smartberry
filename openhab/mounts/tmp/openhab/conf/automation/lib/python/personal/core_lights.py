@@ -6,7 +6,7 @@ from org.openhab.core.types import UnDefType
 from org.openhab.core.library.types import OnOffType
 from core.metadata import get_key_value, set_key_value
 from core.date import minutes_between, ZonedDateTime
-from personal.core_broadcast import BroadcastType, broadcast
+from personal.core_broadcast import broadcast
 
 LightMode = enum(
     OFF=0.0,

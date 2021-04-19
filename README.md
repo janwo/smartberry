@@ -75,6 +75,7 @@ To adjust the heating management configuration, you can adjust the following ite
 Item name|Description
 :---|:---
 Core\_Heating\_Thermostat\_ModeDefault|Set the heating mode. Current choices are `OFF`(0.0), `ON `(1.0), `ECO` (2.0) or `POWER` (3.0)
+Core\_Heating\_Thermostat\_OpenContactShutdownMinutes|Minutes of any open contact until all heating items are turned off
 
 In order to use a different command mapping for your thermostat, add the following metadata via `core` namespace to the thermostat mode item:
 
@@ -117,7 +118,7 @@ Scenes allow multiple devices to be controlled with a single command. For exampl
 
 Role|Needed equipment tags|Needed point tags|Needed custom tags|Description
 :---|:---|:---|:---|:---
-Scene item|||`CoreScene`|Add `options` to metadata via namespace `stateDescription` to add scene states, e.g. `options="0.0=Chillout,1.0=Party"`.
+Scene item|||`CoreScene`|Add `options` to metadata via namespace `stateDescription` to add scene states, e.g. `options="0.0=Chillout,1.0=Party"`. When finished, trigger item `Core_Scenes_ReloadStates` to reinitialize all scene states.
 Scene trigger item|||`CoreSceneTrigger`|Manually changes the state of a given scene.
 
 A scene saves all light switchable items within the same location (as defined in [lights](#lights)). You can change this behavior and use custom scene members by adding the list of items or groups to the metadata object of the scene item via namespace `core` and key `custom-members`. You can add `default:true` to include all default light switchable items.

@@ -6,6 +6,7 @@ from personal.core_heating import TEMPERATURE_MEASUREMENT_POINT_TAGS, OPEN_CONTA
 from core.jsr223.scope import ir, UnDefType, events, OPEN
 from core.metadata import set_key_value, get_key_value, remove_key_value
 from core.date import minutes_between, ZonedDateTime
+from personal.core_broadcast import broadcast
 
 
 @rule("Core - Sync helper items of heating", description="Core - Sync helper items", tags=['core', 'core-heating'])
@@ -85,10 +86,16 @@ def update_heater_on_contact_trigger(event):
                 contactSince
             )
 
-        shutdownHeating = minutes_between(
-            get_date(contactSince),
-            ZonedDateTime.now()
-        ) > 30
+            heatingShutdownMinutesItem = ir.getItem(
+                "Core_Heating_Thermostat_OpenContactShutdownMinutes")
+            if isinstance(heatingShutdownMinutesItem.state, UnDefType):
+                broadcast("No value for {} is set.".format(
+                    heatingShutdownMinutesItem.name))
+            else:
+                shutdownHeating = minutes_between(
+                    get_date(contactSince),
+                    ZonedDateTime.now()
+                ) > heatingShutdownMinutesItem.state.floatValue()
     else:
         remove_key_value(
             heaterMode.name,

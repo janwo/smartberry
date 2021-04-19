@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from core.triggers import when
 from core.rules import rule
-from personal.core_broadcast import BroadcastType, broadcast
+from personal.core_broadcast import broadcast
 from core.jsr223.scope import ir, events, things
 from core.date import days_between, ZonedDateTime
 from personal.core_helpers import get_date

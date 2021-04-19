@@ -1,3 +1,7 @@
+Group gCore_Security_AssaultTrigger
+Group gCore_Security_AssaultDisarmamer
+Group gCore_Security_LockClosureTrigger
+
 Group gCore_Security "Sicherheitssystem" <alarm> (gCore_Settings) ["Equipment"] {
   cellWidget="oh-label-cell"[
     icon="oh:alarm",
@@ -6,10 +10,6 @@ Group gCore_Security "Sicherheitssystem" <alarm> (gCore_Settings) ["Equipment"] 
     footer="\u003ditems.gCore_Security.state"
   ]
 }
-
-Group gCore_Security_AssaultTrigger
-Group gCore_Security_AssaultDisarmamer
-Group gCore_Security_LockClosureTrigger
 
 Number Core_Security_SireneAutoOff "Sirene: Auto-Off (Minuten)" <siren> (gCore_Security) ["Point"] {
     stateDescription="oh-stepper-item"[

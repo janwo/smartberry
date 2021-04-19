@@ -1,7 +1,8 @@
-Group gCore_Heating "Klimaeinstellungen" <heating> (gCore_Settings) ["Equipment"]
 Group gCore_Heating_ContactSwitchable
 Group gCore_Heating_Thermostat_Mode
 Group:Number:AVG gCore_Heating_Temperature
+
+Group gCore_Heating "Klimaeinstellungen" <heating> (gCore_Settings) ["Equipment"]
 
 Number Core_Heating_Thermostat_ModeDefault "Temperaturmodus" <heating> (gCore_Heating) ["Point"] {
     stateDescription=""[
@@ -15,5 +16,19 @@ Number Core_Heating_Thermostat_ModeDefault "Temperaturmodus" <heating> (gCore_He
     listWidget=""[
         icon="oh:motion",
         action="options"
+    ]
+}
+
+Number Core_Heating_Thermostat_OpenContactShutdownMinutes "Zeit bis alle Heizkörper bei offenen Kontakten ausschalten" <time> (gCore_Heating) ["Point"] {
+    stateDescription=""[
+        pattern="%dmin",
+        min="0",
+        max="1440",
+        step="5"
+    ],
+    listWidget="oh-stepper-item"[
+        raised="true",
+        round="true",
+        icon="oh:time"
     ]
 }

@@ -1,3 +1,8 @@
+Group gCore_Lights_Switchables
+Group gCore_Lights_DarkMode
+Group gCore_Lights_BrightMode
+Group gCore_Lights_ObscuredMode
+
 Group gCore_Lights "Lichtsteuerung" <light> (gCore_Settings) ["Equipment"] {
   cellWidget="oh-label-cell"[
     icon="oh:light",
@@ -6,11 +11,6 @@ Group gCore_Lights "Lichtsteuerung" <light> (gCore_Settings) ["Equipment"] {
     footer="\u003ditems.gCore_Lights.state"
   ]
 }
-
-Group gCore_Lights_Switchables
-Group gCore_Lights_DarkMode
-Group gCore_Lights_BrightMode
-Group gCore_Lights_ObscuredMode
 
 Number Core_Lights_DefaultDuration "Standard Lichtdauer" <time> (gCore_Lights) ["Point"]  {
     stateDescription=""[
@@ -32,7 +32,6 @@ Number Core_Lights_AmbientLightCondition "Lichtwert-Einstufung" <sun> (gCore_Lig
     ]
 }
 
-
 Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured "Lichtwert bis Verdunkelt" <line>  (gCore_Lights) ["Point"]  {
     stateDescription=""[
         pattern="%d%%",
@@ -46,7 +45,6 @@ Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured "Lichtwert b
         icon="oh:light"
     ]
 }
-
 
 Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark "Lichtwert bis Dunkel" <line> (gCore_Lights) ["Point"] {
     stateDescription=""[
