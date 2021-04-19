@@ -8,7 +8,7 @@ Group gCore_Scenes_Settings "Szenen" <party> (gCore_Settings) ["Equipment"] {
   ]
 }
 
-Group gCore_Scenes_StoreTriggers "Szene überschreiben" <settings> (gCore_Scenes_Settings) ["Equipment"] {
+Group gCore_Scenes_StoreTriggers "Szene überschreiben" <settings> (gCore_Scenes_Settings) ["Point"] {
     cellWidget=""[
         label="\u003ditems.gCore_Scenes_StoreTriggers.title",
         icon="oh:settings"

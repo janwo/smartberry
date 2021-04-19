@@ -10,7 +10,7 @@ Group gCore_TimedOutlets "Zeituhr-Steckdosen" <poweroutlet> (gCore_Settings) ["E
     ]
 }
 
-Group gCore_TimedOutlets_ActiveDuration "Einschaltdauer von Zeituhr-Steckdosen" <time> (gCore_TimedOutlets) ["Equipment"] {
+Group gCore_TimedOutlets_ActiveDuration "Einschaltdauer von Zeituhr-Steckdosen" <time> (gCore_TimedOutlets) ["Point"] {
     cellWidget=""[
         label="\u003ditems.gCore_TimedOutlets_ActiveDuration.title",
         icon="oh:time"
