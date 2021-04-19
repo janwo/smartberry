@@ -236,7 +236,10 @@ def check_daylight(event):
         medianSensorItem.state
     )
 
-    if conditionItem.state != condition:
+    if (
+        isinstance(conditionItem.state, UnDefType) or
+        conditionItem.state.floatValue() != condition
+    ):
         events.postUpdate(conditionItem, condition)
 
 
