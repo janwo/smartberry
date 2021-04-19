@@ -6,7 +6,6 @@ from personal.core_heating import TEMPERATURE_MEASUREMENT_POINT_TAGS, OPEN_CONTA
 from core.jsr223.scope import ir, UnDefType, events, OPEN
 from core.metadata import set_key_value, get_key_value, remove_key_value
 from core.date import minutes_between, ZonedDateTime
-from personal.core_broadcast import broadcast
 
 
 @rule("Core - Sync helper items of heating", description="Core - Sync helper items", tags=['core', 'core-heating'])
@@ -35,14 +34,14 @@ def sync_heating_helpers(event):
 
 
 update_heater_on_contact_trigger_triggers = [
-    "Time cron 0 0 * ? * * *",
+    "Time cron 0 0/5 * ? * * *",
     "Descendent of gCore_Heating_ContactSwitchable received update",
     "Item Core_Heating_Thermostat_ModeDefault received update"
 ]
 
 
 @rule("Core - Check conditions to update heater values", description="Check conditions to update heater values", tags=['core', 'core-heating', 'core-reload-update_heater_on_contact_trigger'])
-@when("Time cron 0 0 * ? * * *")
+@when("Time cron 0 0/5 * ? * * *")
 @when("Descendent of gCore_Heating_ContactSwitchable received update")
 @when("Item Core_Heating_Thermostat_ModeDefault received update")
 def update_heater_on_contact_trigger(event):
@@ -86,16 +85,16 @@ def update_heater_on_contact_trigger(event):
                 contactSince
             )
 
-            heatingShutdownMinutesItem = ir.getItem(
-                "Core_Heating_Thermostat_OpenContactShutdownMinutes")
-            if isinstance(heatingShutdownMinutesItem.state, UnDefType):
-                broadcast("No value for {} is set.".format(
-                    heatingShutdownMinutesItem.name))
-            else:
-                shutdownHeating = minutes_between(
-                    get_date(contactSince),
-                    ZonedDateTime.now()
-                ) > heatingShutdownMinutesItem.state.floatValue()
+        heatingShutdownMinutesItem = ir.getItem(
+            "Core_Heating_Thermostat_OpenContactShutdownMinutes")
+        shutdownHeating = (
+            not isinstance(heatingShutdownMinutesItem.state, UnDefType) and
+            heatingShutdownMinutesItem.state.floatValue() != 0 and
+            minutes_between(
+                get_date(contactSince),
+                ZonedDateTime.now()
+            ) > heatingShutdownMinutesItem.state.floatValue()
+        )
     else:
         remove_key_value(
             heaterMode.name,

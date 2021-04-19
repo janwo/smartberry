@@ -75,7 +75,7 @@ To adjust the heating management configuration, you can adjust the following ite
 Item name|Description
 :---|:---
 Core\_Heating\_Thermostat\_ModeDefault|Set the heating mode. Current choices are `OFF`(0.0), `ON `(1.0), `ECO` (2.0) or `POWER` (3.0)
-Core\_Heating\_Thermostat\_OpenContactShutdownMinutes|Minutes of any open contact until all heating items are turned off
+Core\_Heating\_Thermostat\_OpenContactShutdownMinutes|Minutes of any open contact until all heating items are turned off. Set to `0` to disable overall turn off
 
 In order to use a different command mapping for your thermostat, add the following metadata via `core` namespace to the thermostat mode item:
 
