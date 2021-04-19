@@ -49,6 +49,21 @@ def get_light_mode_group():
     )
 
 
+def get_light_condition(lightState):
+    darkTresholdItem = ir.getItem(
+        "Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark")
+    obscuredTresholdItem = ir.getItem(
+        "Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured")
+
+    if lightState < darkTresholdItem.state:
+        return AmbientLightCondition.DARK
+
+    if lightState < obscuredTresholdItem.state:
+        return AmbientLightCondition.OBSCURED
+
+    return AmbientLightCondition.BRIGHT
+
+
 def set_location_as_activated(switchable):
     location = get_location(switchable)
     if location:

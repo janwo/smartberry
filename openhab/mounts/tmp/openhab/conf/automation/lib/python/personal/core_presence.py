@@ -95,7 +95,11 @@ def trigger_presence(item):
             get_date_string(ZonedDateTime.now())
         )
 
-    events.postUpdate(presenceProvider, PresenceState.HOME)
+    if (
+        isinstance(presenceProvider.state, UnDefType) or
+        presenceProvider.state.floatValue() != PresenceState.HOME
+    ):
+        events.postUpdate(presenceProvider, PresenceState.HOME)
 
 
 def trigger_absence(item):

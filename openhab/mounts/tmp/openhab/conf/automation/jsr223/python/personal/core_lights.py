@@ -4,7 +4,7 @@ from core.rules import rule
 from personal.core_presence import PresenceState
 from personal.core_scenes import trigger_scene_items, get_scene_items
 from personal.core_helpers import reload_rules, METADATA_NAMESPACE, get_location, get_childs_with_condition, has_same_location, get_item_of_helper_item, get_items_of_any_tags, sync_group_with_tags, create_helper_item, intersection_count, get_all_semantic_items
-from personal.core_lights import LIGHT_MEASUREMENT_POINT_TAGS, LIGHTS_POINT_TAGS, LIGHTS_EQUIPMENT_TAGS, set_location_as_activated, is_elapsed, LightMode, AmbientLightCondition, get_light_mode_group, turn_on_switchable_point, turn_off_switchable_point
+from personal.core_lights import get_light_condition, LIGHT_MEASUREMENT_POINT_TAGS, LIGHTS_POINT_TAGS, LIGHTS_EQUIPMENT_TAGS, set_location_as_activated, is_elapsed, LightMode, AmbientLightCondition, get_light_mode_group, turn_on_switchable_point, turn_off_switchable_point
 from core.jsr223.scope import ir, events, OFF, ON, OPEN
 from org.openhab.core.types import UnDefType
 from org.openhab.core.library.types import OnOffType, OpenClosedType
@@ -218,11 +218,6 @@ def check_daylight(event):
         key=lambda sensor: sensor.state
     )
 
-    darkTresholdItem = ir.getItem(
-        "Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark")
-    obscuredTresholdItem = ir.getItem(
-        "Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured")
-
     if len(sensorsOfInactiveRooms) == 0:
         return
 
@@ -231,22 +226,16 @@ def check_daylight(event):
     if isinstance(medianSensorItem.state, UnDefType):
         return
 
-    conditionItemName = "Core_Lights_AmbientLightCondition"
+    condition = get_light_condition(medianSensorItem.state)
+    conditionItem = ir.getItem("Core_Lights_AmbientLightCondition")
     set_key_value(
-        conditionItemName,
+        conditionItem.name,
         METADATA_NAMESPACE,
         'lights',
         'luminance',
         medianSensorItem.state
     )
 
-    condition = AmbientLightCondition.BRIGHT
-    if medianSensorItem.state < darkTresholdItem.state:
-        condition = AmbientLightCondition.DARK
-    elif medianSensorItem.state < obscuredTresholdItem.state:
-        condition = AmbientLightCondition.OBSCURED
-
-    conditionItem = ir.getItem(conditionItemName)
     if conditionItem.state != condition:
         events.postUpdate(conditionItem, condition)
 
