@@ -65,37 +65,37 @@ def update_heater_on_contact_trigger(event):
             )
         )
     )
+    openContactSince = get_key_value(
+        heaterMode.name,
+        METADATA_NAMESPACE,
+        'heating',
+        'open-contact-since'
+    )
 
     shutdownHeating = False
     if len(openContactLocations):
-        contactSince = get_key_value(
-            heaterMode.name,
-            METADATA_NAMESPACE,
-            'heating',
-            'open-contact-since'
-        )
+        heatingShutdownMinutesItem = ir.getItem(
+            "Core_Heating_Thermostat_OpenContactShutdownMinutes")
 
-        if not contactSince:
-            contactSince = get_date_string(ZonedDateTime.now())
+        if not openContactSince:
+            openContactSince = get_date_string(ZonedDateTime.now())
             set_key_value(
                 heaterMode.name,
                 METADATA_NAMESPACE,
                 'heating',
                 'open-contact-since',
-                contactSince
+                openContactSince
             )
-
-        heatingShutdownMinutesItem = ir.getItem(
-            "Core_Heating_Thermostat_OpenContactShutdownMinutes")
+            
         shutdownHeating = (
             not isinstance(heatingShutdownMinutesItem.state, UnDefType) and
             heatingShutdownMinutesItem.state.floatValue() != 0 and
             minutes_between(
-                get_date(contactSince),
+                get_date(openContactSince),
                 ZonedDateTime.now()
             ) > heatingShutdownMinutesItem.state.floatValue()
         )
-    else:
+    elif openContactSince:
         remove_key_value(
             heaterMode.name,
             METADATA_NAMESPACE,
