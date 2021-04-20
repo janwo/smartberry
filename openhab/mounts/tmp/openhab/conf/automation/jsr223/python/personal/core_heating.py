@@ -36,7 +36,8 @@ def sync_heating_helpers(event):
 update_heater_on_contact_trigger_triggers = [
     "Time cron 0 0/5 * ? * * *",
     "Descendent of gCore_Heating_ContactSwitchable received update",
-    "Item Core_Heating_Thermostat_ModeDefault received update"
+    "Item Core_Heating_Thermostat_ModeDefault received update",
+    "Item Core_Heating_Thermostat_OpenContactShutdownMinutes received update"
 ]
 
 
@@ -44,6 +45,7 @@ update_heater_on_contact_trigger_triggers = [
 @when("Time cron 0 0/5 * ? * * *")
 @when("Descendent of gCore_Heating_ContactSwitchable received update")
 @when("Item Core_Heating_Thermostat_ModeDefault received update")
+@when("Item Core_Heating_Thermostat_OpenContactShutdownMinutes received update")
 def update_heater_on_contact_trigger(event):
     heaterMode = ir.getItem("Core_Heating_Thermostat_ModeDefault")
     if isinstance(heaterMode.state, UnDefType):
@@ -65,8 +67,11 @@ def update_heater_on_contact_trigger(event):
             )
         )
     )
+
+    heatingShutdownMinutesItem = ir.getItem(
+            "Core_Heating_Thermostat_OpenContactShutdownMinutes")
     openContactSince = get_key_value(
-        heaterMode.name,
+        heatingShutdownMinutesItem.name,
         METADATA_NAMESPACE,
         'heating',
         'open-contact-since'
@@ -74,13 +79,10 @@ def update_heater_on_contact_trigger(event):
 
     shutdownHeating = False
     if len(openContactLocations):
-        heatingShutdownMinutesItem = ir.getItem(
-            "Core_Heating_Thermostat_OpenContactShutdownMinutes")
-
         if not openContactSince:
             openContactSince = get_date_string(ZonedDateTime.now())
             set_key_value(
-                heaterMode.name,
+                heatingShutdownMinutesItem.name,
                 METADATA_NAMESPACE,
                 'heating',
                 'open-contact-since',
@@ -97,7 +99,7 @@ def update_heater_on_contact_trigger(event):
         )
     elif openContactSince:
         remove_key_value(
-            heaterMode.name,
+            heatingShutdownMinutesItem.name,
             METADATA_NAMESPACE,
             'heating',
             'open-contact-since'
