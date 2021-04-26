@@ -103,14 +103,15 @@ Core_Presence|The actual presence state. Current choices are `HOME`, `AWAY_SHORT
 Core\_Presence\_HoursUntilAwayShort|Set hours until presence management sets the presence state to `AWAY_SHORT`
 Core\_Presence\_HoursUntilAwayLong|Set hours until presence management sets the presence state to `AWAY_LONG`
 
-Presence items can also trigger absence events. To do so, add the desired state values via namespace `core` to the item with the `Presence` tag as shown below. If no metadata is provided, any `ON`-like state will trigger presence.
+Presence items can also trigger absence events. To do so, add the desired state values via namespace `core` to the item with the `Presence` tag as shown below. By default, any `ON`-like state will trigger presence.
 
 ````
 presence:
-	absence-states: [optional, states that trigger absence]
+	absence-states: [optional, states that trigger absence, defaults to empty list]
 		- "OFF"
-	presence-states: [optional, states that trigger presence]
+	presence-states: [optional, states that trigger presence, defaults to "ON" and "OPEN"]
 		- "ON"
+		- "OPEN"
 ````
 
 #### Scenes 🎬

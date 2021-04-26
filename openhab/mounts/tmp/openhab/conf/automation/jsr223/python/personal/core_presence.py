@@ -43,34 +43,20 @@ def trigger_presence_on_motion(event):
         METADATA_NAMESPACE,
         'presence',
         'presence-states'
-    )
+    ) or ['ON', 'OPEN']
 
     absenceStates = get_key_value(
         item.name,
         METADATA_NAMESPACE,
         'presence',
         'absence-states'
-    )
+    ) or []
 
-    if (
-        presenceStates and
-        item.state.toFullString() in presenceStates
-    ):
+    if item.state.toFullString() in presenceStates:
         trigger_presence(item)
-
-    if (
-        absenceStates and
-        item.state.toFullString() in absenceStates
-    ):
+    
+    if item.state.toFullString() in absenceStates:
         trigger_absence(item)
-
-    # Default, if no metadata is given.
-    if not presenceStates and not absenceStates:
-        if(
-            item.getStateAs(OnOffType) == ON or
-            item.getStateAs(OpenClosedType) == OPEN
-        ):
-            trigger_presence(item)
 
 
 @rule("Core - Check for an absence presence state and update Core_Presence", description="Check presence state and update Core_Presence", tags=['core', 'core-presence'])
