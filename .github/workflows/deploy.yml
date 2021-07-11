@@ -13,6 +13,12 @@ jobs:
       uses: actions/checkout@v2
       with:
         persist-credentials: false
+    - name: Setup Node.js
+      uses: actions/setup-node@v2.2.0
+    - name: Convert README.md to README.html
+      run: |
+        mkdir ./openhab/mounts/tmp/openhab/conf/html
+        npx marked -i ./README.md -o ./openhab/mounts/tmp/openhab/conf/html/index.html
     - name: Push to balena
       run: |
         curl -L -o /tmp/balena.zip ${{ secrets.BALENA_CLI_RELEASE_ZIP }}
