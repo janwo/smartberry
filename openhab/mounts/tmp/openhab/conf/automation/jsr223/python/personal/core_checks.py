@@ -14,7 +14,7 @@ ELAPSED_DAYS = 5
 @when("Time cron 0 0/5 * * * ?")
 def offline_check(event):
     group = ir.getItem("gCore_Checks_OfflineThings")
-    for member in group.allMembers:
+    for member in group.allMembers:   
         group.removeMember(member)
 
     allThings = things.getAll()
@@ -28,6 +28,6 @@ def offline_check(event):
             days_between(get_date(thing.getProperties().get("zwave_lastheal"), "yyyy-MM-dd'T'HH:mm:ssX"), ZonedDateTime.now()) > ELAPSED_DAYS
         ):
             for channel in thing.getChannels():
-                for item in ITEM_CHANNEL_LINK_REGISTRY.getLinkedItems(channel):
-                    if not item.getGroupNames() or group.itemName not in item.getGroupNames():
+                for item in ITEM_CHANNEL_LINK_REGISTRY.getLinkedItems(channel.getUID()):
+                    if not item.getGroupNames() or str(group.name) not in item.getGroupNames():
                         group.addMember(item)
