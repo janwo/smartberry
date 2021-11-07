@@ -52,9 +52,8 @@ def presence_updated(event):
 
 
 @rule("Core - Add custom-members.", description="Core - Add custom-members.", tags=['core', 'core-default-scene'])
-@when("Item added")
-@when("Item updated")
-@when("Item removed")
+@when("Time cron 30 0/5 * ? * * *")
+@when("System started")
 def sync_default_scene_helpers(event):
     set_key_value(
         'Core_DefaultScene',

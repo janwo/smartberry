@@ -5,9 +5,8 @@ from personal.core_helpers import remove_unlinked_helper_items, remove_invalid_h
 
 
 @rule("Core - Check helper items", description="Check helper items", tags=['core', 'core-helpers'])
-@when("Item added")
-@when("Item removed")
-@when("Item updated")
+@when("Time cron 30 0/5 * ? * * *")
+@when("System started")
 def remove_unlinked_or_invalid_helper_items(event):
     remove_unlinked_helper_items()
     remove_invalid_helper_items()

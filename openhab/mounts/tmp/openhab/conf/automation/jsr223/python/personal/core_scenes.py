@@ -12,9 +12,7 @@ from org.openhab.core.library.types import OnOffType
 
 
 @rule("Core - Sync helper items of scenes", description="Core - Sync helper items", tags=['core', 'core-scenes'])
-@when("Item added")
-@when("Item updated")
-@when("Item removed")
+@when("Time cron 30 0/5 * ? * * *")
 @when("System started")
 @when("Item Core_Scenes_ReloadStates received update ON")
 def sync_scenes_helpers(event):

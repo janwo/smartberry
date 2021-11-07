@@ -13,9 +13,7 @@ from org.openhab.core.library.types import OnOffType, OpenClosedType
 
 
 @rule("Core - Sync helper items of security", description="Core - Sync helper items", tags=['core', 'core-security'])
-@when("Item added")
-@when("Item updated")
-@when("Item removed")
+@when("Time cron 30 0/5 * ? * * *")
 @when("System started")
 def sync_security_helpers(event):
     # Sync group gCore_Security_AssaultTrigger with assault items - it's needed to create triggers on it

@@ -21,9 +21,7 @@ POINT_TAGS = [
 
 
 @rule("Core - Create timed outlet helper items", description="Create helper items", tags=['core', 'core-timed-outlets'])
-@when("Item added")
-@when("Item removed")
-@when("Item updated")
+@when("Time cron 30 0/5 * ? * * *")
 @when("System started")
 def sync_timed_outlets_helpers(event):
     # Sync group gCore_TimedOutlets_Switchable with outlet items

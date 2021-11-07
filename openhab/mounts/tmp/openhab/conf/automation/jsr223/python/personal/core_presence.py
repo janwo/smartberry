@@ -11,9 +11,7 @@ from org.openhab.core.model.script.actions import Log
 
 
 @rule("Core - Sync helper items of presence", description="Core - Sync helper items", tags=['core', 'core-presence'])
-@when("Item added")
-@when("Item updated")
-@when("Item removed")
+@when("Time cron 30 0/5 * ? * * *")
 @when("System started")
 def sync_presence_helpers(event):
     # Sync group gCore_Presence_PresenceTrigger with presence items - it's needed to create triggers on it

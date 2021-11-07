@@ -9,9 +9,7 @@ from core.date import minutes_between, ZonedDateTime
 
 
 @rule("Core - Sync helper items of heating", description="Core - Sync helper items", tags=['core', 'core-heating'])
-@when("Item added")
-@when("Item updated")
-@when("Item removed")
+@when("Time cron 30 0/5 * ? * * *")
 @when("System started")
 def sync_heating_helpers(event):
     # Sync group gCore_Heating_ContactSwitchable with contact items - it's needed to create triggers on it

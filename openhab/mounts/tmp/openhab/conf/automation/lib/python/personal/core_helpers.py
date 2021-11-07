@@ -23,7 +23,6 @@ def enum(**enums):
 
 
 def reload_rules(triggers, target):
-    return
     if not len(triggers) or not target:
         Log.logError(
             'reload_rules',
