@@ -3,11 +3,8 @@ from core.triggers import when
 from core.rules import rule
 from personal.core_helpers import reload_rules, sync_group_with_tags, get_date_string, get_semantic_items, get_parents_with_condition, intersection_count, get_date, METADATA_NAMESPACE, create_helper_item, get_helper_item
 from core.date import minutes_between, ZonedDateTime
-from personal.core_broadcast import broadcast
 from core.metadata import set_key_value, get_key_value, set_value
 from core.jsr223.scope import ir, events, ON, OFF
-from org.openhab.core.types import UnDefType
-from org.openhab.core.model.script.actions import Log
 from org.openhab.core.library.types import OnOffType
 
 

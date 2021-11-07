@@ -8,7 +8,6 @@ from personal.core_broadcast import BroadcastType, broadcast
 from core.jsr223.scope import ir, events, ON, OFF, OPEN, CLOSED
 from org.openhab.core.types import UnDefType
 from core.metadata import get_key_value, set_key_value
-from org.openhab.core.model.script.actions import Log
 from org.openhab.core.library.types import OnOffType, OpenClosedType
 
 

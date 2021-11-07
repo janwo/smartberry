@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 from personal.core_helpers import get_date_string, get_date, enum, get_location, METADATA_NAMESPACE
 from core.jsr223.scope import events, OFF, ON, ir
-from org.openhab.core.model.script.actions import Log
 from org.openhab.core.types import UnDefType
 from org.openhab.core.library.types import OnOffType
 from core.metadata import get_key_value, set_key_value

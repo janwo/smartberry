@@ -2,12 +2,10 @@ from __future__ import unicode_literals
 from core.rules import rule
 from core.triggers import when
 from personal.core_presence import POINT_TAGS, PresenceState, trigger_presence, get_presence, trigger_absence
-from core.jsr223.scope import ir, events, OFF, ON, OPEN
+from core.jsr223.scope import ir, events
 from org.openhab.core.types import UnDefType
-from personal.core_helpers import reload_rules, sync_group_with_tags, intersection_count, METADATA_NAMESPACE
-from org.openhab.core.library.types import OnOffType, OpenClosedType
-from core.metadata import set_key_value, get_key_value
-from org.openhab.core.model.script.actions import Log
+from personal.core_helpers import reload_rules, sync_group_with_tags, METADATA_NAMESPACE
+from core.metadata import  get_key_value
 
 
 @rule("Core - Sync helper items of presence", description="Core - Sync helper items", tags=['core', 'core-presence'])

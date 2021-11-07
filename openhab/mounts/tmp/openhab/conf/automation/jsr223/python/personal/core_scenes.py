@@ -1,14 +1,12 @@
 from __future__ import unicode_literals
-from personal.core_helpers import reload_rules, get_date_string, get_date, get_location, sync_group_with_tags, has_same_location, METADATA_NAMESPACE, get_random_number, get_items_of_any_tags, create_helper_item, get_item_of_helper_item
+from personal.core_helpers import reload_rules, get_date_string, get_date, get_location, sync_group_with_tags, METADATA_NAMESPACE, create_helper_item, get_item_of_helper_item
 from personal.core_scenes import SCENE_TAGS, get_scene_item_states, save_scene_item_states, trigger_scene_items, get_scene_states, SCENE_TRIGGER_TAGS
 from core.triggers import when
 from core.rules import rule
-from core.jsr223.scope import ir, events, OFF, ON
+from core.jsr223.scope import ir, events
 from core.metadata import set_key_value, get_key_value, set_value
 from org.openhab.core.types import UnDefType
 from core.date import minutes_between, seconds_between, hours_between, ZonedDateTime
-from org.openhab.core.model.script.actions import Log
-from org.openhab.core.library.types import OnOffType
 
 
 @rule("Core - Sync helper items of scenes", description="Core - Sync helper items", tags=['core', 'core-scenes'])

@@ -1,12 +1,10 @@
 from __future__ import unicode_literals
-from core.jsr223.scope import ir, ON, events
+from core.jsr223.scope import events
 from personal.core_helpers import METADATA_NAMESPACE
-from core.metadata import get_metadata, set_metadata
 from personal.core_helpers import get_items_of_any_tags, unique_items, get_all_semantic_items, METADATA_NAMESPACE, has_same_location, get_childs_with_condition
 from org.openhab.core.types import UnDefType
 from core.metadata import get_key_value, set_key_value
 from personal.core_lights import LIGHTS_POINT_TAGS, LIGHTS_EQUIPMENT_TAGS
-from org.openhab.core.model.script.actions import Log
 
 SCENE_TAGS = [
     'CoreScene'

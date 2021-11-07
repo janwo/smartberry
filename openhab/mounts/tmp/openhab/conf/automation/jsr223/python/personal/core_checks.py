@@ -1,11 +1,11 @@
 from __future__ import unicode_literals
 from core.triggers import when
 from core.rules import rule
-from personal.core_broadcast import broadcast
-from core.jsr223.scope import ir, events, things
+from core.jsr223.scope import ir, things
 from core.date import days_between, ZonedDateTime
 from personal.core_helpers import get_date
 from core import osgi
+from core.actions import Semantics
 
 ITEM_CHANNEL_LINK_REGISTRY = osgi.get_service("org.openhab.core.thing.link.ItemChannelLinkRegistry")
 ELAPSED_DAYS = 5
@@ -29,5 +29,7 @@ def offline_check(event):
         ):
             for channel in thing.getChannels():
                 for item in ITEM_CHANNEL_LINK_REGISTRY.getLinkedItems(channel.getUID()):
-                    if not item.getGroupNames() or str(group.name) not in item.getGroupNames():
+                    if(not Semantics.isEquipment(item)):
+                        item = Semantics.getEquipment(item)
+                    if item and (not item.getGroupNames() or str(group.name) not in item.getGroupNames()):
                         group.addMember(item)

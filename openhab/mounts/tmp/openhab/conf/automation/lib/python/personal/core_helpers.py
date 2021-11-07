@@ -1,10 +1,9 @@
 from __future__ import unicode_literals
 from core.jsr223.scope import ir, scriptExtension
-from core.metadata import set_key_value, get_key_value, remove_key_value, get_value
+from core.metadata import set_key_value, get_key_value, remove_key_value
 from core.items import add_item
 from random import randint
-from org.openhab.core.types import UnDefType
-from java.time import LocalDateTime, ZonedDateTime, ZoneId
+from java.time import ZonedDateTime, ZoneId
 from core.date import format_date
 from java.time.format import DateTimeFormatter
 from org.openhab.core.model.script.actions import Log

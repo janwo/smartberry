@@ -4,7 +4,6 @@ from core.metadata import get_key_value, set_key_value
 from core.jsr223.scope import ir, events
 from org.openhab.core.types import UnDefType
 from core.date import hours_between, ZonedDateTime
-from personal.core_broadcast import broadcast
 
 PresenceState = enum(
     AWAY_SHORT=0.0,

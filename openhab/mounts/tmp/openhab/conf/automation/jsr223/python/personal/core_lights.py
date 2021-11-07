@@ -8,9 +8,8 @@ from personal.core_lights import get_light_condition, LIGHT_MEASUREMENT_POINT_TA
 from core.jsr223.scope import ir, events, OFF, ON, OPEN
 from org.openhab.core.types import UnDefType
 from org.openhab.core.library.types import OnOffType, OpenClosedType
-from core.metadata import set_key_value, get_key_value
+from core.metadata import set_key_value
 from random import randint
-from org.openhab.core.model.script.actions import Log
 
 
 @rule("Core - Sync helper items of lights", description="Core - Sync helper items", tags=['core', 'core-lights'])
