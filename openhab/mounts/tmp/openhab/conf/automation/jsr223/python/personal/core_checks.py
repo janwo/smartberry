@@ -5,71 +5,29 @@ from personal.core_broadcast import broadcast
 from core.jsr223.scope import ir, events, things
 from core.date import days_between, ZonedDateTime
 from personal.core_helpers import get_date
+from core import osgi
 
+ITEM_CHANNEL_LINK_REGISTRY = osgi.get_service("org.openhab.core.thing.link.ItemChannelLinkRegistry")
 ELAPSED_DAYS = 5
 
-
 @rule("Core - Check things for offline state.", description="Check things for offline state.", tags=['core', 'core-checks'])
-@when("Time cron 0 0 12 * * ?")
+@when("Time cron 0 0/5 * * * ?")
 def offline_check(event):
+    group = ir.getItem("gCore_Checks_OfflineThings")
+    for member in group.allMembers:
+        group.removeMember(member)
+
     allThings = things.getAll()
-    offlineThingMessages = map(
-        lambda t: (
-            t.getUID(),
-            "{} is {}!".format(
-                t.getLabel(),
-                t.getStatusInfo().getStatus()
-            )
-        ),
-        filter(
-            lambda t: (
-                t.getStatusInfo() and
-                t.getStatusInfo().getStatus().toString() != "ONLINE"
-            ),
-            allThings
-        )
-    )
-
-    elapsedThingsMessages = map(
-        lambda t: (
-            t.getUID(),
-            "{} is elapsed for {} day(s)!".format(
-                t.getLabel(),
-                days_between(
-                    get_date(
-                        t.getProperties().get("zwave_lastheal"),
-                        "yyyy-MM-dd'T'HH:mm:ssX"),
-                    ZonedDateTime.now()
-                )
-            )
-        ),
-        filter(
-            lambda t: (
-                t.getProperties() and
-                t.getProperties().get("zwave_lastheal") and
-                days_between(
-                    get_date(
-                        t.getProperties().get("zwave_lastheal"),
-                        "yyyy-MM-dd'T'HH:mm:ssX"
-                    ),
-                    ZonedDateTime.now()
-                ) > ELAPSED_DAYS
-            ),
-            allThings
-        )
-    )
-
-    thingUids = set()
-    notifications = []
-    for thingUid, message in offlineThingMessages + elapsedThingsMessages:
-        if not thingUid in thingUids:
-            thingUids.add(thingUid)
-            notifications.append(message)
-
-    if notifications:
-        broadcast("Some things are not ONLINE or elapsed:\n{}".format(
-            reduce(
-                lambda a, b: a + "\n" + b,
-                notifications
-            )
-        ))
+    for thing in allThings:
+        if (
+            thing.getStatusInfo() and 
+            thing.getStatusInfo().getStatus().toString() != "ONLINE"
+            ) or ( 
+            thing.getProperties() and 
+            thing.getProperties().get("zwave_lastheal") and
+            days_between(get_date(thing.getProperties().get("zwave_lastheal"), "yyyy-MM-dd'T'HH:mm:ssX"), ZonedDateTime.now()) > ELAPSED_DAYS
+        ):
+            for channel in thing.getChannels():
+                for item in ITEM_CHANNEL_LINK_REGISTRY.getLinkedItems(channel):
+                    if not item.getGroupNames() or group.itemName not in item.getGroupNames():
+                        group.addMember(item)

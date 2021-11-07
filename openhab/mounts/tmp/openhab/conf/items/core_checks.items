@@ -1,0 +1,16 @@
+Group gCore_Checks "Offline-Geräte" <error> (gCore_Settings) ["Equipment"] {
+  cellWidget="oh-label-cell"[
+    icon="oh:error",
+    title="\u003ditems.Offline-Geräte.title"
+  ]
+}
+
+Group gCore_Checks_OfflineThings "Offline-Items" <lowbattery> (gCore_Checks) ["Point"] {
+    cellWidget=""[
+        label="\u003ditems.gCore_Checks_OfflineThings.title",
+        icon="oh:lowbattery"
+    ],
+    listWidget=""[
+        icon="oh:lowbattery"
+    ]
+}
