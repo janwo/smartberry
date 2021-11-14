@@ -14,7 +14,7 @@ ELAPSED_DAYS = 5
 @when("Time cron 0 0/5 * * * ?")
 def offline_check(event):
     group = ir.getItem("gCore_Checks_OfflineThings")
-    for member in group.allMembers:   
+    for member in group.members:   
         group.removeMember(member)
 
     allThings = things.getAll()
