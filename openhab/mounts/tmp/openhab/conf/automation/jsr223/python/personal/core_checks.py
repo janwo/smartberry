@@ -31,5 +31,5 @@ def offline_check(event):
                 for item in ITEM_CHANNEL_LINK_REGISTRY.getLinkedItems(channel.getUID()):
                     if(not Semantics.isEquipment(item)):
                         item = Semantics.getEquipment(item)
-                    if item and (not item.getGroupNames() or str(group.name) not in item.getGroupNames()):
+                    if item:
                         group.addMember(item)
