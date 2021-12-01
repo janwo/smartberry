@@ -7,7 +7,6 @@ from personal.core_scenes import apply_context
 from personal.core_presence import PresenceState
 from personal.core_helpers import enum, METADATA_NAMESPACE
 from core.metadata import set_key_value
-from org.openhab.core.model.script.actions import Log
 
 DefaultSceneState = enum(
     HOME=0.0,

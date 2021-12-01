@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from core.triggers import when
 from core.rules import rule
-from personal.core_helpers import get_date, get_date_string, reload_rules, METADATA_NAMESPACE, get_location, sync_group_with_tags, get_items_of_any_tags, get_all_semantic_items
+from personal.core_helpers import get_date, get_date_string, reload_rules, METADATA_NAMESPACE, get_location, sync_group_with_tags, get_all_semantic_items
 from personal.core_heating import TEMPERATURE_MEASUREMENT_POINT_TAGS, OPEN_CONTACT_EQUIPMENT_TAGS, OPEN_CONTACT_POINT_TAGS, HEATING_EQUIPMENT_TAGS, HEATING_POINT_TAGS, HeatingState
 from core.jsr223.scope import ir, UnDefType, events, OPEN
 from core.metadata import set_key_value, get_key_value, remove_key_value

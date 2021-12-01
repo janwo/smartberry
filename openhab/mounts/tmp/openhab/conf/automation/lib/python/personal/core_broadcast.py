@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
-from org.openhab.core.model.script.actions import Log
 from personal.core_helpers import enum
-from core.actions import NotificationAction
+from core.actions import NotificationAction, Log
 from core.jsr223.scope import ir
 from org.openhab.core.types import UnDefType
 

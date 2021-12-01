@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 from personal.core_helpers import reload_rules, get_date_string, get_all_semantic_items, get_semantic_items, intersection_count, sync_group_with_tags, get_date, has_same_location, METADATA_NAMESPACE
 from core.triggers import when
 from core.rules import rule
-from personal.core_security import OperationState, is_security_state, ASSAULT_TRIGGER_EQUIPMENT_TAGS, ASSAULT_TRIGGER_POINT_TAGS, ASSAULT_DISARMER_EQUIPMENT_TAGS, ASSAULT_DISARMER_POINT_TAGS, LOCK_CLOSURE_EQUIPMENT_TAGS, LOCK_CLOSURE_POINT_TAGS, LOCK_EQUIPMENT_TAGS, LOCK_POINT_TAGS
+from personal.core_security import OperationState, is_security_state, ASSAULT_ALARM_POINT_TAGS, ASSAULT_TRIGGER_EQUIPMENT_TAGS, ASSAULT_TRIGGER_POINT_TAGS, ASSAULT_DISARMER_EQUIPMENT_TAGS, ASSAULT_DISARMER_POINT_TAGS, LOCK_CLOSURE_EQUIPMENT_TAGS, LOCK_CLOSURE_POINT_TAGS, LOCK_EQUIPMENT_TAGS, LOCK_POINT_TAGS
 from core.date import minutes_between, ZonedDateTime
 from personal.core_broadcast import BroadcastType, broadcast
 from core.jsr223.scope import ir, events, ON, OFF, OPEN, CLOSED
@@ -74,7 +74,7 @@ def assault_trigger(event):
         message = "Silent alarm was triggered by {}!".format(item.label)
         if is_security_state(OperationState.ON):
             message = "Striking alarm was triggered by {}!".format(item.label)
-            for alarm in ir.getItemsByTag("Alarm"):
+            for alarm in ir.getItemsByTag(ASSAULT_ALARM_POINT_TAGS):
                 events.sendCommand(alarm, ON)
 
         broadcast(message, BroadcastType.ATTENTION)
@@ -172,7 +172,7 @@ def lock_closure(event):
 @rule("Core - Core_Security System - Turn off siren after Core_Security_OperationState update", description="Core_Security System - Turn off siren after Core_Security_OperationState update", tags=['core', 'core-security'])
 @when("Item Core_Security_OperationState received update")
 def siren_off(event):
-    for alarm in ir.getItemsByTag("Alarm"):
+    for alarm in ir.getItemsByTag(ASSAULT_ALARM_POINT_TAGS):
         if alarm.getStateAs(OnOffType) != OFF:
             events.sendCommand(alarm, OFF)
 
@@ -200,7 +200,7 @@ def siren_autooff(event):
     ):
         return
 
-    for alarm in ir.getItemsByTag("Alarm"):
+    for alarm in ir.getItemsByTag(ASSAULT_ALARM_POINT_TAGS):
         if alarm.getStateAs(OnOffType) != OFF:
             events.sendCommand(alarm, OFF)
             broadcast(

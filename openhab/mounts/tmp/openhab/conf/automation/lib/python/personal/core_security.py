@@ -29,6 +29,10 @@ ASSAULT_DISARMER_POINT_TAGS = [
     "Switch"
 ]
 
+ASSAULT_ALARM_POINT_TAGS = [
+    "Alarm"
+]
+
 LOCK_CLOSURE_EQUIPMENT_TAGS = [
     "CoreLockClosure"
 ]

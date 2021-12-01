@@ -3,9 +3,9 @@ from core.triggers import when
 from core.rules import rule
 from personal.core_presence import PresenceState
 from personal.core_scenes import trigger_scene_items, get_scene_items
-from personal.core_helpers import reload_rules, METADATA_NAMESPACE, get_location, get_childs_with_condition, has_same_location, get_item_of_helper_item, get_items_of_any_tags, sync_group_with_tags, create_helper_item, intersection_count, get_all_semantic_items
-from personal.core_lights import get_light_condition, LIGHT_MEASUREMENT_POINT_TAGS, LIGHTS_POINT_TAGS, LIGHTS_EQUIPMENT_TAGS, set_location_as_activated, is_elapsed, LightMode, AmbientLightCondition, get_light_mode_group, turn_on_switchable_point, turn_off_switchable_point
-from core.jsr223.scope import ir, events, OFF, ON, OPEN
+from personal.core_helpers import reload_rules, get_location, get_childs_with_condition, has_same_location, get_items_of_any_tags, sync_group_with_tags, create_helper_item, intersection_count, get_all_semantic_items
+from personal.core_lights import get_darkest_light_condition, set_light_condition, convert_to_light_condition, get_astro_light_condition, LIGHT_MEASUREMENT_POINT_TAGS, LIGHTS_POINT_TAGS, LIGHTS_EQUIPMENT_TAGS, set_location_as_activated, is_elapsed, LightMode, AmbientLightCondition, get_light_mode_group, turn_on_switchable_point, turn_off_switchable_point
+from core.jsr223.scope import ir, OFF, ON, OPEN
 from org.openhab.core.types import UnDefType
 from org.openhab.core.library.types import OnOffType, OpenClosedType
 from core.metadata import set_key_value
@@ -181,10 +181,15 @@ def set_last_light_activation(event):
 
 
 @rule("Core - Manage daylight status changes.", description="Manage daylight status changes.", tags=["core", 'core-lights'])
-@when("Time cron 0 0/5 * ? * * *")
+@when("Time cron 0 0/30 * ? * * *")
 @when("Item Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark changed")
 @when("Item Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured changed")
 def check_daylight(event):
+    sensors = filter(
+        lambda sensor: not isinstance(sensor.state, UnDefType),
+        get_items_of_any_tags(LIGHT_MEASUREMENT_POINT_TAGS)
+    )
+
     activeSwitchables = filter(
         lambda switchable: switchable.getStateAs(OnOffType) == ON,
         get_all_semantic_items(LIGHTS_EQUIPMENT_TAGS, LIGHTS_POINT_TAGS)
@@ -205,39 +210,23 @@ def check_daylight(event):
         return location and location.name not in activeRoomNames
 
     sensorsOfInactiveRooms = sorted(
-        filter(
-            lambda sensor: not isinstance(
-                sensor.state,
-                UnDefType
-            ) and isNotActiveRoom(get_location(sensor)),
-            get_items_of_any_tags(LIGHT_MEASUREMENT_POINT_TAGS)
-        ),
+        filter(lambda sensor: isNotActiveRoom(get_location(sensor)), sensors),
         key=lambda sensor: sensor.state
     )
 
     if len(sensorsOfInactiveRooms) == 0:
+        astroLightCondition = get_astro_light_condition()
+        if astroLightCondition:
+            set_light_condition(astroLightCondition)
         return
 
     medianSensorItem = sensorsOfInactiveRooms[len(sensorsOfInactiveRooms) / 2]
-
-    if isinstance(medianSensorItem.state, UnDefType):
-        return
-
-    condition = get_light_condition(medianSensorItem.state)
-    conditionItem = ir.getItem("Core_Lights_AmbientLightCondition")
-    set_key_value(
-        conditionItem.name,
-        METADATA_NAMESPACE,
-        'lights',
-        'luminance',
-        medianSensorItem.state
-    )
-
-    if (
-        isinstance(conditionItem.state, UnDefType) or
-        conditionItem.state.floatValue() != condition
-    ):
-        events.postUpdate(conditionItem, condition)
+    luminance = medianSensorItem.state
+    newCondition = get_darkest_light_condition([
+        get_astro_light_condition(), 
+        convert_to_light_condition(luminance)
+    ])
+    set_light_condition(newCondition, luminance)
 
 
 manage_light_state_triggers = [

@@ -6,8 +6,7 @@ from random import randint
 from java.time import ZonedDateTime, ZoneId
 from core.date import format_date
 from java.time.format import DateTimeFormatter
-from org.openhab.core.model.script.actions import Log
-from core.actions import Semantics
+from core.actions import Semantics, Log
 from core.rules import rule
 from core.triggers import when
 scriptExtension.importPreset("RuleSupport")
@@ -15,7 +14,7 @@ from core.jsr223.scope import ruleRegistry
 
 METADATA_NAMESPACE = "core"
 DATE_STRING = "yyyy-MM-dd'T'HH:mm:ss.SSxx"
-
+HELPER_ITEM_TAG = "CoreHelperItem"
 
 def enum(**enums):
     return type('Enum', (), enums)
@@ -81,7 +80,6 @@ def get_random_number(length=10):
 def get_items_of_any_tags(tags=[]):
     return set(reduce(lambda x, y: x + y, map(lambda tag: ir.getItemsByTag(tag),  tags)))
 
-
 def sync_group_with_tags(group, tags):
     def mayRemoveFromGroup(groupMember, group, allowedTags):
         for allowedTag in allowedTags:
@@ -99,7 +97,7 @@ def sync_group_with_tags(group, tags):
 
     currentGroupMembers = filter(
         lambda member: not mayRemoveFromGroup(member, group, tags),
-        group.allMembers
+        group.members
     )
 
     currentGroupMemberNames = map(
@@ -146,7 +144,7 @@ def get_item_of_helper_item(helperItem):
 def create_helper_item(of, namespace, name, item_type, category, label, groups=[], tags=[]):
     helperItem = get_helper_item(of, namespace, name)
     if not helperItem:
-        tags.append('CoreHelperItem')
+        tags.append(HELPER_ITEM_TAG)
         helperItem = add_item(
             "Core_HelperItem{0}_Of_{1}".format(
                 get_random_number(10),
@@ -178,7 +176,7 @@ def create_helper_item(of, namespace, name, item_type, category, label, groups=[
 
 
 def remove_unlinked_helper_items():
-    for helper in ir.getItemsByTag('CoreHelperItem'):
+    for helper in ir.getItemsByTag(HELPER_ITEM_TAG):
         of = get_key_value(
             helper.name,
             METADATA_NAMESPACE,

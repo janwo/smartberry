@@ -35,6 +35,10 @@ LIGHT_MEASUREMENT_POINT_TAGS = [
     ['Light', 'Measurement']
 ]
 
+LIGHT_MEASUREMENT_ASTRO_SUNPHASE = [
+    'CoreAstroSun'
+]
+
 
 def get_light_mode_group():
     condition = ir.getItem("Core_Lights_AmbientLightCondition").state
@@ -48,19 +52,58 @@ def get_light_mode_group():
     )
 
 
-def get_light_condition(lightState):
+def convert_to_light_condition(luminance):
     darkTresholdItem = ir.getItem(
         "Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark")
     obscuredTresholdItem = ir.getItem(
         "Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured")
-
-    if lightState < darkTresholdItem.state:
+    if luminance < darkTresholdItem.state:
         return AmbientLightCondition.DARK
-
-    if lightState < obscuredTresholdItem.state:
+    if luminance < obscuredTresholdItem.state:
         return AmbientLightCondition.OBSCURED
-
     return AmbientLightCondition.BRIGHT
+
+
+def get_astro_light_condition():
+    for astroItem in ir.getItemsByTag(LIGHT_MEASUREMENT_ASTRO_SUNPHASE):          
+        if astroItem.state.toFullString() == 'NIGHT': 
+            return AmbientLightCondition.DARK
+        elif astroItem.state.toFullString() == 'DAYLIGHT':
+            return AmbientLightCondition.BRIGHT
+        return AmbientLightCondition.OBSCURED
+    return None
+
+
+def get_light_condition():
+    conditionItem = ir.getItem("Core_Lights_AmbientLightCondition")
+    if not isinstance(conditionItem.state, UnDefType):
+        return conditionItem.state.floatValue()
+    return AmbientLightCondition.BRIGHT
+
+
+def set_light_condition(condition, luminance=None):
+    conditionItem = ir.getItem("Core_Lights_AmbientLightCondition")
+    if (
+        isinstance(conditionItem.state, UnDefType) or
+        conditionItem.state.floatValue() != condition
+    ):
+        events.postUpdate(conditionItem, condition)
+    
+    if luminance is not None:
+        set_key_value(
+            conditionItem.name,
+            METADATA_NAMESPACE,
+            'lights',
+            'luminance',
+            luminance
+        )
+
+
+def get_darkest_light_condition(conditions):
+    orderedConditions = [AmbientLightCondition.DARK, AmbientLightCondition.OBSCURED, AmbientLightCondition.BRIGHT]
+    for condition in orderedConditions: 
+        if condition in conditions:
+            return condition
 
 
 def set_location_as_activated(switchable):

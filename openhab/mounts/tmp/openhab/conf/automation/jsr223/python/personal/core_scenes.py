@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from personal.core_helpers import reload_rules, get_date_string, get_date, get_location, sync_group_with_tags, METADATA_NAMESPACE, create_helper_item, get_item_of_helper_item
-from personal.core_scenes import SCENE_TAGS, get_scene_item_states, save_scene_item_states, trigger_scene_items, get_scene_states, SCENE_TRIGGER_TAGS
+from personal.core_scenes import SCENE_TAGS, save_scene_item_states, trigger_scene_items, get_scene_states, SCENE_TRIGGER_TAGS
 from core.triggers import when
 from core.rules import rule
 from core.jsr223.scope import ir, events
