@@ -1,7 +1,7 @@
 Group gCore_Scenes
 Group gCore_Scenes_StateTriggers
 
-Group gCore_Scenes_Settings "Szenen" <party> (gCore_Settings) ["Equipment"] {
+Group gCore_Scenes_Settings "Szenen" <party> (gCore_Home) ["Equipment"] {
   cellWidget="oh-label-cell"[
     icon="oh:party",
     title="\u003ditems.gCore_Scenes_Settings.title"

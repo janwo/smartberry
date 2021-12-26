@@ -2,7 +2,7 @@ Group gCore_Heating_ContactSwitchable
 Group gCore_Heating_Thermostat_Mode
 Group:Number:AVG gCore_Heating_Temperature
 
-Group gCore_Heating "Klimaeinstellungen" <heating> (gCore_Settings) ["Equipment"]
+Group gCore_Heating "Klimaeinstellungen" <heating> (gCore_Home) ["Equipment"]
 
 Number Core_Heating_Thermostat_ModeDefault "Temperaturmodus" <heating> (gCore_Heating) ["Point"] {
     stateDescription=""[

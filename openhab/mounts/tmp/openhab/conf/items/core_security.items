@@ -2,7 +2,7 @@ Group gCore_Security_AssaultTrigger
 Group gCore_Security_AssaultDisarmamer
 Group gCore_Security_LockClosureTrigger
 
-Group gCore_Security "Sicherheitssystem" <alarm> (gCore_Settings) ["Equipment"] {
+Group gCore_Security "Sicherheitssystem" <alarm> (gCore_Home) ["Equipment"] {
   cellWidget="oh-label-cell"[
     icon="oh:alarm",
     label="\u003ditems.gCore_Security.title",

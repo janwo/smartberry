@@ -25,6 +25,16 @@ if [ -f $ADDONS_FILE ]; then
         echo "automation = jythonscripting" >> ${ADDONS_FILE}
     fi
 
+    AUTOMATION_LINE="$(grep -E '^[^#]?\s?automation' ${ADDONS_FILE} || echo '')"
+    if [ "${AUTOMATION_LINE}" != '' ]; then
+        if [[ "${AUTOMATION_LINE}" != *"jscripting"* ]]; then
+            sed -n -e 's/automation\s\?=\s\?/automation = jscripting,/' ${ADDONS_FILE}
+        fi
+    else
+        ## Just append last line
+        echo "automation = jscripting" >> ${ADDONS_FILE}
+    fi
+
     PERSISTENCE_LINE="$(grep -E '^[^#]?\s?persistence' ${ADDONS_FILE} || echo '' )"
     if [ "${PERSISTENCE_LINE}" != '' ]; then
         if [[ "${PERSISTENCE_LINE}" != *"rrd4j"* ]]; then

@@ -1,6 +1,6 @@
 Group gCore_Presence_PresenceTrigger
 
-Group gCore_Presence "Anwesenheit" <motion> (gCore_Settings) ["Equipment"]
+Group gCore_Presence "Anwesenheit" <motion> (gCore_Home) ["Equipment"]
 
 Number Core_Presence "Anwesenheit" <motion> (gCore_Presence) ["Point"] {
     stateDescription=""[

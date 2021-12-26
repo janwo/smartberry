@@ -3,7 +3,7 @@ Group gCore_Lights_DarkMode
 Group gCore_Lights_BrightMode
 Group gCore_Lights_ObscuredMode
 
-Group gCore_Lights "Lichtsteuerung" <light> (gCore_Settings) ["Equipment"] {
+Group gCore_Lights "Lichtsteuerung" <light> (gCore_Home) ["Equipment"] {
   cellWidget="oh-label-cell"[
     icon="oh:light",
     label="Label",

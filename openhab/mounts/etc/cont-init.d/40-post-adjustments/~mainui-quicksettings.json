@@ -1,0 +1,72 @@
+{
+  "component": "oh-block",
+  "config": {
+    "id": "quicksettings",
+    "title": "Schnelleinstellungen"
+  },
+  "slots": {
+    "default": [
+      {
+        "component": "oh-grid-cells",
+        "config": {},
+        "slots": {
+          "default": [
+            {
+              "component": "oh-label-cell",
+              "config": {
+                "icon": "oh:motion",
+                "title": "Anwesenheit",
+                "item": "Core_Presence",
+                "label": "\u003ditems.Core_Presence.title",
+                "action": "options",
+                "actionItem": "Core_Presence",
+                "stateAsHeader": true,
+                "expandable": false
+              }
+            },
+            {
+              "component": "oh-label-cell",
+              "config": {
+                "icon": "oh:party",
+                "title": "Hauptszene",
+                "item": "Core_DefaultScene",
+                "label": "\u003ditems.Core_DefaultScene.title",
+                "action": "options",
+                "actionItem": "Core_DefaultScene",
+                "stateAsHeader": true,
+                "expandable": false
+              }
+            },
+            {
+              "component": "oh-label-cell",
+              "config": {
+                "icon": "oh:alarm",
+                "title": "Angrifferkennung",
+                "item": "Core_Security_OperationState",
+                "label": "\u003ditems.Core_Security_OperationState.title",
+                "action": "options",
+                "actionItem": "Core_Security_OperationState",
+                "stateAsHeader": true,
+                "expandable": false
+              }
+            },
+            {
+              "component": "oh-label-cell",
+              "config": {
+                "icon": "oh:heating",
+                "title": "Klima",
+                "item": "Core_Heating_Thermostat_ModeDefault",
+                "label": "\u003ditems.Core_Heating_Thermostat_ModeDefault.title",
+                "action": "options",
+                "actionItem": "Core_Heating_Thermostat_ModeDefault",
+                "stateAsHeader": true,
+                "expandable": false,
+                "trendItem": "gCore_Heating_Temperature"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

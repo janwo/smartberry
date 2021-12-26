@@ -1,6 +1,6 @@
 Group gCore_TimedOutlets_Switchable
 
-Group gCore_TimedOutlets "Zeituhr-Steckdosen" <poweroutlet> (gCore_Settings) ["Equipment"] {
+Group gCore_TimedOutlets "Zeituhr-Steckdosen" <poweroutlet> (gCore_Home) ["Equipment"] {
     cellWidget=""[
         label="\u003ditems.gCore_TimedOutlets.title",
         icon="oh:poweroutlet"

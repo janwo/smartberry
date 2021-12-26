@@ -1,4 +1,4 @@
-Group gCore_Checks "Überprüfungen" <error> (gCore_Settings) ["Equipment"] {
+Group gCore_Checks "Überprüfungen" <error> (gCore_Home) ["Equipment"] {
   cellWidget="oh-label-cell"[
     icon="oh:error",
     title="\u003ditems.gCore_Checks.title"

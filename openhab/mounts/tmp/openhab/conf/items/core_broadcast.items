@@ -1,4 +1,4 @@
-Group gCore_Broadcast "Benachrichtigungen" <error> (gCore_Settings) ["Equipment"] {
+Group gCore_Broadcast "Benachrichtigungen" <error> (gCore_Home) ["Equipment"] {
   cellWidget="oh-label-cell"[
     icon="oh:error",
     title="\u003ditems.gCore_Broadcast.title"
