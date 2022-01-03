@@ -27,12 +27,12 @@ if [ -f $ADDONS_FILE ]; then
 
     AUTOMATION_LINE="$(grep -E '^[^#]?\s?automation' ${ADDONS_FILE} || echo '')"
     if [ "${AUTOMATION_LINE}" != '' ]; then
-        if [[ "${AUTOMATION_LINE}" != *"jscripting"* ]]; then
-            sed -n -e 's/automation\s\?=\s\?/automation = jscripting,/' ${ADDONS_FILE}
+        if [[ "${AUTOMATION_LINE}" != *"jsscripting"* ]]; then
+            sed -n -e 's/automation\s\?=\s\?/automation = jsscripting,/' ${ADDONS_FILE}
         fi
     else
         ## Just append last line
-        echo "automation = jscripting" >> ${ADDONS_FILE}
+        echo "automation = jsscripting" >> ${ADDONS_FILE}
     fi
 
     PERSISTENCE_LINE="$(grep -E '^[^#]?\s?persistence' ${ADDONS_FILE} || echo '' )"
