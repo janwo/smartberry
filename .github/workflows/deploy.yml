@@ -9,21 +9,24 @@ jobs:
   Deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-      with:
-        persist-credentials: false
-    - name: Setup Node.js
-      uses: actions/setup-node@v2.5.0
-    - name: Convert README.md to README.html
-      run: |
-        mkdir ./openhab/mounts/tmp/openhab/conf/html
-        npx marked -i ./README.md -o ./openhab/mounts/tmp/openhab/conf/html/index.html
-    - name: Push to balena
-      run: |
-        curl -L -o /tmp/balena.zip ${{ secrets.BALENA_CLI_RELEASE_ZIP }}
-        unzip /tmp/balena.zip -d /opt
-        rm /tmp/balena.zip
-        export PATH=$PATH:/opt/balena-cli
-        balena login --token ${{ secrets.BALENA_API_TOKEN }}
-        balena push ${{ secrets.BALENA_APPLICATION_NAME }} --detached
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Setup Node.js
+        uses: actions/setup-node@v2.5.0
+      - name: Convert README.md to README.html
+        run: |
+          mkdir ./openhab/mounts/tmp/openhab/conf/html
+          npx marked -i ./README.md -o ./openhab/mounts/tmp/openhab/conf/html/index.html
+      - name: Install node_modules
+        run: |
+          npm i ./openhab/mounts/tmp/openhab/conf/automation/js
+      - name: Push to balena
+        run: |
+          curl -L -o /tmp/balena.zip ${{ secrets.BALENA_CLI_RELEASE_ZIP }}
+          unzip /tmp/balena.zip -d /opt
+          rm /tmp/balena.zip
+          export PATH=$PATH:/opt/balena-cli
+          balena login --token ${{ secrets.BALENA_API_TOKEN }}
+          balena push ${{ secrets.BALENA_APPLICATION_NAME }} --detached
