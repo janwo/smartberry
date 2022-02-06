@@ -1,9 +1,11 @@
-const { rules, items, triggers, things, time } = require('openhab')
+const { rules, items, triggers, osgi, time } = require('openhab')
 const { TemporalUnit } = require('openhab/time')
 
-const ITEM_CHANNEL_LINK_REGISTRY = osgi.get_service(
+const ItemChannelLinkRegistry = osgi.getService(
   'org.openhab.core.thing.link.ItemChannelLinkRegistry'
 )
+const ThingsRegistry = osgi.getService('org.openhab.core.thing.ThingRegistry')
+
 const ELAPSED_DAYS = 5
 
 rules.JSRule({
@@ -14,10 +16,9 @@ rules.JSRule({
   execute: (event) => {
     const group = items.getItem('gCore_Checks_OfflineThings')
     for (const member of group.members) {
-      group.removeMember(member)
+      member.removeGroups(group)
     }
-    return //TODO: wait for implementation of things.getAll()
-    const allThings = things.getAll()
+    const allThings = ThingsRegistry.getAll()
     for (const thing of allThings) {
       if (
         (thing.getStatusInfo() &&
@@ -29,7 +30,7 @@ rules.JSRule({
             .until(time.ZonedDateTime.now(), TemporalUnit.DAYS)) > ELAPSED_DAYS
       ) {
         for (const channel of thing.getChannels()) {
-          for (const item of ITEM_CHANNEL_LINK_REGISTRY.getLinkedItems(
+          for (const item of ItemChannelLinkRegistry.getLinkedItems(
             channel.getUID()
           )) {
             if (!Semantics.isEquipment(item)) {
@@ -37,7 +38,7 @@ rules.JSRule({
             }
 
             if (item) {
-              group.addMember(item)
+              item.addGroups(group)
             }
           }
         }

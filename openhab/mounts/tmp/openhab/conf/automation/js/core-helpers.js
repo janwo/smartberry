@@ -1,6 +1,6 @@
-const { triggers } = require('openhab/triggers')
-const { items, actions } = require('openhab')
+const { items, osgi, triggers, actions, rules } = require('openhab')
 const { uniq, get, intersection, uniqBy } = require('lodash')
+
 const MetadataKey = Java.type('org.openhab.core.items.MetadataKey')
 const MetadataRegistry = osgi.getService(
   'org.openhab.core.items.MetadataRegistry'
@@ -83,13 +83,13 @@ function sync_group_with_semantic_items(group, equipmentTags, pointTags) {
 
   for (const actualGroupItem of actualGroupItems) {
     if (!targetedGroupItemNames.includes(actualGroupItem.name)) {
-      group.removeMember(actualGroupItem)
+      actualGroupItem.removeGroups(group)
     }
   }
 
   for (const targetedGroupItem of targetedGroupItems) {
     if (!actualGroupItemNames.includes(targetedGroupItem.name)) {
-      group.addMember(targetedGroupItem)
+      targetedGroupItem.addGroups(group)
     }
   }
 

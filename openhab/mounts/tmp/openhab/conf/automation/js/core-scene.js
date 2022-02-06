@@ -84,7 +84,7 @@ function get_scene_items(scene) {
 }
 
 function get_scene_item_states(scene, scene_state = undefined) {
-  const scene_state = scene_state || get_scene_state(scene)
+  scene_state = scene_state || get_scene_state(scene)
 
   if (scene_state === undefined) {
     return []
@@ -104,7 +104,7 @@ function get_scene_item_states(scene, scene_state = undefined) {
 
 function save_scene_item_states(scene, scene_state = undefined) {
   const items = get_scene_items(scene)
-  const scene_state = scene_state || get_scene_state(scene)
+  scene_state = scene_state || get_scene_state(scene)
 
   if (scene_state !== undefined) {
     for (let item in items) {
