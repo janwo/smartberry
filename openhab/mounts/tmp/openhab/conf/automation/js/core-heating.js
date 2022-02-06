@@ -5,7 +5,7 @@ const {
   get_all_semantic_items,
   sync_group_with_semantic_items,
   get_location
-} = require('./core-helpers')
+} = require(__dirname + '/core-helpers')
 
 const HeatingState = {
   OFF: 0.0,
@@ -15,13 +15,9 @@ const HeatingState = {
 }
 
 const OPEN_CONTACT_EQUIPMENT_TAGS = ['Door', 'Window']
-
 const OPEN_CONTACT_POINT_TAGS = ['OpenState']
-
 const HEATING_EQUIPMENT_TAGS = ['RadiatorControl']
-
 const HEATING_POINT_TAGS = ['Setpoint']
-
 const TEMPERATURE_MEASUREMENT_POINT_TAGS = [['Measurement', 'Temperature']]
 
 rules.JSRule({
@@ -83,7 +79,7 @@ rules.JSRule({
           'open-contact-since'
         ])
         if (meta) {
-          return time.parse(meta)
+          return time.ZonedDateTime.parse(meta)
         }
 
         const now = time.ZonedDateTime.now()
@@ -133,3 +129,7 @@ rules.JSRule({
     }
   }
 })
+
+module.exports = {
+  HeatingState
+}

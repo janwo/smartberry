@@ -9,10 +9,9 @@ const {
   sync_group_with_semantic_items,
   get_location,
   has_same_location
-} = require('./core-helpers')
+} = require(__dirname + '/core-helpers')
 
 const SCENE_TAGS = ['CoreScene']
-
 const SCENE_TRIGGER_TAGS = ['CoreSceneTrigger']
 
 function get_scene_state(scene) {

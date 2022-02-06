@@ -7,7 +7,7 @@ const {
   get_items_of_any_tags,
   sync_group_with_semantic_items,
   get_location
-} = require('./core-helpers')
+} = require(__dirname + '/core-helpers')
 
 const LightMode = {
   OFF: 0.0,
@@ -24,11 +24,8 @@ const AmbientLightCondition = {
 }
 
 const LIGHTS_EQUIPMENT_TAGS = ['Lightbulb', 'PowerOutlet', 'WallSwitch']
-
 const LIGHTS_POINT_TAGS = ['Switch']
-
 const LIGHT_MEASUREMENT_POINT_TAGS = [['Light', 'Measurement']]
-
 const LIGHT_MEASUREMENT_ASTRO_SUNPHASE = ['CoreAstroSun']
 
 function get_light_mode_group() {
@@ -63,7 +60,7 @@ function convert_to_light_condition(luminance) {
 
 function get_astro_light_condition() {
   for (const astroItem of items.getItemsByTag(
-    LIGHT_MEASUREMENT_ASTRO_SUNPHASE
+    ...LIGHT_MEASUREMENT_ASTRO_SUNPHASE
   )) {
     if (astroItem.state == 'NIGHT') {
       return AmbientLightCondition.DARK
@@ -527,5 +524,7 @@ module.exports = {
   set_location_as_activated,
   is_elapsed,
   turn_on_switchable_point,
-  turn_off_switchable_point
+  turn_off_switchable_point,
+  LightMode,
+  AmbientLightCondition
 }

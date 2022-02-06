@@ -1,6 +1,6 @@
 const { rules, items, triggers } = require('openhab')
-const { apply_context } = require('./core-scene')
-const { metadata } = require('./core-helpers')
+const { apply_context } = require(__dirname + '/core-scene')
+const { metadata } = require(__dirname + '/core-helpers')
 
 const DefaultSceneState = {
   HOME: 0.0,
@@ -70,3 +70,7 @@ rules.JSRule({
     )
   }
 })
+
+module.exports = {
+  DefaultSceneState
+}

@@ -4,7 +4,7 @@ const {
   metadata,
   sync_group_with_semantic_items,
   get_location
-} = require('./core-helpers')
+} = require(__dirname + '/core-helpers')
 
 const PresenceState = { AWAY_SHORT: 0.0, HOME: 1.0, AWAY_LONG: 2.0 }
 
@@ -171,5 +171,6 @@ module.exports = {
   get_presence_provider_item,
   get_presence,
   trigger_presence,
-  trigger_absence
+  trigger_absence,
+  PresenceState
 }

@@ -18,7 +18,6 @@ const BroadcastNotificationMode = {
 }
 
 const METADATA_NAMESPACE = 'core'
-
 const HELPER_ITEM_TAG = 'CoreHelperItem'
 
 function broadcast(text, broadcastType = BroadcastType.INFO) {
@@ -67,7 +66,15 @@ function has_same_location(item1, item2) {
 
 function get_items_of_any_tags(tags = []) {
   return uniq(
-    tags.reduce((tags, tag) => tags.concat(items.getItemsByTag(tag)), [])
+    tags.reduce(
+      (tags, tag) =>
+        tags.concat(
+          Array.isArray(tag)
+            ? items.getItemsByTag(...tag)
+            : items.getItemsByTag(tag)
+        ),
+      []
+    )
   )
 }
 
@@ -237,7 +244,7 @@ function get_all_semantic_items(equipmentTags, pointTags) {
   return uniqBy(points, (item) => item.name)
 }
 
-function get_parents_with_condition(item, condition = (item) => true) {
+function get_parents_with_condition(item, condition = (item) => !!item) {
   if (typeof item == 'string') {
     item = items.getItem(item)
   }
@@ -361,5 +368,7 @@ module.exports = {
   get_items_of_any_tags,
   has_same_location,
   get_location,
-  broadcast
+  broadcast,
+  BroadcastType,
+  BroadcastNotificationMode
 }

@@ -6,7 +6,7 @@ const {
   sync_group_with_semantic_items,
   broadcast,
   has_same_location
-} = require('./core-helpers')
+} = require(__dirname + '/core-helpers')
 
 const OperationState = {
   OFF: 0.0,
@@ -15,21 +15,13 @@ const OperationState = {
 }
 
 const ASSAULT_TRIGGER_EQUIPMENT_TAGS = ['Window', 'Door', 'CoreAssaultTrigger']
-
 const ASSAULT_TRIGGER_POINT_TAGS = ['OpenState', 'Switch']
-
 const ASSAULT_DISARMER_EQUIPMENT_TAGS = ['CoreAssaultDisarmer']
-
 const ASSAULT_DISARMER_POINT_TAGS = ['OpenState', 'Switch']
-
 const ASSAULT_ALARM_POINT_TAGS = ['Alarm']
-
 const LOCK_CLOSURE_EQUIPMENT_TAGS = ['CoreLockClosure']
-
 const LOCK_CLOSURE_POINT_TAGS = ['OpenState', 'Switch']
-
 const LOCK_EQUIPMENT_TAGS = ['Lock']
-
 const LOCK_POINT_TAGS = ['OpenState', 'Switch']
 
 function is_security_state(state = OperationState.OFF) {
@@ -39,7 +31,7 @@ function is_security_state(state = OperationState.OFF) {
 
 rules.JSRule({
   name: 'sync_security_helpers',
-  description: 'Core (JS) - Sync helper items of security',
+  description: 'Core (JS) - Sync helper items of security zt',
   tags: ['core', 'core-security'],
   triggers: [
     triggers.GenericCronTrigger('30 0/5 * ? * * *'),
@@ -84,7 +76,7 @@ rules.JSRule({
     let message = 'Silent alarm was triggered by {}!'.format(item.label)
     if (is_security_state(OperationState.ON)) {
       message = 'Striking alarm was triggered by {}!'.format(item.label)
-      for (alarm of items.getItemsByTag(ASSAULT_ALARM_POINT_TAGS)) {
+      for (alarm of items.getItemsByTag(...ASSAULT_ALARM_POINT_TAGS)) {
         alarm.sendCommand('ON')
       }
     }
@@ -185,7 +177,7 @@ rules.JSRule({
   tags: ['core', 'core-security'],
   triggers: [triggers.ItemStateUpdateTrigger('Core_Security_OperationState')],
   execute: (event) => {
-    for (const alarm of items.getItemsByTag(ASSAULT_ALARM_POINT_TAGS)) {
+    for (const alarm of items.getItemsByTag(...ASSAULT_ALARM_POINT_TAGS)) {
       if (alarm.state != 'OFF') {
         alarm.sendCommand('OFF')
       }
@@ -207,15 +199,15 @@ rules.JSRule({
     if (
       autoOffTime.state == 0 ||
       !lastAlarmTime ||
-      time
-        .parse(lastAlarmTime)
-        .until(time.ZonedDateTime.now(), TemporalUnit.MINUTES) >
-        autoOffTime.state
+      time.ZonedDateTime.parse(lastAlarmTime).until(
+        time.ZonedDateTime.now(),
+        TemporalUnit.MINUTES
+      ) > autoOffTime.state
     ) {
       return
     }
 
-    for (const alarm of items.getItemsByTag(ASSAULT_ALARM_POINT_TAGS)) {
+    for (const alarm of items.getItemsByTag(...ASSAULT_ALARM_POINT_TAGS)) {
       if (alarm.state != 'OFF') {
         alarm.sendCommand('OFF')
         broadcast(
@@ -231,5 +223,6 @@ rules.JSRule({
 })
 
 module.exports = {
-  is_security_state
+  is_security_state,
+  OperationState
 }
