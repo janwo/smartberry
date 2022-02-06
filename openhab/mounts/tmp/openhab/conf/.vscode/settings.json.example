@@ -1,10 +1,6 @@
 {
-    "python.linting.ignorePatterns": [
-        "**/automation/**/python/core/**/*.py",
-        "**/automation/**/python/community/**/*.py"
-    ],
     "openhab.host": "smartberry",
-    "openhab.port": 80,
+    "openhab.port": 8080,
     "openhab.username": "openhab",
     "openhab.password": "your password"
 }

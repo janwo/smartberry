@@ -1,4 +1,5 @@
 const { rules, items, triggers, time } = require('openhab')
+const { TemporalUnit } = require('openhab/time')
 const {
   metadata,
   get_all_semantic_items,
@@ -31,7 +32,7 @@ rules.JSRule({
     triggers.GenericCronTrigger('30 0/5 * ? * * *'),
     triggers.SystemStartlevelTrigger(100)
   ],
-  execute: (data) => {
+  execute: (event) => {
     // Sync group gCore_Heating_ContactSwitchable with contact items - it's needed to create triggers on it
     sync_group_with_semantic_items(
       'gCore_Heating_ContactSwitchable',
@@ -60,7 +61,7 @@ rules.JSRule({
       'Core_Heating_Thermostat_OpenContactShutdownMinutes'
     )
   ],
-  execute: (data) => {
+  execute: (event) => {
     const openContactLocations = get_all_semantic_items(
       OPEN_CONTACT_EQUIPMENT_TAGS,
       OPEN_CONTACT_POINT_TAGS
@@ -95,7 +96,7 @@ rules.JSRule({
 
       shutdownHeating =
         heatingShutdownMinutesItem.state &&
-        openedSince.until(ZonedDateTime.now(), time.TemporalUnit.MINUTES) >
+        openedSince.until(time.ZonedDateTime.now(), TemporalUnit.MINUTES) >
           heatingShutdownMinutesItem.state
     } else {
       metadata(heatingShutdownMinutesItem).setConfiguration(

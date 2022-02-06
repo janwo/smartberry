@@ -13,7 +13,6 @@ Get started with SmartBerry and start to learn the fundamentals.
   - [Presence](#presence-) 👋
   - [Scenes](#scenes-) 🎬
   - [Security](#security-) 🔒
-  - [Timed Outlets](#timed-outlets-) ⏱️
 
 ### Getting Started
 

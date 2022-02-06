@@ -1,12 +1,49 @@
-const { items } = require('openhab')
+const { triggers } = require('openhab/triggers')
+const { items, actions } = require('openhab')
 const { uniq, get, intersection, uniqBy } = require('lodash')
+const MetadataKey = Java.type('org.openhab.core.items.MetadataKey')
 const MetadataRegistry = osgi.getService(
   'org.openhab.core.items.MetadataRegistry'
 )
-const MetadataKey = Java.type('org.openhab.core.items.MetadataKey')
+
+const BroadcastType = {
+  INFO: 0.0,
+  ATTENTION: 1.0
+}
+
+const BroadcastNotificationMode = {
+  NONE: 0.0,
+  DEFAULT: 1.0,
+  ATTENTION_ONLY: 2.0
+}
 
 const METADATA_NAMESPACE = 'core'
+
 const HELPER_ITEM_TAG = 'CoreHelperItem'
+
+export function broadcast(text, broadcastType = BroadcastType.INFO) {
+  const state = items.getItem('Core_Broadcast_NotificationMode').state
+  let notificationMode = state || BroadcastNotificationMode.DEFAULT
+
+  if (
+    (broadcastType == BroadcastType.INFO &&
+      notificationMode == BroadcastNotificationMode.DEFAULT) ||
+    (broadcastType == BroadcastType.ATTENTION &&
+      (notificationMode == BroadcastNotificationMode.DEFAULT ||
+        notificationMode == BroadcastNotificationMode.ATTENTION_ONLY))
+  ) {
+    actions.NotificationAction.sendBroadcastNotification(text)
+    console.log(
+      'Broadcast message',
+      'Following message was broadcasted to all users: {}'.format(text)
+    )
+  } else {
+    console.log(
+      'Broadcast message',
+      'Following message was muted: {}'.format(text)
+    )
+  }
+}
 
 export function get_location(item) {
   if (typeof item == 'string') {
@@ -149,61 +186,6 @@ export function create_helper_item(
   return helperItem
 }
 
-export function remove_unlinked_helper_items() {
-  for (const helper of items.getItemsByTag(HELPER_ITEM_TAG)) {
-    of = metadata(helper).getConfiguration('helper-item-of')
-
-    if (!of) {
-      console.log(
-        'remove_unlinked_helper_items',
-        'Remove invalid helper item {}: There is no targeted item set in metadata.'.format(
-          helper.name
-        )
-      )
-
-      items.removeItem(helper.name)
-      continue
-    }
-
-    try {
-      items.getItem(of)
-    } catch {
-      console.log(
-        'remove_unlinked_helper_items',
-        'Remove invalid helper item {}: The targeted item {} does not exist.'.format(
-          helper.name,
-          of
-        )
-      )
-      items.removeItem(helper.name)
-    }
-  }
-}
-
-export function remove_invalid_helper_items() {
-  for (const item of items.getItems()) {
-    const meta = metadata(item)
-    for (const type in meta.getConfiguration('helper-items')) {
-      const itemNames = meta[type]
-      for (const name in itemNames) {
-        try {
-          items.getItem(itemNames[name])
-        } catch {
-          console.log(
-            'remove_invalid_helper_items',
-            'Remove invalid metadata of item {}: {} [{}] is no valid helper item for .'.format(
-              item.name,
-              name,
-              type
-            )
-          )
-          meta.setConfiguration(['helper-items', namespace, name], undefined)
-        }
-      }
-    }
-  }
-}
-
 export function get_semantic_items(rootItem, equipmentTags, pointTags) {
   const equipments = equipmentTags
     ? get_childs_with_condition(rootItem, (item) => {
@@ -300,3 +282,72 @@ export function get_childs_with_condition(item, condition = (item) => true) {
 
   return uniqBy(groupMembers, (item) => item.name)
 }
+
+export function remove_unlinked_helper_items() {
+  for (const helper of items.getItemsByTag(HELPER_ITEM_TAG)) {
+    of = metadata(helper).getConfiguration('helper-item-of')
+
+    if (!of) {
+      console.log(
+        'remove_unlinked_helper_items',
+        'Remove invalid helper item {}: There is no targeted item set in metadata.'.format(
+          helper.name
+        )
+      )
+
+      items.removeItem(helper.name)
+      continue
+    }
+
+    try {
+      items.getItem(of)
+    } catch {
+      console.log(
+        'remove_unlinked_helper_items',
+        'Remove invalid helper item {}: The targeted item {} does not exist.'.format(
+          helper.name,
+          of
+        )
+      )
+      items.removeItem(helper.name)
+    }
+  }
+}
+
+export function remove_invalid_helper_items() {
+  for (const item of items.getItems()) {
+    const meta = metadata(item)
+    for (const type in meta.getConfiguration('helper-items')) {
+      const itemNames = meta[type]
+      for (const name in itemNames) {
+        try {
+          items.getItem(itemNames[name])
+        } catch {
+          console.log(
+            'remove_invalid_helper_items',
+            'Remove invalid metadata of item {}: {} [{}] is no valid helper item for .'.format(
+              item.name,
+              name,
+              type
+            )
+          )
+          meta.setConfiguration(['helper-items', namespace, name], undefined)
+        }
+      }
+    }
+  }
+}
+
+rules.JSRule({
+  name: 'remove_unlinked_or_invalid_helper_items',
+  description: 'Core (JS) - Check helper items.',
+  tags: ['core', 'core-helpers'],
+  triggers: [
+    triggers.GenericCronTrigger('30 0/5 * ? * * *'),
+    triggers.SystemStartlevelTrigger(100)
+  ],
+  execute: (event) => {
+    remove_unlinked_helper_items()
+    remove_invalid_helper_items()
+  }
+})
