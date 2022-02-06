@@ -1,8 +1,8 @@
 Group gCore_Presence_PresenceTrigger
 
-Group gCore_Presence "Anwesenheit" <oh:motion> (gCore_Home) ["Equipment"]
+Group gCore_Presence "Anwesenheit" (gCore_Home) ["Equipment"]
 
-Number Core_Presence "Anwesenheit" <oh:motion> (gCore_Presence) ["Point"] {
+Number Core_Presence "Anwesenheit" (gCore_Presence) ["Point"] {
     stateDescription=""[
         options="1.0=Anwesend,0.0=Kurz abwesend,2.0=Lange abwesend"
     ],
@@ -17,7 +17,7 @@ Number Core_Presence "Anwesenheit" <oh:motion> (gCore_Presence) ["Point"] {
     ]
 }
 
-Number Core_Presence_HoursUntilAwayShort "Stunden bis kurze Abwesenheit" <oh:light> (gCore_Presence) ["Point"] {
+Number Core_Presence_HoursUntilAwayShort "Stunden bis kurze Abwesenheit" (gCore_Presence) ["Point"] {
     stateDescription="oh-stepper-item"[
         pattern="%dh",
         min="1",
@@ -31,7 +31,7 @@ Number Core_Presence_HoursUntilAwayShort "Stunden bis kurze Abwesenheit" <oh:lig
     ]
 }
 
-Number Core_Presence_HoursUntilAwayLong "Stunden bis lange Abwesenheit" <oh:light> (gCore_Presence) ["Point"] {
+Number Core_Presence_HoursUntilAwayLong "Stunden bis lange Abwesenheit" (gCore_Presence) ["Point"] {
     stateDescription=""[
         pattern="%dh",
         min="1",

@@ -3,7 +3,7 @@ Group gCore_Lights_DarkMode
 Group gCore_Lights_BrightMode
 Group gCore_Lights_ObscuredMode
 
-Group gCore_Lights "Lichtsteuerung" <oh:light> (gCore_Home) ["Equipment"] {
+Group gCore_Lights "Lichtsteuerung" (gCore_Home) ["Equipment"] {
   cellWidget="oh-label-cell"[
     icon="oh:light",
     label="Label",
@@ -12,7 +12,7 @@ Group gCore_Lights "Lichtsteuerung" <oh:light> (gCore_Home) ["Equipment"] {
   ]
 }
 
-Number Core_Lights_DefaultDuration "Standard Lichtdauer" <oh:time> (gCore_Lights) ["Point"]  {
+Number Core_Lights_DefaultDuration "Standard Lichtdauer" (gCore_Lights) ["Point"]  {
     stateDescription=""[
         pattern="%dm",
         min="1",
@@ -26,13 +26,13 @@ Number Core_Lights_DefaultDuration "Standard Lichtdauer" <oh:time> (gCore_Lights
     ]
 }
 
-Number Core_Lights_AmbientLightCondition "Lichtwert-Einstufung" <oh:sun> (gCore_Lights) /*Core_Lights_AmbientLightCondition_LuminanceTreshold as subtitle "Aktueller Lichtwert" */ ["Point"]  {
+Number Core_Lights_AmbientLightCondition "Lichtwert-Einstufung" (gCore_Lights) /*Core_Lights_AmbientLightCondition_LuminanceTreshold as subtitle "Aktueller Lichtwert" */ ["Point"]  {
      stateDescription=""[
         options="0.0=Dunkel,1.0=Verdunkelt,2.0=Hell"
     ]
 }
 
-Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured "Lichtwert bis Verdunkelt" <oh:line>  (gCore_Lights) ["Point"]  {
+Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured "Lichtwert bis Verdunkelt" (gCore_Lights) ["Point"]  {
     stateDescription=""[
         pattern="%d%%",
         min="1",
@@ -46,7 +46,7 @@ Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured "Lichtwert b
     ]
 }
 
-Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark "Lichtwert bis Dunkel" <oh:line> (gCore_Lights) ["Point"] {
+Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark "Lichtwert bis Dunkel" (gCore_Lights) ["Point"] {
     stateDescription=""[
         pattern="%d%%",
         min="1",
@@ -60,8 +60,8 @@ Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark "Lichtwert bis D
     ]
 }
 
-Switch Core_Lights_WelcomeLight_DarkMode "Begrüßungslicht (Dunkel)" <oh:keyring> (gCore_Lights) ["Point"]
+Switch Core_Lights_WelcomeLight_DarkMode "Begrüßungslicht (Dunkel)" (gCore_Lights) ["Point"]
 
-Switch Core_Lights_WelcomeLight_BrightMode "Begrüßungslicht (Hell)" <oh:keyring> (gCore_Lights) ["Point"]
+Switch Core_Lights_WelcomeLight_BrightMode "Begrüßungslicht (Hell)" (gCore_Lights) ["Point"]
 
-Switch Core_Lights_WelcomeLight_ObscuredMode "Begrüßungslicht (Verdunkelt)" <oh:keyring> (gCore_Lights) ["Point"]
+Switch Core_Lights_WelcomeLight_ObscuredMode "Begrüßungslicht (Verdunkelt)" (gCore_Lights) ["Point"]

@@ -1,1 +1,1 @@
-Group gCore_Home "Zuhause" <oh:home> ["Location"]
+Group gCore_Home "Zuhause" ["Location"]
