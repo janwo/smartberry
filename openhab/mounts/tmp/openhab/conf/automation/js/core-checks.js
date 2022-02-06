@@ -1,4 +1,4 @@
-const { rules, items, triggers, osgi, time } = require('openhab')
+const { rules, items, triggers, osgi, time, actions } = require('openhab')
 const { TemporalUnit } = require('openhab/time')
 
 const ItemChannelLinkRegistry = osgi.getService(
@@ -33,8 +33,8 @@ rules.JSRule({
           for (const item of ItemChannelLinkRegistry.getLinkedItems(
             channel.getUID()
           )) {
-            if (!Semantics.isEquipment(item)) {
-              item = Semantics.getEquipment(item)
+            if (!actions.Semantics.isEquipment(item)) {
+              item = actions.Semantics.getEquipment(item)
             }
 
             if (item) {

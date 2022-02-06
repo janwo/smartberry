@@ -1,5 +1,4 @@
-const { rules, items, triggers, time } = require('openhab')
-const { TemporalUnit } = require('openhab/time')
+const { rules, items, triggers } = require('openhab')
 const { apply_context } = require('./core-scene')
 const { metadata } = require('./core-helpers')
 

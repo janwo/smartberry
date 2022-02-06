@@ -54,7 +54,7 @@ function get_location(item) {
     }
   }
 
-  return Semantics.getLocation(item)
+  return actions.Semantics.getLocation(item)
 }
 
 function has_same_location(item1, item2) {
@@ -349,8 +349,6 @@ rules.JSRule({
 })
 
 module.exports = {
-  remove_invalid_helper_items,
-  remove_unlinked_helper_items,
   get_childs_with_condition,
   get_parents_with_condition,
   get_all_semantic_items,
