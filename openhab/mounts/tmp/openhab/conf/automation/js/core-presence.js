@@ -2,7 +2,6 @@ const { TemporalUnit } = require('openhab/time')
 const { rules, items, triggers, time } = require('openhab')
 const {
   metadata,
-  get_all_semantic_items,
   sync_group_with_semantic_items,
   get_location
 } = require('./core-helpers')
@@ -11,7 +10,7 @@ const PresenceState = { AWAY_SHORT: 0.0, HOME: 1.0, AWAY_LONG: 2.0 }
 
 const POINT_TAGS = ['Presence']
 
-export function get_presence_provider_item(item = undefined) {
+function get_presence_provider_item(item = undefined) {
   if (!item) {
     return items.getItem('Core_Presence')
   }
@@ -24,7 +23,7 @@ export function get_presence_provider_item(item = undefined) {
   return location
 }
 
-export function get_presence(item = undefined) {
+function get_presence(item = undefined) {
   const presenceProvider = get_presence_provider_item(item)
   const lastUpdate = metadata(presenceProvider).getConfiguration([
     'presence',
@@ -74,7 +73,7 @@ export function get_presence(item = undefined) {
   }
 }
 
-export function trigger_presence(item) {
+function trigger_presence(item) {
   let presenceProvider = get_presence_provider_item(item)
   metadata(presenceProvider).setConfiguration(
     ['presence', 'last-update'],
@@ -94,7 +93,7 @@ export function trigger_presence(item) {
   }
 }
 
-export function trigger_absence(item) {
+function trigger_absence(item) {
   if (get_presence() == PresenceState.HOME) {
     const presenceProvider = items.getItem('Core_Presence')
     presenceProvider.postUpdate(PresenceState.AWAY_SHORT)
@@ -167,3 +166,10 @@ rules.JSRule({
     }
   }
 })
+
+module.exports = {
+  get_presence_provider_item,
+  get_presence,
+  trigger_presence,
+  trigger_absence
+}

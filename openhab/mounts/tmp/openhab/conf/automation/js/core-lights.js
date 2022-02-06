@@ -31,7 +31,7 @@ const LIGHT_MEASUREMENT_POINT_TAGS = [['Light', 'Measurement']]
 
 const LIGHT_MEASUREMENT_ASTRO_SUNPHASE = ['CoreAstroSun']
 
-export function get_light_mode_group() {
+function get_light_mode_group() {
   const condition = items.getItem('Core_Lights_AmbientLightCondition').state
   switch (condition) {
     case AmbientLightCondition.DARK:
@@ -44,7 +44,7 @@ export function get_light_mode_group() {
   }
 }
 
-export function convert_to_light_condition(luminance) {
+function convert_to_light_condition(luminance) {
   const darkTresholdItem = items.getItem(
     'Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark'
   )
@@ -61,7 +61,7 @@ export function convert_to_light_condition(luminance) {
   return AmbientLightCondition.BRIGHT
 }
 
-export function get_astro_light_condition() {
+function get_astro_light_condition() {
   for (const astroItem of items.getItemsByTag(
     LIGHT_MEASUREMENT_ASTRO_SUNPHASE
   )) {
@@ -77,12 +77,12 @@ export function get_astro_light_condition() {
   return undefined
 }
 
-export function get_light_condition() {
+function get_light_condition() {
   const conditionItem = items.getItem('Core_Lights_AmbientLightCondition')
   return conditionItem.state
 }
 
-export function set_light_condition(condition, luminance = undefined) {
+function set_light_condition(condition, luminance = undefined) {
   const conditionItem = items.getItem('Core_Lights_AmbientLightCondition')
   if (conditionItem.state != condition) {
     conditionItem.postUpdate(condition)
@@ -93,7 +93,7 @@ export function set_light_condition(condition, luminance = undefined) {
   }
 }
 
-export function get_darkest_light_condition(conditions) {
+function get_darkest_light_condition(conditions) {
   const orderedConditions = [
     AmbientLightCondition.DARK,
     AmbientLightCondition.OBSCURED,
@@ -106,7 +106,7 @@ export function get_darkest_light_condition(conditions) {
   }
 }
 
-export function set_location_as_activated(switchable) {
+function set_location_as_activated(switchable) {
   const location = get_location(switchable)
   if (location) {
     metadata(location).setConfiguration(
@@ -116,7 +116,7 @@ export function set_location_as_activated(switchable) {
   }
 }
 
-export function is_elapsed(item) {
+function is_elapsed(item) {
   const location = get_location(item)
   if (location) {
     const lastActivation = metadata(location).getConfiguration([
@@ -138,7 +138,7 @@ export function is_elapsed(item) {
   return false
 }
 
-export function turn_on_switchable_point(point, force = false) {
+function turn_on_switchable_point(point, force = false) {
   if (!point.state || force) {
     point.sendCommand('ON')
     point.postUpdate('ON')
@@ -147,7 +147,7 @@ export function turn_on_switchable_point(point, force = false) {
   }
 }
 
-export function turn_off_switchable_point(point, force = false) {
+function turn_off_switchable_point(point, force = false) {
   if (point.state || force) {
     point.sendCommand('OFF')
     point.postUpdate('OFF')
@@ -516,3 +516,16 @@ rules.JSRule({
     }
   }
 })
+
+module.exports = {
+  get_light_mode_group,
+  get_light_condition,
+  convert_to_light_condition,
+  get_astro_light_condition,
+  set_light_condition,
+  get_darkest_light_condition,
+  set_location_as_activated,
+  is_elapsed,
+  turn_on_switchable_point,
+  turn_off_switchable_point
+}

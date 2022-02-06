@@ -32,7 +32,7 @@ const LOCK_EQUIPMENT_TAGS = ['Lock']
 
 const LOCK_POINT_TAGS = ['OpenState', 'Switch']
 
-export function is_security_state(state = OperationState.OFF) {
+function is_security_state(state = OperationState.OFF) {
   const OperationStateItem = items.getItem('Core_Security_OperationState')
   return OperationStateItem.state == state
 }
@@ -229,3 +229,7 @@ rules.JSRule({
     }
   }
 })
+
+module.exports = {
+  is_security_state
+}

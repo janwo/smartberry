@@ -15,7 +15,7 @@ const SCENE_TAGS = ['CoreScene']
 
 const SCENE_TRIGGER_TAGS = ['CoreSceneTrigger']
 
-export function get_scene_state(scene) {
+function get_scene_state(scene) {
   if (['NULL', 'UNDEF'].includes(scene.state)) {
     return scene.state
   } else {
@@ -30,7 +30,7 @@ export function get_scene_state(scene) {
   return undefined
 }
 
-export function get_scene_states(scene) {
+function get_scene_states(scene) {
   const commandDescription = scene.getCommandDescription()
   const commandOptions = commandDescription
     ? commandDescription.getCommandOptions()
@@ -44,7 +44,7 @@ export function get_scene_states(scene) {
   )
 }
 
-export function get_scene_items(scene) {
+function get_scene_items(scene) {
   const sceneMembers = metadata(scene).getConfiguration([
     'scenes',
     'custom-members'
@@ -83,7 +83,7 @@ export function get_scene_items(scene) {
   )
 }
 
-export function get_scene_item_states(scene, scene_state = undefined) {
+function get_scene_item_states(scene, scene_state = undefined) {
   const scene_state = scene_state || get_scene_state(scene)
 
   if (scene_state === undefined) {
@@ -102,7 +102,7 @@ export function get_scene_item_states(scene, scene_state = undefined) {
   )
 }
 
-export function save_scene_item_states(scene, scene_state = undefined) {
+function save_scene_item_states(scene, scene_state = undefined) {
   const items = get_scene_items(scene)
   const scene_state = scene_state || get_scene_state(scene)
 
@@ -115,7 +115,7 @@ export function save_scene_item_states(scene, scene_state = undefined) {
   }
 }
 
-export function trigger_scene_items(scene, poke_only = false) {
+function trigger_scene_items(scene, poke_only = false) {
   const item_states = get_scene_item_states(scene)
   for (let item in item_states) {
     item = items.getItem(item)
@@ -128,7 +128,7 @@ export function trigger_scene_items(scene, poke_only = false) {
   }
 }
 
-export function apply_context(scene, context) {
+function apply_context(scene, context) {
   const contextState = metadata(scene).getConfiguration([
     'scenes',
     'context-states',
@@ -386,3 +386,13 @@ rules.JSRule({
     }
   }
 })
+
+module.exports = {
+  get_scene_state,
+  get_scene_states,
+  get_scene_items,
+  get_scene_item_states,
+  save_scene_item_states,
+  trigger_scene_items,
+  apply_context
+}

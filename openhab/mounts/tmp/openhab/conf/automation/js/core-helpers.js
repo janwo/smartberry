@@ -21,7 +21,7 @@ const METADATA_NAMESPACE = 'core'
 
 const HELPER_ITEM_TAG = 'CoreHelperItem'
 
-export function broadcast(text, broadcastType = BroadcastType.INFO) {
+function broadcast(text, broadcastType = BroadcastType.INFO) {
   const state = items.getItem('Core_Broadcast_NotificationMode').state
   let notificationMode = state || BroadcastNotificationMode.DEFAULT
 
@@ -45,7 +45,7 @@ export function broadcast(text, broadcastType = BroadcastType.INFO) {
   }
 }
 
-export function get_location(item) {
+function get_location(item) {
   if (typeof item == 'string') {
     try {
       item = items.getItem(item)
@@ -57,7 +57,7 @@ export function get_location(item) {
   return Semantics.getLocation(item)
 }
 
-export function has_same_location(item1, item2) {
+function has_same_location(item1, item2) {
   const locationItem1 = get_location(item1)
   const locationItem2 = get_location(item2)
   return (
@@ -65,17 +65,13 @@ export function has_same_location(item1, item2) {
   )
 }
 
-export function get_items_of_any_tags(tags = []) {
+function get_items_of_any_tags(tags = []) {
   return uniq(
     tags.reduce((tags, tag) => tags.concat(items.getItemsByTag(tag)), [])
   )
 }
 
-export function sync_group_with_semantic_items(
-  group,
-  equipmentTags,
-  pointTags
-) {
+function sync_group_with_semantic_items(group, equipmentTags, pointTags) {
   if (typeof group == 'string') {
     group = items.getItem(group)
   }
@@ -100,7 +96,7 @@ export function sync_group_with_semantic_items(
   return targetedGroupItems
 }
 
-export function metadata(item, namespace = METADATA_NAMESPACE) {
+function metadata(item, namespace = METADATA_NAMESPACE) {
   if (typeof item != 'string') {
     item = item.name
   }
@@ -139,7 +135,7 @@ function get_helper_item(of, type, name) {
   }
 }
 
-export function get_item_of_helper_item(helperItem) {
+function get_item_of_helper_item(helperItem) {
   try {
     const meta = metadata(helperItem).getConfiguration('helper-item-of')
     if (meta) {
@@ -150,7 +146,7 @@ export function get_item_of_helper_item(helperItem) {
   }
 }
 
-export function create_helper_item(
+function create_helper_item(
   of,
   type,
   name,
@@ -186,7 +182,7 @@ export function create_helper_item(
   return helperItem
 }
 
-export function get_semantic_items(rootItem, equipmentTags, pointTags) {
+function get_semantic_items(rootItem, equipmentTags, pointTags) {
   const equipments = equipmentTags
     ? get_childs_with_condition(rootItem, (item) => {
         for (const equipmentTag of equipmentTags) {
@@ -229,7 +225,7 @@ export function get_semantic_items(rootItem, equipmentTags, pointTags) {
   return uniqBy(points, (item) => item.name)
 }
 
-export function get_all_semantic_items(equipmentTags, pointTags) {
+function get_all_semantic_items(equipmentTags, pointTags) {
   const points = get_items_of_any_tags(equipmentTags).reduce(
     (pointsList, newEquipment) => {
       const newPoints = get_semantic_items(newEquipment, undefined, pointTags)
@@ -241,7 +237,7 @@ export function get_all_semantic_items(equipmentTags, pointTags) {
   return uniqBy(points, (item) => item.name)
 }
 
-export function get_parents_with_condition(item, condition = (item) => true) {
+function get_parents_with_condition(item, condition = (item) => true) {
   if (typeof item == 'string') {
     item = items.getItem(item)
   }
@@ -262,7 +258,7 @@ export function get_parents_with_condition(item, condition = (item) => true) {
   return uniqBy(groupMembers, (item) => item.name)
 }
 
-export function get_childs_with_condition(item, condition = (item) => true) {
+function get_childs_with_condition(item, condition = (item) => true) {
   if (typeof item == 'string') {
     item = items.getItem(item)
   }
@@ -283,7 +279,7 @@ export function get_childs_with_condition(item, condition = (item) => true) {
   return uniqBy(groupMembers, (item) => item.name)
 }
 
-export function remove_unlinked_helper_items() {
+function remove_unlinked_helper_items() {
   for (const helper of items.getItemsByTag(HELPER_ITEM_TAG)) {
     of = metadata(helper).getConfiguration('helper-item-of')
 
@@ -314,7 +310,7 @@ export function remove_unlinked_helper_items() {
   }
 }
 
-export function remove_invalid_helper_items() {
+function remove_invalid_helper_items() {
   for (const item of items.getItems()) {
     const meta = metadata(item)
     for (const type in meta.getConfiguration('helper-items')) {
@@ -351,3 +347,21 @@ rules.JSRule({
     remove_invalid_helper_items()
   }
 })
+
+module.exports = {
+  remove_invalid_helper_items,
+  remove_unlinked_helper_items,
+  get_childs_with_condition,
+  get_parents_with_condition,
+  get_all_semantic_items,
+  get_semantic_items,
+  create_helper_item,
+  get_helper_item,
+  get_item_of_helper_item,
+  metadata,
+  sync_group_with_semantic_items,
+  get_items_of_any_tags,
+  has_same_location,
+  get_location,
+  broadcast
+}
