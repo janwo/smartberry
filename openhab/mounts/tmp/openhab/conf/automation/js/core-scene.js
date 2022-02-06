@@ -6,6 +6,7 @@ const {
   create_helper_item,
   get_all_semantic_items,
   get_items_of_any_tags,
+  DATETIME_FORMAT,
   sync_group_with_semantic_items,
   get_location,
   has_same_location
@@ -363,20 +364,20 @@ rules.JSRule({
       if (
         !lastActivation ||
         (triggerInfo['hours-until-active'] &&
-          time
-            .parse(lastActivation)
-            .until(time.ZonedDateTime.now(), TemporalUnit.HOURS) <=
-            triggerInfo['hours-until-active']) ||
+          time.ZonedDateTime.parse(lastActivation, DATETIME_FORMAT).until(
+            time.ZonedDateTime.now(),
+            TemporalUnit.HOURS
+          ) <= triggerInfo['hours-until-active']) ||
         (triggerInfo['minutes-until-active'] &&
-          time
-            .parse(lastActivation)
-            .until(time.ZonedDateTime.now(), TemporalUnit.MINUTES) <=
-            triggerInfo['minutes-until-active']) ||
+          time.ZonedDateTime.parse(lastActivation, DATETIME_FORMAT).until(
+            time.ZonedDateTime.now(),
+            TemporalUnit.MINUTES
+          ) <= triggerInfo['minutes-until-active']) ||
         (triggerInfo['seconds-until-active'] &&
-          time
-            .parse(lastActivation)
-            .until(time.ZonedDateTime.now(), TemporalUnit.HOURS) <=
-            triggerInfo['seconds-until-active'])
+          time.ZonedDateTime.parse(lastActivation, DATETIME_FORMAT).until(
+            time.ZonedDateTime.now(),
+            TemporalUnit.HOURS
+          ) <= triggerInfo['seconds-until-active'])
       ) {
         return
       }

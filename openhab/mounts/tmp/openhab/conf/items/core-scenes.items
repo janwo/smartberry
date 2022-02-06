@@ -1,14 +1,14 @@
 Group gCore_Scenes
 Group gCore_Scenes_StateTriggers
 
-Group gCore_Scenes_Settings "Szenen" <party> (gCore_Home) ["Equipment"] {
+Group gCore_Scenes_Settings "Szenen" <oh:party> (gCore_Home) ["Equipment"] {
   cellWidget="oh-label-cell"[
     icon="oh:party",
     title="\u003ditems.gCore_Scenes_Settings.title"
   ]
 }
 
-Group gCore_Scenes_StoreTriggers "Szene überschreiben" <settings> (gCore_Scenes_Settings) ["Point"] {
+Group gCore_Scenes_StoreTriggers "Szene überschreiben" <oh:settings> (gCore_Scenes_Settings) ["Point"] {
     cellWidget=""[
         label="\u003ditems.gCore_Scenes_StoreTriggers.title",
         icon="oh:settings"
@@ -18,6 +18,6 @@ Group gCore_Scenes_StoreTriggers "Szene überschreiben" <settings> (gCore_Scenes
     ]
 }
 
-Switch Core_Scenes_ReloadStates "Szenen reinitialisieren" <party> (gCore_Scenes_Settings) ["Point"] {
+Switch Core_Scenes_ReloadStates "Szenen reinitialisieren" <oh:party> (gCore_Scenes_Settings) ["Point"] {
   expire="30s,state=OFF"
 }

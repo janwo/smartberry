@@ -2,6 +2,7 @@ const { TemporalUnit } = require('openhab/time')
 const { rules, items, triggers, time } = require('openhab')
 const {
   metadata,
+  DATETIME_FORMAT,
   sync_group_with_semantic_items,
   get_location
 } = require(__dirname + '/core-helpers')
@@ -36,10 +37,10 @@ function get_presence(item = undefined) {
     if (Number.parseFloat(hours_away_long.state) > 0) {
       skipExpireCheck = false
       if (
-        time
-          .parse(lastUpdate)
-          .until(time.ZonedDateTime.now(), TemporalUnit.HOURS) >
-        hours_away_long.state
+        time.ZonedDateTime.parse(lastUpdate, DATETIME_FORMAT).until(
+          time.ZonedDateTime.now(),
+          TemporalUnit.HOURS
+        ) > hours_away_long.state
       ) {
         return PresenceState.AWAY_LONG
       }
@@ -49,10 +50,10 @@ function get_presence(item = undefined) {
     if (Number.parseFloat(hours_away_short.state) > 0) {
       skipExpireCheck = False
       if (
-        time
-          .parse(lastUpdate)
-          .until(time.ZonedDateTime.now(), TemporalUnit.HOURS) >
-        hours_away_short.state
+        time.ZonedDateTime.parse(lastUpdate, DATETIME_FORMAT).until(
+          time.ZonedDateTime.now(),
+          TemporalUnit.HOURS
+        ) > hours_away_short.state
       ) {
         return PresenceState.AWAY_SHORT
       }
@@ -77,14 +78,14 @@ function trigger_presence(item) {
   let presenceProvider = get_presence_provider_item(item)
   metadata(presenceProvider).setConfiguration(
     ['presence', 'last-update'],
-    time.ZonedDateTime.now().toString()
+    time.ZonedDateTime.now().format(DATETIME_FORMAT)
   )
 
   if (presenceProvider.name != 'Core_Presence') {
     presenceProvider = items.getItem('Core_Presence')
     metadata(presenceProvider).setConfiguration(
       ['presence', 'last-update'],
-      time.ZonedDateTime.now().toString()
+      time.ZonedDateTime.now().format(DATETIME_FORMAT)
     )
   }
 

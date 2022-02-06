@@ -1,4 +1,4 @@
-const { items, osgi, triggers, actions, rules } = require('openhab')
+const { items, osgi, triggers, actions, time, rules } = require('openhab')
 const { uniq, get, intersection, uniqBy } = require('lodash')
 
 const MetadataKey = Java.type('org.openhab.core.items.MetadataKey')
@@ -20,6 +20,9 @@ const BroadcastNotificationMode = {
 const METADATA_NAMESPACE = 'core'
 const HELPER_ITEM_TAG = 'CoreHelperItem'
 
+const DATETIME_FORMAT = time.DateTimeFormatter.ofPattern(
+  "yyyy-MM-dd'T'HH:mm:ssZ"
+)
 function broadcast(text, broadcastType = BroadcastType.INFO) {
   const state = items.getItem('Core_Broadcast_NotificationMode').state
   let notificationMode = state || BroadcastNotificationMode.DEFAULT
@@ -370,5 +373,6 @@ module.exports = {
   get_location,
   broadcast,
   BroadcastType,
-  BroadcastNotificationMode
+  BroadcastNotificationMode,
+  DATETIME_FORMAT
 }

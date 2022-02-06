@@ -1,10 +1,12 @@
 const { rules, items, triggers, osgi, time, actions } = require('openhab')
 const { TemporalUnit } = require('openhab/time')
+const { DATETIME_FORMAT } = require(__dirname + '/core-helpers')
 
+const ThingRegistry = osgi.getService('org.openhab.core.thing.ThingRegistry')
+const ThingStatus = Java.type('org.openhab.core.thing.ThingStatus')
 const ItemChannelLinkRegistry = osgi.getService(
   'org.openhab.core.thing.link.ItemChannelLinkRegistry'
 )
-const ThingsRegistry = osgi.getService('org.openhab.core.thing.ThingRegistry')
 
 const ELAPSED_DAYS = 5
 
@@ -18,19 +20,19 @@ rules.JSRule({
     for (const member of group.members) {
       member.removeGroups(group)
     }
-    const allThings = ThingsRegistry.getAll()
+    const allThings = ThingRegistry.getAll()
     for (const thing of allThings) {
       if (
-        (thing.getStatusInfo() &&
-          thing.getStatusInfo().getStatus().toString() != 'ONLINE') ||
+        thing.getStatus() != ThingStatus.ONLINE ||
         (thing.getProperties() &&
           thing.getProperties().get('zwave_lastheal') &&
-          time
-            .parse(thing.getProperties().get('zwave_lastheal'))
-            .until(time.ZonedDateTime.now(), TemporalUnit.DAYS)) > ELAPSED_DAYS
+          time.ZonedDateTime.parse(
+            thing.getProperties().get('zwave_lastheal'),
+            DATETIME_FORMAT
+          ).until(time.ZonedDateTime.now(), TemporalUnit.DAYS)) > ELAPSED_DAYS
       ) {
         for (const channel of thing.getChannels()) {
-          for (const item of ItemChannelLinkRegistry.getLinkedItems(
+          for (let item of ItemChannelLinkRegistry.getLinkedItems(
             channel.getUID()
           )) {
             if (!actions.Semantics.isEquipment(item)) {
@@ -38,7 +40,7 @@ rules.JSRule({
             }
 
             if (item) {
-              item.addGroups(group)
+              items.getItem(item.name).addGroups(group)
             }
           }
         }

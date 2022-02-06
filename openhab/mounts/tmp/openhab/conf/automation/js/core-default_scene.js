@@ -1,6 +1,7 @@
 const { rules, items, triggers } = require('openhab')
 const { apply_context } = require(__dirname + '/core-scene')
 const { metadata } = require(__dirname + '/core-helpers')
+const { PresenceState } = require(__dirname + '/core-presence')
 
 const DefaultSceneState = {
   HOME: 0.0,

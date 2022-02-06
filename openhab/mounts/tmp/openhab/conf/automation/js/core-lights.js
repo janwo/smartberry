@@ -5,9 +5,11 @@ const {
   metadata,
   get_all_semantic_items,
   get_items_of_any_tags,
+  DATETIME_FORMAT,
   sync_group_with_semantic_items,
   get_location
 } = require(__dirname + '/core-helpers')
+const { PresenceState } = require(__dirname + '/core-presence')
 
 const LightMode = {
   OFF: 0.0,
@@ -108,7 +110,7 @@ function set_location_as_activated(switchable) {
   if (location) {
     metadata(location).setConfiguration(
       ['lights', 'last-activation'],
-      time.ZonedDateTime.now().toString()
+      time.ZonedDateTime.now().format(DATETIME_FORMAT)
     )
   }
 }
@@ -125,10 +127,10 @@ function is_elapsed(item) {
 
       return (
         durationItem.state &&
-        time
-          .parse(lastActivation)
-          .until(time.ZonedDateTime.now(), TemporalUnit.MINUTES) >
-          durationItem.state
+        time.ZonedDateTime.parse(lastActivation, DATETIME_FORMAT).until(
+          time.ZonedDateTime.now(),
+          TemporalUnit.MINUTES
+        ) > durationItem.state
       )
     }
   }
@@ -178,19 +180,19 @@ rules.JSRule({
         suffix: 'dark',
         label: 'Lichtmodus (Dunkel) in {}',
         groups: ['gCore_Lights_DarkMode'],
-        icon: 'moon'
+        icon: 'oh:moon'
       },
       {
         suffix: 'bright',
         label: 'Lichtmodus (Hell) in {}',
         groups: ['gCore_Lights_BrightMode'],
-        icon: 'sun'
+        icon: 'oh:sun'
       },
       {
         suffix: 'obscured',
         label: 'Lichtmodus (Verdunkelt) in {}',
         groups: ['gCore_Lights_ObscuredMode'],
-        icon: 'blinds'
+        icon: 'oh:blinds'
       }
     ]
 

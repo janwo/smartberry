@@ -5,6 +5,8 @@ const {
   get_all_semantic_items,
   sync_group_with_semantic_items,
   broadcast,
+  BroadcastType,
+  DATETIME_FORMAT,
   has_same_location
 } = require(__dirname + '/core-helpers')
 
@@ -31,7 +33,7 @@ function is_security_state(state = OperationState.OFF) {
 
 rules.JSRule({
   name: 'sync_security_helpers',
-  description: 'Core (JS) - Sync helper items of security zt',
+  description: 'Core (JS) - Sync helper items of security',
   tags: ['core', 'core-security'],
   triggers: [
     triggers.GenericCronTrigger('30 0/5 * ? * * *'),
@@ -70,7 +72,7 @@ rules.JSRule({
     const item = items.getItem(data.itemName)
     metadata('Core_Security_OperationState').setConfiguration(
       ['security', 'last-alarm'],
-      time.ZonedDateTime.now().toString()
+      time.ZonedDateTime.now().format(DATETIME_FORMAT)
     )
 
     let message = 'Silent alarm was triggered by {}!'.format(item.label)
@@ -199,7 +201,7 @@ rules.JSRule({
     if (
       autoOffTime.state == 0 ||
       !lastAlarmTime ||
-      time.ZonedDateTime.parse(lastAlarmTime).until(
+      time.ZonedDateTime.parse(lastAlarmTime, DATETIME_FORMAT).until(
         time.ZonedDateTime.now(),
         TemporalUnit.MINUTES
       ) > autoOffTime.state

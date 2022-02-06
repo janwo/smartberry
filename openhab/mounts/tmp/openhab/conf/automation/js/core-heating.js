@@ -3,6 +3,7 @@ const { TemporalUnit } = require('openhab/time')
 const {
   metadata,
   get_all_semantic_items,
+  DATETIME_FORMAT,
   sync_group_with_semantic_items,
   get_location
 } = require(__dirname + '/core-helpers')
@@ -79,13 +80,13 @@ rules.JSRule({
           'open-contact-since'
         ])
         if (meta) {
-          return time.ZonedDateTime.parse(meta)
+          return time.ZonedDateTime.parse(meta, DATETIME_FORMAT)
         }
 
         const now = time.ZonedDateTime.now()
         metadata(heatingShutdownMinutesItem).setConfiguration(
           ['heating', 'open-contact-since'],
-          now.toString()
+          now.format(DATETIME_FORMAT)
         )
         return now
       })()
