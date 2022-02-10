@@ -21,7 +21,7 @@ const METADATA_NAMESPACE = 'core'
 const HELPER_ITEM_TAG = 'CoreHelperItem'
 
 const DATETIME_FORMAT = time.DateTimeFormatter.ofPattern(
-  "yyyy-MM-dd'T'HH:mm:ssZ"
+  "yyyy-MM-dd'T'HH:mm:ss.SSS[xxxx][xxxxx]"
 )
 function broadcast(text, broadcastType = BroadcastType.INFO) {
   const state = items.getItem('Core_Broadcast_NotificationMode').state
@@ -291,7 +291,7 @@ function get_childs_with_condition(item, condition = (item) => true) {
 
 function remove_unlinked_helper_items() {
   for (const helper of items.getItemsByTag(HELPER_ITEM_TAG)) {
-    of = metadata(helper).getConfiguration('helper-item-of')
+    const of = metadata(helper).getConfiguration('helper-item-of')
 
     if (!of) {
       console.log(
