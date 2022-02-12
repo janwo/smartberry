@@ -52,7 +52,7 @@ function get_scene_items(scene) {
   const handleMember = (member) => {
     if (member.startsWith('tag:')) {
       return get_items_of_any_tags([member.substring(4)]).filter(
-        (item) => item.type != 'Group' && has_same_location(item, scene)
+        (item) => item.type != 'GroupItem' && has_same_location(item, scene)
       )
     }
 
@@ -63,11 +63,11 @@ function get_scene_items(scene) {
           LIGHTS_EQUIPMENT_TAGS,
           LIGHTS_POINT_TAGS
         ).filter(
-          (item) => item.type != 'Group' && has_same_location(item, scene)
+          (item) => item.type != 'GroupItem' && has_same_location(item, scene)
         )
       }
     }
-    return get_childs_with_condition(member, (item) => item.type != 'Group')
+    return get_childs_with_condition(member, (item) => item.type != 'GroupItem')
   }
 
   return uniqBy(

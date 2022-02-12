@@ -197,7 +197,7 @@ function get_semantic_items(rootItem, equipmentTags, pointTags) {
     ? get_childs_with_condition(rootItem, (item) => {
         for (const equipmentTag of equipmentTags) {
           if (Array.isArray(equipmentTag)) {
-            matchedTags = intersection(item.tags, equipmentTags)
+            const matchedTags = intersection(item.tags, equipmentTags)
             if (equipmentTags.length == matchedTags.length) {
               return true
             }
@@ -218,7 +218,7 @@ function get_semantic_items(rootItem, equipmentTags, pointTags) {
     const newPoints = get_childs_with_condition(newEquipment, (item) => {
       for (const pointTag of pointTags) {
         if (Array.isArray(pointTag)) {
-          matchedTags = intersection(item.tags, pointTags)
+          const matchedTags = intersection(item.tags, pointTags)
           if (pointTags.length == matchedTags.length) {
             return true
           }
@@ -277,7 +277,7 @@ function get_childs_with_condition(item, condition = (item) => true) {
     return [item]
   }
 
-  if (item.type != 'Group') {
+  if (item.type != 'GroupItem') {
     return []
   }
 
