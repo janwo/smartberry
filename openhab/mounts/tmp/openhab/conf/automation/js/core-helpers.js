@@ -197,11 +197,11 @@ function get_semantic_items(rootItem, equipmentTags, pointTags) {
     ? get_childs_with_condition(rootItem, (item) => {
         for (const equipmentTag of equipmentTags) {
           if (Array.isArray(equipmentTag)) {
-            matchedTags = intersection(item.getTags(), equipmentTags)
+            matchedTags = intersection(item.tags, equipmentTags)
             if (equipmentTags.length == matchedTags.length) {
               return true
             }
-          } else if (item.getTags().includes(equipmentTag)) {
+          } else if (item.tags.includes(equipmentTag)) {
             return true
           }
         }
@@ -218,11 +218,11 @@ function get_semantic_items(rootItem, equipmentTags, pointTags) {
     const newPoints = get_childs_with_condition(newEquipment, (item) => {
       for (const pointTag of pointTags) {
         if (Array.isArray(pointTag)) {
-          matchedTags = intersection(item.getTags(), pointTags)
+          matchedTags = intersection(item.tags, pointTags)
           if (pointTags.length == matchedTags.length) {
             return true
           }
-        } else if (item.getTags().includes(pointTag)) {
+        } else if (item.tags.includes(pointTag)) {
           return true
         }
       }
@@ -256,11 +256,11 @@ function get_parents_with_condition(item, condition = (item) => !!item) {
     return [item]
   }
 
-  if (!item.getGroupNames()) {
+  if (!item.groupNames) {
     return []
   }
 
-  const groupMembers = item.getGroupNames().reduce((memberList, newMember) => {
+  const groupMembers = item.groupNames.reduce((memberList, newMember) => {
     const newMembers = get_parents_with_condition(newMember, condition)
     return memberList.concat(newMembers)
   }, [])
@@ -277,7 +277,7 @@ function get_childs_with_condition(item, condition = (item) => true) {
     return [item]
   }
 
-  if (item.getType() != 'Group') {
+  if (item.type != 'Group') {
     return []
   }
 

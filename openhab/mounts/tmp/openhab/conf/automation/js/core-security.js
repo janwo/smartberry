@@ -1,4 +1,3 @@
-const { TemporalUnit } = require('openhab/time')
 const { rules, items, triggers, time } = require('openhab')
 const {
   metadata,
@@ -203,7 +202,7 @@ rules.JSRule({
       !lastAlarmTime ||
       time.ZonedDateTime.parse(lastAlarmTime, DATETIME_FORMAT).until(
         time.ZonedDateTime.now(),
-        TemporalUnit.MINUTES
+        time.ChronoUnit.MINUTES
       ) > autoOffTime.state
     ) {
       return

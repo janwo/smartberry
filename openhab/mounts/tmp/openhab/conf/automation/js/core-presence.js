@@ -1,4 +1,3 @@
-const { TemporalUnit } = require('openhab/time')
 const { rules, items, triggers, time } = require('openhab')
 const {
   metadata,
@@ -39,7 +38,7 @@ function get_presence(item = undefined) {
       if (
         time.ZonedDateTime.parse(lastUpdate, DATETIME_FORMAT).until(
           time.ZonedDateTime.now(),
-          TemporalUnit.HOURS
+          time.ChronoUnit.HOURS
         ) > hours_away_long.state
       ) {
         return PresenceState.AWAY_LONG
@@ -52,7 +51,7 @@ function get_presence(item = undefined) {
       if (
         time.ZonedDateTime.parse(lastUpdate, DATETIME_FORMAT).until(
           time.ZonedDateTime.now(),
-          TemporalUnit.HOURS
+          time.ChronoUnit.HOURS
         ) > hours_away_short.state
       ) {
         return PresenceState.AWAY_SHORT

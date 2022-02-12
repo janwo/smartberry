@@ -1,5 +1,4 @@
 const { rules, items, triggers, osgi, time, actions } = require('openhab')
-const { TemporalUnit } = require('openhab/time')
 const { DATETIME_FORMAT } = require(__dirname + '/core-helpers')
 
 const ThingRegistry = osgi.getService('org.openhab.core.thing.ThingRegistry')
@@ -29,7 +28,8 @@ rules.JSRule({
           time.ZonedDateTime.parse(
             thing.getProperties().get('zwave_lastheal'),
             DATETIME_FORMAT
-          ).until(time.ZonedDateTime.now(), TemporalUnit.DAYS)) > ELAPSED_DAYS
+          ).until(time.ZonedDateTime.now(), time.ChronoUnit.DAYS)) >
+          ELAPSED_DAYS
       ) {
         for (const channel of thing.getChannels()) {
           for (let item of ItemChannelLinkRegistry.getLinkedItems(

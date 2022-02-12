@@ -1,6 +1,5 @@
 const { rules, items, triggers, time } = require('openhab')
 const { uniqBy } = require('lodash')
-const { TemporalUnit } = require('openhab/time')
 const {
   metadata,
   create_helper_item,
@@ -53,7 +52,7 @@ function get_scene_items(scene) {
   const handleMember = (member) => {
     if (member.startsWith('tag:')) {
       return get_items_of_any_tags([member.substring(4)]).filter(
-        (item) => item.getType() != 'Group' && has_same_location(item, scene)
+        (item) => item.type != 'Group' && has_same_location(item, scene)
       )
     }
 
@@ -64,14 +63,11 @@ function get_scene_items(scene) {
           LIGHTS_EQUIPMENT_TAGS,
           LIGHTS_POINT_TAGS
         ).filter(
-          (item) => item.getType() != 'Group' && has_same_location(item, scene)
+          (item) => item.type != 'Group' && has_same_location(item, scene)
         )
       }
     }
-    return get_childs_with_condition(
-      member,
-      (item) => item.getType() != 'Group'
-    )
+    return get_childs_with_condition(member, (item) => item.type != 'Group')
   }
 
   return uniqBy(
@@ -366,17 +362,17 @@ rules.JSRule({
         (triggerInfo['hours-until-active'] &&
           time.ZonedDateTime.parse(lastActivation, DATETIME_FORMAT).until(
             time.ZonedDateTime.now(),
-            TemporalUnit.HOURS
+            time.ChronoUnit.HOURS
           ) <= triggerInfo['hours-until-active']) ||
         (triggerInfo['minutes-until-active'] &&
           time.ZonedDateTime.parse(lastActivation, DATETIME_FORMAT).until(
             time.ZonedDateTime.now(),
-            TemporalUnit.MINUTES
+            time.ChronoUnit.MINUTES
           ) <= triggerInfo['minutes-until-active']) ||
         (triggerInfo['seconds-until-active'] &&
           time.ZonedDateTime.parse(lastActivation, DATETIME_FORMAT).until(
             time.ZonedDateTime.now(),
-            TemporalUnit.HOURS
+            time.ChronoUnit.HOURS
           ) <= triggerInfo['seconds-until-active'])
       ) {
         return

@@ -1,5 +1,4 @@
 const { rules, items, triggers, time } = require('openhab')
-const { TemporalUnit } = require('openhab/time')
 const {
   metadata,
   get_all_semantic_items,
@@ -93,7 +92,7 @@ rules.JSRule({
 
       shutdownHeating =
         heatingShutdownMinutesItem.state &&
-        openedSince.until(time.ZonedDateTime.now(), TemporalUnit.MINUTES) >
+        openedSince.until(time.ZonedDateTime.now(), time.ChronoUnit.MINUTES) >
           heatingShutdownMinutesItem.state
     } else {
       metadata(heatingShutdownMinutesItem).setConfiguration(

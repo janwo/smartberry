@@ -1,5 +1,4 @@
 const { rules, items, triggers, time } = require('openhab')
-const { TemporalUnit } = require('openhab/time')
 const { uniq } = require('lodash')
 const {
   metadata,
@@ -129,7 +128,7 @@ function is_elapsed(item) {
         durationItem.state &&
         time.ZonedDateTime.parse(lastActivation, DATETIME_FORMAT).until(
           time.ZonedDateTime.now(),
-          TemporalUnit.MINUTES
+          time.ChronoUnit.MINUTES
         ) > durationItem.state
       )
     }
@@ -220,7 +219,7 @@ rules.JSRule({
           (tags = ['Point'])
         )
 
-        if (!helperItem.getGroupNames().includes(helperGroupItem.name)) {
+        if (!helperItem.groupNames.includes(helperGroupItem.name)) {
           helperItem.addGroupName(helperGroupItem.name)
         }
 
