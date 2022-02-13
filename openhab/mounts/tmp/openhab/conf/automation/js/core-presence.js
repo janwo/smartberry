@@ -10,20 +10,16 @@ const PresenceState = { AWAY_SHORT: 0.0, HOME: 1.0, AWAY_LONG: 2.0 }
 
 const POINT_TAGS = ['Presence']
 
-function get_presence_provider_item(item = undefined) {
+function get_presence_provider_item(item) {
   if (!item) {
     return items.getItem('Core_Presence')
   }
 
   const location = get_location(item)
-  if (!location) {
-    return items.getItem('Core_Presence')
-  }
-
-  return location
+  return location ? location : items.getItem('Core_Presence')
 }
 
-function get_presence(item = undefined) {
+function get_presence(item) {
   const presenceProvider = get_presence_provider_item(item)
   const lastUpdate = metadata(presenceProvider).getConfiguration([
     'presence',
@@ -93,7 +89,7 @@ function trigger_presence(item) {
   }
 }
 
-function trigger_absence(item) {
+function trigger_absence() {
   if (get_presence() == PresenceState.HOME) {
     const presenceProvider = items.getItem('Core_Presence')
     presenceProvider.postUpdate(PresenceState.AWAY_SHORT)

@@ -56,7 +56,8 @@ function get_location(item) {
     }
   }
 
-  return actions.Semantics.getLocation(item)
+  item = actions.Semantics.getLocation(item.rawItem)
+  return item ? items.getItem(item.name) : undefined
 }
 
 function has_same_location(item1, item2) {

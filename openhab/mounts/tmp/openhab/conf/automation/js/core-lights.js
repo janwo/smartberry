@@ -80,7 +80,7 @@ function get_light_condition() {
   return conditionItem.state
 }
 
-function set_light_condition(condition, luminance = undefined) {
+function set_light_condition(condition, luminance) {
   const conditionItem = items.getItem('Core_Lights_AmbientLightCondition')
   if (conditionItem.state != condition) {
     conditionItem.postUpdate(condition)
