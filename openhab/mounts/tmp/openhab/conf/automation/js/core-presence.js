@@ -96,72 +96,74 @@ function trigger_absence() {
   }
 }
 
-rules.JSRule({
-  name: 'sync_presence_helpers',
-  description: 'Core (JS) - Sync helper items of presence',
-  tags: ['core', 'core-presence'],
-  triggers: [
-    triggers.GenericCronTrigger('30 0/5 * ? * * *'),
-    triggers.SystemStartlevelTrigger(100)
-  ],
-  execute: (event) => {
-    // Sync group gCore_Presence_PresenceTrigger with presence items - it's needed to create triggers on it
-    sync_group_with_semantic_items(
-      'gCore_Presence_PresenceTrigger',
-      undefined,
-      POINT_TAGS
-    )
-  }
-})
-
-rules.JSRule({
-  name: 'trigger_presence_on_motion',
-  description: 'Core (JS) - Trigger presence on motion.',
-  tags: ['core', 'core-presence'],
-  triggers: [
-    triggers.GroupStateUpdateTrigger('gCore_Presence_PresenceTrigger')
-  ],
-  execute: (event) => {
-    const item = items.getItem(event.itemName)
-    const presenceStates = metadata(item).getConfiguration([
-      'presence',
-      'presence-states'
-    ]) || ['ON', 'OPEN']
-
-    const absenceStates =
-      metadata(item).getConfiguration(['presence', 'absence-states']) || []
-
-    if (presenceStates.includes(item.state)) {
-      trigger_presence(item)
+const scriptLoaded = function () {
+  rules.JSRule({
+    name: 'sync_presence_helpers',
+    description: 'Core (JS) - Sync helper items of presence',
+    tags: ['core', 'core-presence'],
+    triggers: [
+      triggers.GenericCronTrigger('30 0/5 * ? * * *'),
+      triggers.SystemStartlevelTrigger(100)
+    ],
+    execute: (event) => {
+      // Sync group gCore_Presence_PresenceTrigger with presence items - it's needed to create triggers on it
+      sync_group_with_semantic_items(
+        'gCore_Presence_PresenceTrigger',
+        undefined,
+        POINT_TAGS
+      )
     }
+  })
 
-    if (absenceStates.includes(item.state)) {
-      trigger_absence(item)
+  rules.JSRule({
+    name: 'trigger_presence_on_motion',
+    description: 'Core (JS) - Trigger presence on motion.',
+    tags: ['core', 'core-presence'],
+    triggers: [
+      triggers.GroupStateUpdateTrigger('gCore_Presence_PresenceTrigger')
+    ],
+    execute: (event) => {
+      const item = items.getItem(event.itemName)
+      const presenceStates = metadata(item).getConfiguration([
+        'presence',
+        'presence-states'
+      ]) || ['ON', 'OPEN']
+
+      const absenceStates =
+        metadata(item).getConfiguration(['presence', 'absence-states']) || []
+
+      if (presenceStates.includes(item.state)) {
+        trigger_presence(item)
+      }
+
+      if (absenceStates.includes(item.state)) {
+        trigger_absence(item)
+      }
     }
-  }
-})
+  })
 
-rules.JSRule({
-  name: 'check_presence',
-  description:
-    'Core (JS) - Check for an absence presence state and update Core_Presence.',
-  tags: ['core', 'core-presence'],
-  triggers: [triggers.GenericCronTrigger('0 0 * ? * * *')],
-  execute: (event) => {
-    const presence = get_presence()
-    const presenceManagement = items.getItem('Core_Presence')
+  rules.JSRule({
+    name: 'check_presence',
+    description:
+      'Core (JS) - Check for an absence presence state and update Core_Presence.',
+    tags: ['core', 'core-presence'],
+    triggers: [triggers.GenericCronTrigger('0 0 * ? * * *')],
+    execute: (event) => {
+      const presence = get_presence()
+      const presenceManagement = items.getItem('Core_Presence')
 
-    // Do not update to HOME as we only want to update to absence presence states.
-    if (presence == PresenceState.HOME) {
-      return
+      // Do not update to HOME as we only want to update to absence presence states.
+      if (presence == PresenceState.HOME) {
+        return
+      }
+
+      // Update presence state, if it changed.
+      if (presence != presenceManagement.state) {
+        presenceManagement.postUpdate(presence)
+      }
     }
-
-    // Update presence state, if it changed.
-    if (presence != presenceManagement.state) {
-      presenceManagement.postUpdate(presence)
-    }
-  }
-})
+  })
+}
 
 module.exports = {
   get_presence_provider_item,

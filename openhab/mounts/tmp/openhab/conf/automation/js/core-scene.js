@@ -138,250 +138,257 @@ function apply_context(scene, context) {
   return false
 }
 
-rules.JSRule({
-  name: 'sync_scenes_helpers',
-  description: 'Core (JS) - Sync helper items of scenes',
-  tags: ['core', 'core-scenes'],
-  triggers: [
-    triggers.GenericCronTrigger('30 0/5 * ? * * *'),
-    triggers.SystemStartlevelTrigger(100),
-    triggers.ItemStateUpdateTrigger('Core_Scenes_ReloadStates', 'ON')
-  ],
-  execute: (event) => {
-    //Sync group gCore_Scenes_StateTriggers with scene trigger items
-    sync_group_with_semantic_items(
-      'gCore_Scenes_StateTriggers',
-      SCENE_TRIGGER_TAGS
-    )
-
-    // Sync group gCore_Scenes with scene items
-    const sceneMembers = sync_group_with_semantic_items(
-      'gCore_Scenes',
-      SCENE_TAGS
-    )
-
-    // Check helper items
-    for (const sceneMember of sceneMembers) {
-      // get scene location
-      const sceneLocation = get_location(sceneMember)
-
-      // check metadata of context states
-      const contextStates = metadata(sceneMember).getConfiguration([
-        'scenes',
-        'context-states'
-      ])
-
-      const defaultContextStates = {
-        reset: false
-      }
-
-      for (const key of Object.keys(defaultContextStates)) {
-        if (!contextStates.includes(key)) {
-          contextStates[key] = defaultContextStates[key]
-        }
-      }
-
-      metadata(sceneMember).setConfiguration(
-        ['scenes', 'context-states'],
-        contextStates
+const scriptLoaded = function () {
+  rules.JSRule({
+    name: 'sync_scenes_helpers',
+    description: 'Core (JS) - Sync helper items of scenes',
+    tags: ['core', 'core-scenes'],
+    triggers: [
+      triggers.GenericCronTrigger('30 0/5 * ? * * *'),
+      triggers.SystemStartlevelTrigger(100),
+      triggers.ItemStateUpdateTrigger('Core_Scenes_ReloadStates', 'ON')
+    ],
+    execute: (event) => {
+      //Sync group gCore_Scenes_StateTriggers with scene trigger items
+      sync_group_with_semantic_items(
+        'gCore_Scenes_StateTriggers',
+        SCENE_TRIGGER_TAGS
       )
 
-      // Create scene store trigger
-      const helper = create_helper_item(
-        sceneMember,
-        'scenes',
-        'store-trigger',
-        'Number',
-        'settings',
-        '{0} überschreiben'.format(sceneMember.label),
-        ['gCore_Scenes_StoreTriggers'],
-        ['Point']
+      // Sync group gCore_Scenes with scene items
+      const sceneMembers = sync_group_with_semantic_items(
+        'gCore_Scenes',
+        SCENE_TAGS
       )
 
-      for (const path of ['listWidget', 'cellWidget']) {
-        metadata(helper).setConfiguration(path, {
-          label: '=items.{0}.title'.format(sceneMember.name),
-          icon: 'oh:settings',
-          action: 'options',
-          actionItem: helper.name
-        })
-      }
+      // Check helper items
+      for (const sceneMember of sceneMembers) {
+        // get scene location
+        const sceneLocation = get_location(sceneMember)
 
-      const commandDescription = sceneMember.getCommandDescription()
-      const commandOptions = commandDescription
-        ? commandDescription.getCommandOptions()
-        : []
-      if (commandOptions) {
-        metadata(helper).setConfiguration('stateDescription', {
-          options: commandOptions
-            .map((option) =>
-              '{}={}'.format(option.getCommand(), option.getLabel())
-            )
-            .join(','),
-          pattern: '%d'
-        })
-      }
-
-      // Sync (Add) switches for each scene state
-      const sceneStates = get_scene_states(sceneMember)
-      for (const sceneName in sceneStates) {
-        const stateTriggerLabel = '{0}-Szene'.format(sceneName)
-        const stateTrigger = create_helper_item(
-          sceneMember,
+        // check metadata of context states
+        const contextStates = metadata(sceneMember).getConfiguration([
           'scenes',
-          'trigger-state-{}'.format(sceneStates[sceneName]),
-          'Switch',
-          'party',
-          stateTriggerLabel,
-          ['gCore_Scenes_StateTriggers'],
-          SCENE_TRIGGER_TAGS
-        )
-
-        if (stateTrigger.getLabel() != stateTriggerLabel) {
-          stateTrigger.setLabel(stateTriggerLabel)
-        }
-
-        const meta = metadata(stateTrigger)
-
-        meta.setConfiguration(['scenes', 'trigger-state'], {
-          to: sceneStates[sceneName],
-          'target-scene': sceneMember.name,
-          generated: true
-        })
-
-        meta.setValue('ga', 'Scene')
-
-        meta.setConfiguration('ga', {
-          sceneReversible: false,
-          synonyms: sceneLocation
-            ? '{} in {}'.format(stateTriggerLabel, sceneLocation.label)
-            : undefined
-        })
-
-        for (const path of ['listWidget', 'cellWidget']) {
-          meta.setConfiguration(path, {
-            label: '=items.{0}.title'.format(stateTrigger.name),
-            icon: 'oh:party',
-            subtitle: '=items.{0}.displayState'.format(stateTrigger.name)
-          })
-        }
-      }
-
-      // Sync (Remove) switches for each scene state
-      for (const stateTrigger of items.getItem('gCore_Scenes_StateTriggers')
-        .members) {
-        const triggerInfo = metadata(stateTrigger).getConfiguration([
-          'scenes',
-          'trigger-state'
+          'context-states'
         ])
 
-        // Do not remove manual created items that are just tagged wrong as it could be added manually to an existing (important) item.
-        if (!triggerInfo || !triggerInfo['generated']) {
-          continue
+        const defaultContextStates = {
+          reset: false
         }
 
-        if (triggerInfo['to'] && triggerInfo['target-scene']) {
-          try {
-            const scene = items.getItem(triggerInfo['target-scene'])
-            if (
-              scene &&
-              Object.values(get_scene_states(scene)).includes(triggerInfo['to'])
-            ) {
-              continue
-            }
-          } catch {}
+        for (const key of Object.keys(defaultContextStates)) {
+          if (!contextStates.includes(key)) {
+            contextStates[key] = defaultContextStates[key]
+          }
         }
-        items.remove(stateTrigger.name)
+
+        metadata(sceneMember).setConfiguration(
+          ['scenes', 'context-states'],
+          contextStates
+        )
+
+        // Create scene store trigger
+        const helper = create_helper_item(
+          sceneMember,
+          'scenes',
+          'store-trigger',
+          'Number',
+          'settings',
+          '{0} überschreiben'.format(sceneMember.label),
+          ['gCore_Scenes_StoreTriggers'],
+          ['Point']
+        )
+
+        for (const path of ['listWidget', 'cellWidget']) {
+          metadata(helper).setConfiguration(path, {
+            label: '=items.{0}.title'.format(sceneMember.name),
+            icon: 'oh:settings',
+            action: 'options',
+            actionItem: helper.name
+          })
+        }
+
+        const commandDescription = sceneMember.getCommandDescription()
+        const commandOptions = commandDescription
+          ? commandDescription.getCommandOptions()
+          : []
+        if (commandOptions) {
+          metadata(helper).setConfiguration('stateDescription', {
+            options: commandOptions
+              .map((option) =>
+                '{}={}'.format(option.getCommand(), option.getLabel())
+              )
+              .join(','),
+            pattern: '%d'
+          })
+        }
+
+        // Sync (Add) switches for each scene state
+        const sceneStates = get_scene_states(sceneMember)
+        for (const sceneName in sceneStates) {
+          const stateTriggerLabel = '{0}-Szene'.format(sceneName)
+          const stateTrigger = create_helper_item(
+            sceneMember,
+            'scenes',
+            'trigger-state-{}'.format(sceneStates[sceneName]),
+            'Switch',
+            'party',
+            stateTriggerLabel,
+            ['gCore_Scenes_StateTriggers'],
+            SCENE_TRIGGER_TAGS
+          )
+
+          if (stateTrigger.getLabel() != stateTriggerLabel) {
+            stateTrigger.setLabel(stateTriggerLabel)
+          }
+
+          const meta = metadata(stateTrigger)
+
+          meta.setConfiguration(['scenes', 'trigger-state'], {
+            to: sceneStates[sceneName],
+            'target-scene': sceneMember.name,
+            generated: true
+          })
+
+          meta.setValue('ga', 'Scene')
+
+          meta.setConfiguration('ga', {
+            sceneReversible: false,
+            synonyms: sceneLocation
+              ? '{} in {}'.format(stateTriggerLabel, sceneLocation.label)
+              : undefined
+          })
+
+          for (const path of ['listWidget', 'cellWidget']) {
+            meta.setConfiguration(path, {
+              label: '=items.{0}.title'.format(stateTrigger.name),
+              icon: 'oh:party',
+              subtitle: '=items.{0}.displayState'.format(stateTrigger.name)
+            })
+          }
+        }
+
+        // Sync (Remove) switches for each scene state
+        for (const stateTrigger of items.getItem('gCore_Scenes_StateTriggers')
+          .members) {
+          const triggerInfo = metadata(stateTrigger).getConfiguration([
+            'scenes',
+            'trigger-state'
+          ])
+
+          // Do not remove manual created items that are just tagged wrong as it could be added manually to an existing (important) item.
+          if (!triggerInfo || !triggerInfo['generated']) {
+            continue
+          }
+
+          if (triggerInfo['to'] && triggerInfo['target-scene']) {
+            try {
+              const scene = items.getItem(triggerInfo['target-scene'])
+              if (
+                scene &&
+                Object.values(get_scene_states(scene)).includes(
+                  triggerInfo['to']
+                )
+              ) {
+                continue
+              }
+            } catch {}
+          }
+          items.remove(stateTrigger.name)
+        }
       }
     }
-  }
-})
+  })
 
-rules.JSRule({
-  name: 'activate_scene',
-  description: 'Core (JS) - Activate scene.',
-  tags: ['core', 'core-scenes'],
-  triggers: [triggers.GroupStateUpdateTrigger('gCore_Scenes')],
-  execute: (event) => {
-    const scene = items.getItem(event.itemName)
-    metadata(scene).setConfiguration(
-      ['scenes', 'last-activation'],
-      get_date_string(ZonedDateTime.now())
-    )
-    trigger_scene_items(scene)
-  }
-})
-
-rules.JSRule({
-  name: 'store_scene',
-  description: 'Core (JS) - Store scene.',
-  tags: ['core', 'core-scenes'],
-  triggers: [triggers.GroupStateUpdateTrigger('gCore_Scenes_StoreTriggers')],
-  execute: (event) => {
-    const sceneTrigger = items.getItem(event.itemName)
-    const scene = get_item_of_helper_item(sceneTrigger)
-    save_scene_item_states(scene, event.itemState)
-  }
-})
-
-rules.JSRule({
-  name: 'manage_scenetriggers',
-  description:
-    'Core (JS) - Manage gCore_Scenes_StateTriggers to trigger scene.',
-  tags: ['core', 'core-default_scene'],
-  triggers: [triggers.GroupStateUpdateTrigger('gCore_Scenes_StateTriggers')],
-  execute: (event) => {
-    const item = items.getItem(event.itemName)
-    const triggerInfo = metadata(item).getConfiguration([
-      'scenes',
-      'trigger-state'
-    ])
-
-    if (triggerInfo['states'] && !triggerInfo['states'].includes(item.state)) {
-      return
+  rules.JSRule({
+    name: 'activate_scene',
+    description: 'Core (JS) - Activate scene.',
+    tags: ['core', 'core-scenes'],
+    triggers: [triggers.GroupStateUpdateTrigger('gCore_Scenes')],
+    execute: (event) => {
+      const scene = items.getItem(event.itemName)
+      metadata(scene).setConfiguration(
+        ['scenes', 'last-activation'],
+        get_date_string(ZonedDateTime.now())
+      )
+      trigger_scene_items(scene)
     }
+  })
 
-    if (triggerInfo['to'] && triggerInfo['target-scene']) {
-      try {
-        const scene = items.getItem(triggerInfo['target-scene'])
-      } catch {
-        return
-      }
+  rules.JSRule({
+    name: 'store_scene',
+    description: 'Core (JS) - Store scene.',
+    tags: ['core', 'core-scenes'],
+    triggers: [triggers.GroupStateUpdateTrigger('gCore_Scenes_StoreTriggers')],
+    execute: (event) => {
+      const sceneTrigger = items.getItem(event.itemName)
+      const scene = get_item_of_helper_item(sceneTrigger)
+      save_scene_item_states(scene, event.itemState)
+    }
+  })
 
-      if (triggerInfo['from'] && triggerInfo['from'] != scene.state) {
-        return
-      }
-
-      const lastActivation = metadata(scene).getConfiguration([
+  rules.JSRule({
+    name: 'manage_scenetriggers',
+    description:
+      'Core (JS) - Manage gCore_Scenes_StateTriggers to trigger scene.',
+    tags: ['core', 'core-default_scene'],
+    triggers: [triggers.GroupStateUpdateTrigger('gCore_Scenes_StateTriggers')],
+    execute: (event) => {
+      const item = items.getItem(event.itemName)
+      const triggerInfo = metadata(item).getConfiguration([
         'scenes',
-        'last-activation'
+        'trigger-state'
       ])
 
       if (
-        !lastActivation ||
-        (triggerInfo['hours-until-active'] &&
-          time.ZonedDateTime.parse(lastActivation, DATETIME_FORMAT).until(
-            time.ZonedDateTime.now(),
-            time.ChronoUnit.HOURS
-          ) <= triggerInfo['hours-until-active']) ||
-        (triggerInfo['minutes-until-active'] &&
-          time.ZonedDateTime.parse(lastActivation, DATETIME_FORMAT).until(
-            time.ZonedDateTime.now(),
-            time.ChronoUnit.MINUTES
-          ) <= triggerInfo['minutes-until-active']) ||
-        (triggerInfo['seconds-until-active'] &&
-          time.ZonedDateTime.parse(lastActivation, DATETIME_FORMAT).until(
-            time.ZonedDateTime.now(),
-            time.ChronoUnit.HOURS
-          ) <= triggerInfo['seconds-until-active'])
+        triggerInfo['states'] &&
+        !triggerInfo['states'].includes(item.state)
       ) {
         return
       }
 
-      scene.postUpdate(triggerInfo['to'])
+      if (triggerInfo['to'] && triggerInfo['target-scene']) {
+        try {
+          const scene = items.getItem(triggerInfo['target-scene'])
+        } catch {
+          return
+        }
+
+        if (triggerInfo['from'] && triggerInfo['from'] != scene.state) {
+          return
+        }
+
+        const lastActivation = metadata(scene).getConfiguration([
+          'scenes',
+          'last-activation'
+        ])
+
+        if (
+          !lastActivation ||
+          (triggerInfo['hours-until-active'] &&
+            time.ZonedDateTime.parse(lastActivation, DATETIME_FORMAT).until(
+              time.ZonedDateTime.now(),
+              time.ChronoUnit.HOURS
+            ) <= triggerInfo['hours-until-active']) ||
+          (triggerInfo['minutes-until-active'] &&
+            time.ZonedDateTime.parse(lastActivation, DATETIME_FORMAT).until(
+              time.ZonedDateTime.now(),
+              time.ChronoUnit.MINUTES
+            ) <= triggerInfo['minutes-until-active']) ||
+          (triggerInfo['seconds-until-active'] &&
+            time.ZonedDateTime.parse(lastActivation, DATETIME_FORMAT).until(
+              time.ZonedDateTime.now(),
+              time.ChronoUnit.HOURS
+            ) <= triggerInfo['seconds-until-active'])
+        ) {
+          return
+        }
+
+        scene.postUpdate(triggerInfo['to'])
+      }
     }
-  }
-})
+  })
+}
 
 module.exports = {
   get_scene_state,

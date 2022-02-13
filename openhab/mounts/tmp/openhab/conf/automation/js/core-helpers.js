@@ -345,19 +345,21 @@ function remove_invalid_helper_items() {
   }
 }
 
-rules.JSRule({
-  name: 'remove_unlinked_or_invalid_helper_items',
-  description: 'Core (JS) - Check helper items.',
-  tags: ['core', 'core-helpers'],
-  triggers: [
-    triggers.GenericCronTrigger('30 0/5 * ? * * *'),
-    triggers.SystemStartlevelTrigger(100)
-  ],
-  execute: (event) => {
-    remove_unlinked_helper_items()
-    remove_invalid_helper_items()
-  }
-})
+const scriptLoaded = function () {
+  rules.JSRule({
+    name: 'remove_unlinked_or_invalid_helper_items',
+    description: 'Core (JS) - Check helper items.',
+    tags: ['core', 'core-helpers'],
+    triggers: [
+      triggers.GenericCronTrigger('30 0/5 * ? * * *'),
+      triggers.SystemStartlevelTrigger(100)
+    ],
+    execute: (event) => {
+      remove_unlinked_helper_items()
+      remove_invalid_helper_items()
+    }
+  })
+}
 
 module.exports = {
   get_childs_with_condition,
