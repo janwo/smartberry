@@ -33,7 +33,7 @@ function get_presence(item) {
   if (lastUpdate) {
     let skipExpireCheck = true
     const hours_away_long = items.getItem('Core_Presence_HoursUntilAwayLong')
-    if (Number.parseFloat(hours_away_long.state) > 0) {
+    if (hours_away_long.state > 0) {
       skipExpireCheck = false
       if (
         time.ZonedDateTime.parse(lastUpdate, DATETIME_FORMAT).until(
@@ -45,9 +45,9 @@ function get_presence(item) {
       }
     }
 
-    const hours_away_short = ir.getItem('Core_Presence_HoursUntilAwayShort')
-    if (Number.parseFloat(hours_away_short.state) > 0) {
-      skipExpireCheck = False
+    const hours_away_short = items.getItem('Core_Presence_HoursUntilAwayShort')
+    if (hours_away_short.state > 0) {
+      skipExpireCheck = false
       if (
         time.ZonedDateTime.parse(lastUpdate, DATETIME_FORMAT).until(
           time.ZonedDateTime.now(),

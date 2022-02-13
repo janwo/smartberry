@@ -189,24 +189,25 @@ function create_helper_item(
 }
 
 function get_semantic_items(rootItem, equipmentTags, pointTags) {
-  const equipments = equipmentTags
-    ? get_childs_with_condition(rootItem, (item) => {
-        for (const equipmentTag of equipmentTags) {
-          if (Array.isArray(equipmentTag)) {
-            const matchedTags = intersection(item.tags, equipmentTags)
-            if (equipmentTags.length == matchedTags.length) {
+  const equipments =
+    equipmentTags && equipmentTags.length > 0
+      ? get_childs_with_condition(rootItem, (item) => {
+          for (const equipmentTag of equipmentTags) {
+            if (Array.isArray(equipmentTag)) {
+              const matchedTags = intersection(item.tags, equipmentTags)
+              if (equipmentTags.length == matchedTags.length) {
+                return true
+              }
+            } else if (item.tags.includes(equipmentTag)) {
               return true
             }
-          } else if (item.tags.includes(equipmentTag)) {
-            return true
           }
-        }
 
-        return false
-      })
-    : [rootItem]
+          return false
+        })
+      : [rootItem]
 
-  if (!pointTags) {
+  if (!pointTags || pointTags.length == 0) {
     return equipments
   }
 
@@ -252,7 +253,7 @@ function get_parents_with_condition(item, condition = (item) => !!item) {
     return [item]
   }
 
-  if (!item.groupNames) {
+  if (item.groupNames.length == 0) {
     return []
   }
 

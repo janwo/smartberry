@@ -73,7 +73,7 @@ function scriptLoaded() {
         'Core_Heating_Thermostat_OpenContactShutdownMinutes'
       )
 
-      if (openContactLocations) {
+      if (openContactLocations.length > 0) {
         const openedSince = (() => {
           const meta = metadata(heatingShutdownMinutesItem).getConfiguration([
             'heating',

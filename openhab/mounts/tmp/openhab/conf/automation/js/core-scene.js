@@ -22,7 +22,7 @@ function get_scene_state(scene) {
     const commandOptions = commandDescription
       ? commandDescription.getCommandOptions()
       : []
-    if (commandOptions) {
+    if (commandOptions.length > 0) {
       return commandOptions[0].getCommand()
     }
   }
@@ -34,9 +34,6 @@ function get_scene_states(scene) {
   const commandOptions = commandDescription
     ? commandDescription.getCommandOptions()
     : []
-  if (!commandOptions) {
-    return []
-  }
   return commandOptions.reduce(
     (obj, newOption) => (obj[newOption.getCommand()] = newOption.getLabel()),
     {}
@@ -212,7 +209,7 @@ function scriptLoaded() {
         const commandOptions = commandDescription
           ? commandDescription.getCommandOptions()
           : []
-        if (commandOptions) {
+        if (commandOptions.length > 0) {
           metadata(helper).setConfiguration('stateDescription', {
             options: commandOptions
               .map((option) => `${option.getCommand()}=${option.getLabel()}`)

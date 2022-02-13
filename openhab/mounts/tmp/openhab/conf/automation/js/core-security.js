@@ -121,7 +121,7 @@ function scriptLoaded() {
         blockingAssaultTriggers.map((trigger) => trigger.name)
       )
 
-      if (blockingAssaultTriggers) {
+      if (blockingAssaultTriggers.length > 0) {
         items
           .getItem('Core_Security_OperationState')
           .postUpdate(OperationState.OFF)

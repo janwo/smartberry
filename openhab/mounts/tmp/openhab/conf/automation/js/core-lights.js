@@ -256,7 +256,7 @@ function scriptLoaded() {
     triggers: [triggers.GroupStateUpdateTrigger('gCore_Lights_Switchables')],
     execute: (event) => {
       const item = items.getItem(event.itemName)
-      if (Number.parseFloat(item.state) > 0 || item.state == 'ON') {
+      if (item.state > 0 || item.state == 'ON') {
         set_location_as_activated(item)
       }
     }
@@ -283,10 +283,7 @@ function scriptLoaded() {
       const activeSwitchables = get_all_semantic_items(
         LIGHTS_EQUIPMENT_TAGS,
         LIGHTS_POINT_TAGS
-      ).filter(
-        (switchable) =>
-          Number.parseFloat(switchable.state) > 0 || switchable.state == 'ON'
-      )
+      ).filter((switchable) => switchable.state > 0 || switchable.state == 'ON')
 
       const activeRoomNames = activeSwitchables
         .map((switchable) => get_location(switchable))
@@ -376,9 +373,7 @@ function scriptLoaded() {
         LIGHTS_EQUIPMENT_TAGS,
         LIGHTS_POINT_TAGS
       )
-        .filter(
-          (item) => Number.parseFloat(item.state) > 0 || item.state == 'ON'
-        )
+        .filter((item) => item.state > 0 || item.state == 'ON')
         .map((s) => s.name)
 
       for (const member of lightModeGroup.members) {
@@ -512,7 +507,7 @@ function scriptLoaded() {
           simulateLocations.includes(location.name) &&
           Math.random() <= 0.25
         ) {
-          if (Number.parseFloat(point.state) == 0 || point.state == 'OFF') {
+          if (point.state == 0 || point.state == 'OFF') {
             turn_on_switchable_point(point)
           } else {
             turn_off_switchable_point(point)
