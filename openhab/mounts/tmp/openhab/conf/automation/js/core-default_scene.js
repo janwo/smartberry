@@ -10,7 +10,7 @@ const DefaultSceneState = {
   SLEEP: 3.0
 }
 
-const scriptLoaded = function () {
+function scriptLoaded() {
   rules.JSRule({
     name: 'default_scene_updated',
     description: 'Core (JS) - Manage changes of default scene.',

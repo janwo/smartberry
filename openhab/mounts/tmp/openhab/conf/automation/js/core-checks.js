@@ -1,5 +1,4 @@
 const { rules, items, triggers, osgi, time, actions } = require('openhab')
-const { DATETIME_FORMAT } = require(__dirname + '/core-helpers')
 
 const ThingRegistry = osgi.getService('org.openhab.core.thing.ThingRegistry')
 const ThingStatus = Java.type('org.openhab.core.thing.ThingStatus')
@@ -8,8 +7,11 @@ const ItemChannelLinkRegistry = osgi.getService(
 )
 
 const ELAPSED_DAYS = 5
+const ZWAVE_DATETIME_FORMAT = time.DateTimeFormatter.ofPattern(
+  "yyyy-MM-dd'T'HH:mm:ssX"
+)
 
-const scriptLoaded = function () {
+function scriptLoaded() {
   rules.JSRule({
     name: 'offline_check',
     description: 'Core (JS) - Check things for offline state.',
@@ -28,7 +30,7 @@ const scriptLoaded = function () {
             thing.getProperties().get('zwave_lastheal') &&
             time.ZonedDateTime.parse(
               thing.getProperties().get('zwave_lastheal'),
-              DATETIME_FORMAT
+              ZWAVE_DATETIME_FORMAT
             ).until(time.ZonedDateTime.now(), time.ChronoUnit.DAYS)) >
             ELAPSED_DAYS
         ) {

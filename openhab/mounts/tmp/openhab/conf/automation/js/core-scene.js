@@ -138,7 +138,7 @@ function apply_context(scene, context) {
   return false
 }
 
-const scriptLoaded = function () {
+function scriptLoaded() {
   rules.JSRule({
     name: 'sync_scenes_helpers',
     description: 'Core (JS) - Sync helper items of scenes',

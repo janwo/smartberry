@@ -20,7 +20,7 @@ const HEATING_EQUIPMENT_TAGS = ['RadiatorControl']
 const HEATING_POINT_TAGS = ['Setpoint']
 const TEMPERATURE_MEASUREMENT_POINT_TAGS = [['Measurement', 'Temperature']]
 
-const scriptLoaded = function () {
+function scriptLoaded() {
   rules.JSRule({
     name: 'sync_heating_helpers',
     description: 'Core (JS) - Sync helper items of heating',

@@ -154,7 +154,7 @@ function turn_off_switchable_point(point, force = false) {
   }
 }
 
-const scriptLoaded = function () {
+function scriptLoaded() {
   rules.JSRule({
     name: 'sync_lights_helpers',
     description: 'Core (JS) - Sync helper items of lights',

@@ -30,7 +30,7 @@ function is_security_state(state = OperationState.OFF) {
   return OperationStateItem.state == state
 }
 
-const scriptLoaded = function () {
+function scriptLoaded() {
   rules.JSRule({
     name: 'sync_security_helpers',
     description: 'Core (JS) - Sync helper items of security',

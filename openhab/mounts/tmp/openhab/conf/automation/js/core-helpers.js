@@ -1,6 +1,7 @@
 const { items, osgi, triggers, actions, time, rules } = require('openhab')
-const { uniq, get, intersection, uniqBy } = require('lodash')
+const { uniq, get, set, intersection, uniqBy } = require('lodash')
 
+const Metadata = Java.type('org.openhab.core.items.Metadata')
 const MetadataKey = Java.type('org.openhab.core.items.MetadataKey')
 const MetadataRegistry = osgi.getService(
   'org.openhab.core.items.MetadataRegistry'
@@ -114,7 +115,7 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
 
   const metadataKey = new MetadataKey(namespace, item)
   const metadata =
-    MetadataRegistry.get(metadataKey) || new Metadata(metadataKey, null)
+    MetadataRegistry.get(metadataKey) || new Metadata(metadataKey, null, {})
 
   return {
     getValue: () => metadata.getValue(),
@@ -345,7 +346,7 @@ function remove_invalid_helper_items() {
   }
 }
 
-const scriptLoaded = function () {
+function scriptLoaded() {
   rules.JSRule({
     name: 'remove_unlinked_or_invalid_helper_items',
     description: 'Core (JS) - Check helper items.',

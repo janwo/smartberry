@@ -96,7 +96,7 @@ function trigger_absence() {
   }
 }
 
-const scriptLoaded = function () {
+function scriptLoaded() {
   rules.JSRule({
     name: 'sync_presence_helpers',
     description: 'Core (JS) - Sync helper items of presence',
