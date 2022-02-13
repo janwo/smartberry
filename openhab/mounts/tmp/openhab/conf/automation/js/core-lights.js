@@ -4,6 +4,7 @@ const {
   metadata,
   get_all_semantic_items,
   get_items_of_any_tags,
+  create_helper_item,
   DATETIME_FORMAT,
   sync_group_with_semantic_items,
   get_location
@@ -11,17 +12,17 @@ const {
 const { PresenceState } = require(__dirname + '/core-presence')
 
 const LightMode = {
-  OFF: 0.0,
-  ON: 1.0,
-  AUTO_ON: 2.0,
-  UNCHANGED: 3.0,
-  SIMULATE: 4.0
+  OFF: '0.0',
+  ON: '1.0',
+  AUTO_ON: '2.0',
+  UNCHANGED: '3.0',
+  SIMULATE: '4.0'
 }
 
 const AmbientLightCondition = {
-  DARK: 0.0,
-  OBSCURED: 1.0,
-  BRIGHT: 2.0
+  DARK: '0.0',
+  OBSCURED: '1.0',
+  BRIGHT: '2.0'
 }
 
 const LIGHTS_EQUIPMENT_TAGS = ['Lightbulb', 'PowerOutlet', 'WallSwitch']
@@ -180,19 +181,19 @@ function scriptLoaded() {
       const items = [
         {
           suffix: 'dark',
-          label: 'Lichtmodus (Dunkel) in {}',
+          label: (label) => `Lichtmodus (Dunkel) in ${label}`,
           groups: ['gCore_Lights_DarkMode'],
           icon: 'oh:moon'
         },
         {
           suffix: 'bright',
-          label: 'Lichtmodus (Hell) in {}',
+          label: (label) => `Lichtmodus (Hell) in ${label}`,
           groups: ['gCore_Lights_BrightMode'],
           icon: 'oh:sun'
         },
         {
           suffix: 'obscured',
-          label: 'Lichtmodus (Verdunkelt) in {}',
+          label: (label) => `Lichtmodus (Verdunkelt) in ${label}`,
           groups: ['gCore_Lights_ObscuredMode'],
           icon: 'oh:blinds'
         }
@@ -205,21 +206,21 @@ function scriptLoaded() {
           'light-mode-group',
           'Group',
           'colorlight',
-          'Lichtmodus in {}'.format(location.label),
+          `Lichtmodus in ${location.label}`,
           [location.name],
           ['Equipment']
         )
 
         for (const item of items) {
           const helperItem = create_helper_item(
-            (of = location),
-            (namespace = 'lights'),
-            (name = 'light-mode-{}'.format(item.suffix)),
-            (item_type = 'Number'),
-            (category = icon),
-            (label = label.format(location.label)),
-            (groups = groups + [helperGroupItem.name]),
-            (tags = ['Point'])
+            location,
+            'lights',
+            `light-mode-${item.suffix}`,
+            'Number',
+            item.icon,
+            item.label(location.label),
+            item.groups.concat([helperGroupItem.name]),
+            ['Point']
           )
 
           if (!helperItem.groupNames.includes(helperGroupItem.name)) {
@@ -236,11 +237,11 @@ function scriptLoaded() {
 
           for (const path of ['listWidget', 'cellWidget']) {
             meta.setConfiguration(path, {
-              label: '=items.{0}.title'.format(helperItem.name),
-              icon: 'oh:{}'.format(item.icon),
+              label: `=items.${helperItem.name}.title`,
+              icon: `oh:${item.icon}`,
               action: 'options',
               actionItem: helperItem.name,
-              subtitle: '=items.{0}.displayState'.format(helperItem.name)
+              subtitle: `=items.${helperItem.name}.displayState`
             })
           }
         }
@@ -309,7 +310,7 @@ function scriptLoaded() {
       }
 
       const medianSensorItem =
-        sensorsOfInactiveRooms[sensorsOfInactiveRooms.length / 2]
+        sensorsOfInactiveRooms[Math.floor(sensorsOfInactiveRooms.length / 2)]
       const luminance = medianSensorItem.state
       const newCondition = get_darkest_light_condition([
         get_astro_light_condition(),

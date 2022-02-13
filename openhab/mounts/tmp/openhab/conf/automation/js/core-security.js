@@ -10,9 +10,9 @@ const {
 } = require(__dirname + '/core-helpers')
 
 const OperationState = {
-  OFF: 0.0,
-  ON: 1.0,
-  SILENTLY: 2.0
+  OFF: '0.0',
+  ON: '1.0',
+  SILENTLY: '2.0'
 }
 
 const ASSAULT_TRIGGER_EQUIPMENT_TAGS = ['Window', 'Door', 'CoreAssaultTrigger']
@@ -77,9 +77,9 @@ function scriptLoaded() {
         time.ZonedDateTime.now().format(DATETIME_FORMAT)
       )
 
-      let message = 'Silent alarm was triggered by {}!'.format(item.label)
+      let message = `Silent alarm was triggered by ${item.label}!`
       if (is_security_state(OperationState.ON)) {
-        message = 'Striking alarm was triggered by {}!'.format(item.label)
+        message = `Striking alarm was triggered by ${item.label}!`
         for (alarm of items.getItemsByTag(...ASSAULT_ALARM_POINT_TAGS)) {
           alarm.sendCommand('ON')
         }
@@ -126,9 +126,9 @@ function scriptLoaded() {
           .getItem('Core_Security_OperationState')
           .postUpdate(OperationState.OFF)
         broadcast(
-          '{} is in an OPEN state. No initiation into assault detection.'.format(
-            ', '.join(blockingAssaultTriggers.map((trigger) => trigger.label))
-          )
+          `${', '.join(
+            blockingAssaultTriggers.map((trigger) => trigger.label)
+          )} is in an OPEN state. No initiation into assault detection.`
         )
       }
     }
@@ -215,10 +215,7 @@ function scriptLoaded() {
         if (alarm.state != 'OFF') {
           alarm.sendCommand('OFF')
           broadcast(
-            'Alarm item {} was automatically disabled after {} minutes.'.format(
-              alarm.label,
-              autoOffTime.state
-            ),
+            `Alarm item ${alarm.label} was automatically disabled after ${autoOffTime.state} minutes.`,
             BroadcastType.ATTENTION
           )
         }

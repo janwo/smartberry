@@ -4,10 +4,10 @@ const { metadata } = require(__dirname + '/core-helpers')
 const { PresenceState } = require(__dirname + '/core-presence')
 
 const DefaultSceneState = {
-  HOME: 0.0,
-  AWAY_SHORT: 1.0,
-  AWAY_LONG: 2.0,
-  SLEEP: 3.0
+  HOME: '0.0',
+  AWAY_SHORT: '1.0',
+  AWAY_LONG: '2.0',
+  SLEEP: '3.0'
 }
 
 function scriptLoaded() {

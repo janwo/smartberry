@@ -6,7 +6,11 @@ const {
   get_location
 } = require(__dirname + '/core-helpers')
 
-const PresenceState = { AWAY_SHORT: 0.0, HOME: 1.0, AWAY_LONG: 2.0 }
+const PresenceState = {
+  AWAY_SHORT: '0.0',
+  HOME: '1.0',
+  AWAY_LONG: '2.0'
+}
 
 const POINT_TAGS = ['Presence']
 

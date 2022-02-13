@@ -8,14 +8,14 @@ const MetadataRegistry = osgi.getService(
 )
 
 const BroadcastType = {
-  INFO: 0.0,
-  ATTENTION: 1.0
+  INFO: '0.0',
+  ATTENTION: '1.0'
 }
 
 const BroadcastNotificationMode = {
-  NONE: 0.0,
-  DEFAULT: 1.0,
-  ATTENTION_ONLY: 2.0
+  NONE: '0.0',
+  DEFAULT: '1.0',
+  ATTENTION_ONLY: '2.0'
 }
 
 const METADATA_NAMESPACE = 'core'
@@ -38,13 +38,10 @@ function broadcast(text, broadcastType = BroadcastType.INFO) {
     actions.NotificationAction.sendBroadcastNotification(text)
     console.log(
       'Broadcast message',
-      'Following message was broadcasted to all users: {}'.format(text)
+      `Following message was broadcasted to all users: ${text}`
     )
   } else {
-    console.log(
-      'Broadcast message',
-      'Following message was muted: {}'.format(text)
-    )
+    console.log('Broadcast message', `Following message was muted: ${text}`)
   }
 }
 
@@ -88,7 +85,7 @@ function sync_group_with_semantic_items(group, equipmentTags, pointTags) {
     group = items.getItem(group)
   }
 
-  const actualGroupItems = group.member
+  const actualGroupItems = group.members
   const actualGroupItemNames = actualGroupItems.map((item) => item.name)
   const targetedGroupItems = get_all_semantic_items(equipmentTags, pointTags)
   const targetedGroupItemNames = targetedGroupItems.map((item) => item.name)
@@ -168,14 +165,11 @@ function create_helper_item(
   groups = [],
   tags = []
 ) {
-  const helperItem = get_helper_item(of, type, name)
+  let helperItem = get_helper_item(of, type, name)
   if (!helperItem) {
     tags.push(HELPER_ITEM_TAG)
     helperItem = items.addItem(
-      'Core_HelperItem{0}_Of_{1}'.format(
-        Math.floor(Math.random() * 1000000000),
-        of.name
-      ),
+      `Core_HelperItem${Math.floor(Math.random() * 1000000000)}_Of_${of.name}`,
       item_type,
       category,
       groups,
@@ -298,9 +292,7 @@ function remove_unlinked_helper_items() {
     if (!of) {
       console.log(
         'remove_unlinked_helper_items',
-        'Remove invalid helper item {}: There is no targeted item set in metadata.'.format(
-          helper.name
-        )
+        `Remove invalid helper item ${helper.name}: There is no targeted item set in metadata.`
       )
 
       items.removeItem(helper.name)
@@ -312,10 +304,7 @@ function remove_unlinked_helper_items() {
     } catch {
       console.log(
         'remove_unlinked_helper_items',
-        'Remove invalid helper item {}: The targeted item {} does not exist.'.format(
-          helper.name,
-          of
-        )
+        `Remove invalid helper item ${helper.name}: The targeted item ${of} does not exist.`
       )
       items.removeItem(helper.name)
     }
@@ -333,11 +322,7 @@ function remove_invalid_helper_items() {
         } catch {
           console.log(
             'remove_invalid_helper_items',
-            'Remove invalid metadata of item {}: {} [{}] is no valid helper item for .'.format(
-              item.name,
-              name,
-              type
-            )
+            `Remove invalid metadata of item ${item.name}: ${name} [${type}] is no valid helper item for .`
           )
           meta.setConfiguration(['helper-items', namespace, name], undefined)
         }

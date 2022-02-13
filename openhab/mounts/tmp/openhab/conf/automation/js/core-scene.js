@@ -194,14 +194,14 @@ function scriptLoaded() {
           'store-trigger',
           'Number',
           'settings',
-          '{0} überschreiben'.format(sceneMember.label),
+          `${sceneMember.label} überschreiben`,
           ['gCore_Scenes_StoreTriggers'],
           ['Point']
         )
 
         for (const path of ['listWidget', 'cellWidget']) {
           metadata(helper).setConfiguration(path, {
-            label: '=items.{0}.title'.format(sceneMember.name),
+            label: `=items.${sceneMember.name}.title`,
             icon: 'oh:settings',
             action: 'options',
             actionItem: helper.name
@@ -215,9 +215,7 @@ function scriptLoaded() {
         if (commandOptions) {
           metadata(helper).setConfiguration('stateDescription', {
             options: commandOptions
-              .map((option) =>
-                '{}={}'.format(option.getCommand(), option.getLabel())
-              )
+              .map((option) => `${option.getCommand()}=${option.getLabel()}`)
               .join(','),
             pattern: '%d'
           })
@@ -226,11 +224,11 @@ function scriptLoaded() {
         // Sync (Add) switches for each scene state
         const sceneStates = get_scene_states(sceneMember)
         for (const sceneName in sceneStates) {
-          const stateTriggerLabel = '{0}-Szene'.format(sceneName)
+          const stateTriggerLabel = `${sceneName}-Szene`
           const stateTrigger = create_helper_item(
             sceneMember,
             'scenes',
-            'trigger-state-{}'.format(sceneStates[sceneName]),
+            `trigger-state-${sceneStates[sceneName]}`,
             'Switch',
             'party',
             stateTriggerLabel,
@@ -255,15 +253,15 @@ function scriptLoaded() {
           meta.setConfiguration('ga', {
             sceneReversible: false,
             synonyms: sceneLocation
-              ? '{} in {}'.format(stateTriggerLabel, sceneLocation.label)
+              ? `${stateTriggerLabel} in ${sceneLocation.label}`
               : undefined
           })
 
           for (const path of ['listWidget', 'cellWidget']) {
             meta.setConfiguration(path, {
-              label: '=items.{0}.title'.format(stateTrigger.name),
+              label: `=items.${stateTrigger.name}.title`,
               icon: 'oh:party',
-              subtitle: '=items.{0}.displayState'.format(stateTrigger.name)
+              subtitle: `=items.${stateTrigger.name}.displayState`
             })
           }
         }

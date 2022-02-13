@@ -8,10 +8,10 @@ const {
 } = require(__dirname + '/core-helpers')
 
 const HeatingState = {
-  OFF: 0.0,
-  DEFAULT: 1.0,
-  ECO: 2.0,
-  POWER: 3.0
+  OFF: '0.0',
+  DEFAULT: '1.0',
+  ECO: '2.0',
+  POWER: '3.0'
 }
 
 const OPEN_CONTACT_EQUIPMENT_TAGS = ['Door', 'Window']
@@ -68,7 +68,7 @@ function scriptLoaded() {
         .filter((contact) => contact)
         .map((contact) => contact.name)
 
-      const shutdownHeating = false
+      let shutdownHeating = false
       const heatingShutdownMinutesItem = items.getItem(
         'Core_Heating_Thermostat_OpenContactShutdownMinutes'
       )
@@ -111,7 +111,7 @@ function scriptLoaded() {
       )) {
         const location = get_location(point)
         if (location) {
-          const state = heaterModeItem.state
+          let state = heaterModeItem.state
           if (shutdownHeating || openContactLocations.includes(location.name)) {
             state = HeatingState.OFF
           }
