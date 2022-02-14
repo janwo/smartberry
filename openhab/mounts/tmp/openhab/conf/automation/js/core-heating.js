@@ -75,17 +75,18 @@ function scriptLoaded() {
 
       if (openContactLocations.length > 0) {
         const openedSince = (() => {
-          const meta = metadata(heatingShutdownMinutesItem).getConfiguration([
+          const meta = metadata(heatingShutdownMinutesItem).getConfiguration(
             'heating',
             'open-contact-since'
-          ])
+          )
           if (meta) {
             return time.ZonedDateTime.parse(meta, DATETIME_FORMAT)
           }
 
           const now = time.ZonedDateTime.now()
           metadata(heatingShutdownMinutesItem).setConfiguration(
-            ['heating', 'open-contact-since'],
+            'heating',
+            'open-contact-since',
             now.format(DATETIME_FORMAT)
           )
           return now
@@ -97,7 +98,8 @@ function scriptLoaded() {
             heatingShutdownMinutesItem.state
       } else {
         metadata(heatingShutdownMinutesItem).setConfiguration(
-          ['heating', 'open-contact-since'],
+          'heating',
+          'open-contact-since',
           undefined
         )
       }
@@ -116,10 +118,10 @@ function scriptLoaded() {
             state = HeatingState.OFF
           }
 
-          const pointCommandMap = metadata(point).getConfiguration([
+          const pointCommandMap = metadata(point).getConfiguration(
             'heating',
             'command-map'
-          ])
+          )
 
           if (pointCommandMap && Object.keys(pointCommandMap).includes(state)) {
             state = pointCommandMap[state]

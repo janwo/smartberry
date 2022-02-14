@@ -25,10 +25,10 @@ function get_presence_provider_item(item) {
 
 function get_presence(item) {
   const presenceProvider = get_presence_provider_item(item)
-  const lastUpdate = metadata(presenceProvider).getConfiguration([
+  const lastUpdate = metadata(presenceProvider).getConfiguration(
     'presence',
     'last-update'
-  ])
+  )
 
   if (lastUpdate) {
     let skipExpireCheck = true
@@ -76,14 +76,16 @@ function get_presence(item) {
 function trigger_presence(item) {
   let presenceProvider = get_presence_provider_item(item)
   metadata(presenceProvider).setConfiguration(
-    ['presence', 'last-update'],
+    'presence',
+    'last-update',
     time.ZonedDateTime.now().format(DATETIME_FORMAT)
   )
 
   if (presenceProvider.name != 'Core_Presence') {
     presenceProvider = items.getItem('Core_Presence')
     metadata(presenceProvider).setConfiguration(
-      ['presence', 'last-update'],
+      'presence',
+      'last-update',
       time.ZonedDateTime.now().format(DATETIME_FORMAT)
     )
   }
@@ -128,13 +130,13 @@ function scriptLoaded() {
     ],
     execute: (event) => {
       const item = items.getItem(event.itemName)
-      const presenceStates = metadata(item).getConfiguration([
+      const presenceStates = metadata(item).getConfiguration(
         'presence',
         'presence-states'
-      ]) || ['ON', 'OPEN']
+      ) || ['ON', 'OPEN']
 
       const absenceStates =
-        metadata(item).getConfiguration(['presence', 'absence-states']) || []
+        metadata(item).getConfiguration('presence', 'absence-states') || []
 
       if (presenceStates.includes(item.state)) {
         trigger_presence(item)

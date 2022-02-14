@@ -149,7 +149,7 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
 
 function get_helper_item(of, type, name) {
   try {
-    const meta = metadata(of).getConfiguration(['helper-items', type, name])
+    const meta = metadata(of).getConfiguration('helper-items', type, name)
     if (meta) {
       return items.getItem(meta)
     }
@@ -194,7 +194,9 @@ function create_helper_item(
     metadata(helperItem).setConfiguration('helper-item-of', of.name)
 
     metadata(of).setConfiguration(
-      ['helper-items', namespace, name],
+      'helper-items',
+      namespace,
+      name,
       helperItem.name
     )
   }
@@ -247,13 +249,14 @@ function get_semantic_items(rootItem, equipmentTags, pointTags) {
 }
 
 function get_all_semantic_items(equipmentTags, pointTags) {
-  const points = get_items_of_any_tags(equipmentTags).reduce(
-    (pointsList, newEquipment) => {
-      const newPoints = get_semantic_items(newEquipment, undefined, pointTags)
-      return pointsList.concat(newPoints)
-    },
-    []
-  )
+  const points = (
+    equipmentTags && equipmentTags.length > 0
+      ? get_items_of_any_tags(equipmentTags)
+      : items.getItems()
+  ).reduce((pointsList, newEquipment) => {
+    const newPoints = get_semantic_items(newEquipment, undefined, pointTags)
+    return pointsList.concat(newPoints)
+  }, [])
 
   return uniqBy(points, (item) => item.name)
 }
@@ -339,7 +342,7 @@ function remove_invalid_helper_items() {
             'remove_invalid_helper_items',
             `Remove invalid metadata of item ${item.name}: ${name} [${type}] is no valid helper item for .`
           )
-          meta.setConfiguration(['helper-items', namespace, name], undefined)
+          meta.setConfiguration('helper-items', namespace, name, undefined)
         }
       }
     }

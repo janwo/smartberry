@@ -88,7 +88,7 @@ function set_light_condition(condition, luminance) {
   }
 
   if (luminance !== undefined) {
-    metadata(conditionItem).setConfiguration(['lights', 'luminance'], luminance)
+    metadata(conditionItem).setConfiguration('lights', 'luminance', luminance)
   }
 }
 
@@ -109,7 +109,8 @@ function set_location_as_activated(switchable) {
   const location = get_location(switchable)
   if (location) {
     metadata(location).setConfiguration(
-      ['lights', 'last-activation'],
+      'lights',
+      'last-activation',
       time.ZonedDateTime.now().format(DATETIME_FORMAT)
     )
   }
@@ -118,10 +119,10 @@ function set_location_as_activated(switchable) {
 function is_elapsed(item) {
   const location = get_location(item)
   if (location) {
-    const lastActivation = metadata(location).getConfiguration([
+    const lastActivation = metadata(location).getConfiguration(
       'lights',
       'last-activation'
-    ])
+    )
     if (lastActivation) {
       const durationItem = items.getItem('Core_Lights_DefaultDuration')
 
@@ -329,13 +330,17 @@ function scriptLoaded() {
     execute: (event) => {
       const lightModeGroup = get_light_mode_group()
       const switchOnRoomNames = lightModeGroup.members
-        .filter((groupMember) => [LightMode.ON].includes(groupMember.state))
+        .filter((groupMember) =>
+          [LightMode.ON].includes(Number.parseFloat(groupMember.state))
+        )
         .map((groupMember) => get_location(groupMember))
         .filter((r) => r)
         .map((r) => r.name)
 
       const switchOffRoomNames = lightModeGroup.members
-        .filter((groupMember) => [LightMode.OFF].includes(groupMember.state))
+        .filter((groupMember) =>
+          [LightMode.OFF].includes(Number.parseFloat(groupMember.state))
+        )
         .map((groupMember) => get_location(groupMember))
         .filter((r) => r)
         .map((r) => r.name)

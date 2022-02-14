@@ -71,16 +71,17 @@ function scriptLoaded() {
       triggers.GroupStateChangeTrigger('gCore_Security_AssaultTrigger')
     ],
     execute: (event) => {
-      const item = items.getItem(data.itemName)
+      const item = items.getItem(event.itemName)
       metadata('Core_Security_OperationState').setConfiguration(
-        ['security', 'last-alarm'],
+        'security',
+        'last-alarm',
         time.ZonedDateTime.now().format(DATETIME_FORMAT)
       )
 
       let message = `Silent alarm was triggered by ${item.label}!`
       if (is_security_state(OperationState.ON)) {
         message = `Striking alarm was triggered by ${item.label}!`
-        for (alarm of items.getItemsByTag(...ASSAULT_ALARM_POINT_TAGS)) {
+        for (const alarm of items.getItemsByTag(...ASSAULT_ALARM_POINT_TAGS)) {
           alarm.sendCommand('ON')
         }
       }
@@ -117,7 +118,8 @@ function scriptLoaded() {
         .filter((point) => [OPEN, ON].includes(point.state))
 
       metadata('Core_Security_OperationState').setConfiguration(
-        ['security', 'blocking-assault-triggers'],
+        'security',
+        'blocking-assault-triggers',
         blockingAssaultTriggers.map((trigger) => trigger.name)
       )
 
@@ -198,7 +200,7 @@ function scriptLoaded() {
       const autoOffTime = items.getItem('Core_Security_SireneAutoOff')
       const lastAlarmTime = metadata(
         'Core_Security_OperationState'
-      ).getConfiguration(['security', 'last-alarm'])
+      ).getConfiguration('security', 'last-alarm')
 
       if (
         autoOffTime.state == 0 ||

@@ -41,10 +41,10 @@ function get_scene_states(scene) {
 }
 
 function get_scene_items(scene) {
-  const sceneMembers = metadata(scene).getConfiguration([
+  const sceneMembers = metadata(scene).getConfiguration(
     'scenes',
     'custom-members'
-  ]) || ['default:true']
+  ) || ['default:true']
 
   const handleMember = (member) => {
     if (member.startsWith('tag:')) {
@@ -83,11 +83,11 @@ function get_scene_item_states(scene, scene_state) {
     return []
   }
 
-  const states = metadata(scene).getConfiguration([
+  const states = metadata(scene).getConfiguration(
     'scenes',
     'states',
     scene_state
-  ])
+  )
 
   return get_scene_items(scene).reduce(
     (obj, newItem) => (obj[newItem.name] = states?.[newItem.name]),
@@ -104,7 +104,7 @@ function save_scene_item_states(scene, scene_state) {
       items[item] = items.getItem(item)?.state
     }
 
-    metadata(scene).setConfiguration(['scenes', 'states', scene_state], items)
+    metadata(scene).setConfiguration('scenes', 'states', scene_state, items)
   }
 }
 
@@ -122,11 +122,11 @@ function trigger_scene_items(scene, poke_only = false) {
 }
 
 function apply_context(scene, context) {
-  const contextState = metadata(scene).getConfiguration([
+  const contextState = metadata(scene).getConfiguration(
     'scenes',
     'context-states',
     context
-  ])
+  )
 
   if (Object.values(get_scene_states(scene)).includes(contextState)) {
     scene.postUpdate(contextState)
@@ -164,10 +164,10 @@ function scriptLoaded() {
         const sceneLocation = get_location(sceneMember)
 
         // check metadata of context states
-        const contextStates = metadata(sceneMember).getConfiguration([
+        const contextStates = metadata(sceneMember).getConfiguration(
           'scenes',
           'context-states'
-        ])
+        )
 
         const defaultContextStates = {
           reset: false
@@ -180,7 +180,8 @@ function scriptLoaded() {
         }
 
         metadata(sceneMember).setConfiguration(
-          ['scenes', 'context-states'],
+          'scenes',
+          'context-states',
           contextStates
         )
 
@@ -239,7 +240,7 @@ function scriptLoaded() {
 
           const meta = metadata(stateTrigger)
 
-          meta.setConfiguration(['scenes', 'trigger-state'], {
+          meta.setConfiguration('scenes', 'trigger-state', {
             to: sceneStates[sceneName],
             'target-scene': sceneMember.name,
             generated: true
@@ -266,10 +267,10 @@ function scriptLoaded() {
         // Sync (Remove) switches for each scene state
         for (const stateTrigger of items.getItem('gCore_Scenes_StateTriggers')
           .members) {
-          const triggerInfo = metadata(stateTrigger).getConfiguration([
+          const triggerInfo = metadata(stateTrigger).getConfiguration(
             'scenes',
             'trigger-state'
-          ])
+          )
 
           // Do not remove manual created items that are just tagged wrong as it could be added manually to an existing (important) item.
           if (!triggerInfo || !triggerInfo['generated']) {
@@ -303,7 +304,8 @@ function scriptLoaded() {
     execute: (event) => {
       const scene = items.getItem(event.itemName)
       metadata(scene).setConfiguration(
-        ['scenes', 'last-activation'],
+        'scenes',
+        'last-activation',
         get_date_string(ZonedDateTime.now())
       )
       trigger_scene_items(scene)
@@ -330,10 +332,10 @@ function scriptLoaded() {
     triggers: [triggers.GroupStateUpdateTrigger('gCore_Scenes_StateTriggers')],
     execute: (event) => {
       const item = items.getItem(event.itemName)
-      const triggerInfo = metadata(item).getConfiguration([
+      const triggerInfo = metadata(item).getConfiguration(
         'scenes',
         'trigger-state'
-      ])
+      )
 
       if (
         triggerInfo['states'] &&
@@ -353,10 +355,10 @@ function scriptLoaded() {
           return
         }
 
-        const lastActivation = metadata(scene).getConfiguration([
+        const lastActivation = metadata(scene).getConfiguration(
           'scenes',
           'last-activation'
-        ])
+        )
 
         if (
           !lastActivation ||

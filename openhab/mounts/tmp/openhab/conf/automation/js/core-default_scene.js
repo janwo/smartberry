@@ -61,7 +61,8 @@ function scriptLoaded() {
     ],
     execute: (event) => {
       metadata('Core_DefaultScene').setConfiguration(
-        ['scenes', 'custom-members'],
+        'scenes',
+        'custom-members',
         [
           'Core_Security_OperationState',
           'Core_Heating_Thermostat_ModeDefault',
