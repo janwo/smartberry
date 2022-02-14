@@ -27,7 +27,7 @@ const LOCK_POINT_TAGS = ['OpenState', 'Switch']
 
 function is_security_state(state = OperationState.OFF) {
   const OperationStateItem = items.getItem('Core_Security_OperationState')
-  return OperationStateItem.state == state
+  return Number.parseFloat(OperationStateItem.state) == state
 }
 
 function scriptLoaded() {

@@ -1,5 +1,5 @@
 const { items, osgi, triggers, actions, time, rules } = require('openhab')
-const { uniq, get, set, intersection, uniqBy } = require('lodash')
+const { uniq, get, set, intersection, merge, uniqBy } = require('lodash')
 
 const Metadata = Java.type('org.openhab.core.items.Metadata')
 const MetadataKey = Java.type('org.openhab.core.items.MetadataKey')
@@ -116,17 +116,31 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
 
   return {
     getValue: () => metadata.getValue(),
-    getConfiguration: (path) => get(metadata.getConfiguration(), path),
+    getConfiguration: (...args) =>
+      args.length === 0
+        ? metadata.getConfiguration()
+        : get(metadata.getConfiguration(), args),
     setValue: (value) => {
       metadata.value = value
       return MetadataRegistry.update(metadata) || MetadataRegistry.add(metadata)
     },
-    setConfiguration: (path, configuration) => {
-      metadata.configuration = set(
-        metadata.getConfiguration(),
-        path,
-        configuration
-      )
+    setConfiguration: (...args) => {
+      switch (args.length) {
+        case 0:
+          metadata.configuration = {}
+          break
+
+        case 1:
+          metadata.configuration = merge(metadata.getConfiguration(), args[0])
+          break
+
+        default:
+          metadata.configuration = set(
+            metadata.getConfiguration(),
+            args.slice(0, -1),
+            args[args.length - 1]
+          )
+      }
       return MetadataRegistry.update(metadata) || MetadataRegistry.add(metadata)
     },
     remove: () => MetadataRegistry.remove(metadata)

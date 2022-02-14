@@ -227,16 +227,14 @@ function scriptLoaded() {
             helperItem.addGroupName(helperGroupItem.name)
           }
 
-          const meta = metadata(helperItem)
-
-          meta.setConfiguration('stateDescription', {
+          metadata(helperItem, 'stateDescription').setConfiguration({
             pattern: '%d',
             options:
               '0.0=Aus,1.0=An,2.0=Auto-An,3.0=Unveraendert,4.0=Simulierend'
           })
 
           for (const path of ['listWidget', 'cellWidget']) {
-            meta.setConfiguration(path, {
+            metadata(helperItem, path).setConfiguration({
               label: `=items.${helperItem.name}.title`,
               icon: `oh:${item.icon}`,
               action: 'options',
@@ -493,7 +491,7 @@ function scriptLoaded() {
       const lightModeGroup = get_light_mode_group()
       const simulateLocations = uniq(
         lightModeGroup.members
-          .filter((mode) => mode.state == LightMode.SIMULATE)
+          .filter((mode) => Number.parseFloat(mode.state) == LightMode.SIMULATE)
           .map((mode) => get_location(mode))
       )
 

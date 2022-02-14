@@ -17,7 +17,7 @@ function scriptLoaded() {
     tags: ['core', 'core-default_scene'],
     triggers: [triggers.ItemStateUpdateTrigger('Core_DefaultScene')],
     execute: (event) => {
-      if (event.itemState == DefaultSceneState.SLEEP) {
+      if (Number.parseFloat(event.itemState) == DefaultSceneState.SLEEP) {
         for (scene of items.getItem('gCore_Scenes').members) {
           const contexts = ['sleep', 'reset']
           for (context of contexts) {
@@ -37,7 +37,7 @@ function scriptLoaded() {
     triggers: [triggers.ItemStateChangeTrigger('Core_Presence')],
     execute: (event) => {
       const scene = items.getItem('Core_DefaultScene')
-      if (scene.state == DefaultSceneState.SLEEP) {
+      if (Number.parseFloat(scene.state) == DefaultSceneState.SLEEP) {
         return
       }
 

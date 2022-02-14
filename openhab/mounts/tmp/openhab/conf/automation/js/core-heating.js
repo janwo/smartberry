@@ -125,7 +125,7 @@ function scriptLoaded() {
             state = pointCommandMap[state]
           }
 
-          if (point.state != state) {
+          if (Number.parseFloat(point.state) != state) {
             point.sendCommand(state)
           }
         }
