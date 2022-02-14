@@ -1,5 +1,5 @@
 const { rules, items, triggers, time } = require('openhab')
-const { uniqBy } = require('lodash')
+const { uniqBy, merge } = require('lodash')
 const {
   metadata,
   create_helper_item,
@@ -14,30 +14,46 @@ const {
 const SCENE_TAGS = ['CoreScene']
 const SCENE_TRIGGER_TAGS = ['CoreSceneTrigger']
 
-function get_scene_state(scene) {
-  if (['NULL', 'UNDEF'].includes(scene.state)) {
-    return scene.state
-  } else {
-    const commandDescription = scene.getCommandDescription()
-    const commandOptions = commandDescription
-      ? commandDescription.getCommandOptions()
-      : []
-    if (commandOptions.length > 0) {
-      return commandOptions[0].getCommand()
+function get_default_scene_state(scene) {
+  const stateDescription = metadata(
+    helperItem,
+    'stateDescription'
+  ).getConfiguration('options')
+
+  if (stateDescription) {
+    const command = stateDescription.split(',')[0].split('=')[0]
+    if (command.length > 0) {
+      return command
     }
   }
+
   return undefined
 }
 
 function get_scene_states(scene) {
-  const commandDescription = scene.getCommandDescription()
-  const commandOptions = commandDescription
-    ? commandDescription.getCommandOptions()
-    : []
-  return commandOptions.reduce(
-    (obj, newOption) => (obj[newOption.getCommand()] = newOption.getLabel()),
-    {}
-  )
+  const stateDescription = metadata(
+    helperItem,
+    'stateDescription'
+  ).getConfiguration('options')
+
+  if (!stateDescription) {
+    return {}
+  }
+
+  return stateDescription.split(',').reduce((obj, stateDescription) => {
+    stateDescription = stateDescription.split('=')
+    const command = stateDescription[0]
+    const label = stateDescription[1]
+    if (
+      command !== undefined &&
+      command.length > 0 &&
+      label !== undefined &&
+      label.length > 0
+    ) {
+      obj[command] = label
+    }
+    return obj
+  }, {})
 }
 
 function get_scene_items(scene) {
@@ -77,7 +93,7 @@ function get_scene_items(scene) {
 }
 
 function get_scene_item_states(scene, scene_state) {
-  scene_state = scene_state || get_scene_state(scene)
+  scene_state = scene_state || get_default_scene_state(scene)
 
   if (scene_state === undefined) {
     return []
@@ -97,7 +113,7 @@ function get_scene_item_states(scene, scene_state) {
 
 function save_scene_item_states(scene, scene_state) {
   const items = get_scene_items(scene)
-  scene_state = scene_state || get_scene_state(scene)
+  scene_state = scene_state || get_default_scene_state(scene)
 
   if (scene_state !== undefined) {
     for (let item in items) {
@@ -173,16 +189,10 @@ function scriptLoaded() {
           reset: false
         }
 
-        for (const key of Object.keys(defaultContextStates)) {
-          if (!contextStates.includes(key)) {
-            contextStates[key] = defaultContextStates[key]
-          }
-        }
-
         metadata(sceneMember).setConfiguration(
           'scenes',
           'context-states',
-          contextStates
+          merge(defaultContextStates, contextStates)
         )
 
         // Create scene store trigger
@@ -203,19 +213,6 @@ function scriptLoaded() {
             icon: 'oh:settings',
             action: 'options',
             actionItem: helper.name
-          })
-        }
-
-        const commandDescription = sceneMember.getCommandDescription()
-        const commandOptions = commandDescription
-          ? commandDescription.getCommandOptions()
-          : []
-        if (commandOptions.length > 0) {
-          metadata(helper).setConfiguration('stateDescription', {
-            options: commandOptions
-              .map((option) => `${option.getCommand()}=${option.getLabel()}`)
-              .join(','),
-            pattern: '%d'
           })
         }
 
@@ -388,7 +385,7 @@ function scriptLoaded() {
 }
 
 module.exports = {
-  get_scene_state,
+  get_default_scene_state,
   get_scene_states,
   get_scene_items,
   get_scene_item_states,
