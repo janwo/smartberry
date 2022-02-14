@@ -4,10 +4,10 @@ const { metadata } = require(__dirname + '/core-helpers')
 const { PresenceState } = require(__dirname + '/core-presence')
 
 const DefaultSceneState = {
-  HOME: '0.0',
-  AWAY_SHORT: '1.0',
-  AWAY_LONG: '2.0',
-  SLEEP: '3.0'
+  HOME: 0,
+  AWAY_SHORT: 1,
+  AWAY_LONG: 2,
+  SLEEP: 3
 }
 
 function scriptLoaded() {
@@ -17,7 +17,7 @@ function scriptLoaded() {
     tags: ['core', 'core-default_scene'],
     triggers: [triggers.ItemStateUpdateTrigger('Core_DefaultScene')],
     execute: (event) => {
-      if (Number.parseFloat(event.itemState) == DefaultSceneState.SLEEP) {
+      if (event.itemState == DefaultSceneState.SLEEP) {
         for (scene of items.getItem('gCore_Scenes').members) {
           const contexts = ['sleep', 'reset']
           for (context of contexts) {
@@ -37,7 +37,7 @@ function scriptLoaded() {
     triggers: [triggers.ItemStateChangeTrigger('Core_Presence')],
     execute: (event) => {
       const scene = items.getItem('Core_DefaultScene')
-      if (Number.parseFloat(scene.state) == DefaultSceneState.SLEEP) {
+      if (scene.state == DefaultSceneState.SLEEP) {
         return
       }
 
@@ -47,7 +47,7 @@ function scriptLoaded() {
         DefaultSceneState.AWAY_SHORT
       defaultSceneMapping[PresenceState.AWAY_LONG] = DefaultSceneState.AWAY_LONG
 
-      scene.postUpdate(defaultSceneMapping[event.itemState])
+      scene.postUpdate(defaultSceneMapping[event.itemState].toFixed(1))
     }
   })
 

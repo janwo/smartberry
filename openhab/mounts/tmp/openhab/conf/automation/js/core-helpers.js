@@ -8,14 +8,14 @@ const MetadataRegistry = osgi.getService(
 )
 
 const BroadcastType = {
-  INFO: '0.0',
-  ATTENTION: '1.0'
+  INFO: 0,
+  ATTENTION: 1
 }
 
 const BroadcastNotificationMode = {
-  NONE: '0.0',
-  DEFAULT: '1.0',
-  ATTENTION_ONLY: '2.0'
+  NONE: 0,
+  DEFAULT: 1,
+  ATTENTION_ONLY: 2
 }
 
 const METADATA_NAMESPACE = 'core'

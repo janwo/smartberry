@@ -10,9 +10,9 @@ const {
 } = require(__dirname + '/core-helpers')
 
 const OperationState = {
-  OFF: '0.0',
-  ON: '1.0',
-  SILENTLY: '2.0'
+  OFF: 0,
+  ON: 1,
+  SILENTLY: 2
 }
 
 const ASSAULT_TRIGGER_EQUIPMENT_TAGS = ['Window', 'Door', 'CoreAssaultTrigger']
@@ -27,7 +27,7 @@ const LOCK_POINT_TAGS = ['OpenState', 'Switch']
 
 function is_security_state(state = OperationState.OFF) {
   const OperationStateItem = items.getItem('Core_Security_OperationState')
-  return Number.parseFloat(OperationStateItem.state) == state
+  return OperationStateItem.state == state
 }
 
 function scriptLoaded() {
@@ -126,7 +126,7 @@ function scriptLoaded() {
       if (blockingAssaultTriggers.length > 0) {
         items
           .getItem('Core_Security_OperationState')
-          .postUpdate(OperationState.OFF)
+          .postUpdate(OperationState.OFF.toFixed(1))
         broadcast(
           `${', '.join(
             blockingAssaultTriggers.map((trigger) => trigger.label)
@@ -148,7 +148,7 @@ function scriptLoaded() {
       if (['ON', 'OPEN'].includes(item.state)) {
         items
           .getItem('Core_Security_OperationState')
-          .postUpdate(OperationState.OFF)
+          .postUpdate(OperationState.OFF.toFixed(1))
       }
     }
   })

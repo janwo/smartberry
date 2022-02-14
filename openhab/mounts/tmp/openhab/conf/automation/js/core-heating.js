@@ -8,10 +8,10 @@ const {
 } = require(__dirname + '/core-helpers')
 
 const HeatingState = {
-  OFF: '0.0',
-  DEFAULT: '1.0',
-  ECO: '2.0',
-  POWER: '3.0'
+  OFF: 0,
+  DEFAULT: 1,
+  ECO: 2,
+  POWER: 3
 }
 
 const OPEN_CONTACT_EQUIPMENT_TAGS = ['Door', 'Window']
@@ -127,8 +127,8 @@ function scriptLoaded() {
             state = pointCommandMap[state]
           }
 
-          if (Number.parseFloat(point.state) != state) {
-            point.sendCommand(state)
+          if (point.state != state) {
+            point.sendCommand(state.toFixed(1))
           }
         }
       }

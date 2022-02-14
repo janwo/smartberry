@@ -7,9 +7,9 @@ const {
 } = require(__dirname + '/core-helpers')
 
 const PresenceState = {
-  AWAY_SHORT: '0.0',
-  HOME: '1.0',
-  AWAY_LONG: '2.0'
+  AWAY_SHORT: 0,
+  HOME: 1,
+  AWAY_LONG: 2
 }
 
 const POINT_TAGS = ['Presence']
@@ -91,14 +91,14 @@ function trigger_presence(item) {
   }
 
   if (presenceProvider.state != PresenceState.HOME) {
-    presenceProvider.postUpdate(PresenceState.HOME)
+    presenceProvider.postUpdate(PresenceState.HOME.toFixed(1))
   }
 }
 
 function trigger_absence() {
   if (get_presence() == PresenceState.HOME) {
     const presenceProvider = items.getItem('Core_Presence')
-    presenceProvider.postUpdate(PresenceState.AWAY_SHORT)
+    presenceProvider.postUpdate(PresenceState.AWAY_SHORT.toFixed(1))
   }
 }
 
@@ -165,7 +165,7 @@ function scriptLoaded() {
 
       // Update presence state, if it changed.
       if (presence != presenceManagement.state) {
-        presenceManagement.postUpdate(presence)
+        presenceManagement.postUpdate(presence.toFixed(1))
       }
     }
   })

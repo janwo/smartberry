@@ -12,17 +12,17 @@ const {
 const { PresenceState } = require(__dirname + '/core-presence')
 
 const LightMode = {
-  OFF: '0.0',
-  ON: '1.0',
-  AUTO_ON: '2.0',
-  UNCHANGED: '3.0',
-  SIMULATE: '4.0'
+  OFF: 0,
+  ON: 1,
+  AUTO_ON: 2,
+  UNCHANGED: 3,
+  SIMULATE: 4
 }
 
 const AmbientLightCondition = {
-  DARK: '0.0',
-  OBSCURED: '1.0',
-  BRIGHT: '2.0'
+  DARK: 0,
+  OBSCURED: 1,
+  BRIGHT: 2
 }
 
 const LIGHTS_EQUIPMENT_TAGS = ['Lightbulb', 'PowerOutlet', 'WallSwitch']
@@ -330,17 +330,13 @@ function scriptLoaded() {
     execute: (event) => {
       const lightModeGroup = get_light_mode_group()
       const switchOnRoomNames = lightModeGroup.members
-        .filter((groupMember) =>
-          [LightMode.ON].includes(Number.parseFloat(groupMember.state))
-        )
+        .filter((groupMember) => [LightMode.ON].includes(groupMember.state))
         .map((groupMember) => get_location(groupMember))
         .filter((r) => r)
         .map((r) => r.name)
 
       const switchOffRoomNames = lightModeGroup.members
-        .filter((groupMember) =>
-          [LightMode.OFF].includes(Number.parseFloat(groupMember.state))
-        )
+        .filter((groupMember) => [LightMode.OFF].includes(groupMember.state))
         .map((groupMember) => get_location(groupMember))
         .filter((r) => r)
         .map((r) => r.name)
@@ -496,7 +492,7 @@ function scriptLoaded() {
       const lightModeGroup = get_light_mode_group()
       const simulateLocations = uniq(
         lightModeGroup.members
-          .filter((mode) => Number.parseFloat(mode.state) == LightMode.SIMULATE)
+          .filter((mode) => mode.state == LightMode.SIMULATE)
           .map((mode) => get_location(mode))
       )
 
