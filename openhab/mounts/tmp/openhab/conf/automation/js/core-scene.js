@@ -31,10 +31,9 @@ function get_default_scene_state(scene) {
 }
 
 function get_scene_states(scene) {
-  const stateDescription = metadata(
-    helperItem,
-    'stateDescription'
-  ).getConfiguration('options')
+  const stateDescription = metadata(scene, 'stateDescription').getConfiguration(
+    'options'
+  )
 
   if (!stateDescription) {
     return {}
