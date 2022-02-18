@@ -123,7 +123,10 @@ function scriptLoaded() {
             'command-map'
           )
 
-          if (pointCommandMap && Object.keys(pointCommandMap).includes(state)) {
+          if (
+            pointCommandMap &&
+            Object.keys(pointCommandMap).some((command) => command == state)
+          ) {
             state = pointCommandMap[state]
           }
 

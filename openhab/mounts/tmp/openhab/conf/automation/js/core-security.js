@@ -71,6 +71,10 @@ function scriptLoaded() {
       triggers.GroupStateChangeTrigger('gCore_Security_AssaultTrigger')
     ],
     execute: (event) => {
+      if (is_security_state(OperationState.OFF)) {
+        return
+      }
+
       const item = items.getItem(event.itemName)
       metadata('Core_Security_OperationState').setConfiguration(
         'security',
@@ -84,9 +88,9 @@ function scriptLoaded() {
         for (const alarm of items.getItemsByTag(...ASSAULT_ALARM_POINT_TAGS)) {
           alarm.sendCommand('ON')
         }
-      }
 
-      broadcast(message, BroadcastType.ATTENTION)
+        broadcast(message, BroadcastType.ATTENTION)
+      }
     }
   })
 
@@ -115,7 +119,7 @@ function scriptLoaded() {
           )
           return pointsList.concat(newPoints)
         }, [])
-        .filter((point) => [OPEN, ON].includes(point.state))
+        .filter((point) => [OPEN, ON].some((state) => state == point.state))
 
       metadata('Core_Security_OperationState').setConfiguration(
         'security',
@@ -145,7 +149,7 @@ function scriptLoaded() {
     ],
     execute: (event) => {
       const item = items.getItem(event.itemName)
-      if (['ON', 'OPEN'].includes(item.state)) {
+      if (['ON', 'OPEN'].some((state) => state == item.state)) {
         items
           .getItem('Core_Security_OperationState')
           .postUpdate(OperationState.OFF.toFixed(1))
@@ -162,7 +166,7 @@ function scriptLoaded() {
     ],
     execute: (event) => {
       const item = items.getItem(event.itemName)
-      if (['OFF', 'CLOSED'].includes(item.state)) {
+      if (['OFF', 'CLOSED'].some((state) => state == item.state)) {
         for (const lock of get_all_semantic_items(
           LOCK_EQUIPMENT_TAGS,
           LOCK_POINT_TAGS

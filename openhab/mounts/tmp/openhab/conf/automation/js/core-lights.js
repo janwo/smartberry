@@ -5,11 +5,15 @@ const {
   get_all_semantic_items,
   get_items_of_any_tags,
   create_helper_item,
+  get_childs_with_condition,
+
+  has_same_location,
   DATETIME_FORMAT,
   sync_group_with_semantic_items,
   get_location
 } = require(__dirname + '/core-helpers')
 const { PresenceState } = require(__dirname + '/core-presence')
+const { trigger_scene_items } = require(__dirname + '/core-scenes')
 
 const LightMode = {
   OFF: 0,
@@ -98,9 +102,9 @@ function get_darkest_light_condition(conditions) {
     AmbientLightCondition.OBSCURED,
     AmbientLightCondition.BRIGHT
   ]
-  for (const condition of orderedConditions) {
-    if (conditions.includes(condition)) {
-      return condition
+  for (const orderedCondition of orderedConditions) {
+    if (conditions.some((condition) => orderedCondition == condition)) {
+      return orderedCondition
     }
   }
 }
@@ -330,13 +334,13 @@ function scriptLoaded() {
     execute: (event) => {
       const lightModeGroup = get_light_mode_group()
       const switchOnRoomNames = lightModeGroup.members
-        .filter((groupMember) => [LightMode.ON].includes(groupMember.state))
+        .filter((groupMember) => groupMember.state == LightMode.ON)
         .map((groupMember) => get_location(groupMember))
         .filter((r) => r)
         .map((r) => r.name)
 
       const switchOffRoomNames = lightModeGroup.members
-        .filter((groupMember) => [LightMode.OFF].includes(groupMember.state))
+        .filter((groupMember) => groupMember.state == LightMode.OFF)
         .map((groupMember) => get_location(groupMember))
         .filter((r) => r)
         .map((r) => r.name)
@@ -377,7 +381,7 @@ function scriptLoaded() {
 
       for (const member of lightModeGroup.members) {
         if (
-          [LightMode.AUTO_ON].includes(member.state) &&
+          member.state == LightMode.AUTO_ON &&
           has_same_location(member, location)
         ) {
           const scene = items
@@ -433,7 +437,7 @@ function scriptLoaded() {
       if (welcomeLightMode.state == 'ON') {
         const lightModeGroup = get_light_mode_group()
         const switchOnRoomNames = lightModeGroup.members
-          .filter((mode) => [LightMode.AUTO_ON].includes(mode.state))
+          .filter((mode) => mode.state == LightMode.AUTO_ON)
           .map((mode) => get_location(mode))
           .filter((r) => r)
           .map((r) => r.name)
@@ -464,7 +468,9 @@ function scriptLoaded() {
       const switchOffRoomNames = uniq(
         lightModeGroup.members
           .filter((mode) =>
-            [LightMode.AUTO_ON, LightMode.OFF].includes(mode.state)
+            [LightMode.AUTO_ON, LightMode.OFF].some(
+              (state) => state == mode.state
+            )
           )
           .map((mode) => get_location(mode))
       )

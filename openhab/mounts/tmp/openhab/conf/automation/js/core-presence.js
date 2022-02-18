@@ -64,7 +64,9 @@ function get_presence(item) {
   }
 
   if (presenceProvider.name == 'Core_Presence') {
-    return Object.values(PresenceState).includes(presenceProvider.state)
+    return Object.values(PresenceState).some(
+      (state) => state == presenceProvider.state
+    )
       ? presenceProvider.state
       : PresenceState.HOME
   } else {
@@ -138,11 +140,11 @@ function scriptLoaded() {
       const absenceStates =
         metadata(item).getConfiguration('presence', 'absence-states') || []
 
-      if (presenceStates.includes(item.state)) {
+      if (presenceStates.some((state) => state == item.state)) {
         trigger_presence(item)
       }
 
-      if (absenceStates.includes(item.state)) {
+      if (absenceStates.some((state) => state == item.state)) {
         trigger_absence(item)
       }
     }

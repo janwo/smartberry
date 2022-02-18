@@ -143,7 +143,11 @@ function apply_context(scene, context) {
     context
   )
 
-  if (Object.values(get_scene_states(scene)).includes(contextState)) {
+  if (
+    Object.values(get_scene_states(scene)).some(
+      (sceneState) => sceneState == contextState
+    )
+  ) {
     scene.postUpdate(contextState)
     return true
   }
@@ -175,9 +179,6 @@ function scriptLoaded() {
 
       // Check helper items
       for (const sceneMember of sceneMembers) {
-        // get scene location
-        const sceneLocation = get_location(sceneMember)
-
         // check metadata of context states
         const contextStates = metadata(sceneMember).getConfiguration(
           'scenes',
@@ -216,6 +217,7 @@ function scriptLoaded() {
         }
 
         // Sync (Add) switches for each scene state
+        const sceneLocation = get_location(sceneMember)
         const sceneStates = get_scene_states(sceneMember)
         for (const sceneName in sceneStates) {
           const stateTriggerLabel = `${sceneName}-Szene`
@@ -278,8 +280,8 @@ function scriptLoaded() {
               const scene = items.getItem(triggerInfo['target-scene'])
               if (
                 scene &&
-                Object.values(get_scene_states(scene)).includes(
-                  triggerInfo['to']
+                Object.values(get_scene_states(scene)).some(
+                  (sceneState) => sceneState == triggerInfo['to']
                 )
               ) {
                 continue
@@ -335,19 +337,23 @@ function scriptLoaded() {
 
       if (
         triggerInfo['states'] &&
-        !triggerInfo['states'].includes(item.state)
+        !triggerInfo['states'].some((state) => state == item.state)
       ) {
         return
       }
 
       if (triggerInfo['to'] && triggerInfo['target-scene']) {
+        let scene
         try {
-          const scene = items.getItem(triggerInfo['target-scene'])
+          scene = items.getItem(triggerInfo['target-scene'])
         } catch {
           return
         }
 
-        if (triggerInfo['from'] && triggerInfo['from'] != scene.state) {
+        if (
+          triggerInfo['from'] &&
+          triggerInfo['from'] != Number.parseFloat(scene.state)
+        ) {
           return
         }
 
