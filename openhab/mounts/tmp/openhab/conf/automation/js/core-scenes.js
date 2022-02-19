@@ -7,6 +7,7 @@ const {
   get_items_of_any_tags,
   DATETIME_FORMAT,
   sync_group_with_semantic_items,
+  get_childs_with_condition,
   get_location,
   has_same_location
 } = require(__dirname + '/core-helpers')

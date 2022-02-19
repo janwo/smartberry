@@ -116,10 +116,13 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
 
   return {
     getValue: () => metadata.getValue(),
-    getConfiguration: (...args) =>
-      args.length === 0
-        ? metadata.getConfiguration()
-        : get(metadata.getConfiguration(), args),
+    getConfiguration: (...args) => {
+      const configuration = metadata.getConfiguration()
+      if (args.length == 0) {
+        return isEmpty(configuration) ? undefined : configuration
+      }
+      return get(configuration, args)
+    },
     setValue: (value) => {
       metadata.value = value
       return MetadataRegistry.update(metadata) || MetadataRegistry.add(metadata)
@@ -344,14 +347,9 @@ function remove_invalid_helper_items() {
         } catch {
           console.log(
             'remove_invalid_helper_items',
-            `Remove invalid metadata of item ${item.name}: ${name} [${type}] is no valid helper item for .`
+            `Remove invalid metadata of item ${item.name}: ${name} [${type}] is no valid helper item.`
           )
-          metadata(item).setConfiguration(
-            'helper-items',
-            namespace,
-            name,
-            undefined
-          )
+          metadata(item).setConfiguration('helper-items', type, name, undefined)
         }
       }
     }
