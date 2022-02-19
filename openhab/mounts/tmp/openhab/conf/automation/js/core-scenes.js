@@ -91,9 +91,8 @@ function get_scene_items(scene) {
   )
 }
 
-function get_scene_item_states(scene, sceneState) {
-  sceneState = sceneState || get_default_scene_state(scene)
-
+function get_scene_item_states(scene) {
+  const sceneState = get_default_scene_state(scene)
   if (sceneState === undefined) {
     return []
   }

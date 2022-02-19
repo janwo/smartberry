@@ -1,5 +1,13 @@
 const { items, osgi, triggers, actions, time, rules } = require('openhab')
-const { uniq, get, set, intersection, merge, uniqBy } = require('lodash')
+const {
+  uniq,
+  get,
+  set,
+  intersection,
+  merge,
+  uniqBy,
+  isEmpty
+} = require('lodash')
 
 const Metadata = Java.type('org.openhab.core.items.Metadata')
 const MetadataKey = Java.type('org.openhab.core.items.MetadataKey')
