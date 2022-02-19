@@ -103,10 +103,10 @@ function get_scene_item_states(scene) {
     sceneState
   )
 
-  return get_scene_items(scene).reduce(
-    (obj, newItem) => (obj[newItem.name] = states?.[newItem.name]),
-    {}
-  )
+  return get_scene_items(scene).reduce((obj, newItem) => {
+    obj[newItem.name] = states?.[newItem.name]
+    return obj
+  }, {})
 }
 
 function save_scene_item_states(scene, sceneState) {

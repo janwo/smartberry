@@ -144,7 +144,7 @@ function is_elapsed(item) {
 }
 
 function turn_on_switchable_point(point, force = false) {
-  if (!point.state || force) {
+  if (['OFF', 0].some((state) => state == point.state) || force) {
     point.sendCommand('ON')
     point.postUpdate('ON')
   } else {
@@ -153,7 +153,7 @@ function turn_on_switchable_point(point, force = false) {
 }
 
 function turn_off_switchable_point(point, force = false) {
-  if (point.state || force) {
+  if (!['OFF', 0].some((state) => state == point.state) || force) {
     point.sendCommand('OFF')
     point.postUpdate('OFF')
   } else {
