@@ -36,7 +36,9 @@ const LIGHT_MEASUREMENT_POINT_TAGS = [['Light', 'Measurement']]
 const LIGHT_MEASUREMENT_ASTRO_SUNPHASE = ['CoreAstroSun']
 
 function get_light_mode_group() {
-  const condition = items.getItem('Core_Lights_AmbientLightCondition').state
+  const condition = Number.parseFloat(
+    items.getItem('Core_Lights_AmbientLightCondition').state
+  )
   switch (condition) {
     case AmbientLightCondition.DARK:
       return items.getItem('gCore_Lights_DarkMode')
