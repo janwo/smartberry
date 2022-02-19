@@ -4,7 +4,8 @@ const {
   get_all_semantic_items,
   DATETIME_FORMAT,
   sync_group_with_semantic_items,
-  get_location
+  get_location,
+  stringifiedFloat
 } = require(__dirname + '/core-helpers')
 
 const HeatingState = {
@@ -74,13 +75,12 @@ function scriptLoaded() {
       )
 
       if (openContactLocations.length > 0) {
-        const openedSince = (() => {
-          const meta = metadata(heatingShutdownMinutesItem).getConfiguration(
-            'heating',
-            'open-contact-since'
-          )
-          if (meta) {
-            return time.ZonedDateTime.parse(meta, DATETIME_FORMAT)
+        const openedSinceDate = (() => {
+          const openedSince = metadata(
+            heatingShutdownMinutesItem
+          ).getConfiguration('heating', 'open-contact-since')
+          if (openedSince) {
+            return time.ZonedDateTime.parse(openedSince, DATETIME_FORMAT)
           }
 
           const now = time.ZonedDateTime.now()
@@ -94,8 +94,10 @@ function scriptLoaded() {
 
         shutdownHeating =
           heatingShutdownMinutesItem.state &&
-          openedSince.until(time.ZonedDateTime.now(), time.ChronoUnit.MINUTES) >
-            heatingShutdownMinutesItem.state
+          openedSinceDate.until(
+            time.ZonedDateTime.now(),
+            time.ChronoUnit.MINUTES
+          ) > heatingShutdownMinutesItem.state
       } else {
         metadata(heatingShutdownMinutesItem).setConfiguration(
           'heating',
@@ -123,15 +125,12 @@ function scriptLoaded() {
             'command-map'
           )
 
-          if (
-            pointCommandMap &&
-            Object.keys(pointCommandMap).some((command) => command == state)
-          ) {
+          if (pointCommandMap[state] !== undefined) {
             state = pointCommandMap[state]
           }
 
-          if (point.state != state) {
-            point.sendCommand(state.toFixed(1))
+          if (stringifiedFloat(point.state) != stringifiedFloat(state)) {
+            point.sendCommand(stringifiedFloat(state))
           }
         }
       }

@@ -6,14 +6,15 @@ const {
   get_items_of_any_tags,
   create_helper_item,
   get_childs_with_condition,
-
   has_same_location,
+  stringifiedFloat,
   DATETIME_FORMAT,
   sync_group_with_semantic_items,
   get_location
 } = require(__dirname + '/core-helpers')
 const { PresenceState } = require(__dirname + '/core-presence')
-const { trigger_scene_items } = require(__dirname + '/core-scenes')
+const { get_scene_items, trigger_scene_items } = require(__dirname +
+  '/core-scenes')
 
 const LightMode = {
   OFF: 0,
@@ -88,7 +89,7 @@ function get_light_condition() {
 function set_light_condition(condition, luminance) {
   const conditionItem = items.getItem('Core_Lights_AmbientLightCondition')
   if (conditionItem.state != condition) {
-    conditionItem.postUpdate(condition.toFixed(1))
+    conditionItem.postUpdate(stringifiedFloat(condition))
   }
 
   if (luminance !== undefined) {

@@ -9,28 +9,23 @@ networks:
 
 services:
   samba:
-    image: dperson/samba:latest
+    build:
+      context: ./samba
+      dockerfile: Dockerfile
     ports:
-      - 445:445/udp
-      - 139:139/udp
-      - 139:139/tcp
       - 445:445/tcp
+    volumes:
+      - ./samba/config.yml:/data/config.yml
+      - openhab-conf:/samba/conf
+      - openhab-userdata:/samba/userdata
     networks:
       - smartberry
-    volumes:
-      - openhab-conf:/mount/conf
-      - openhab-userdata:/mount/userdata
     restart: unless-stopped
-    environment:
-      USERID: 9001
-      GROUPID: 9001
-      SHARE: openhab;/mount;yes;no;no;openhab
-      USER: openhab;${SAMBA_PASSWORD}
 
   openhab:
     build:
       context: ./openhab
-      dockerfile: Dockerfile.template
+      dockerfile: Dockerfile
     networks:
       - smartberry
     restart: unless-stopped

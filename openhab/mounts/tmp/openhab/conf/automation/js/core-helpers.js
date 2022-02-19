@@ -149,9 +149,13 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
 
 function get_helper_item(of, type, name) {
   try {
-    const meta = metadata(of).getConfiguration('helper-items', type, name)
-    if (meta) {
-      return items.getItem(meta)
+    const helperItemName = metadata(of).getConfiguration(
+      'helper-items',
+      type,
+      name
+    )
+    if (helperItemName) {
+      return items.getItem(helperItemName)
     }
   } catch {
     return undefined
@@ -160,9 +164,9 @@ function get_helper_item(of, type, name) {
 
 function get_item_of_helper_item(helperItem) {
   try {
-    const meta = metadata(helperItem).getConfiguration('helper-item-of')
-    if (meta) {
-      return items.getItem(meta)
+    const itemName = metadata(helperItem).getConfiguration('helper-item-of')
+    if (itemName) {
+      return items.getItem(itemName)
     }
   } catch {
     return undefined
@@ -331,9 +335,9 @@ function remove_unlinked_helper_items() {
 
 function remove_invalid_helper_items() {
   for (const item of items.getItems()) {
-    const meta = metadata(item)
-    for (const type in meta.getConfiguration('helper-items')) {
-      const itemNames = meta[type]
+    const helperItemTypes = metadata(item).getConfiguration('helper-items')
+    for (const type in helperItemTypes) {
+      const itemNames = helperItemTypes[type]
       for (const name in itemNames) {
         try {
           items.getItem(itemNames[name])
@@ -342,11 +346,24 @@ function remove_invalid_helper_items() {
             'remove_invalid_helper_items',
             `Remove invalid metadata of item ${item.name}: ${name} [${type}] is no valid helper item for .`
           )
-          meta.setConfiguration('helper-items', namespace, name, undefined)
+          metadata(item).setConfiguration(
+            'helper-items',
+            namespace,
+            name,
+            undefined
+          )
         }
       }
     }
   }
+}
+
+function stringifiedFloat(state) {
+  const number = Number.parseFloat(state)
+  if (number !== NaN) {
+    return number.toFixed(1)
+  }
+  return state
 }
 
 function scriptLoaded() {
@@ -376,6 +393,7 @@ module.exports = {
   metadata,
   sync_group_with_semantic_items,
   get_items_of_any_tags,
+  stringifiedFloat,
   has_same_location,
   get_location,
   broadcast,

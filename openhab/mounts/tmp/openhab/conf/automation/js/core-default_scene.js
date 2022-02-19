@@ -1,5 +1,5 @@
 const { rules, items, triggers } = require('openhab')
-const { apply_context } = require(__dirname + '/core-scene')
+const { apply_context } = require(__dirname + '/core-scenes')
 const { metadata } = require(__dirname + '/core-helpers')
 const { PresenceState } = require(__dirname + '/core-presence')
 

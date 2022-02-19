@@ -15,10 +15,9 @@ const SCENE_TAGS = ['CoreScene']
 const SCENE_TRIGGER_TAGS = ['CoreSceneTrigger']
 
 function get_default_scene_state(scene) {
-  const stateDescription = metadata(
-    helperItem,
-    'stateDescription'
-  ).getConfiguration('options')
+  const stateDescription = metadata(scene, 'stateDescription').getConfiguration(
+    'options'
+  )
 
   if (stateDescription) {
     const command = stateDescription.split(',')[0].split('=')[0]
@@ -91,17 +90,17 @@ function get_scene_items(scene) {
   )
 }
 
-function get_scene_item_states(scene, scene_state) {
-  scene_state = scene_state || get_default_scene_state(scene)
+function get_scene_item_states(scene, sceneState) {
+  sceneState = sceneState || get_default_scene_state(scene)
 
-  if (scene_state === undefined) {
+  if (sceneState === undefined) {
     return []
   }
 
   const states = metadata(scene).getConfiguration(
     'scenes',
     'states',
-    scene_state
+    sceneState
   )
 
   return get_scene_items(scene).reduce(
@@ -110,28 +109,28 @@ function get_scene_item_states(scene, scene_state) {
   )
 }
 
-function save_scene_item_states(scene, scene_state) {
+function save_scene_item_states(scene, sceneState) {
   const items = get_scene_items(scene)
-  scene_state = scene_state || get_default_scene_state(scene)
+  sceneState = sceneState || get_default_scene_state(scene)
 
-  if (scene_state !== undefined) {
+  if (sceneState !== undefined) {
     for (let item in items) {
       items[item] = items.getItem(item)?.state
     }
 
-    metadata(scene).setConfiguration('scenes', 'states', scene_state, items)
+    metadata(scene).setConfiguration('scenes', 'states', sceneState, items)
   }
 }
 
-function trigger_scene_items(scene, poke_only = false) {
-  const item_states = get_scene_item_states(scene)
-  for (let item in item_states) {
+function trigger_scene_items(scene, pokeOnly = false) {
+  const itemStates = get_scene_item_states(scene)
+  for (let item in itemStates) {
     item = items.getItem(item)
-    if (poke_only) {
+    if (pokeOnly) {
       item.postUpdate(item.state)
     } else {
-      item.postUpdate(item_states[item.name])
-      item.sendCommand(item_states[item.name])
+      item.postUpdate(itemStates[item.name])
+      item.sendCommand(itemStates[item.name])
     }
   }
 }
@@ -143,10 +142,10 @@ function apply_context(scene, context) {
     context
   )
 
+  const sceneStates = get_scene_states(scene)
+  console.log('appy', sceneStates)
   if (
-    Object.values(get_scene_states(scene)).some(
-      (sceneState) => sceneState == contextState
-    )
+    Object.values(sceneStates).some((sceneState) => sceneState == contextState)
   ) {
     scene.postUpdate(contextState)
     return true
@@ -236,17 +235,15 @@ function scriptLoaded() {
             stateTrigger.setLabel(stateTriggerLabel)
           }
 
-          const meta = metadata(stateTrigger)
-
-          meta.setConfiguration('scenes', 'trigger-state', {
+          metadata(stateTrigger).setConfiguration('scenes', 'trigger-state', {
             to: sceneStates[sceneName],
             'target-scene': sceneMember.name,
             generated: true
           })
 
-          meta.setValue('ga', 'Scene')
+          metadata(stateTrigger).setValue('ga', 'Scene')
 
-          meta.setConfiguration('ga', {
+          metadata(stateTrigger).setConfiguration('ga', {
             sceneReversible: false,
             synonyms: sceneLocation
               ? `${stateTriggerLabel} in ${sceneLocation.label}`
@@ -254,7 +251,7 @@ function scriptLoaded() {
           })
 
           for (const path of ['listWidget', 'cellWidget']) {
-            meta.setConfiguration(path, {
+            metadata(stateTrigger).setConfiguration(path, {
               label: `=items.${stateTrigger.name}.title`,
               icon: 'oh:party',
               subtitle: `=items.${stateTrigger.name}.displayState`

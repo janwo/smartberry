@@ -1,0 +1,19 @@
+auth:
+  - user: openhab
+    group: openhab
+    uid: 9001
+    gid: 9001
+    password_file: /run/secrets/password
+
+global:
+  - 'force user = openhab'
+  - 'force group = openhab'
+
+share:
+  - name: openhab
+    path: /samba
+    browsable: yes
+    readonly: no
+    guestok: no
+    writelist: openhab
+    veto: no
