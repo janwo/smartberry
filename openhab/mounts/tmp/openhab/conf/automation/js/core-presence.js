@@ -64,11 +64,9 @@ function get_presence(item) {
   }
 
   if (presenceProvider.name == 'Core_Presence') {
-    return Object.values(PresenceState).some(
+    return Object.values(PresenceState).find(
       (state) => state == presenceProvider.state
     )
-      ? presenceProvider.state
-      : PresenceState.HOME
   } else {
     // Try again with root presence item.
     return get_presence()
