@@ -11,11 +11,9 @@ services:
   samba:
     build:
       context: ./samba
-      dockerfile: Dockerfile
     ports:
       - 445:445/tcp
     volumes:
-      - ./samba/config.yml:/data/config.yml
       - openhab-conf:/samba/conf
       - openhab-userdata:/samba/userdata
     networks:
@@ -25,7 +23,6 @@ services:
   openhab:
     build:
       context: ./openhab
-      dockerfile: Dockerfile
     networks:
       - smartberry
     restart: unless-stopped
