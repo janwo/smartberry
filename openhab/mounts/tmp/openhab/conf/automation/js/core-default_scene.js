@@ -1,7 +1,7 @@
 const { rules, items, triggers } = require('openhab')
 const { apply_context } = require(__dirname + '/core-scenes')
 const { metadata } = require(__dirname + '/core-helpers')
-const { PresenceState } = require(__dirname + '/core-presence')
+const { PresenceState, get_presence } = require(__dirname + '/core-presence')
 
 const DefaultSceneState = {
   HOME: 0,
@@ -47,7 +47,8 @@ function scriptLoaded() {
         DefaultSceneState.AWAY_SHORT
       defaultSceneMapping[PresenceState.AWAY_LONG] = DefaultSceneState.AWAY_LONG
 
-      scene.postUpdate(defaultSceneMapping[event.itemState].toFixed(1))
+      const presence = get_presence()
+      scene.postUpdate(defaultSceneMapping[presence].toFixed(1))
     }
   })
 

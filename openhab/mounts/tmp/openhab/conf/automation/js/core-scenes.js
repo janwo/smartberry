@@ -301,7 +301,7 @@ function scriptLoaded() {
       metadata(scene).setConfiguration(
         'scenes',
         'last-activation',
-        get_date_string(ZonedDateTime.now())
+        time.ZonedDateTime.now().format(DATETIME_FORMAT)
       )
       trigger_scene_items(scene)
     }
