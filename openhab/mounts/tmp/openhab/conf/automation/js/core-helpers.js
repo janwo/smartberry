@@ -32,6 +32,7 @@ const HELPER_ITEM_TAG = 'CoreHelperItem'
 const DATETIME_FORMAT = time.DateTimeFormatter.ofPattern(
   "yyyy-MM-dd'T'HH:mm:ss.SSS[xxxx][xxxxx]"
 )
+
 function broadcast(text, broadcastType = BroadcastType.INFO) {
   const state = items.getItem('Core_Broadcast_NotificationMode').state
   let notificationMode = state || BroadcastNotificationMode.DEFAULT
@@ -122,40 +123,39 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
   const metadata =
     MetadataRegistry.get(metadataKey) || new Metadata(metadataKey, null, {})
 
-  return {
-    getValue: () => metadata.getValue(),
-    getConfiguration: (...args) => {
-      const configuration = metadata.getConfiguration()
-      if (args.length == 0) {
-        return isEmpty(configuration) ? undefined : configuration
-      }
-      return get(configuration, args)
-    },
-    setValue: (value) => {
-      metadata.value = value
-      return MetadataRegistry.update(metadata) || MetadataRegistry.add(metadata)
-    },
-    setConfiguration: (...args) => {
-      switch (args.length) {
-        case 0:
-          metadata.configuration = {}
-          break
-
-        case 1:
-          metadata.configuration = merge(metadata.getConfiguration(), args[0])
-          break
-
-        default:
-          metadata.configuration = set(
-            metadata.getConfiguration(),
-            args.slice(0, -1),
-            args[args.length - 1]
-          )
-      }
-      return MetadataRegistry.update(metadata) || MetadataRegistry.add(metadata)
-    },
-    remove: () => MetadataRegistry.remove(metadata)
+  const getValue = () => metadata.getValue()
+  const getConfiguration = (...args) => {
+    const configuration = metadata.getConfiguration()
+    if (args.length == 0) {
+      return isEmpty(configuration) ? undefined : configuration
+    }
+    return get(configuration, args)
   }
+  const setValue = (value) => {
+    metadata.value = value
+    return MetadataRegistry.update(metadata) || MetadataRegistry.add(metadata)
+  }
+  const setConfiguration = (...args) => {
+    switch (args.length) {
+      case 0:
+        metadata.configuration = {}
+        break
+
+      case 1:
+        metadata.configuration = merge(getConfiguration() || {}, args[0])
+        break
+
+      default:
+        metadata.configuration = set(
+          getConfiguration() || {},
+          args.slice(0, -1),
+          args[args.length - 1]
+        )
+    }
+    return MetadataRegistry.update(metadata) || MetadataRegistry.add(metadata)
+  }
+  const remove = () => MetadataRegistry.remove(metadata)
+  return { setConfiguration, getConfiguration, remove, getValue, setValue }
 }
 
 function get_helper_item(of, type, name) {
