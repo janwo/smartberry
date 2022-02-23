@@ -208,12 +208,7 @@ function create_helper_item(
 
     metadata(helperItem).setConfiguration('helper-item-of', of.name)
 
-    metadata(of).setConfiguration(
-      'helper-items',
-      namespace,
-      name,
-      helperItem.name
-    )
+    metadata(of).setConfiguration('helper-items', type, name, helperItem.name)
   }
 
   return helperItem

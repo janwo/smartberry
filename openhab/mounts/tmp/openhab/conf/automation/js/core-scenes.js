@@ -207,7 +207,7 @@ function scriptLoaded() {
         )
 
         for (const path of ['listWidget', 'cellWidget']) {
-          metadata(helper).setConfiguration(path, {
+          metadata(helper, path).setConfiguration({
             label: `=items.${sceneMember.name}.title`,
             icon: 'oh:settings',
             action: 'options',
@@ -241,9 +241,9 @@ function scriptLoaded() {
             generated: true
           })
 
-          metadata(stateTrigger).setValue('ga', 'Scene')
+          metadata(stateTrigger, 'ga').setValue('Scene')
 
-          metadata(stateTrigger).setConfiguration('ga', {
+          metadata(stateTrigger, 'ga').setConfiguration({
             sceneReversible: false,
             synonyms: sceneLocation
               ? `${stateTriggerLabel} in ${sceneLocation.label}`
@@ -251,7 +251,7 @@ function scriptLoaded() {
           })
 
           for (const path of ['listWidget', 'cellWidget']) {
-            metadata(stateTrigger).setConfiguration(path, {
+            metadata(stateTrigger, path).setConfiguration({
               label: `=items.${stateTrigger.name}.title`,
               icon: 'oh:party',
               subtitle: `=items.${stateTrigger.name}.displayState`
