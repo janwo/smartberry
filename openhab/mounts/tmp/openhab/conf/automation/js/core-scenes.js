@@ -285,7 +285,7 @@ function scriptLoaded() {
               }
             } catch {}
           }
-          items.remove(stateTrigger.name)
+          items(stateTrigger.name)
         }
       }
     }

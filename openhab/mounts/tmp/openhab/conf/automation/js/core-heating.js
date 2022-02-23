@@ -129,8 +129,9 @@ function scriptLoaded() {
             state = pointCommandMap[state]
           }
 
-          if (stringifiedFloat(point.state) != stringifiedFloat(state)) {
-            point.sendCommand(stringifiedFloat(state))
+          state = stringifiedFloat(state)
+          if (stringifiedFloat(point.state) != state) {
+            point.sendCommand(state)
           }
         }
       }

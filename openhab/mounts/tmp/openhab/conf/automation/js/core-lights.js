@@ -123,6 +123,16 @@ function set_location_as_activated(switchable) {
   }
 }
 
+function is_on(state) {
+  if (state == 'ON') {
+    return true
+  } else if (/\d{1,3},\d{1,3},(\d{1,3})/.test(state)) {
+    return /\d{1,3},\d{1,3},(\d{1,3})/.exec(state)[1] > 0
+  } else {
+    return Number.parseFloat(state) > 0
+  }
+}
+
 function is_elapsed(item) {
   const location = get_location(item)
   if (location) {
@@ -146,7 +156,7 @@ function is_elapsed(item) {
 }
 
 function turn_on_switchable_point(point, force = false) {
-  if (['OFF', 0].some((state) => state == point.state) || force) {
+  if (!is_on(point.state) || force) {
     point.sendCommand('ON')
     point.postUpdate('ON')
   } else {
@@ -155,7 +165,7 @@ function turn_on_switchable_point(point, force = false) {
 }
 
 function turn_off_switchable_point(point, force = false) {
-  if (!['OFF', 0].some((state) => state == point.state) || force) {
+  if (is_on(point.state) || force) {
     point.sendCommand('OFF')
     point.postUpdate('OFF')
   } else {
@@ -262,7 +272,7 @@ function scriptLoaded() {
     triggers: [triggers.GroupStateUpdateTrigger('gCore_Lights_Switchables')],
     execute: (event) => {
       const item = items.getItem(event.itemName)
-      if (item.state > 0 || item.state == 'ON') {
+      if (is_on(item.state)) {
         set_location_as_activated(item)
       }
     }
@@ -289,7 +299,7 @@ function scriptLoaded() {
       const activeSwitchables = get_all_semantic_items(
         LIGHTS_EQUIPMENT_TAGS,
         LIGHTS_POINT_TAGS
-      ).filter((switchable) => switchable.state > 0 || switchable.state == 'ON')
+      ).filter((switchable) => is_on(switchable.state))
 
       const activeRoomNames = activeSwitchables
         .map((switchable) => get_location(switchable))
@@ -379,7 +389,7 @@ function scriptLoaded() {
         LIGHTS_EQUIPMENT_TAGS,
         LIGHTS_POINT_TAGS
       )
-        .filter((item) => item.state > 0 || item.state == 'ON')
+        .filter((item) => is_on(item.state))
         .map((s) => s.name)
 
       for (const member of lightModeGroup.members) {
@@ -515,7 +525,7 @@ function scriptLoaded() {
           simulateLocations.includes(location.name) &&
           Math.random() <= 0.25
         ) {
-          if (point.state == 0 || point.state == 'OFF') {
+          if (!is_on(point.state)) {
             turn_on_switchable_point(point)
           } else {
             turn_off_switchable_point(point)
@@ -535,6 +545,7 @@ module.exports = {
   get_darkest_light_condition,
   set_location_as_activated,
   is_elapsed,
+  is_on,
   turn_on_switchable_point,
   turn_off_switchable_point,
   LightMode,

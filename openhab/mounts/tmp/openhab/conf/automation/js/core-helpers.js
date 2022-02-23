@@ -4,7 +4,7 @@ const {
   get,
   set,
   intersection,
-  merge,
+  unset,
   uniqBy,
   isEmpty
 } = require('lodash')
@@ -123,7 +123,19 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
   const metadata =
     MetadataRegistry.get(metadataKey) || new Metadata(metadataKey, null, {})
 
-  const getValue = () => metadata.getValue()
+  const getValue = () => {
+    return metadata.getValue()
+  }
+
+  const setValue = (value) => {
+    metadata.value = value
+    return MetadataRegistry.update(metadata) || MetadataRegistry.add(metadata)
+  }
+
+  const remove = () => {
+    return MetadataRegistry.remove(metadata)
+  }
+
   const getConfiguration = (...args) => {
     const configuration = metadata.getConfiguration()
     if (args.length == 0) {
@@ -131,10 +143,7 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
     }
     return get(configuration, args)
   }
-  const setValue = (value) => {
-    metadata.value = value
-    return MetadataRegistry.update(metadata) || MetadataRegistry.add(metadata)
-  }
+
   const setConfiguration = (...args) => {
     switch (args.length) {
       case 0:
@@ -142,7 +151,7 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
         break
 
       case 1:
-        metadata.configuration = merge(getConfiguration() || {}, args[0])
+        metadata.configuration = args[0]
         break
 
       default:
@@ -151,10 +160,14 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
           args.slice(0, -1),
           args[args.length - 1]
         )
+
+        if (args[args.length - 1] === undefined) {
+          unset(metadata.configuration, args.slice(0, -1))
+        }
     }
     return MetadataRegistry.update(metadata) || MetadataRegistry.add(metadata)
   }
-  const remove = () => MetadataRegistry.remove(metadata)
+
   return { setConfiguration, getConfiguration, remove, getValue, setValue }
 }
 
@@ -197,7 +210,7 @@ function create_helper_item(
   let helperItem = get_helper_item(of, type, name)
   if (!helperItem) {
     tags.push(HELPER_ITEM_TAG)
-    helperItem = items.addItem(
+    helperItem = items.createItem(
       `Core_HelperItem${Math.floor(Math.random() * 1000000000)}_Of_${of.name}`,
       item_type,
       category,
@@ -350,7 +363,7 @@ function remove_invalid_helper_items() {
         } catch {
           console.log(
             'remove_invalid_helper_items',
-            `Remove invalid metadata of item ${item.name}: ${name} [${type}] is no valid helper item.`
+            `Remove invalid metadata of item ${item.name}: [${type} => ${name6}] is no valid helper item.`
           )
           metadata(item).setConfiguration('helper-items', type, name, undefined)
         }

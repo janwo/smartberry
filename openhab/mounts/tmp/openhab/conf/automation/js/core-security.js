@@ -119,7 +119,7 @@ function scriptLoaded() {
           )
           return pointsList.concat(newPoints)
         }, [])
-        .filter((point) => [OPEN, ON].some((state) => state == point.state))
+        .filter((point) => ['OPEN', 'ON'].some((state) => state == point.state))
 
       metadata('Core_Security_OperationState').setConfiguration(
         'security',
