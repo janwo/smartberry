@@ -123,17 +123,25 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
   const metadata =
     MetadataRegistry.get(metadataKey) || new Metadata(metadataKey, null, {})
 
+  const remove = () => {
+    return MetadataRegistry.remove(metadata)
+  }
+
   const getValue = () => {
     return metadata.getValue()
   }
 
   const setValue = (value) => {
-    metadata.value = value
-    return MetadataRegistry.update(metadata) || MetadataRegistry.add(metadata)
-  }
+    const newMetadata = new Metadata(
+      metadataKey,
+      value,
+      metadata.getConfiguration()
+    )
+    console.log(newMetadata)
 
-  const remove = () => {
-    return MetadataRegistry.remove(metadata)
+    //return (
+    //  MetadataRegistry.update(newMetadata) || MetadataRegistry.add(newMetadata)
+    //)
   }
 
   const getConfiguration = (...args) => {
@@ -145,27 +153,33 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
   }
 
   const setConfiguration = (...args) => {
+    let configuration = getConfiguration() || {}
     switch (args.length) {
       case 0:
-        metadata.configuration = {}
+        configuration = {}
         break
 
       case 1:
-        metadata.configuration = args[0]
+        configuration = args[0]
         break
 
       default:
-        metadata.configuration = set(
-          getConfiguration() || {},
+        configuration = set(
+          configuration,
           args.slice(0, -1),
           args[args.length - 1]
         )
 
         if (args[args.length - 1] === undefined) {
-          unset(metadata.configuration, args.slice(0, -1))
+          unset(configuration, args.slice(0, -1))
         }
     }
-    return MetadataRegistry.update(metadata) || MetadataRegistry.add(metadata)
+
+    const newMetadata = new Metadata(metadataKey, getValue(), configuration)
+    console.log(newMetadata)
+    //return (
+    //  MetadataRegistry.update(newMetadata) || MetadataRegistry.add(newMetadata)
+    //)
   }
 
   return { setConfiguration, getConfiguration, remove, getValue, setValue }
