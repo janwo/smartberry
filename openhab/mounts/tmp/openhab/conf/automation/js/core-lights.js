@@ -1,5 +1,5 @@
 const { rules, items, triggers, time } = require('openhab')
-const { uniq } = require('lodash')
+const { uniq, uniqBy } = require('lodash')
 const {
   metadata,
   get_all_semantic_items,
@@ -155,8 +155,8 @@ function is_elapsed(item) {
   return false
 }
 
-function turn_on_switchable_point(point, force = false) {
-  if (!is_on(point.state) || force) {
+function turn_on_switchable_point(point) {
+  if (!is_on(point.state)) {
     point.sendCommand('ON')
     point.postUpdate('ON')
   } else {
@@ -164,8 +164,8 @@ function turn_on_switchable_point(point, force = false) {
   }
 }
 
-function turn_off_switchable_point(point, force = false) {
-  if (is_on(point.state) || force) {
+function turn_off_switchable_point(point) {
+  if (is_on(point.state)) {
     point.sendCommand('OFF')
     point.postUpdate('OFF')
   } else {
@@ -191,8 +191,9 @@ function scriptLoaded() {
       )
 
       // Get locations
-      const locations = uniq(
-        members.map((l) => get_location(l)).filter((l) => l)
+      const locations = uniqBy(
+        members.map((l) => get_location(l)).filter((l) => l),
+        (l) => l.name
       )
 
       // Create helper items for each location
@@ -486,9 +487,9 @@ function scriptLoaded() {
             )
           )
           .map((mode) => get_location(mode))
+          .filter((r) => r && is_elapsed(r))
+          .map((r) => r.name)
       )
-        .filter((r) => r && is_elapsed(r))
-        .map((r) => r.name)
 
       for (const point of get_all_semantic_items(
         LIGHTS_EQUIPMENT_TAGS,
@@ -509,10 +510,12 @@ function scriptLoaded() {
     triggers: [triggers.GenericCronTrigger('0 0/5 0 ? * * *')],
     execute: (event) => {
       const lightModeGroup = get_light_mode_group()
-      const simulateLocations = uniq(
+      const simulateLocations = uniqBy(
         lightModeGroup.members
           .filter((mode) => mode.state == LightMode.SIMULATE)
           .map((mode) => get_location(mode))
+          .filter((l) => l),
+        (l) => l.name
       )
 
       for (const point of get_all_semantic_items(
