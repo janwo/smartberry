@@ -41,14 +41,13 @@ function scriptLoaded() {
         return
       }
 
-      const defaultSceneMapping = {}
-      defaultSceneMapping[PresenceState.HOME] = DefaultSceneState.HOME
-      defaultSceneMapping[PresenceState.AWAY_SHORT] =
-        DefaultSceneState.AWAY_SHORT
-      defaultSceneMapping[PresenceState.AWAY_LONG] = DefaultSceneState.AWAY_LONG
+      const map = {}
+      map[`state-${PresenceState.HOME}`] = DefaultSceneState.HOME
+      map[`state-${PresenceState.AWAY_SHORT}`] = DefaultSceneState.AWAY_SHORT
+      map[`state-${PresenceState.AWAY_LONG}`] = DefaultSceneState.AWAY_LONG
 
       const presence = get_presence()
-      scene.postUpdate(defaultSceneMapping[presence].toFixed(1))
+      scene.postUpdate(map[`state-${presence}`].toFixed(1))
     }
   })
 
