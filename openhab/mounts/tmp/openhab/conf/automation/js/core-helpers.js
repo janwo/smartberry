@@ -131,25 +131,37 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
     return metadata.getValue()
   }
 
-  const setValue = (value) => {
-    const newMetadata = new Metadata(
-      metadataKey,
-      value,
-      metadata.getConfiguration()
-    )
-    console.log(newMetadata)
-
-    //return (
-    //  MetadataRegistry.update(newMetadata) || MetadataRegistry.add(newMetadata)
-    //)
-  }
-
   const getConfiguration = (...args) => {
-    const configuration = metadata.getConfiguration()
+    const copy = (obj) => {
+      if (!obj) {
+        return obj
+      }
+
+      let objCopy = Array.isArray(obj) ? [] : {}
+      for (let k in obj) {
+        const value = obj[k]
+        objCopy[k] = typeof value === 'object' ? copy(value) : value
+      }
+      return objCopy
+    }
+
+    const configuration = copy(metadata.getConfiguration())
     if (args.length == 0) {
       return isEmpty(configuration) ? undefined : configuration
     }
     return get(configuration, args)
+  }
+
+  const setValue = (value) => {
+    const newMetadata = new Metadata(
+      metadataKey,
+      value,
+      getConfiguration() || {}
+    )
+
+    return (
+      MetadataRegistry.update(newMetadata) || MetadataRegistry.add(newMetadata)
+    )
   }
 
   const setConfiguration = (...args) => {
@@ -176,10 +188,9 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
     }
 
     const newMetadata = new Metadata(metadataKey, getValue(), configuration)
-    console.log(newMetadata)
-    //return (
-    //  MetadataRegistry.update(newMetadata) || MetadataRegistry.add(newMetadata)
-    //)
+    return (
+      MetadataRegistry.update(newMetadata) || MetadataRegistry.add(newMetadata)
+    )
   }
 
   return { setConfiguration, getConfiguration, remove, getValue, setValue }
