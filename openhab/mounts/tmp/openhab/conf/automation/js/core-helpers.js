@@ -136,10 +136,10 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
       if (!obj) {
         return obj
       }
-
-      let objCopy = Array.isArray(obj) ? [] : {}
+      var value
+      var objCopy = Array.isArray(obj) ? [] : {}
       for (let k in obj) {
-        const value = obj[k]
+        value = obj[k]
         objCopy[k] = typeof value === 'object' ? copy(value) : value
       }
       return objCopy
@@ -235,7 +235,7 @@ function create_helper_item(
   let helperItem = get_helper_item(of, type, name)
   if (!helperItem) {
     tags.push(HELPER_ITEM_TAG)
-    helperItem = items.createItem(
+    helperItem = items.addItem(
       `Core_HelperItem${Math.floor(Math.random() * 1000000000)}_Of_${of.name}`,
       item_type,
       category,
