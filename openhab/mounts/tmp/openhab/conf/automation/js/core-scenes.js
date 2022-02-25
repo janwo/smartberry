@@ -5,12 +5,15 @@ const {
   create_helper_item,
   get_all_semantic_items,
   get_items_of_any_tags,
+  get_item_of_helper_item,
   DATETIME_FORMAT,
   sync_group_with_semantic_items,
   get_childs_with_condition,
   get_location,
   has_same_location
 } = require(__dirname + '/core-helpers')
+const { LIGHTS_EQUIPMENT_TAGS, LIGHTS_POINT_TAGS } = require(__dirname +
+  '/core-lights')
 
 const SCENE_TAGS = ['CoreScene']
 const SCENE_TRIGGER_TAGS = ['CoreSceneTrigger']
@@ -49,7 +52,7 @@ function get_scene_states(scene) {
       label !== undefined &&
       label.length > 0
     ) {
-      obj[command] = label
+      obj[label] = command
     }
     return obj
   }, {})
@@ -110,15 +113,21 @@ function get_scene_item_states(scene) {
 }
 
 function save_scene_item_states(scene, sceneState) {
-  const items = get_scene_items(scene)
+  const sceneItems = get_scene_items(scene)
   sceneState = sceneState || get_default_scene_state(scene)
 
   if (sceneState !== undefined) {
-    for (let item in items) {
-      items[item] = items.getItem(item)?.state
+    const sceneItemStates = {}
+    for (const item of sceneItems) {
+      sceneItemStates[item.name] = item.state
     }
 
-    metadata(scene).setConfiguration('scenes', 'states', sceneState, items)
+    metadata(scene).setConfiguration(
+      'scenes',
+      'states',
+      sceneState,
+      sceneItemStates
+    )
   }
 }
 
@@ -231,8 +240,8 @@ function scriptLoaded() {
             SCENE_TRIGGER_TAGS
           )
 
-          if (stateTrigger.getLabel() != stateTriggerLabel) {
-            stateTrigger.setLabel(stateTriggerLabel)
+          if (stateTrigger.label != stateTriggerLabel) {
+            stateTrigger.rawItem.setLabel(stateTriggerLabel)
           }
 
           metadata(stateTrigger).setConfiguration('scenes', 'trigger-state', {
@@ -257,6 +266,17 @@ function scriptLoaded() {
               subtitle: `=items.${stateTrigger.name}.displayState`
             })
           }
+        }
+
+        const stateDescription = metadata(
+          sceneMember,
+          'stateDescription'
+        ).getConfiguration('options')
+        if (stateDescription) {
+          metadata(helper, 'stateDescription').setConfiguration({
+            options: stateDescription,
+            pattern: '%d'
+          })
         }
 
         // Sync (Remove) switches for each scene state
@@ -315,7 +335,7 @@ function scriptLoaded() {
     execute: (event) => {
       const sceneTrigger = items.getItem(event.itemName)
       const scene = get_item_of_helper_item(sceneTrigger)
-      save_scene_item_states(scene, event.itemState)
+      save_scene_item_states(scene, sceneTrigger.state)
     }
   })
 
@@ -393,5 +413,7 @@ module.exports = {
   get_scene_item_states,
   save_scene_item_states,
   trigger_scene_items,
-  apply_context
+  apply_context,
+  SCENE_TAGS,
+  SCENE_TRIGGER_TAGS
 }

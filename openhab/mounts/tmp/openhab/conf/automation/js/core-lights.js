@@ -243,7 +243,7 @@ function scriptLoaded() {
           )
 
           if (!helperItem.groupNames.includes(helperGroupItem.name)) {
-            helperItem.addGroupName(helperGroupItem.name)
+            helperItem.addGroups(helperGroupItem)
           }
 
           metadata(helperItem, 'stateDescription').setConfiguration({
@@ -552,5 +552,9 @@ module.exports = {
   turn_on_switchable_point,
   turn_off_switchable_point,
   LightMode,
-  AmbientLightCondition
+  AmbientLightCondition,
+  LIGHTS_EQUIPMENT_TAGS,
+  LIGHTS_POINT_TAGS,
+  LIGHT_MEASUREMENT_POINT_TAGS,
+  LIGHT_MEASUREMENT_ASTRO_SUNPHASE
 }

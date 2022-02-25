@@ -12,7 +12,7 @@ const PresenceState = {
   AWAY_LONG: 2
 }
 
-const POINT_TAGS = ['Presence']
+const PRESENCE_POINT_TAGS = ['Presence']
 
 function get_presence_provider_item(item) {
   if (!item) {
@@ -116,7 +116,7 @@ function scriptLoaded() {
       sync_group_with_semantic_items(
         'gCore_Presence_PresenceTrigger',
         undefined,
-        POINT_TAGS
+        PRESENCE_POINT_TAGS
       )
     }
   })
@@ -176,5 +176,6 @@ module.exports = {
   get_presence,
   trigger_presence,
   trigger_absence,
-  PresenceState
+  PresenceState,
+  PRESENCE_POINT_TAGS
 }

@@ -28,7 +28,6 @@ const BroadcastNotificationMode = {
 
 const METADATA_NAMESPACE = 'core'
 const HELPER_ITEM_TAG = 'CoreHelperItem'
-
 const DATETIME_FORMAT = time.DateTimeFormatter.ofPattern(
   "yyyy-MM-dd'T'HH:mm:ss.SSS[xxxx][xxxxx]"
 )
@@ -203,9 +202,8 @@ function get_helper_item(of, type, name) {
       type,
       name
     )
-    if (helperItemName) {
-      return items.getItem(helperItemName)
-    }
+
+    return helperItemName ? items.getItem(helperItemName) : undefined
   } catch {
     return undefined
   }
@@ -388,7 +386,7 @@ function remove_invalid_helper_items() {
         } catch {
           console.log(
             'remove_invalid_helper_items',
-            `Remove invalid metadata of item ${item.name}: [${type} => ${name6}] is no valid helper item.`
+            `Remove invalid metadata of item ${item.name}: [${type} => ${name}] is no valid helper item.`
           )
           metadata(item).setConfiguration('helper-items', type, name, undefined)
         }
@@ -438,5 +436,7 @@ module.exports = {
   broadcast,
   BroadcastType,
   BroadcastNotificationMode,
-  DATETIME_FORMAT
+  DATETIME_FORMAT,
+  METADATA_NAMESPACE,
+  HELPER_ITEM_TAG
 }

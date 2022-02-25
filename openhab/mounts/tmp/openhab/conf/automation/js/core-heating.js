@@ -140,5 +140,10 @@ function scriptLoaded() {
 }
 
 module.exports = {
-  HeatingState
+  HeatingState,
+  OPEN_CONTACT_EQUIPMENT_TAGS,
+  OPEN_CONTACT_POINT_TAGS,
+  HEATING_EQUIPMENT_TAGS,
+  HEATING_POINT_TAGS,
+  TEMPERATURE_MEASUREMENT_POINT_TAGS
 }
