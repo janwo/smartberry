@@ -243,7 +243,7 @@ function scriptLoaded() {
           )
 
           if (!helperItem.groupNames.includes(helperGroupItem.name)) {
-            helperItem.addGroupName(helperGroupItem.name)
+            helperItem.addGroups(helperGroupItem)
           }
 
           metadata(helperItem, 'stateDescription').setConfiguration({

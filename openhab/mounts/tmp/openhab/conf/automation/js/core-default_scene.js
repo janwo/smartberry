@@ -17,7 +17,8 @@ function scriptLoaded() {
     tags: ['core', 'core-default_scene'],
     triggers: [triggers.ItemStateUpdateTrigger('Core_DefaultScene')],
     execute: (event) => {
-      if (event.itemState == DefaultSceneState.SLEEP) {
+      const item = items.getItem(event.itemName)
+      if (item.itemState == DefaultSceneState.SLEEP) {
         for (scene of items.getItem('gCore_Scenes').members) {
           const contexts = ['sleep', 'reset']
           for (context of contexts) {

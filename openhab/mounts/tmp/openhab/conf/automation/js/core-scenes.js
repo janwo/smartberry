@@ -49,7 +49,7 @@ function get_scene_states(scene) {
       label !== undefined &&
       label.length > 0
     ) {
-      obj[command] = label
+      obj[label] = command
     }
     return obj
   }, {})
@@ -231,8 +231,8 @@ function scriptLoaded() {
             SCENE_TRIGGER_TAGS
           )
 
-          if (stateTrigger.getLabel() != stateTriggerLabel) {
-            stateTrigger.setLabel(stateTriggerLabel)
+          if (stateTrigger.label != stateTriggerLabel) {
+            stateTrigger.rawItem.setLabel(stateTriggerLabel)
           }
 
           metadata(stateTrigger).setConfiguration('scenes', 'trigger-state', {
@@ -257,6 +257,17 @@ function scriptLoaded() {
               subtitle: `=items.${stateTrigger.name}.displayState`
             })
           }
+        }
+
+        const stateDescription = metadata(
+          sceneMember,
+          'stateDescription'
+        ).getConfiguration('options')
+        if (stateDescription) {
+          metadata(helper, 'stateDescription').setConfiguration({
+            options: stateDescription,
+            pattern: '%d'
+          })
         }
 
         // Sync (Remove) switches for each scene state
@@ -315,7 +326,7 @@ function scriptLoaded() {
     execute: (event) => {
       const sceneTrigger = items.getItem(event.itemName)
       const scene = get_item_of_helper_item(sceneTrigger)
-      save_scene_item_states(scene, event.itemState)
+      save_scene_item_states(scene, sceneTrigger.state)
     }
   })
 
