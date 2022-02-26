@@ -114,11 +114,8 @@ Presence items can also trigger absence events. To do so, add the desired state 
 
 ```
 presence:
-	absence-states: [optional, states that trigger absence, defaults to empty list]
-		- "OFF"
-	presence-states: [optional, states that trigger presence, defaults to "ON" and "OPEN"]
-		- "ON"
-		- "OPEN"
+	absence-states: "OFF" [optional, states that trigger absence, defaults to empty list]
+	presence-states: "ON, OPEN" [optional, states that trigger presence, defaults to "ON" and "OPEN"]
 ```
 
 #### Scenes 🎬
