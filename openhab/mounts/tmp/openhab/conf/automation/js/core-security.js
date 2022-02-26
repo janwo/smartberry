@@ -124,7 +124,7 @@ function scriptLoaded() {
       metadata('Core_Security_OperationState').setConfiguration(
         'security',
         'blocking-assault-triggers',
-        blockingAssaultTriggers.map((trigger) => trigger.name)
+        blockingAssaultTriggers.map((trigger) => trigger.name).join(',')
       )
 
       if (blockingAssaultTriggers.length > 0) {

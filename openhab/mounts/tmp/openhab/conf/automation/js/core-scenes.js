@@ -59,10 +59,10 @@ function get_scene_states(scene) {
 }
 
 function get_scene_items(scene) {
-  const sceneMembers = metadata(scene).getConfiguration(
-    'scenes',
-    'custom-members'
-  ) || ['default:true']
+  const sceneMembers = metadata(scene)
+    .getConfiguration('scenes', 'custom-members')
+    .split(',')
+    .map((i) => i.trim()) || ['default:true']
 
   const handleMember = (member) => {
     if (member.startsWith('tag:')) {

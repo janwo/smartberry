@@ -71,7 +71,7 @@ function scriptLoaded() {
           'gCore_Lights_BrightMode',
           'gCore_Lights_ObscuredMode',
           'Core_Lights_DefaultDuration'
-        ]
+        ].join(',')
       )
     }
   })
