@@ -119,18 +119,23 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
   }
 
   const metadataKey = new MetadataKey(namespace, item)
-  const metadata =
-    MetadataRegistry.get(metadataKey) || new Metadata(metadataKey, null, {})
+  const metadata = MetadataRegistry.get(metadataKey)
 
   const remove = () => {
-    return MetadataRegistry.remove(metadata)
+    if (metadata) {
+      return MetadataRegistry.remove(metadata)
+    }
   }
 
   const getValue = () => {
-    return metadata.getValue()
+    return metadata ? metadata.getValue() : null
   }
 
   const getConfiguration = (...args) => {
+    if (!metadata) {
+      return undefined
+    }
+
     const copy = (obj) => {
       if (!obj) {
         return obj
@@ -154,13 +159,15 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
   const setValue = (value) => {
     const newMetadata = new Metadata(
       metadataKey,
-      value,
+      value === undefined ? null : value,
       getConfiguration() || {}
     )
 
-    return (
-      MetadataRegistry.update(newMetadata) || MetadataRegistry.add(newMetadata)
-    )
+    if (metadata) {
+      MetadataRegistry.update(newMetadata)
+    } else {
+      MetadataRegistry.add(newMetadata)
+    }
   }
 
   const setConfiguration = (...args) => {
@@ -187,9 +194,11 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
     }
 
     const newMetadata = new Metadata(metadataKey, getValue(), configuration)
-    return (
-      MetadataRegistry.update(newMetadata) || MetadataRegistry.add(newMetadata)
-    )
+    if (metadata) {
+      MetadataRegistry.update(newMetadata)
+    } else {
+      MetadataRegistry.add(newMetadata)
+    }
   }
 
   return { setConfiguration, getConfiguration, remove, getValue, setValue }
@@ -359,7 +368,7 @@ function remove_unlinked_helper_items() {
         `Remove invalid helper item ${helper.name}: There is no targeted item set in metadata.`
       )
 
-      items.removeItem(helper.name)
+      items.removeItem(helper)
       continue
     }
 
@@ -370,7 +379,7 @@ function remove_unlinked_helper_items() {
         'remove_unlinked_helper_items',
         `Remove invalid helper item ${helper.name}: The targeted item ${of} does not exist.`
       )
-      items.removeItem(helper.name)
+      items.removeItem(helper)
     }
   }
 }

@@ -107,7 +107,9 @@ function get_scene_item_states(scene) {
   )
 
   return get_scene_items(scene).reduce((obj, newItem) => {
-    obj[newItem.name] = states?.[newItem.name]
+    if (states && states[newItem.name] !== undefined) {
+      obj[newItem.name] = states[newItem.name]
+    }
     return obj
   }, {})
 }
@@ -117,7 +119,7 @@ function save_scene_item_states(scene, sceneState) {
   sceneState = sceneState || get_default_scene_state(scene)
 
   if (sceneState !== undefined) {
-    const sceneItemStates = {}
+    let sceneItemStates = {}
     for (const item of sceneItems) {
       sceneItemStates[item.name] = item.state
     }
@@ -305,7 +307,7 @@ function scriptLoaded() {
               }
             } catch {}
           }
-          items(stateTrigger.name)
+          items.removeItem(stateTrigger)
         }
       }
     }
