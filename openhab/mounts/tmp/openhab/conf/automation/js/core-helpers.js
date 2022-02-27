@@ -360,6 +360,7 @@ function get_childs_with_condition(item, condition = (item) => true) {
 
 function remove_unlinked_helper_items() {
   for (const helper of items.getItemsByTag(HELPER_ITEM_TAG)) {
+    console.log('remove_unlinked_helper_items', 'Check ' + helper.name + '...')
     const of = metadata(helper).getConfiguration('helper-item-of')
 
     if (!of) {
@@ -372,8 +373,17 @@ function remove_unlinked_helper_items() {
       continue
     }
 
+    console.log(
+      'remove_unlinked_helper_items',
+      'Check linked item [' + of + '] of ' + helper.name + '...'
+    )
+
     try {
       items.getItem(of)
+      console.log(
+        'remove_unlinked_helper_items',
+        'Check ' + helper.name + ' successful!'
+      )
     } catch {
       console.log(
         'remove_unlinked_helper_items',
@@ -386,12 +396,25 @@ function remove_unlinked_helper_items() {
 
 function remove_invalid_helper_items() {
   for (const item of items.getItems()) {
+    console.log('remove_invalid_helper_items', 'Check ' + item.name + '...')
     const helperItemTypes = metadata(item).getConfiguration('helper-items')
     for (const type in helperItemTypes) {
+      console.log(
+        'remove_invalid_helper_items',
+        'Check ' + item.name + ' [' + type + ']...'
+      )
       const itemNames = helperItemTypes[type]
       for (const name in itemNames) {
+        console.log(
+          'remove_invalid_helper_items',
+          'Check ' + item.name + ' [' + type + ' => ' + name + ']...'
+        )
         try {
           items.getItem(itemNames[name])
+          console.log(
+            'remove_invalid_helper_items',
+            'Check ' + item.name + ' [' + type + ' => ' + name + '] successful!'
+          )
         } catch {
           console.log(
             'remove_invalid_helper_items',
