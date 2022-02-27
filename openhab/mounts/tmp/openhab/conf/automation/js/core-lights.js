@@ -197,7 +197,7 @@ function scriptLoaded() {
       )
 
       // Create helper items for each location
-      const items = [
+      const helperItems = [
         {
           suffix: 'dark',
           label: (label) => `Lichtmodus (Dunkel) in ${label}`,
@@ -230,7 +230,7 @@ function scriptLoaded() {
           ['Equipment']
         )
 
-        for (const item of items) {
+        for (const item of helperItems) {
           const helperItem = create_helper_item(
             location,
             'lights',
