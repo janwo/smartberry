@@ -1,7 +1,7 @@
 const { rules, items, triggers } = require('openhab')
 const { apply_context } = require(__dirname + '/core-scenes')
-const { metadata } = require(__dirname + '/core-helpers')
-const { PresenceState, get_presence } = require(__dirname + '/core-presence')
+const { metadata, stringifiedFloat } = require(__dirname + '/core-helpers')
+const { PresenceState } = require(__dirname + '/core-presence')
 
 const DefaultSceneState = {
   HOME: 0,
@@ -18,10 +18,10 @@ function scriptLoaded() {
     triggers: [triggers.ItemStateUpdateTrigger('Core_DefaultScene')],
     execute: (event) => {
       const item = items.getItem(event.itemName)
-      if (item.itemState == DefaultSceneState.SLEEP) {
-        for (scene of items.getItem('gCore_Scenes').members) {
+      if (item.state == DefaultSceneState.SLEEP) {
+        for (const scene of items.getItem('gCore_Scenes').members) {
           const contexts = ['sleep', 'reset']
-          for (context of contexts) {
+          for (const context of contexts) {
             if (apply_context(scene, context)) {
               break
             }
@@ -43,12 +43,12 @@ function scriptLoaded() {
       }
 
       const map = {}
-      map[`state-${PresenceState.HOME}`] = DefaultSceneState.HOME
-      map[`state-${PresenceState.AWAY_SHORT}`] = DefaultSceneState.AWAY_SHORT
-      map[`state-${PresenceState.AWAY_LONG}`] = DefaultSceneState.AWAY_LONG
+      map[PresenceState.HOME] = DefaultSceneState.HOME
+      map[PresenceState.AWAY_SHORT] = DefaultSceneState.AWAY_SHORT
+      map[PresenceState.AWAY_LONG] = DefaultSceneState.AWAY_LONG
 
-      const presence = get_presence()
-      scene.postUpdate(map[`state-${presence}`].toFixed(1))
+      const presence = Number.parseFloat(items.getItem('Core_Presence').state)
+      scene.postUpdate(stringifiedFloat(map[presence]))
     }
   })
 

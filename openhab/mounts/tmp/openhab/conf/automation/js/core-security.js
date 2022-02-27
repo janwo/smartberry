@@ -5,6 +5,7 @@ const {
   sync_group_with_semantic_items,
   broadcast,
   BroadcastType,
+  stringifiedFloat,
   get_location,
   DATETIME_FORMAT,
   has_same_location
@@ -166,7 +167,7 @@ function scriptLoaded() {
       if (blockingAssaultTriggers.length > 0) {
         items
           .getItem('Core_Security_OperationState')
-          .postUpdate(OperationState.OFF.toFixed(1))
+          .postUpdate(stringifiedFloat(OperationState.OFF))
         broadcast(
           `${', '.join(
             blockingAssaultTriggers.map((trigger) => trigger.label)
@@ -188,7 +189,7 @@ function scriptLoaded() {
       if (['ON', 'OPEN'].some((state) => state == item.state)) {
         items
           .getItem('Core_Security_OperationState')
-          .postUpdate(OperationState.OFF.toFixed(1))
+          .postUpdate(stringifiedFloat(OperationState.OFF))
       }
     }
   })

@@ -2,6 +2,7 @@ const { rules, items, triggers, time } = require('openhab')
 const {
   metadata,
   DATETIME_FORMAT,
+  stringifiedFloat,
   sync_group_with_semantic_items,
   get_location
 } = require(__dirname + '/core-helpers')
@@ -91,14 +92,14 @@ function trigger_presence(item) {
   }
 
   if (presenceProvider.state != PresenceState.HOME) {
-    presenceProvider.postUpdate(PresenceState.HOME.toFixed(1))
+    presenceProvider.postUpdate(stringifiedFloat(PresenceState.HOME))
   }
 }
 
 function trigger_absence() {
   if (get_presence() == PresenceState.HOME) {
     const presenceProvider = items.getItem('Core_Presence')
-    presenceProvider.postUpdate(PresenceState.AWAY_SHORT.toFixed(1))
+    presenceProvider.postUpdate(stringifiedFloat(PresenceState.AWAY_SHORT))
   }
 }
 
@@ -168,7 +169,7 @@ function scriptLoaded() {
 
       // Update presence state, if it changed.
       if (presence != presenceManagement.state) {
-        presenceManagement.postUpdate(presence.toFixed(1))
+        presenceManagement.postUpdate(stringifiedFloat(presence))
       }
     }
   })

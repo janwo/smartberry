@@ -168,7 +168,7 @@ function apply_context(scene, context) {
   if (
     Object.values(sceneStates).some((sceneState) => sceneState == contextState)
   ) {
-    scene.postUpdate(contextState)
+    scene.postUpdate(stringifiedFloat(contextState))
     return true
   }
   return false
@@ -412,7 +412,7 @@ function scriptLoaded() {
           return
         }
 
-        scene.postUpdate(triggerInfo['to'])
+        scene.postUpdate(stringifiedFloat(triggerInfo['to']))
       }
     }
   })
