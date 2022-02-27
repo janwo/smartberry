@@ -373,17 +373,8 @@ function remove_unlinked_helper_items() {
       continue
     }
 
-    console.log(
-      'remove_unlinked_helper_items',
-      'Check linked item [' + of + '] of ' + helper.name + '...'
-    )
-
     try {
       items.getItem(of)
-      console.log(
-        'remove_unlinked_helper_items',
-        'Check ' + helper.name + ' successful!'
-      )
     } catch {
       console.log(
         'remove_unlinked_helper_items',
@@ -399,22 +390,10 @@ function remove_invalid_helper_items() {
     console.log('remove_invalid_helper_items', 'Check ' + item.name + '...')
     const helperItemTypes = metadata(item).getConfiguration('helper-items')
     for (const type in helperItemTypes) {
-      console.log(
-        'remove_invalid_helper_items',
-        'Check ' + item.name + ' [' + type + ']...'
-      )
       const itemNames = helperItemTypes[type]
       for (const name in itemNames) {
-        console.log(
-          'remove_invalid_helper_items',
-          'Check ' + item.name + ' [' + type + ' => ' + name + ']...'
-        )
         try {
           items.getItem(itemNames[name])
-          console.log(
-            'remove_invalid_helper_items',
-            'Check ' + item.name + ' [' + type + ' => ' + name + '] successful!'
-          )
         } catch {
           console.log(
             'remove_invalid_helper_items',
