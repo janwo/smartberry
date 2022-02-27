@@ -61,7 +61,7 @@ function get_scene_states(scene) {
 function get_scene_items(scene) {
   const sceneMembers = metadata(scene)
     .getConfiguration('scenes', 'custom-members')
-    .split(',')
+    ?.split(',')
     .map((i) => i.trim()) || ['default:true']
 
   const handleMember = (member) => {
@@ -95,7 +95,10 @@ function get_scene_items(scene) {
 }
 
 function get_scene_item_states(scene) {
-  const sceneState = get_default_scene_state(scene)
+  let sceneState = Number.parseFloat(scene.state)
+  sceneState = Number.isNaN(sceneState)
+    ? get_default_scene_state(scene)
+    : sceneState
   if (sceneState === undefined) {
     return []
   }
@@ -135,13 +138,20 @@ function save_scene_item_states(scene, sceneState) {
 
 function trigger_scene_items(scene, pokeOnly = false) {
   const itemStates = get_scene_item_states(scene)
-  for (let item in itemStates) {
-    item = items.getItem(item)
-    if (pokeOnly) {
-      item.postUpdate(item.state)
-    } else {
-      item.postUpdate(itemStates[item.name])
-      item.sendCommand(itemStates[item.name])
+  for (const itemName in itemStates) {
+    try {
+      const item = items.getItem(itemName)
+      if (pokeOnly) {
+        item.postUpdate(item.state)
+      } else {
+        item.postUpdate(itemStates[itemName])
+        item.sendCommand(itemStates[itemName])
+      }
+    } catch {
+      console.log(
+        'trigger_scene_items',
+        `Could not set item state: Item ${item} does not exist.`
+      )
     }
   }
 }
@@ -154,7 +164,6 @@ function apply_context(scene, context) {
   )
 
   const sceneStates = get_scene_states(scene)
-  console.log('appy', sceneStates)
   if (
     Object.values(sceneStates).some((sceneState) => sceneState == contextState)
   ) {
