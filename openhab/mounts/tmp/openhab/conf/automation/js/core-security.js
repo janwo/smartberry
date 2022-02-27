@@ -5,6 +5,7 @@ const {
   sync_group_with_semantic_items,
   broadcast,
   BroadcastType,
+  get_location,
   DATETIME_FORMAT,
   has_same_location
 } = require(__dirname + '/core-helpers')
@@ -19,7 +20,10 @@ const ASSAULT_TRIGGER_EQUIPMENT_TAGS = ['Window', 'Door', 'CoreAssaultTrigger']
 const ASSAULT_TRIGGER_POINT_TAGS = ['OpenState', 'Switch']
 const ASSAULT_DISARMER_EQUIPMENT_TAGS = ['CoreAssaultDisarmer']
 const ASSAULT_DISARMER_POINT_TAGS = ['OpenState', 'Switch']
+const ASSAULT_ALARM_EQUIPMENT_TAGS = ['AlarmSystem', 'Siren']
 const ASSAULT_ALARM_POINT_TAGS = ['Alarm']
+const SMOKE_ALARM_EQUIPMENT_TAGS = ['SmokeDetector']
+const SMOKE_ALARM_POINT_TAGS = ['Alarm']
 const LOCK_CLOSURE_EQUIPMENT_TAGS = ['CoreLockClosure']
 const LOCK_CLOSURE_POINT_TAGS = ['OpenState', 'Switch']
 const LOCK_EQUIPMENT_TAGS = ['Lock']
@@ -47,6 +51,13 @@ function scriptLoaded() {
         ASSAULT_TRIGGER_POINT_TAGS
       )
 
+      // Sync group gCore_Security_SmokeTrigger with smoke detector items - it's needed to create triggers on it
+      sync_group_with_semantic_items(
+        'gCore_Security_SmokeTrigger',
+        SMOKE_ALARM_EQUIPMENT_TAGS,
+        SMOKE_ALARM_POINT_TAGS
+      )
+
       // Sync group gCore_Security_AssaultDisarmamer with disarmer items - it's needed to create triggers on it
       sync_group_with_semantic_items(
         'gCore_Security_AssaultDisarmamer',
@@ -64,8 +75,8 @@ function scriptLoaded() {
   })
 
   rules.JSRule({
-    name: 'assault_trigger',
-    description: 'Core (JS) - Core_Security System - Trigger-Management.',
+    name: 'assault_detection',
+    description: 'Core (JS) - Core_Security System - Assault Detection.',
     tags: ['core', 'core-security'],
     triggers: [
       triggers.GroupStateChangeTrigger('gCore_Security_AssaultTrigger')
@@ -85,12 +96,37 @@ function scriptLoaded() {
       let message = `Silent alarm was triggered by ${item.label}!`
       if (is_security_state(OperationState.ON)) {
         message = `Striking alarm was triggered by ${item.label}!`
-        for (const alarm of items.getItemsByTag(...ASSAULT_ALARM_POINT_TAGS)) {
+        for (const alarm of get_all_semantic_items(
+          ASSAULT_ALARM_EQUIPMENT_TAGS,
+          ASSAULT_ALARM_POINT_TAGS
+        )) {
           alarm.sendCommand('ON')
         }
 
         broadcast(message, BroadcastType.ATTENTION)
       }
+    }
+  })
+
+  rules.JSRule({
+    name: 'smoke_detection',
+    description: 'Core (JS) - Core_Security System - Smoke Detection.',
+    tags: ['core', 'core-security'],
+    triggers: [triggers.GroupStateChangeTrigger('gCore_Security_SmokeTrigger')],
+    execute: (event) => {
+      const item = items.getItem(event.itemName)
+      metadata('Core_Security_OperationState').setConfiguration(
+        'security',
+        'last-alarm',
+        time.ZonedDateTime.now().format(DATETIME_FORMAT)
+      )
+
+      const location = get_location(item)
+      let message = `Smoke was detected ${
+        location ? `in ${location.label}` : `by ${item.label}`
+      }!`
+
+      broadcast(message, BroadcastType.ATTENTION)
     }
   })
 
@@ -187,7 +223,10 @@ function scriptLoaded() {
     tags: ['core', 'core-security'],
     triggers: [triggers.ItemStateUpdateTrigger('Core_Security_OperationState')],
     execute: (event) => {
-      for (const alarm of items.getItemsByTag(...ASSAULT_ALARM_POINT_TAGS)) {
+      for (const alarm of get_all_semantic_items(
+        ASSAULT_ALARM_EQUIPMENT_TAGS,
+        ASSAULT_ALARM_POINT_TAGS
+      )) {
         if (alarm.state != 'OFF') {
           alarm.sendCommand('OFF')
         }
@@ -217,7 +256,10 @@ function scriptLoaded() {
         return
       }
 
-      for (const alarm of items.getItemsByTag(...ASSAULT_ALARM_POINT_TAGS)) {
+      for (const alarm of get_all_semantic_items(
+        ASSAULT_ALARM_EQUIPMENT_TAGS,
+        ASSAULT_ALARM_POINT_TAGS
+      )) {
         if (alarm.state != 'OFF') {
           alarm.sendCommand('OFF')
           broadcast(
@@ -237,9 +279,12 @@ module.exports = {
   ASSAULT_TRIGGER_POINT_TAGS,
   ASSAULT_DISARMER_EQUIPMENT_TAGS,
   ASSAULT_DISARMER_POINT_TAGS,
+  ASSAULT_ALARM_EQUIPMENT_TAGS,
   ASSAULT_ALARM_POINT_TAGS,
   LOCK_CLOSURE_EQUIPMENT_TAGS,
   LOCK_CLOSURE_POINT_TAGS,
   LOCK_EQUIPMENT_TAGS,
-  LOCK_POINT_TAGS
+  LOCK_POINT_TAGS,
+  SMOKE_ALARM_EQUIPMENT_TAGS,
+  SMOKE_ALARM_POINT_TAGS
 }

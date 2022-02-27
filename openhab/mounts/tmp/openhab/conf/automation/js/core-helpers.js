@@ -406,7 +406,7 @@ function remove_invalid_helper_items() {
 
 function stringifiedFloat(state) {
   const number = Number.parseFloat(state)
-  if (number !== NaN) {
+  if (!Number.isNaN(number)) {
     return number.toFixed(1)
   }
   return state

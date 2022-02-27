@@ -1,3 +1,4 @@
+Group gCore_Security_SmokeTrigger
 Group gCore_Security_AssaultTrigger
 Group gCore_Security_AssaultDisarmamer
 Group gCore_Security_LockClosureTrigger
