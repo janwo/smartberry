@@ -12,7 +12,7 @@ const PresenceState = {
   AWAY_LONG: 2
 }
 
-const PRESENCE_POINT_TAGS = ['Presence']
+const PRESENCE_POINT_TAGS = [['Measurement', 'Presence']]
 
 function get_presence_provider_item(item) {
   if (!item) {

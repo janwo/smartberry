@@ -98,9 +98,9 @@ heating:
 
 The presence management will automatically adjust the presence state in dependence to the last presence detection events. The following items are scoped.
 
-| Role                  | Needed point tags |
-| :-------------------- | :---------------- |
-| Presence trigger item | `Presence`        |
+| Role                  | Needed point tags                |
+| :-------------------- | :------------------------------- |
+| Presence trigger item | `Presence` **and** `Measurement` |
 
 To adjust the presence management configuration, you can adjust the following presence items.
 

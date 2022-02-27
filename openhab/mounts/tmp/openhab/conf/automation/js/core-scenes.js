@@ -7,6 +7,7 @@ const {
   get_items_of_any_tags,
   get_item_of_helper_item,
   DATETIME_FORMAT,
+  stringifiedFloat,
   sync_group_with_semantic_items,
   get_childs_with_condition,
   get_location,
@@ -106,7 +107,7 @@ function get_scene_item_states(scene) {
   const states = metadata(scene).getConfiguration(
     'scenes',
     'states',
-    sceneState
+    stringifiedFloat(sceneState)
   )
 
   return get_scene_items(scene).reduce((obj, newItem) => {
@@ -130,7 +131,7 @@ function save_scene_item_states(scene, sceneState) {
     metadata(scene).setConfiguration(
       'scenes',
       'states',
-      sceneState,
+      stringifiedFloat(sceneState),
       sceneItemStates
     )
   }
