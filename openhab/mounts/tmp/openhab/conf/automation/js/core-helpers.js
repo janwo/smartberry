@@ -287,7 +287,7 @@ function get_semantic_items(rootItem, equipmentTags, pointTags) {
       for (const pointTag of pointTags) {
         if (Array.isArray(pointTag)) {
           const matchedTags = intersection(item.tags, pointTag)
-          if (pointTags.length == matchedTags.length) {
+          if (pointTag.length == matchedTags.length) {
             return true
           }
         } else if (item.tags.includes(pointTag)) {
