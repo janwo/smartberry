@@ -1,5 +1,5 @@
 const { rules, items, triggers, time } = require('openhab')
-const { uniqBy, merge } = require('lodash')
+const { uniqBy, merge, isEmpty } = require('lodash')
 const {
   metadata,
   create_helper_item,
@@ -300,17 +300,18 @@ function scriptLoaded() {
           )
 
           // Do not remove manual created items that are just tagged wrong as it could be added manually to an existing (important) item.
-          if (!triggerInfo || !triggerInfo['generated']) {
+          if (isEmpty(triggerInfo) || !triggerInfo['generated']) {
             continue
           }
 
-          if (triggerInfo['to'] && triggerInfo['target-scene']) {
+          if (triggerInfo['to'] !== undefined && triggerInfo['target-scene']) {
             try {
               const scene = items.getItem(triggerInfo['target-scene'])
               if (
                 scene &&
                 Object.values(get_scene_states(scene)).some(
-                  (sceneState) => sceneState == triggerInfo['to']
+                  (sceneState) =>
+                    sceneState == Number.parseFloat(triggerInfo['to'])
                 )
               ) {
                 continue
