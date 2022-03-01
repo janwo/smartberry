@@ -9,6 +9,7 @@ const {
   has_same_location,
   stringifiedFloat,
   DATETIME_FORMAT,
+  DATETIME_FORMAT2,
   sync_group_with_semantic_items,
   get_location
 } = require(__dirname + '/core-helpers')
@@ -118,7 +119,7 @@ function set_location_as_activated(switchable) {
     metadata(location).setConfiguration(
       'lights',
       'last-activation',
-      time.ZonedDateTime.now().format(DATETIME_FORMAT)
+      time.ZonedDateTime.now().format(DATETIME_FORMAT2)
     )
   }
 }

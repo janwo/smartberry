@@ -8,6 +8,7 @@ const {
   stringifiedFloat,
   get_location,
   DATETIME_FORMAT,
+  DATETIME_FORMAT2,
   has_same_location
 } = require(__dirname + '/core-helpers')
 
@@ -91,7 +92,7 @@ function scriptLoaded() {
       metadata('Core_Security_OperationState').setConfiguration(
         'security',
         'last-alarm',
-        time.ZonedDateTime.now().format(DATETIME_FORMAT)
+        time.ZonedDateTime.now().format(DATETIME_FORMAT2)
       )
 
       let message = `Silent alarm was triggered by ${item.label}!`
@@ -119,7 +120,7 @@ function scriptLoaded() {
       metadata('Core_Security_OperationState').setConfiguration(
         'security',
         'last-alarm',
-        time.ZonedDateTime.now().format(DATETIME_FORMAT)
+        time.ZonedDateTime.now().format(DATETIME_FORMAT2)
       )
 
       const location = get_location(item)

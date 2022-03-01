@@ -7,6 +7,7 @@ const {
   get_items_of_any_tags,
   get_item_of_helper_item,
   DATETIME_FORMAT,
+  DATETIME_FORMAT2,
   stringifiedFloat,
   sync_group_with_semantic_items,
   get_childs_with_condition,
@@ -334,7 +335,7 @@ function scriptLoaded() {
       metadata(scene).setConfiguration(
         'scenes',
         'last-activation',
-        time.ZonedDateTime.now().format(DATETIME_FORMAT)
+        time.ZonedDateTime.now().format(DATETIME_FORMAT2)
       )
       trigger_scene_items(scene)
     }

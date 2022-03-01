@@ -2,6 +2,7 @@ const { rules, items, triggers, time } = require('openhab')
 const {
   metadata,
   DATETIME_FORMAT,
+  DATETIME_FORMAT2,
   stringifiedFloat,
   sync_group_with_semantic_items,
   get_location
@@ -79,7 +80,7 @@ function trigger_presence(item) {
   metadata(presenceProvider).setConfiguration(
     'presence',
     'last-update',
-    time.ZonedDateTime.now().format(DATETIME_FORMAT)
+    time.ZonedDateTime.now().format(DATETIME_FORMAT2)
   )
 
   if (presenceProvider.name != 'Core_Presence') {
@@ -87,7 +88,7 @@ function trigger_presence(item) {
     metadata(presenceProvider).setConfiguration(
       'presence',
       'last-update',
-      time.ZonedDateTime.now().format(DATETIME_FORMAT)
+      time.ZonedDateTime.now().format(DATETIME_FORMAT2)
     )
   }
 
