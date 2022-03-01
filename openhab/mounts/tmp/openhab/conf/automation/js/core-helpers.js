@@ -29,9 +29,6 @@ const BroadcastNotificationMode = {
 const METADATA_NAMESPACE = 'core'
 const HELPER_ITEM_TAG = 'CoreHelperItem'
 const DATETIME_FORMAT = time.DateTimeFormatter.ofPattern(
-  "yyyy-MM-dd'T'HH:mm:ss.SSS[xxxx][xxxxx]"
-)
-const DATETIME_FORMAT2 = time.DateTimeFormatter.ofPattern(
   "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
 )
 
@@ -451,7 +448,6 @@ module.exports = {
   BroadcastType,
   BroadcastNotificationMode,
   DATETIME_FORMAT,
-  DATETIME_FORMAT2,
   METADATA_NAMESPACE,
   HELPER_ITEM_TAG
 }

@@ -3,7 +3,6 @@ const {
   metadata,
   get_all_semantic_items,
   DATETIME_FORMAT,
-  DATETIME_FORMAT2,
   sync_group_with_semantic_items,
   get_location,
   stringifiedFloat
@@ -88,7 +87,7 @@ function scriptLoaded() {
           metadata(heatingShutdownMinutesItem).setConfiguration(
             'heating',
             'open-contact-since',
-            now.format(DATETIME_FORMAT2)
+            now.format(DATETIME_FORMAT)
           )
           return now
         })()
