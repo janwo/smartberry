@@ -118,97 +118,94 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
     item = item.name
   }
 
-  const metadataKey = new MetadataKey(namespace, item)
-  const metadata = MetadataRegistry.get(metadataKey)
-
-  const remove = () => {
-    if (metadata) {
-      return MetadataRegistry.remove(metadata)
+  const copy = (obj) => {
+    if (!obj) {
+      return obj
     }
+    var value
+    var objCopy = Array.isArray(obj) ? [] : {}
+    for (let k in obj) {
+      value = obj[k]
+      objCopy[k] = typeof value === 'object' ? copy(value) : value
+    }
+    return objCopy
   }
 
-  const getValue = () => {
-    return metadata ? metadata.getValue() : null
-  }
+  return {
+    remove: () => {
+      const key = new MetadataKey(namespace, item)
+      return MetadataRegistry.remove(key)
+    },
+    getValue: () => {
+      const key = new MetadataKey(namespace, item)
+      const meta = MetadataRegistry.get(key)
+      return meta ? null : meta.getValue()
+    },
+    setValue: (value) => {
+      const key = new MetadataKey(namespace, item)
+      const meta = MetadataRegistry.get(key)
+      const newMetadata = new Metadata(
+        key,
+        value === undefined ? null : value,
+        copy(meta.getConfiguration())
+      )
 
-  const getConfiguration = (...args) => {
-    if (!metadata) {
-      return undefined
-    }
+      if (meta) {
+        MetadataRegistry.update(newMetadata)
+      } else {
+        MetadataRegistry.add(newMetadata)
+      }
+    },
+    getConfiguration: (...args) => {
+      const key = new MetadataKey(namespace, item)
+      const meta = MetadataRegistry.get(key)
+      if (!meta) {
+        return undefined
+      }
 
-    const copy = (obj) => {
-      try {
-        if (!obj) {
-          return obj
-        }
-        var value
-        var objCopy = Array.isArray(obj) ? [] : {}
-        for (let k in obj) {
-          value = obj[k]
-          objCopy[k] = typeof value === 'object' ? copy(value) : value
-        }
-        return objCopy
-      } catch (err) {
-        console.log('K:', JSON.stringify(obj))
+      const configuration = copy(meta.getConfiguration())
+      if (args.length == 0) {
+        return isEmpty(configuration) ? undefined : configuration
+      }
+      return get(configuration, args)
+    },
+    setConfiguration: (...args) => {
+      const key = new MetadataKey(namespace, item)
+      const meta = MetadataRegistry.get(key)
+      if (!meta) {
+        return undefined
+      }
 
-        console.log(err)
-        throw new Error()
+      let configuration = copy(meta.getConfiguration())
+      switch (args.length) {
+        case 0:
+          configuration = {}
+          break
+
+        case 1:
+          configuration = args[0]
+          break
+
+        default:
+          configuration = set(
+            configuration,
+            args.slice(0, -1),
+            args[args.length - 1]
+          )
+
+          if (args[args.length - 1] === undefined) {
+            unset(configuration, args.slice(0, -1))
+          }
+      }
+
+      const newMetadata = new Metadata(key, meta.getValue(), configuration)
+      if (meta) {
+        MetadataRegistry.update(newMetadata)
+      } else {
+        MetadataRegistry.add(newMetadata)
       }
     }
-
-    const configuration = copy(metadata.getConfiguration())
-    if (args.length == 0) {
-      return isEmpty(configuration) ? undefined : configuration
-    }
-    return get(configuration, args)
   }
-
-  const setValue = (value) => {
-    const newMetadata = new Metadata(
-      metadataKey,
-      value === undefined ? null : value,
-      getConfiguration() || {}
-    )
-
-    if (metadata) {
-      MetadataRegistry.update(newMetadata)
-    } else {
-      MetadataRegistry.add(newMetadata)
-    }
-  }
-
-  const setConfiguration = (...args) => {
-    let configuration = getConfiguration() || {}
-    switch (args.length) {
-      case 0:
-        configuration = {}
-        break
-
-      case 1:
-        configuration = args[0]
-        break
-
-      default:
-        configuration = set(
-          configuration,
-          args.slice(0, -1),
-          args[args.length - 1]
-        )
-
-        if (args[args.length - 1] === undefined) {
-          unset(configuration, args.slice(0, -1))
-        }
-    }
-
-    const newMetadata = new Metadata(metadataKey, getValue(), configuration)
-    if (metadata) {
-      MetadataRegistry.update(newMetadata)
-    } else {
-      MetadataRegistry.add(newMetadata)
-    }
-  }
-
-  return { setConfiguration, getConfiguration, remove, getValue, setValue }
 }
 
 function get_helper_item(of, type, name) {
