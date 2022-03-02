@@ -399,7 +399,7 @@ function remove_invalid_helper_items() {
         } catch {
           console.log(
             'remove_invalid_helper_items',
-            `Remove invalid metadata of item ${item.name}: [${type} => ${name}] is no valid helper item.`
+            `Remove invalid metadata of item ${item.name}: [${type} => ${itemNames[name]}] is no valid helper item.`
           )
           metadata(item).setConfiguration('helper-items', type, name, undefined)
         }
