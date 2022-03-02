@@ -137,16 +137,23 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
     }
 
     const copy = (obj) => {
-      if (!obj) {
-        return obj
+      try {
+        if (!obj) {
+          return obj
+        }
+        var value
+        var objCopy = Array.isArray(obj) ? [] : {}
+        for (let k in obj) {
+          value = obj[k]
+          objCopy[k] = typeof value === 'object' ? copy(value) : value
+        }
+        return objCopy
+      } catch (err) {
+        console.log('K:', JSON.stringify(obj))
+
+        console.log(err)
+        throw new Error()
       }
-      var value
-      var objCopy = Array.isArray(obj) ? [] : {}
-      for (let k in obj) {
-        value = obj[k]
-        objCopy[k] = typeof value === 'object' ? copy(value) : value
-      }
-      return objCopy
     }
 
     const configuration = copy(metadata.getConfiguration())
