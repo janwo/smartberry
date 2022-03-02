@@ -147,7 +147,7 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
       const newMetadata = new Metadata(
         key,
         value === undefined ? null : value,
-        copy(meta.getConfiguration())
+        meta ? copy(meta.getConfiguration()) : {}
       )
 
       if (meta) {
@@ -172,11 +172,7 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
     setConfiguration: (...args) => {
       const key = new MetadataKey(namespace, item)
       const meta = MetadataRegistry.get(key)
-      if (!meta) {
-        return undefined
-      }
-
-      let configuration = copy(meta.getConfiguration())
+      let configuration = meta ? copy(meta.getConfiguration()) : {}
       switch (args.length) {
         case 0:
           configuration = {}
@@ -198,7 +194,11 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
           }
       }
 
-      const newMetadata = new Metadata(key, meta.getValue(), configuration)
+      const newMetadata = new Metadata(
+        key,
+        meta ? meta.getValue() : null,
+        configuration
+      )
       if (meta) {
         MetadataRegistry.update(newMetadata)
       } else {
@@ -364,7 +364,6 @@ function get_childs_with_condition(item, condition = (item) => true) {
 
 function remove_unlinked_helper_items() {
   for (const helper of items.getItemsByTag(HELPER_ITEM_TAG)) {
-    console.log('remove_unlinked_helper_items', 'Check ' + helper.name + '...')
     const of = metadata(helper).getConfiguration('helper-item-of')
 
     if (!of) {
@@ -391,7 +390,6 @@ function remove_unlinked_helper_items() {
 
 function remove_invalid_helper_items() {
   for (const item of items.getItems()) {
-    console.log('remove_invalid_helper_items', 'Check ' + item.name + '...')
     const helperItemTypes = metadata(item).getConfiguration('helper-items')
     for (const type in helperItemTypes) {
       const itemNames = helperItemTypes[type]
