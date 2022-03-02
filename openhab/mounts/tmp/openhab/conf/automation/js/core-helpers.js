@@ -164,8 +164,8 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
       }
 
       const configuration = copy(meta.getConfiguration())
-      if (args.length == 0) {
-        return isEmpty(configuration) ? undefined : configuration
+      if (args.length == 0 || isEmpty(configuration)) {
+        return undefined
       }
       return get(configuration, args)
     },
@@ -183,14 +183,14 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
           break
 
         default:
-          configuration = set(
-            configuration,
-            args.slice(0, -1),
-            args[args.length - 1]
-          )
-
           if (args[args.length - 1] === undefined) {
             unset(configuration, args.slice(0, -1))
+          } else {
+            configuration = set(
+              configuration,
+              args.slice(0, -1),
+              args[args.length - 1]
+            )
           }
       }
 
