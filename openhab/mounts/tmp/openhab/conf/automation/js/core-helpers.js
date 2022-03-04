@@ -365,25 +365,23 @@ function get_childs_with_condition(item, condition = (item) => true) {
 function remove_unlinked_helper_items() {
   for (const helper of items.getItemsByTag(HELPER_ITEM_TAG)) {
     const of = metadata(helper).getConfiguration('helper-item-of')
+    let remove = undefined
 
-    if (!of) {
-      console.log(
-        'remove_unlinked_helper_items',
-        `Remove invalid helper item ${helper.name}: There is no targeted item set in metadata.`
-      )
-
-      items.removeItem(helper)
-      continue
+    if (of) {
+      try {
+        items.getItem(of)
+      } catch {
+        remove = `Remove invalid helper item ${helper.name}: The targeted item ${of} does not exist.`
+      }
+    } else {
+      remove = `Remove invalid helper item ${helper.name}: There is no targeted item set in metadata.`
     }
 
-    try {
-      items.getItem(of)
-    } catch {
-      console.log(
-        'remove_unlinked_helper_items',
-        `Remove invalid helper item ${helper.name}: The targeted item ${of} does not exist.`
-      )
-      items.removeItem(helper)
+    if (remove) {
+      console.log('remove_unlinked_helper_items', remove)
+      try {
+        items.removeItem(helper.name)
+      } catch {}
     }
   }
 }
@@ -422,7 +420,7 @@ function scriptLoaded() {
     description: 'Core (JS) - Check helper items.',
     tags: ['core', 'core-helpers'],
     triggers: [
-      triggers.GenericCronTrigger('30 0/5 * ? * * *'),
+      triggers.GenericCronTrigger('5 0/5 * ? * * *'),
       triggers.SystemStartlevelTrigger(100)
     ],
     execute: (event) => {
