@@ -369,7 +369,7 @@ function scriptLoaded() {
 
       if (
         !triggerInfo ||
-        (triggerInfo['states']?.split(',') || []).some(
+        !(triggerInfo['states']?.split(',') || [item.state]).some(
           (state) => state == item.state
         )
       ) {
