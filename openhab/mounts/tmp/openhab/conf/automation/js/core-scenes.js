@@ -318,7 +318,9 @@ function scriptLoaded() {
               }
             } catch {}
           }
-          items.removeItem(stateTrigger.name)
+          try {
+            items.removeItem(stateTrigger.name)
+          } catch {}
         }
       }
     }
