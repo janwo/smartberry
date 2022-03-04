@@ -368,54 +368,53 @@ function scriptLoaded() {
       )
 
       if (
-        triggerInfo['states'] &&
-        !triggerInfo['states'].some((state) => state == item.state)
+        !triggerInfo ||
+        (triggerInfo['states']?.split(',') || []).some(
+          (state) => state == item.state
+        )
       ) {
         return
       }
 
       if (triggerInfo['to'] && triggerInfo['target-scene']) {
-        let scene
         try {
-          scene = items.getItem(triggerInfo['target-scene'])
-        } catch {
-          return
-        }
+          const scene = items.getItem(triggerInfo['target-scene'])
 
-        if (
-          triggerInfo['from'] &&
-          triggerInfo['from'] != Number.parseFloat(scene.state)
-        ) {
-          return
-        }
+          if (
+            triggerInfo['from'] &&
+            triggerInfo['from'] != Number.parseFloat(scene.state)
+          ) {
+            return
+          }
 
-        const lastActivation = metadata(scene).getConfiguration(
-          'scenes',
-          'last-activation'
-        )
+          const lastActivation = metadata(scene).getConfiguration(
+            'scenes',
+            'last-activation'
+          )
 
-        if (
-          !lastActivation ||
-          (triggerInfo['hours-until-active'] &&
-            time.ZonedDateTime.parse(lastActivation, DATETIME_FORMAT).until(
-              time.ZonedDateTime.now(),
-              time.ChronoUnit.HOURS
-            ) <= triggerInfo['hours-until-active']) ||
-          (triggerInfo['minutes-until-active'] &&
-            time.ZonedDateTime.parse(lastActivation, DATETIME_FORMAT).until(
-              time.ZonedDateTime.now(),
-              time.ChronoUnit.MINUTES
-            ) <= triggerInfo['minutes-until-active']) ||
-          (triggerInfo['seconds-until-active'] &&
-            time.ZonedDateTime.parse(lastActivation, DATETIME_FORMAT).until(
-              time.ZonedDateTime.now(),
-              time.ChronoUnit.HOURS
-            ) <= triggerInfo['seconds-until-active'])
-        ) {
-          return
-        }
+          if (
+            !lastActivation ||
+            (triggerInfo['hours-until-active'] &&
+              time.ZonedDateTime.parse(lastActivation, DATETIME_FORMAT).until(
+                time.ZonedDateTime.now(),
+                time.ChronoUnit.HOURS
+              ) <= triggerInfo['hours-until-active']) ||
+            (triggerInfo['minutes-until-active'] &&
+              time.ZonedDateTime.parse(lastActivation, DATETIME_FORMAT).until(
+                time.ZonedDateTime.now(),
+                time.ChronoUnit.MINUTES
+              ) <= triggerInfo['minutes-until-active']) ||
+            (triggerInfo['seconds-until-active'] &&
+              time.ZonedDateTime.parse(lastActivation, DATETIME_FORMAT).until(
+                time.ZonedDateTime.now(),
+                time.ChronoUnit.HOURS
+              ) <= triggerInfo['seconds-until-active'])
+          ) {
+            return
+          }
 
-        scene.postUpdate(stringifiedFloat(triggerInfo['to']))
+          scene.postUpdate(stringifiedFloat(triggerInfo['to']))
+        } catch {}
       }
     }
   })

@@ -169,9 +169,7 @@ scenes:
 		target-scene: >>sceneItemName<<
 		from: >>initialState<< [optional, only triggers if scene is in that state]
 		to: >>newState<<
-		states:  [optional]
-			- "ON"
-			- "OPEN"
+		states: "ON, OPEN" [optional]
 ```
 
 #### Security 🔒
