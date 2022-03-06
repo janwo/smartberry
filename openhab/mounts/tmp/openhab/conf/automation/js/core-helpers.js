@@ -147,7 +147,7 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
       const newMetadata = new Metadata(
         key,
         value === undefined ? null : value,
-        meta ? copy(meta.getConfiguration()) : {}
+        meta ? copy(meta.configuration) : {}
       )
 
       if (meta) {
@@ -163,7 +163,7 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
         return undefined
       }
 
-      const configuration = copy(meta.getConfiguration())
+      const configuration = copy(meta.configuration)
       if (args.length == 0 || isEmpty(configuration)) {
         return undefined
       }
@@ -172,7 +172,7 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
     setConfiguration: (...args) => {
       const key = new MetadataKey(namespace, item)
       const meta = MetadataRegistry.get(key)
-      let configuration = meta ? copy(meta.getConfiguration()) : {}
+      let configuration = meta ? copy(meta.configuration) : {}
       switch (args.length) {
         case 0:
           configuration = {}
