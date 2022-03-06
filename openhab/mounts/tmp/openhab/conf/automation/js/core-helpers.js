@@ -118,7 +118,7 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
     item = item.name
   }
 
-  const copy = (obj) => {
+  function copy(obj) {
     if (!obj) {
       return obj
     }
