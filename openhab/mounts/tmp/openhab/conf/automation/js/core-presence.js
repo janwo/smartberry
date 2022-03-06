@@ -76,7 +76,7 @@ function get_presence(item) {
 
 function trigger_presence(item) {
   let presenceProvider = get_presence_provider_item(item)
-  console.log('trigger_presence0')
+  console.log('trigger_presence0', presenceProvider.name)
   metadata(presenceProvider).setConfiguration(
     'presence',
     'last-update',
