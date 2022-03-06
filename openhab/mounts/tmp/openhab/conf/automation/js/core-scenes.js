@@ -165,6 +165,7 @@ function apply_context(scene, context) {
   )
 
   const sceneStates = get_scene_states(scene)
+  console.log('apply_context', [scene.name, context, contextState, sceneStates])
   if (
     Object.values(sceneStates).some((sceneState) => sceneState == contextState)
   ) {

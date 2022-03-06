@@ -76,22 +76,30 @@ function get_presence(item) {
 
 function trigger_presence(item) {
   let presenceProvider = get_presence_provider_item(item)
+  console.log('trigger_presence0')
   metadata(presenceProvider).setConfiguration(
     'presence',
     'last-update',
     time.ZonedDateTime.now().format(DATETIME_FORMAT)
   )
+  console.log('trigger_p resence1', presenceProvider.name)
 
   if (presenceProvider.name != 'Core_Presence') {
     presenceProvider = items.getItem('Core_Presence')
+    console.log('trigger_presence2Ä')
+
     metadata(presenceProvider).setConfiguration(
       'presence',
       'last-update',
       time.ZonedDateTime.now().format(DATETIME_FORMAT)
     )
   }
+  console.log('trigger_presence3')
 
   if (presenceProvider.state != PresenceState.HOME) {
+    console.log('trigger_presence4')
+    console.log('trigger_presence4', stringifiedFloat(PresenceState.HOME))
+
     presenceProvider.postUpdate(stringifiedFloat(PresenceState.HOME))
   }
 }
