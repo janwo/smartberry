@@ -40,9 +40,9 @@ services:
       OPENHAB_UUID:
       OPENHAB_SECRET:
 
-  persistence:
+  openhab-helper:
     build:
-      context: ./persistence
+      context: ./openhab-helper
     networks:
       - smartberry
     restart: unless-stopped
