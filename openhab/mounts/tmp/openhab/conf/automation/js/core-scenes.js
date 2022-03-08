@@ -158,27 +158,16 @@ function trigger_scene_items(scene, pokeOnly = false) {
 }
 
 function apply_context(scene, context) {
-  console.log('apply_context - 0', [scene.name, context])
-
   const contextState = metadata(scene).getConfiguration(
     'scenes',
     'context-states',
     context
   )
-  console.log('apply_context - 1', [scene.name, context, contextState])
+
   const sceneStates = get_scene_states(scene)
-  console.log('apply_context - 2', [
-    scene.name,
-    context,
-    contextState,
-    sceneStates
-  ])
   if (
     Object.values(sceneStates).some((sceneState) => sceneState == contextState)
   ) {
-    console.log('apply_context - 3')
-    console.log('apply_context - 4', stringifiedFloat(contextState))
-
     scene.postUpdate(stringifiedFloat(contextState))
     return true
   }

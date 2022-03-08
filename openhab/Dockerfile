@@ -1,7 +1,6 @@
-FROM openhab/openhab:milestone
+FROM openhab/openhab:alpine-milestone
 
-# RUN apk add --no-cache \
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apk add --no-cache \
     rsync \
     curl \
     unzip \

@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@hapi/hapi": "^20.2.1",
+    "lodash": "^4.17.21",
+    "node-json-db": "^1.4.1"
+  },
+  "type": "module"
+}

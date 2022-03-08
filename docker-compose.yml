@@ -3,6 +3,7 @@ volumes:
   openhab-addons:
   openhab-conf:
   openhab-userdata:
+  persistence-data:
 
 networks:
   smartberry:
@@ -37,6 +38,15 @@ services:
       OPENHAB_HOSTKEY:
       OPENHAB_UUID:
       OPENHAB_SECRET:
+
+  persistence:
+    build:
+      context: ./persistence
+    networks:
+      - smartberry
+    restart: unless-stopped
+    volumes:
+      - persistence-data:/home/node/data.json
 
   bluetooth-beacon:
     image: dominikth/rpi-docker-ibeacon:latest
