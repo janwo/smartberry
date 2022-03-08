@@ -1,10 +1,7 @@
-FROM openhab/openhab:alpine-milestone
+FROM openhab/openhab:milestone-alpine
 
 RUN apk add --no-cache \
     rsync \
-    curl \
-    unzip \
-    grep \
     jq \
     coreutils \
     findutils
