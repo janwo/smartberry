@@ -2,9 +2,9 @@ import * as Hapi from '@hapi/hapi'
 import { JsonDB } from 'node-json-db'
 
 const init = async () => {
-  const db = new JsonDB(process.cwd() + '/data.json', true, true, '/')
+  const db = new JsonDB(process.cwd() + '/data/metadata.json', true, true, '/')
   const server = Hapi.server({
-    port: 80,
+    port: 8080,
     host: '0.0.0.0'
   })
 
