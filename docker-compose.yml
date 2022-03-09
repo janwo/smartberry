@@ -3,7 +3,7 @@ volumes:
   openhab-addons:
   openhab-conf:
   openhab-userdata:
-  openhab-helper-data:
+  helper-data:
 
 networks:
   smartberry:
@@ -17,7 +17,6 @@ services:
     volumes:
       - openhab-conf:/samba/openhab-conf
       - openhab-userdata:/samba/openhab-userdata
-      - openhab-helper-data:/samba/openhab-helper-data
     networks:
       - smartberry
     restart: unless-stopped
@@ -48,7 +47,7 @@ services:
       - smartberry
     restart: unless-stopped
     volumes:
-      - openhab-helper-data:/home/node/data/
+      - helper-data:/home/node/data/
 
   bluetooth-beacon:
     image: dominikth/rpi-docker-ibeacon:latest
