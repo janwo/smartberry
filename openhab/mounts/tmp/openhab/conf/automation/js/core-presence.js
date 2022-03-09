@@ -1,5 +1,6 @@
 const { rules, items, triggers, time } = require('openhab')
 const {
+  json_storage,
   metadata,
   DATETIME_FORMAT,
   stringifiedFloat,
@@ -26,7 +27,7 @@ function get_presence_provider_item(item) {
 
 function get_presence(item) {
   const presenceProvider = get_presence_provider_item(item)
-  const lastUpdate = metadata(presenceProvider).getConfiguration(
+  const lastUpdate = json_storage(presenceProvider).get(
     'presence',
     'last-update'
   )
@@ -76,7 +77,7 @@ function get_presence(item) {
 
 function trigger_presence(item) {
   let presenceProvider = get_presence_provider_item(item)
-  metadata(presenceProvider).setConfiguration(
+  json_storage(presenceProvider).set(
     'presence',
     'last-update',
     time.ZonedDateTime.now().format(DATETIME_FORMAT)
@@ -84,7 +85,7 @@ function trigger_presence(item) {
 
   if (presenceProvider.name != 'Core_Presence') {
     presenceProvider = items.getItem('Core_Presence')
-    metadata(presenceProvider).setConfiguration(
+    json_storage(presenceProvider).set(
       'presence',
       'last-update',
       time.ZonedDateTime.now().format(DATETIME_FORMAT)

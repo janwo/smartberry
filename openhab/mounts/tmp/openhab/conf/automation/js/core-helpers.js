@@ -113,6 +113,45 @@ function sync_group_with_semantic_items(group, equipmentTags, pointTags) {
   return targetedGroupItems
 }
 
+function json_storage(item) {
+  if (typeof item != 'string') {
+    item = item.name
+  }
+
+  let urlSegments = [item]
+
+  return {
+    remove: () => {
+      const url = `http://openhab-helper:8080/json-storage/${urlSegments.join(
+        '/'
+      )}`
+      return JSON.parse(actions.HTTP.sendHttpDeleteRequest(url)).success
+    },
+    get: (...args) => {
+      urlSegments = urlSegments.concat(args)
+      const url = `http://openhab-helper:8080/json-storage/${urlSegments.join(
+        '/'
+      )}`
+      return JSON.parse(actions.HTTP.sendHttpGetRequest(url)).data
+    },
+    set: (...args) => {
+      if (args.length > 1) {
+        urlSegments = urlSegments.concat(args.slice(0, -1))
+        const url = `http://openhab-helper:8080/json-storage/${urlSegments.join(
+          '/'
+        )}`
+        return JSON.parse(
+          actions.HTTP.sendHttpPostRequest(
+            url,
+            'application/json',
+            JSON.stringify(args[args.length - 1])
+          )
+        ).success
+      }
+    }
+  }
+}
+
 function metadata(item, namespace = METADATA_NAMESPACE) {
   if (typeof item != 'string') {
     item = item.name
@@ -210,11 +249,7 @@ function metadata(item, namespace = METADATA_NAMESPACE) {
 
 function get_helper_item(of, type, name) {
   try {
-    const helperItemName = metadata(of).getConfiguration(
-      'helper-items',
-      type,
-      name
-    )
+    const helperItemName = json_storage(of).get('helper-items', type, name)
 
     return helperItemName ? items.getItem(helperItemName) : undefined
   } catch {
@@ -224,7 +259,7 @@ function get_helper_item(of, type, name) {
 
 function get_item_of_helper_item(helperItem) {
   try {
-    const itemName = metadata(helperItem).getConfiguration('helper-item-of')
+    const itemName = json_storage(helperItem).get('helper-item-of')
     if (itemName) {
       return items.getItem(itemName)
     }
@@ -255,9 +290,9 @@ function create_helper_item(
       tags
     )
 
-    metadata(helperItem).setConfiguration('helper-item-of', of.name)
+    json_storage(helperItem).set('helper-item-of', of.name)
 
-    metadata(of).setConfiguration('helper-items', type, name, helperItem.name)
+    json_storage(of).set('helper-items', type, name, helperItem.name)
   }
 
   return helperItem
@@ -364,7 +399,7 @@ function get_childs_with_condition(item, condition = (item) => true) {
 
 function remove_unlinked_helper_items() {
   for (const helper of items.getItemsByTag(HELPER_ITEM_TAG)) {
-    const of = metadata(helper).getConfiguration('helper-item-of')
+    const of = json_storage(helper).get('helper-item-of')
     let remove = undefined
 
     if (of) {
@@ -388,7 +423,7 @@ function remove_unlinked_helper_items() {
 
 function remove_invalid_helper_items() {
   for (const item of items.getItems()) {
-    const helperItemTypes = metadata(item).getConfiguration('helper-items')
+    const helperItemTypes = json_storage(item).get('helper-items')
     for (const type in helperItemTypes) {
       const itemNames = helperItemTypes[type]
       for (const name in itemNames) {
@@ -399,7 +434,7 @@ function remove_invalid_helper_items() {
             'remove_invalid_helper_items',
             `Remove invalid metadata of item ${item.name}: [${type} => ${itemNames[name]}] is no valid helper item.`
           )
-          metadata(item).setConfiguration('helper-items', type, name, undefined)
+          json_storage(item).remove('helper-items', type, name)
         }
       }
     }
@@ -444,6 +479,7 @@ module.exports = {
   stringifiedFloat,
   has_same_location,
   get_location,
+  json_storage,
   broadcast,
   BroadcastType,
   BroadcastNotificationMode,

@@ -8,6 +8,7 @@ const {
   get_item_of_helper_item,
   DATETIME_FORMAT,
   stringifiedFloat,
+  json_storage,
   sync_group_with_semantic_items,
   get_childs_with_condition,
   get_location,
@@ -104,7 +105,7 @@ function get_scene_item_states(scene) {
     return []
   }
 
-  const states = metadata(scene).getConfiguration(
+  const states = json_storage(scene).get(
     'scenes',
     'states',
     stringifiedFloat(sceneState)
@@ -128,7 +129,7 @@ function save_scene_item_states(scene, sceneState) {
       sceneItemStates[item.name] = item.state
     }
 
-    metadata(scene).setConfiguration(
+    json_storage(scene).set(
       'scenes',
       'states',
       stringifiedFloat(sceneState),
@@ -333,7 +334,7 @@ function scriptLoaded() {
     triggers: [triggers.GroupStateUpdateTrigger('gCore_Scenes')],
     execute: (event) => {
       const scene = items.getItem(event.itemName)
-      metadata(scene).setConfiguration(
+      json_storage(scene).set(
         'scenes',
         'last-activation',
         time.ZonedDateTime.now().format(DATETIME_FORMAT)
@@ -387,7 +388,7 @@ function scriptLoaded() {
             return
           }
 
-          const lastActivation = metadata(scene).getConfiguration(
+          const lastActivation = json_storage(scene).get(
             'scenes',
             'last-activation'
           )

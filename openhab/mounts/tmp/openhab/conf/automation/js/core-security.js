@@ -1,6 +1,6 @@
 const { rules, items, triggers, time } = require('openhab')
 const {
-  metadata,
+  json_storage,
   get_all_semantic_items,
   sync_group_with_semantic_items,
   broadcast,
@@ -88,7 +88,7 @@ function scriptLoaded() {
       }
 
       const item = items.getItem(event.itemName)
-      metadata('Core_Security_OperationState').setConfiguration(
+      json_storage('Core_Security_OperationState').set(
         'security',
         'last-alarm',
         time.ZonedDateTime.now().format(DATETIME_FORMAT)
@@ -116,7 +116,7 @@ function scriptLoaded() {
     triggers: [triggers.GroupStateChangeTrigger('gCore_Security_SmokeTrigger')],
     execute: (event) => {
       const item = items.getItem(event.itemName)
-      metadata('Core_Security_OperationState').setConfiguration(
+      json_storage('Core_Security_OperationState').set(
         'security',
         'last-alarm',
         time.ZonedDateTime.now().format(DATETIME_FORMAT)
@@ -158,7 +158,7 @@ function scriptLoaded() {
         }, [])
         .filter((point) => ['OPEN', 'ON'].some((state) => state == point.state))
 
-      metadata('Core_Security_OperationState').setConfiguration(
+      json_storage('Core_Security_OperationState').set(
         'security',
         'blocking-assault-triggers',
         blockingAssaultTriggers.map((trigger) => trigger.name).join(',')
@@ -242,9 +242,10 @@ function scriptLoaded() {
     triggers: [triggers.GenericCronTrigger('0 * * ? * * *')],
     execute: (event) => {
       const autoOffTime = items.getItem('Core_Security_SireneAutoOff')
-      const lastAlarmTime = metadata(
-        'Core_Security_OperationState'
-      ).getConfiguration('security', 'last-alarm')
+      const lastAlarmTime = json_storage('Core_Security_OperationState').get(
+        'security',
+        'last-alarm'
+      )
 
       if (
         autoOffTime.state == 0 ||

@@ -8,6 +8,7 @@ const {
   get_childs_with_condition,
   has_same_location,
   stringifiedFloat,
+  json_storage,
   DATETIME_FORMAT,
   sync_group_with_semantic_items,
   get_location
@@ -95,7 +96,7 @@ function set_light_condition(condition, luminance) {
   }
 
   if (luminance !== undefined) {
-    metadata(conditionItem).setConfiguration('lights', 'luminance', luminance)
+    json_storage(conditionItem).set('lights', 'luminance', luminance)
   }
 }
 
@@ -115,7 +116,7 @@ function get_darkest_light_condition(conditions) {
 function set_location_as_activated(switchable) {
   const location = get_location(switchable)
   if (location) {
-    metadata(location).setConfiguration(
+    json_storage(location).set(
       'lights',
       'last-activation',
       time.ZonedDateTime.now().format(DATETIME_FORMAT)
@@ -136,7 +137,7 @@ function is_on(state) {
 function is_elapsed(item) {
   const location = get_location(item)
   if (location) {
-    const lastActivation = metadata(location).getConfiguration(
+    const lastActivation = json_storage(location).get(
       'lights',
       'last-activation'
     )

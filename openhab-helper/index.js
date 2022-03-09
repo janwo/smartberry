@@ -2,7 +2,12 @@ import * as Hapi from '@hapi/hapi'
 import { JsonDB } from 'node-json-db'
 
 const init = async () => {
-  const db = new JsonDB(process.cwd() + '/data/metadata.json', true, true, '/')
+  const db = new JsonDB(
+    process.cwd() + '/data/json-storage.json',
+    true,
+    true,
+    '/'
+  )
   const server = Hapi.server({
     port: 8080,
     host: '0.0.0.0'
@@ -10,7 +15,7 @@ const init = async () => {
 
   server.route({
     method: 'GET',
-    path: '/metadata/{item}/{path*}',
+    path: '/json-storage/{item}/{path*}',
     handler: (request, h) => {
       const path =
         '/' +
@@ -26,7 +31,7 @@ const init = async () => {
 
   server.route({
     method: 'POST',
-    path: '/metadata/{item}/{path*}',
+    path: '/json-storage/{item}/{path*}',
     options: { payload: { allow: 'application/json' } },
     handler: (request, h) => {
       const path =
@@ -43,7 +48,7 @@ const init = async () => {
 
   server.route({
     method: 'DELETE',
-    path: '/metadata/{item}/{path*}',
+    path: '/json-storage/{item}/{path*}',
     handler: (request, h) => {
       const path =
         '/' +

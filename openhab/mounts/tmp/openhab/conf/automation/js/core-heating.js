@@ -1,5 +1,6 @@
 const { rules, items, triggers, time } = require('openhab')
 const {
+  json_storage,
   metadata,
   get_all_semantic_items,
   DATETIME_FORMAT,
@@ -76,15 +77,16 @@ function scriptLoaded() {
 
       if (openContactLocations.length > 0) {
         const openedSinceDate = (() => {
-          const openedSince = metadata(
-            heatingShutdownMinutesItem
-          ).getConfiguration('heating', 'open-contact-since')
+          const openedSince = json_storage(heatingShutdownMinutesItem).get(
+            'heating',
+            'open-contact-since'
+          )
           if (openedSince) {
             return time.ZonedDateTime.parse(openedSince, DATETIME_FORMAT)
           }
 
           const now = time.ZonedDateTime.now()
-          metadata(heatingShutdownMinutesItem).setConfiguration(
+          json_storage(heatingShutdownMinutesItem).set(
             'heating',
             'open-contact-since',
             now.format(DATETIME_FORMAT)
@@ -99,10 +101,9 @@ function scriptLoaded() {
             time.ChronoUnit.MINUTES
           ) > heatingShutdownMinutesItem.state
       } else {
-        metadata(heatingShutdownMinutesItem).setConfiguration(
+        json_storage(heatingShutdownMinutesItem).remove(
           'heating',
-          'open-contact-since',
-          undefined
+          'open-contact-since'
         )
       }
 
