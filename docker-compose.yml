@@ -17,7 +17,7 @@ services:
     volumes:
       - openhab-conf:/samba/openhab-conf
       - openhab-userdata:/samba/openhab-userdata
-      - openhab-helper-data:/samba/ openhab-helper-data
+      - openhab-helper-data:/samba/openhab-helper-data
     networks:
       - smartberry
     restart: unless-stopped
