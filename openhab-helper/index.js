@@ -4,9 +4,9 @@ import * as fs from 'fs'
 
 const init = async () => {
   const dir = process.cwd() + '/data'
-  if (!fs.existsSync(dir)) {
+  /*if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir)
-  }
+  }*/
   const db = new JsonDB(dir + '/metadata.json', true, true, '/')
   const server = Hapi.server({
     port: 8080,

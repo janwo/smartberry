@@ -43,6 +43,7 @@ services:
   openhab-helper:
     build:
       context: ./openhab-helper
+    user: node
     networks:
       - smartberry
     restart: unless-stopped
