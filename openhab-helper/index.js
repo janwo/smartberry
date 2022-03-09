@@ -1,13 +1,8 @@
 import * as Hapi from '@hapi/hapi'
 import { JsonDB } from 'node-json-db'
-import * as fs from 'fs'
 
 const init = async () => {
-  const dir = process.cwd() + '/data'
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir)
-  }
-  const db = new JsonDB(dir + '/metadata.json', true, true, '/')
+  const db = new JsonDB(process.cwd() + '/data/metadata.json', true, true, '/')
   const server = Hapi.server({
     port: 8080,
     host: '0.0.0.0'
