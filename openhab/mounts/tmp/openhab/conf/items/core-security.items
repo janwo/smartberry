@@ -5,7 +5,7 @@ Group gCore_Security_LockClosureTrigger
 
 Group gCore_Security "Sicherheitssystem" (gCore_Home) ["Equipment"] {
   cellWidget="oh-label-cell"[
-    icon="oh:alarm",
+    icon="f7:shield",
     label="\u003ditems.gCore_Security.title",
     title="\u003ditems.gCore_Security.title",
     footer="\u003ditems.gCore_Security.state"
@@ -22,7 +22,7 @@ Number Core_Security_SireneAutoOff "Sirene: Auto-Off (Minuten)" (gCore_Security)
     listWidget="oh-stepper-item"[
         raised="true",
         round="true",
-        icon="oh:light"
+        icon="f7:lightbulb"
     ]
 }
 
@@ -32,11 +32,11 @@ Number Core_Security_OperationState "Angrifferkennung" (gCore_Security) ["Point"
     ],
     cellWidget=""[
         label="\u003ditems.Core_Security_OperationState.title",
-        icon="oh:shield",
+        icon="f7:shield",
         action="options"
     ],
     listWidget=""[
-        icon="oh:shield",
+        icon="f7:shield",
         action="options"
     ]
 }

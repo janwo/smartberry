@@ -4,11 +4,11 @@ Number Core_DefaultScene "Hauptszene" (gCore_Home, gCore_Scenes) ["Status", "Cor
     ],
     cellWidget=""[
         label="\u003ditems.Core_DefaultScene.title",
-        icon="oh:cinema",
+        icon="f7:film",
         action="options"
     ],
     listWidget=""[
-        icon="oh:cinema",
+        icon="f7:film",
         action="options"
     ]
 }

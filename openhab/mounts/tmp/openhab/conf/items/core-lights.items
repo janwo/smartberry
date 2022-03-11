@@ -5,7 +5,7 @@ Group gCore_Lights_ObscuredMode
 
 Group gCore_Lights "Lichtsteuerung" (gCore_Home) ["Equipment"] {
   cellWidget="oh-label-cell"[
-    icon="oh:light",
+    icon="f7:lightbulb",
     label="Label",
     title="\u003ditems.gCore_Lights.title",
     footer="\u003ditems.gCore_Lights.state"
@@ -22,7 +22,7 @@ Number Core_Lights_DefaultDuration "Standard Lichtdauer" (gCore_Lights) ["Point"
     listWidget="oh-stepper-item"[
         raised="true",
         round="true",
-        icon="oh:time"
+        icon="f7:timer"
     ]
 }
 
@@ -42,7 +42,7 @@ Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured "Lichtwert b
     listWidget="oh-stepper-item"[
         raised="true",
         round="true",
-        icon="oh:light"
+        icon="f7:sun_dust"
     ]
 }
 
@@ -56,7 +56,7 @@ Number Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark "Lichtwert bis D
     listWidget="oh-stepper-item"[
         raised="true",
         round="true",
-        icon="oh:light"
+        icon="f7:moon_stars"
     ]
 }
 

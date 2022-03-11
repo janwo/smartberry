@@ -225,13 +225,13 @@ function scriptLoaded() {
           'settings',
           `${sceneMember.label} überschreiben`,
           ['gCore_Scenes_StoreTriggers'],
-          ['Point']
+          []
         )
 
         for (const path of ['listWidget', 'cellWidget']) {
           metadata(helper, path).setConfiguration({
             label: `=items.${sceneMember.name}.title`,
-            icon: 'oh:settings',
+            icon: 'f7:gear_alt',
             action: 'options',
             actionItem: helper.name
           })
@@ -275,7 +275,7 @@ function scriptLoaded() {
           for (const path of ['listWidget', 'cellWidget']) {
             metadata(stateTrigger, path).setConfiguration({
               label: `=items.${stateTrigger.name}.title`,
-              icon: 'oh:party',
+              icon: 'f7:film',
               subtitle: `=items.${stateTrigger.name}.displayState`
             })
           }

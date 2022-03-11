@@ -10,11 +10,11 @@ Number Core_Heating_Thermostat_ModeDefault "Temperaturmodus" (gCore_Heating) ["P
     ],
     cellWidget=""[
         label="\u003ditems.Core_Heating_Thermostat_ModeDefault.title",
-        icon="oh:motion",
+        icon="f7:thermometer",
         action="options"
     ],
     listWidget=""[
-        icon="oh:motion",
+        icon="f7:thermometer",
         action="options"
     ]
 }
@@ -29,7 +29,7 @@ Number Core_Heating_Thermostat_OpenContactShutdownMinutes "Zeit bis alle Heizkö
     listWidget="oh-stepper-item"[
         raised="true",
         round="true",
-        icon="oh:time",
+        icon="f7:timer",
         step="5"
     ]
 }

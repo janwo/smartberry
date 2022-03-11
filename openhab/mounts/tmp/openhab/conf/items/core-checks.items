@@ -1,6 +1,6 @@
 Group gCore_Checks "Überprüfungen" (gCore_Home) ["Equipment"] {
   cellWidget="oh-label-cell"[
-    icon="oh:error",
+    icon="f7:checkmark_seal",
     title="\u003ditems.gCore_Checks.title"
   ]
 }
@@ -8,9 +8,9 @@ Group gCore_Checks "Überprüfungen" (gCore_Home) ["Equipment"] {
 Group gCore_Checks_OfflineThings "Offline-Geräte" (gCore_Checks) ["Point"] {
     cellWidget=""[
         label="\u003ditems.gCore_Checks_OfflineThings.title",
-        icon="oh:lowbattery"
+        icon="f7:battery_0"
     ],
     listWidget=""[
-        icon="oh:lowbattery"
+        icon="f7:battery_0"
     ]
 }

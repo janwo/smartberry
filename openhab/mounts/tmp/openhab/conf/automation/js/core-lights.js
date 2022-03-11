@@ -203,19 +203,19 @@ function scriptLoaded() {
           suffix: 'dark',
           label: (label) => `Lichtmodus (Dunkel) in ${label}`,
           groups: ['gCore_Lights_DarkMode'],
-          icon: 'oh:moon'
+          icon: 'f7:moon'
         },
         {
           suffix: 'bright',
           label: (label) => `Lichtmodus (Hell) in ${label}`,
           groups: ['gCore_Lights_BrightMode'],
-          icon: 'oh:sun'
+          icon: 'f7:sun_max'
         },
         {
           suffix: 'obscured',
           label: (label) => `Lichtmodus (Verdunkelt) in ${label}`,
           groups: ['gCore_Lights_ObscuredMode'],
-          icon: 'oh:blinds'
+          icon: 'f7:sun_dust'
         }
       ]
 
@@ -256,7 +256,7 @@ function scriptLoaded() {
           for (const path of ['listWidget', 'cellWidget']) {
             metadata(helperItem, path).setConfiguration({
               label: `=items.${helperItem.name}.title`,
-              icon: `oh:${item.icon}`,
+              icon: item.icon,
               action: 'options',
               actionItem: helperItem.name,
               subtitle: `=items.${helperItem.name}.displayState`

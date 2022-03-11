@@ -14,7 +14,8 @@
             {
               "component": "oh-label-cell",
               "config": {
-                "icon": "oh:motion",
+                "iconColor": "=(items.Core_Presence.state == 1.0 ? 'black' : 'gray')",
+                "icon": "=(items.Core_Presence.state == 2.0 ? 'f7:airplane' : (items.Core_Presence.state == 1.0 ? 'f7:house' : 'f7:hourglass'))",
                 "title": "Anwesenheit",
                 "item": "Core_Presence",
                 "label": "\u003ditems.Core_Presence.title",
@@ -27,7 +28,7 @@
             {
               "component": "oh-label-cell",
               "config": {
-                "icon": "oh:party",
+                "icon": "=(items.Core_DefaultScene.state == 2.0 ? 'f7:airplane' : (items.Core_DefaultScene.state == 1.0 ? 'f7:hourglass' :  (items.Core_DefaultScene.state == 3.0 ? 'f7:bed_double' : 'f7:house')))",
                 "title": "Hauptszene",
                 "item": "Core_DefaultScene",
                 "label": "\u003ditems.Core_DefaultScene.title",
@@ -40,20 +41,22 @@
             {
               "component": "oh-label-cell",
               "config": {
-                "icon": "oh:alarm",
                 "title": "Angrifferkennung",
                 "item": "Core_Security_OperationState",
                 "label": "\u003ditems.Core_Security_OperationState.title",
                 "action": "options",
                 "actionItem": "Core_Security_OperationState",
                 "stateAsHeader": true,
-                "expandable": false
+                "expandable": false,
+                "icon": "=(items.Core_Security_OperationState.state == 2.0 ? 'f7:shield_lefthalf_fill' : (items.Core_Security_OperationState.state == 1.0 ? 'f7:shield_fill' : 'f7:shield_slash'))",
+                "iconColor": "=(items.Core_Security_OperationState.state == 2.0 ? 'yellow' : (items.Core_Security_OperationState.state == 1.0 ? 'green' : 'gray'))"
               }
             },
             {
               "component": "oh-label-cell",
               "config": {
-                "icon": "oh:heating",
+                "icon": "=(items.Core_Heating_Thermostat_ModeDefault.state == 2.0 ? 'f7:leaf_arrow_circlepath' : (items.Core_Heating_Thermostat_ModeDefault.state == 1.0 ? 'f7:thermometer' :  (items.Core_Heating_Thermostat_ModeDefault.state == 3.0 ? 'f7:thermometer' : 'f7:thermometer_snowflake')))",
+                "iconColor": "=(items.Core_Heating_Thermostat_ModeDefault.state == 2.0 ? 'lightblue' : (items.Core_Heating_Thermostat_ModeDefault.state == 1.0 ? 'yellow' : (items.Core_Heating_Thermostat_ModeDefault.state == 3.0 ? 'red' : 'gray')))",
                 "title": "Klima",
                 "item": "Core_Heating_Thermostat_ModeDefault",
                 "label": "\u003ditems.Core_Heating_Thermostat_ModeDefault.title",
@@ -62,6 +65,19 @@
                 "stateAsHeader": true,
                 "expandable": false,
                 "trendItem": "gCore_Heating_Temperature"
+              }
+            },
+            {
+              "component": "oh-label-cell",
+              "config": {
+                "action": "options",
+                "actionItem": "Core_Lights_AmbientLightCondition",
+                "item": "Core_Lights_AmbientLightCondition",
+                "title": "Lichtwert-Einstufung",
+                "stateAsHeader": true,
+                "expandable": false,
+                "icon": "=(items.Core_Lights_AmbientLightCondition.state == 2.0 ? 'f7:sun_max' : (items.Core_Lights_AmbientLightCondition.state == 1.0 ? 'f7:sun_dust' : 'f7:moon_stars'))",
+                "iconColor": "=(items.Core_Lights_AmbientLightCondition.state == 2.0 ? 'yellow' : (items.Core_Lights_AmbientLightCondition.state == 1.0 ? 'purple' : 'deeppurple'))"
               }
             }
           ]

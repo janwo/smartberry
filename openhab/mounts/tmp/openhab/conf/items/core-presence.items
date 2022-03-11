@@ -8,11 +8,11 @@ Number Core_Presence "Anwesenheit" (gCore_Presence) ["Point"] {
     ],
     cellWidget=""[
         label="\u003ditems.Core_Presence.title",
-        icon="oh:motion",
+        icon="f7:house",
         action="options"
     ],
     listWidget=""[
-        icon="oh:motion",
+        icon="f7:house",
         action="options"
     ]
 }
@@ -27,7 +27,7 @@ Number Core_Presence_HoursUntilAwayShort "Stunden bis kurze Abwesenheit" (gCore_
     listWidget="oh-stepper-item"[
         raised="true",
         round="true",
-        icon="oh:light"
+        icon="f7:lightbulb"
     ]
 }
 
@@ -41,6 +41,6 @@ Number Core_Presence_HoursUntilAwayLong "Stunden bis lange Abwesenheit" (gCore_P
     listWidget="oh-stepper-item"[
         raised="true",
         round="true",
-        icon="oh:light"
+        icon="f7:lightbulb"
     ]
 }

@@ -3,7 +3,7 @@ Group gCore_Scenes_StateTriggers
 
 Group gCore_Scenes_Settings "Szenen" (gCore_Home) ["Equipment"] {
   cellWidget="oh-label-cell"[
-    icon="oh:party",
+    icon="f7:film",
     title="\u003ditems.gCore_Scenes_Settings.title"
   ]
 }
@@ -11,10 +11,10 @@ Group gCore_Scenes_Settings "Szenen" (gCore_Home) ["Equipment"] {
 Group gCore_Scenes_StoreTriggers "Szene überschreiben" (gCore_Scenes_Settings) ["Point"] {
     cellWidget=""[
         label="\u003ditems.gCore_Scenes_StoreTriggers.title",
-        icon="oh:settings"
+        icon="f7:gear_alt"
     ],
     listWidget=""[
-        icon="oh:settings"
+        icon="f7:gear_alt"
     ]
 }
 
