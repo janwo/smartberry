@@ -8,11 +8,11 @@ Number Core_Presence "Anwesenheit" (gCore_Presence) ["Point"] {
     ],
     cellWidget=""[
         label="\u003ditems.Core_Presence.title",
-        icon="f7:house",
+        icon="f7:house_alt",
         action="options"
     ],
     listWidget=""[
-        icon="f7:house",
+        icon="f7:house_alt",
         action="options"
     ]
 }

@@ -14,8 +14,8 @@
             {
               "component": "oh-label-cell",
               "config": {
-                "iconColor": "=(items.Core_Presence.state == 1.0 ? 'black' : 'gray')",
-                "icon": "=(items.Core_Presence.state == 2.0 ? 'f7:airplane' : (items.Core_Presence.state == 1.0 ? 'f7:house' : 'f7:hourglass'))",
+                "iconColor": "=(items.Core_Presence.state == 1.0 ? undefined : 'gray')",
+                "icon": "=(items.Core_Presence.state == 2.0 ? 'f7:airplane' : (items.Core_Presence.state == 1.0 ? 'f7:house_alt' : 'f7:hourglass'))",
                 "title": "Anwesenheit",
                 "item": "Core_Presence",
                 "label": "\u003ditems.Core_Presence.title",
@@ -28,7 +28,7 @@
             {
               "component": "oh-label-cell",
               "config": {
-                "icon": "=(items.Core_DefaultScene.state == 2.0 ? 'f7:airplane' : (items.Core_DefaultScene.state == 1.0 ? 'f7:hourglass' :  (items.Core_DefaultScene.state == 3.0 ? 'f7:bed_double' : 'f7:house')))",
+                "icon": "=(items.Core_DefaultScene.state == 2.0 ? 'f7:airplane' : (items.Core_DefaultScene.state == 1.0 ? 'f7:hourglass' :  (items.Core_DefaultScene.state == 3.0 ? 'f7:bed_double' : 'f7:house_alt')))",
                 "title": "Hauptszene",
                 "item": "Core_DefaultScene",
                 "label": "\u003ditems.Core_DefaultScene.title",
