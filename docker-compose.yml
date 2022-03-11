@@ -28,6 +28,8 @@ services:
     networks:
       - smartberry
     restart: unless-stopped
+    depends_on:
+      - openhab-helper
     ports:
       - 8080:8080
     privileged: true
