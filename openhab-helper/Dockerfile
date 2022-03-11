@@ -4,7 +4,7 @@ RUN deluser --remove-home node \
   && adduser -S -g node -u 9001 node
 RUN chown node:node /home/node
 RUN apk add --no-cache curl dumb-init 
-HEALTHCHECK --interval=30s --timeout=5s --retries=5 CMD curl -sS 0.0.0.0:8080/healthcheck
+HEALTHCHECK --interval=30s --timeout=5s --retries=5 CMD curl -sS localhost:8080/healthcheck
 
 WORKDIR /home/node/
 COPY --chown=node:node package*.json ./
