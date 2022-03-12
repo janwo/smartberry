@@ -61,10 +61,9 @@ function get_scene_states(scene) {
 }
 
 function get_scene_items(scene) {
-  const sceneMembers = metadata(scene)
-    .getConfiguration('scenes', 'custom-members')
-    ?.split(',')
-    .map((i) => i.trim()) || ['default:true']
+  const sceneMembers = json_storage(scene)
+    .get('scenes', 'custom-members')
+    ?.map((i) => i.trim()) || ['default:true']
 
   const handleMember = (member) => {
     if (member.startsWith('tag:')) {
@@ -159,7 +158,7 @@ function trigger_scene_items(scene, pokeOnly = false) {
 }
 
 function apply_context(scene, context) {
-  const contextState = metadata(scene).getConfiguration(
+  const contextState = json_storage(scene).get(
     'scenes',
     'context-states',
     context
@@ -201,7 +200,7 @@ function scriptLoaded() {
       // Check helper items
       for (const sceneMember of sceneMembers) {
         // check metadata of context states
-        const contextStates = metadata(sceneMember).getConfiguration(
+        const contextStates = json_storage(sceneMember).get(
           'scenes',
           'context-states'
         )
@@ -210,7 +209,7 @@ function scriptLoaded() {
           reset: false
         }
 
-        metadata(sceneMember).setConfiguration(
+        json_storage(sceneMember).set(
           'scenes',
           'context-states',
           merge(defaultContextStates, contextStates)
@@ -257,7 +256,7 @@ function scriptLoaded() {
             stateTrigger.rawItem.setLabel(stateTriggerLabel)
           }
 
-          metadata(stateTrigger).setConfiguration('scenes', 'trigger-state', {
+          json_storage(stateTrigger).set('scenes', 'trigger-state', {
             to: sceneStates[sceneName],
             'target-scene': sceneMember.name,
             generated: true
@@ -295,7 +294,7 @@ function scriptLoaded() {
         // Sync (Remove) switches for each scene state
         for (const stateTrigger of items.getItem('gCore_Scenes_StateTriggers')
           .members) {
-          const triggerInfo = metadata(stateTrigger).getConfiguration(
+          const triggerInfo = json_storage(stateTrigger).get(
             'scenes',
             'trigger-state'
           )
@@ -363,10 +362,7 @@ function scriptLoaded() {
     triggers: [triggers.GroupStateUpdateTrigger('gCore_Scenes_StateTriggers')],
     execute: (event) => {
       const item = items.getItem(event.itemName)
-      const triggerInfo = metadata(item).getConfiguration(
-        'scenes',
-        'trigger-state'
-      )
+      const triggerInfo = json_storage(item).get('scenes', 'trigger-state')
 
       if (
         !triggerInfo ||

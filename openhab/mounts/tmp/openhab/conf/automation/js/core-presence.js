@@ -132,16 +132,14 @@ function scriptLoaded() {
     ],
     execute: (event) => {
       const item = items.getItem(event.itemName)
-      const presenceStates = metadata(item)
-        .getConfiguration('presence', 'presence-states')
-        ?.split(',')
-        .map((s) => s.trim()) || ['ON', 'OPEN']
+      const presenceStates = json_storage(item)
+        .get('presence', 'presence-states')
+        ?.map((s) => s.trim()) || ['ON', 'OPEN']
 
       const absenceStates =
-        metadata(item)
-          .getConfiguration('presence', 'absence-states')
-          ?.split(',')
-          .map((s) => s.trim()) || []
+        json_storage(item)
+          .get('presence', 'absence-states')
+          ?.map((s) => s.trim()) || []
 
       if (presenceStates.some((state) => state == item.state)) {
         trigger_presence(item)

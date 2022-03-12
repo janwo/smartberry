@@ -1,7 +1,6 @@
 const { rules, items, triggers, time } = require('openhab')
 const {
   json_storage,
-  metadata,
   get_all_semantic_items,
   DATETIME_FORMAT,
   sync_group_with_semantic_items,
@@ -116,12 +115,12 @@ function scriptLoaded() {
       )) {
         const location = get_location(point)
         if (location) {
-          let state = heaterModeItem.state
+          let state = stringifiedFloat(heaterModeItem.state)
           if (shutdownHeating || openContactLocations.includes(location.name)) {
-            state = HeatingState.OFF
+            state = stringifiedFloat(HeatingState.OFF)
           }
 
-          const pointCommandMap = metadata(point).getConfiguration(
+          const pointCommandMap = json_storage(point).get(
             'heating',
             'command-map'
           )
@@ -130,8 +129,7 @@ function scriptLoaded() {
             state = pointCommandMap[state]
           }
 
-          state = stringifiedFloat(state)
-          if (stringifiedFloat(point.state) != state) {
+          if (point.state != state) {
             point.sendCommand(state)
           }
         }

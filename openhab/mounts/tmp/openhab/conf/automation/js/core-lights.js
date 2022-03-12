@@ -508,8 +508,9 @@ function scriptLoaded() {
     name: 'simulate_presence',
     description: 'Core (JS) - Simulate lights.',
     tags: ['core', 'core-lights'],
-    triggers: [triggers.GenericCronTrigger('0 0/5 0 ? * * *')],
+    triggers: [triggers.GenericCronTrigger('0 0/15 0 ? * * *')],
     execute: (event) => {
+      const historicDateTime = time.ZonedDateTime.now().minusWeeks(3)
       const lightModeGroup = get_light_mode_group()
       const simulateLocations = uniqBy(
         lightModeGroup.members
@@ -524,14 +525,12 @@ function scriptLoaded() {
         LIGHTS_POINT_TAGS
       )) {
         const location = get_location(point)
-        if (
-          location &&
-          simulateLocations.includes(location.name) &&
-          Math.random() <= 0.25
-        ) {
-          if (!is_on(point.state)) {
+        if (location && simulateLocations.includes(location.name)) {
+          const historicState = point.history.historicState(historicDateTime)
+          if (is_on(historicState) && !is_on(point.state)) {
             turn_on_switchable_point(point)
-          } else {
+          }
+          if (!is_on(historicState) && is_on(point.state)) {
             turn_off_switchable_point(point)
           }
         }

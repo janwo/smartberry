@@ -1,6 +1,6 @@
 const { rules, items, triggers } = require('openhab')
 const { apply_context } = require(__dirname + '/core-scenes')
-const { metadata, stringifiedFloat } = require(__dirname + '/core-helpers')
+const { json_storage, stringifiedFloat } = require(__dirname + '/core-helpers')
 const { PresenceState } = require(__dirname + '/core-presence')
 
 const DefaultSceneState = {
@@ -61,18 +61,14 @@ function scriptLoaded() {
       triggers.GenericCronTrigger('30 0/5 * ? * * *')
     ],
     execute: (event) => {
-      metadata('Core_DefaultScene').setConfiguration(
-        'scenes',
-        'custom-members',
-        [
-          'Core_Security_OperationState',
-          'Core_Heating_Thermostat_ModeDefault',
-          'gCore_Lights_DarkMode',
-          'gCore_Lights_BrightMode',
-          'gCore_Lights_ObscuredMode',
-          'Core_Lights_DefaultDuration'
-        ].join(',')
-      )
+      json_storage('Core_DefaultScene').set('scenes', 'custom-members', [
+        'Core_Security_OperationState',
+        'Core_Heating_Thermostat_ModeDefault',
+        'gCore_Lights_DarkMode',
+        'gCore_Lights_BrightMode',
+        'gCore_Lights_ObscuredMode',
+        'Core_Lights_DefaultDuration'
+      ])
     }
   })
 }

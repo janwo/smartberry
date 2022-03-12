@@ -26,7 +26,6 @@ const BroadcastNotificationMode = {
   ATTENTION_ONLY: 2
 }
 
-const METADATA_NAMESPACE = 'core'
 const HELPER_ITEM_TAG = 'CoreHelperItem'
 const DATETIME_FORMAT = time.DateTimeFormatter.ofPattern(
   "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
@@ -152,7 +151,7 @@ function json_storage(item) {
   }
 }
 
-function metadata(item, namespace = METADATA_NAMESPACE) {
+function metadata(item, namespace) {
   if (typeof item != 'string') {
     item = item.name
   }
@@ -484,6 +483,5 @@ module.exports = {
   BroadcastType,
   BroadcastNotificationMode,
   DATETIME_FORMAT,
-  METADATA_NAMESPACE,
   HELPER_ITEM_TAG
 }
