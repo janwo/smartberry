@@ -1,0 +1,45 @@
+/* You can add global styles to this file, and also import other style files */
+@import './variables';
+@import '../../node_modules/bulma/bulma.sass';
+
+.disabled {
+  opacity: 0.5;
+}
+
+.has-single-line {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// Set headings.
+$heading-font-size: (
+  'h1': 2rem,
+  'h2': 1.75rem,
+  'h3': 1.35rem,
+  'h4': 1rem,
+  'h5': 0.85rem
+);
+@each $heading, $size in $heading-font-size {
+  #{$heading},
+  .#{$heading} {
+    font-weight: $weight-bold;
+    font-size: $size;
+  }
+}
+
+.container {
+  padding: $size-large;
+}
+
+.title-icon app-svg-icon {
+  margin-right: $size-small;
+}
+
+.tag {
+  app-svg-icon {
+    fill: #fff;
+    width: 1rem;
+    height: 1rem;
+  }
+}

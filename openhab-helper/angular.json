@@ -1,0 +1,96 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "openhab-helper": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "frontend",
+      "sourceRoot": "frontend/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/frontend",
+            "index": "frontend/src/index.html",
+            "main": "frontend/src/main.ts",
+            "polyfills": "frontend/src/polyfills.ts",
+            "tsConfig": "frontend/tsconfig.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "frontend/src/favicon.ico",
+              "frontend/src/assets",
+              {
+                "glob": "**/*",
+                "input": "./frontend/tmp/assets",
+                "output": "/assets/"
+              }
+            ],
+            "styles": ["frontend/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "frontend/src/environments/environment.ts",
+                  "with": "frontend/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "openhab-helper:build:production"
+            },
+            "development": {
+              "browserTarget": "openhab-helper:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "openhab-helper:build"
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "openhab-helper"
+}

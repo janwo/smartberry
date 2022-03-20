@@ -1,7 +1,10 @@
+import * as Hapi from '@hapi/hapi'
+
 const healthcheckPlugin = {
-  name: 'healthcheck',
-  register: async (server) => {
+  name: 'app/healthcheck',
+  register: async (server: Hapi.Server) => {
     server.route({
+      options: { auth: false },
       method: 'GET',
       path: '/healthcheck',
       handler: (_, h) => {

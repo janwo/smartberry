@@ -15,11 +15,7 @@ jobs:
           persist-credentials: false
       - name: Setup Node.js
         uses: actions/setup-node@v2.5.1
-      - name: Convert README.md to README.html
-        run: |
-          mkdir ./openhab/mounts/tmp/openhab/conf/html
-          npx marked -i ./README.md -o ./openhab/mounts/tmp/openhab/conf/html/index.html
-      - name: Install node_modules
+      - name: Install node_modules in automation folder
         run: |
           cd  ./openhab/mounts/tmp/openhab/conf/automation/js && npm i
       - name: Push to balena

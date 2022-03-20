@@ -1,0 +1,10 @@
+@import '../../variables.scss';
+
+:host {
+  user-select: none;
+  display: flex;
+  width: 1.5rem;
+  height: 1.5rem;
+  transform: translate(0, 0);
+  fill: $primary;
+}

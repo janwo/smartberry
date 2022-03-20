@@ -1,0 +1,21 @@
+@import '../variables.scss';
+
+.navbar {
+  padding: $size-small;
+
+  app-svg-icon {
+    width: 2rem;
+    height: 2rem;
+    fill: #fff;
+
+    &:not(.disabled) {
+      cursor: pointer;
+    }
+  }
+}
+
+.navbar-brand {
+  flex: 1 1 auto;
+  justify-content: space-between;
+  align-items: center;
+}

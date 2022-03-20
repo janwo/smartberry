@@ -1,8 +1,46 @@
 {
-  "dependencies": {
-    "@hapi/hapi": "^20.2.1",
-    "lodash": "^4.17.21",
-    "node-json-db": "^1.4.1"
+  "name": "openhab-helper",
+  "scripts": {
+    "frontend:serve": "npm run frontend:build:icons && ng serve --host 0.0.0.0 --port 4200",
+    "frontend:build": "npm run frontend:build:icons && ng build --configuration production",
+    "frontend:build:icons": "mkdir -p ./frontend/tmp/assets && node ./frontend/scripts/generate-svg-icons.js",
+    "backend:start": "npm run backend:build && npm run backend:start:build",
+    "backend:start:build": "node dist/backend/index.js",
+    "backend:build": "tsc --project backend/tsconfig.json && npm run backend:build:help",
+    "backend:build:help": "npx marked -i ../README.md -o ./dist/backend/help.html",
+    "backend:serve": "nodemon -e ts --watch backend --exec \"npm run backend:start\""
   },
-  "type": "module"
+  "private": true,
+  "dependencies": {
+    "@angular/common": "~13.2.0",
+    "@angular/compiler": "~13.2.0",
+    "@angular/core": "~13.2.0",
+    "@angular/forms": "~13.2.0",
+    "@angular/platform-browser": "~13.2.0",
+    "@angular/platform-browser-dynamic": "~13.2.0",
+    "@angular/router": "~13.2.0",
+    "@hapi/hapi": "^20.2.1",
+    "@hapi/inert": "^6.0.5",
+    "@hapi/jwt": "^2.1.0",
+    "axios": "^0.26.1",
+    "bulma": "^0.9.3",
+    "lodash": "^4.17.21",
+    "node-json-db": "^1.4.1",
+    "rxjs": "~7.5.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.11.4"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^13.2.6",
+    "@angular/cli": "~13.2.6",
+    "@angular/compiler-cli": "~13.2.0",
+    "@types/hapi__hapi": "^20.0.9",
+    "@types/hapi__inert": "^5.2.3",
+    "@types/hapi__jwt": "^2.0.1",
+    "@types/node": "^12.11.1",
+    "eva-icons": "^1.1.3",
+    "fast-xml-parser": "^3.21.1",
+    "nodemon": "^2.0.15",
+    "typescript": "~4.5.2"
+  }
 }

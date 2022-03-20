@@ -1,7 +1,28 @@
 import { JsonDB } from 'node-json-db'
+import * as Hapi from '@hapi/hapi'
+
+export const LOCALHOST_AUTH_STRATEGY = 'LOCAL'
+
 const jsonStoragePlugin = {
-  name: 'json-storage',
-  register: async (server) => {
+  name: 'app/json-storage',
+  dependencies: ['app/authentication'],
+  register: async (server: Hapi.Server) => {
+    // Add localhost scheme
+    server.auth.scheme(LOCALHOST_AUTH_STRATEGY, () => {
+      return {
+        authenticate(request, h) {
+          const { remoteAddress } = request.info
+          if (remoteAddress == '127.0.0.1') {
+            return h.authenticated({ credentials: {} as any })
+          }
+          throw h.unauthenticated(
+            new Error(`${remoteAddress} is not a valid IP.`)
+          )
+        }
+      }
+    })
+    server.auth.strategy(LOCALHOST_AUTH_STRATEGY, LOCALHOST_AUTH_STRATEGY)
+
     const db = new JsonDB(
       process.cwd() + '/data/json-storage.json',
       true,
@@ -11,6 +32,7 @@ const jsonStoragePlugin = {
 
     server.route({
       method: 'GET',
+      options: { auth: LOCALHOST_AUTH_STRATEGY },
       path: '/json-storage/{item}/{path*}',
       handler: (request, h) => {
         const path =
@@ -28,7 +50,10 @@ const jsonStoragePlugin = {
     server.route({
       method: 'POST',
       path: '/json-storage/{item}/{path*}',
-      options: { payload: { allow: 'application/json' } },
+      options: {
+        auth: LOCALHOST_AUTH_STRATEGY,
+        payload: { allow: 'application/json' }
+      },
       handler: (request, h) => {
         const path =
           '/' +
@@ -44,6 +69,7 @@ const jsonStoragePlugin = {
 
     server.route({
       method: 'DELETE',
+      options: { auth: LOCALHOST_AUTH_STRATEGY },
       path: '/json-storage/{item}/{path*}',
       handler: (request, h) => {
         const path =

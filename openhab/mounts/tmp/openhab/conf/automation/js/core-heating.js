@@ -44,6 +44,13 @@ function scriptLoaded() {
         undefined,
         TEMPERATURE_MEASUREMENT_POINT_TAGS
       )
+
+      // Sync group gCore_Heating_Thermostat_Mode with temperature items.
+      sync_group_with_semantic_items(
+        'gCore_Heating_Thermostat_Mode',
+        HEATING_EQUIPMENT_TAGS,
+        HEATING_POINT_TAGS
+      )
     }
   })
 
@@ -109,18 +116,16 @@ function scriptLoaded() {
       const heaterModeItem = items.getItem(
         'Core_Heating_Thermostat_ModeDefault'
       )
-      for (const point of get_all_semantic_items(
-        HEATING_EQUIPMENT_TAGS,
-        HEATING_POINT_TAGS
-      )) {
-        const location = get_location(point)
+      for (const modeItem of items.getItem('gCore_Heating_Thermostat_Mode')
+        .members) {
+        const location = get_location(modeItem)
         if (location) {
           let state = stringifiedFloat(heaterModeItem.state)
           if (shutdownHeating || openContactLocations.includes(location.name)) {
             state = stringifiedFloat(HeatingState.OFF)
           }
 
-          const pointCommandMap = json_storage(point).get(
+          const pointCommandMap = json_storage(modeItem).get(
             'heating',
             'command-map'
           )
@@ -129,8 +134,8 @@ function scriptLoaded() {
             state = pointCommandMap[state]
           }
 
-          if (point.state != state) {
-            point.sendCommand(state)
+          if (modeItem.state != state) {
+            modeItem.sendCommand(state)
           }
         }
       }
