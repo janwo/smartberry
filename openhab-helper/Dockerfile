@@ -3,8 +3,9 @@ RUN deluser --remove-home node \
   && addgroup -S node -g 9001 \
   && adduser -S -g node -u 9001 node
 RUN chown node:node /home/node
-RUN apk add --no-cache curl dumb-init 
-HEALTHCHECK --interval=30s --timeout=5s --retries=5 CMD curl -sS localhost:8080/healthcheck
+RUN apk add --no-cache curl 
+HEALTHCHECK --interval=30s --timeout=5s --retries=5 CMD curl -sS localhost:8081/healthcheck
+EXPOSE 8ß81 
 
 WORKDIR /home/node/
 COPY --chown=node:node package*.json angular.json ./

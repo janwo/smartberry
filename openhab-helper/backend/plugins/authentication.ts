@@ -24,7 +24,7 @@ async function handleToken(
   //connect to openhab
   const result: { success: boolean; error?: string; bearer?: string } =
     await axios
-      .get('http://smartberry:8080/rest/items', {
+      .get('http://openhab:8080/rest/items', {
         headers: {
           Authorization: `Bearer ${bearer}`
         }

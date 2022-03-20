@@ -49,7 +49,7 @@ export class OpenhabService implements CanActivate {
         success: boolean
         error?: string
         bearer?: string
-      }>('http://localhost:8080/authenticate', { bearer })
+      }>('http://localhost:8081/authenticate', { bearer })
       .pipe(
         tap((response) => {
           if (response.success) {
@@ -69,7 +69,7 @@ export class OpenhabService implements CanActivate {
 
   getSceneItems() {
     return this.http.get<Response & { data: Item[] }>(
-      'http://localhost:8080/scene-items',
+      'http://localhost:8081/scene-items',
       {
         headers: {
           Authorization: `Bearer ${this.bearer}`
@@ -80,7 +80,7 @@ export class OpenhabService implements CanActivate {
 
   getSceneTriggerItems() {
     return this.http.get<Response & { data: Item[] }>(
-      'http://localhost:8080/scene-trigger-items',
+      'http://localhost:8081/scene-trigger-items',
       {
         headers: {
           Authorization: `Bearer ${this.bearer}`
@@ -96,7 +96,7 @@ export class OpenhabService implements CanActivate {
           Item & { commandMap: { on: any; off: any; power: any; eco: any } }
         >
       }
-    >('http://localhost:8080/heating-mode-items', {
+    >('http://localhost:8081/heating-mode-items', {
       headers: {
         Authorization: `Bearer ${this.bearer}`
       }
@@ -108,7 +108,7 @@ export class OpenhabService implements CanActivate {
     commandMap: { on: any; off: any; power: any; eco: any }
   ) {
     return this.http.post<Response>(
-      `http://localhost:8080/heating-mode-item/${item}`,
+      `http://localhost:8081/heating-mode-item/${item}`,
       commandMap,
       {
         headers: {

@@ -9,7 +9,7 @@ interface Item {
   stateDescription?: { options: [{ [key: string]: string }] }
 }
 
-const URL = 'http://smartberry:8080/rest/'
+const URL = 'http://openhab:8080/rest/'
 
 async function openhabGET(
   url: string,
