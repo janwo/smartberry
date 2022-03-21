@@ -10,14 +10,14 @@ interface Item {
 }
 
 const HOST = process.env.build === 'production' ? 'openhab' : 'smartberry'
-const URL = `http://${HOST}:8080/rest/`
+const OPENHAB_URL = `http://${HOST}:8080/rest/`
 
 async function openhabGET(
   url: string,
   bearer: string
 ): Promise<{ success: boolean; error?: string; data?: any }> {
   return axios
-    .get(`${URL}${url}`, {
+    .get(`${OPENHAB_URL}${url}`, {
       headers: {
         Authorization: `Bearer ${bearer}`
       }

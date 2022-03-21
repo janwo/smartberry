@@ -47,7 +47,7 @@ services:
       context: ./openhab-helper
     user: node
     ports:
-      - 8080:8080
+      - 8081:8081
     networks:
       - smartberry
     restart: unless-stopped

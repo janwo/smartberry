@@ -117,28 +117,22 @@ function json_storage(item) {
     item = item.name
   }
 
-  let urlSegments = [item]
+  const urlSegments = [item]
+  const getUrl = (segments) =>
+    `http://openhab-helper:8082/json-storage/${segments.join('/')}`
 
   return {
     remove: () => {
-      const url = `http://openhab-helper:8081/json-storage/${urlSegments.join(
-        '/'
-      )}`
+      const url = getUrl(urlSegments)
       return JSON.parse(actions.HTTP.sendHttpDeleteRequest(url)).success
     },
     get: (...args) => {
-      urlSegments = urlSegments.concat(args)
-      const url = `http://openhab-helper:8081/json-storage/${urlSegments.join(
-        '/'
-      )}`
+      const url = getUrl(urlSegments.concat(args))
       return JSON.parse(actions.HTTP.sendHttpGetRequest(url)).data
     },
     set: (...args) => {
       if (args.length > 1) {
-        urlSegments = urlSegments.concat(args.slice(0, -1))
-        const url = `http://openhab-helper:8081/json-storage/${urlSegments.join(
-          '/'
-        )}`
+        const url = getUrl(urlSegments.concat(args.slice(0, -1)))
         return JSON.parse(
           actions.HTTP.sendHttpPostRequest(
             url,

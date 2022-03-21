@@ -4,10 +4,10 @@ RUN deluser --remove-home node \
   && adduser -S -g node -u 9001 node
 RUN chown node:node /home/node
 RUN apk add --no-cache curl 
-HEALTHCHECK --interval=30s --timeout=5s --retries=5 CMD curl -sS localhost:8080/healthcheck
-EXPOSE 8080 
+HEALTHCHECK --interval=30s --timeout=5s --retries=5 CMD curl -sS localhost:8081/healthcheck
 EXPOSE 8081
- 
+EXPOSE 8082
+
 WORKDIR /home/node/
 COPY --chown=node:node package*.json angular.json ./
 RUN npm ci --no-optional && npm cache clean --force

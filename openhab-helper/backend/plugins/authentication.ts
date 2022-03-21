@@ -6,6 +6,8 @@ import axios from 'axios'
 
 export const API_AUTH_STATEGY = 'API'
 const JWT_SECRET = process.env.JWT_SECRET || 'SUPER_SECRET_JWT_SECRET'
+const HOST = process.env.build === 'production' ? 'openhab' : 'smartberry'
+const OPENHAB_URL = `http://${HOST}:8080/rest/items`
 
 declare module '@hapi/hapi' {
   interface AuthCredentials extends JWTToken {}
@@ -24,7 +26,7 @@ async function handleToken(
   //connect to openhab
   const result: { success: boolean; error?: string; bearer?: string } =
     await axios
-      .get('http://openhab:8080/rest/items', {
+      .get(OPENHAB_URL, {
         headers: {
           Authorization: `Bearer ${bearer}`
         }
@@ -73,7 +75,7 @@ const authenticationPlugin = {
     // Add authentication routes
     server.route({
       method: 'POST',
-      path: '/authenticate',
+      path: '/api/authenticate',
       options: {
         auth: false,
         validate: {

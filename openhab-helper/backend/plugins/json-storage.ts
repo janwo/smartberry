@@ -13,7 +13,7 @@ declare module '@hapi/hapi' {
 
 const jsonStoragePlugin = {
   name: 'app/json-storage',
-  register: async (server: Hapi.Server) => {
+  register: async (server: Hapi.Server, options: { port?: number }) => {
     const db = new JsonDB(
       process.cwd() + '/data/json-storage.json',
       true,
@@ -48,7 +48,10 @@ const jsonStoragePlugin = {
 
     // Start server on different port
     const jsonServer = Hapi.server({
-      port: (server.info.port as number) + 1,
+      port:
+        options.port !== undefined
+          ? options.port
+          : (server.info.port as number) + 1,
       host: server.info.host,
       routes: {
         cors: process.env.build !== 'production'
