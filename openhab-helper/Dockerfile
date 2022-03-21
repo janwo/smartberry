@@ -10,7 +10,7 @@ EXPOSE 8082
 
 WORKDIR /home/node/
 COPY --chown=node:node package*.json angular.json ./
-RUN npm ci --no-optional && npm cache clean --force
+RUN npm ci && npm cache clean 
 COPY --chown=node:node backend/ ./backend/
 COPY --chown=node:node frontend/ ./frontend/
 
@@ -22,6 +22,6 @@ FROM node:lts-alpine as production
 WORKDIR /home/node/
 COPY --from=build-production --chown=node:node /home/node/dist/ ./dist/
 COPY --from=build-production --chown=node:node /home/node/package*.json ./
-RUN npm ci --only=production --no-optional && npm cache clean --force 
+RUN npm ci --production && npm cache clean 
 ENV build=production
 CMD npm run backend:start:build
