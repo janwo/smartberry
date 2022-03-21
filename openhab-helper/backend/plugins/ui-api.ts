@@ -9,7 +9,8 @@ interface Item {
   stateDescription?: { options: [{ [key: string]: string }] }
 }
 
-const URL = 'http://openhab:8080/rest/'
+const HOST = process.env.build === 'production' ? 'openhab' : 'smartberry'
+const URL = `http://${HOST}:8080/rest/`
 
 async function openhabGET(
   url: string,
@@ -36,7 +37,7 @@ const uiApiPlugin = {
     // scene routes
     server.route({
       method: 'GET',
-      path: '/scene-items',
+      path: '/api/scene-items',
       handler: async (request, h) => {
         const result = await openhabGET(
           'items?tags=CoreScene&recursive=false',
@@ -49,7 +50,7 @@ const uiApiPlugin = {
 
     server.route({
       method: 'GET',
-      path: '/scene-trigger-items',
+      path: '/api/scene-trigger-items',
       handler: async (request, h) => {
         const result = await openhabGET(
           'items?tags=CoreSceneTrigger&recursive=false',
@@ -63,7 +64,7 @@ const uiApiPlugin = {
     // heating routes
     server.route({
       method: 'GET',
-      path: '/heating-mode-items',
+      path: '/api/heating-mode-items',
       handler: async (request, h) => {
         const result = await openhabGET(
           'items/gCore_Heating_Thermostat_Mode?recursive=true',
@@ -73,18 +74,17 @@ const uiApiPlugin = {
         result.data = await Promise.all(
           result.data.members.map(
             async (item: Item & { commandMap: { [key: string]: any } }) => {
-              const response = await server.inject(
-                `/json-storage/${item.name}/heating/command-map`
+              const jsonStorage = server.plugins['app/json-storage'].get(
+                item.name,
+                'heating/command-map'
               )
-              const jsonStorage = JSON.parse(response.payload).data
               if (jsonStorage) {
-                const commandMap = {
+                item.commandMap = {
                   off: jsonStorage['0.0'],
                   on: jsonStorage['1.0'],
                   eco: jsonStorage['2.0'],
                   power: jsonStorage['3.0']
                 }
-                item.commandMap = commandMap
               }
               return item
             }
@@ -93,34 +93,34 @@ const uiApiPlugin = {
         return h.response(result).code(200)
       }
     })
+
     server.route({
       method: 'POST',
-      path: '/heating-mode-item/{item}',
+      path: '/api/heating-mode-item/{item}',
       options: {
         validate: {
           params: { item: Joi.string().required() },
           payload: Joi.object({
-            on: Joi.required(),
-            off: Joi.required(),
-            eco: Joi.required(),
-            power: Joi.required()
+            on: Joi.string().alphanum().empty('').optional(),
+            off: Joi.string().alphanum().empty('').optional(),
+            eco: Joi.string().alphanum().empty('').optional(),
+            power: Joi.string().alphanum().empty('').optional()
           })
         }
       },
       handler: async (request, h) => {
         const { on, off, eco, power } = request.payload as any
-        const payload = {
-          '0.0': off,
-          '1.0': on,
-          '2.0': eco,
-          '3.0': power
-        }
-        const response = await server.inject({
-          method: 'POST',
-          payload,
-          url: `/json-storage/${request.params.item}/heating/command-map`
-        })
-        return h.response(response.payload).code(response.statusCode)
+        server.plugins['app/json-storage'].set(
+          request.params.item,
+          'heating/command-map',
+          {
+            '0.0': off,
+            '1.0': on,
+            '2.0': eco,
+            '3.0': power
+          }
+        )
+        return h.response().code(200)
       }
     })
   }

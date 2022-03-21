@@ -6,6 +6,7 @@ import {
   RouterStateSnapshot
 } from '@angular/router'
 import { map, tap } from 'rxjs'
+import { environment } from 'src/environments/environment'
 
 interface Response {
   success: boolean
@@ -39,17 +40,13 @@ export class OpenhabService implements CanActivate {
 
   constructor(private http: HttpClient) {}
 
-  unregister() {
-    this.bearer = null
-  }
-
   register(bearer: string) {
     return this.http
       .post<{
         success: boolean
         error?: string
         bearer?: string
-      }>('http://localhost:8081/authenticate', { bearer })
+      }>(`${environment.API_URL()}/authenticate`, { bearer })
       .pipe(
         tap((response) => {
           if (response.success) {
@@ -57,6 +54,10 @@ export class OpenhabService implements CanActivate {
           }
         })
       )
+  }
+
+  unregister() {
+    this.bearer = null
   }
 
   authenticated() {
@@ -67,54 +68,56 @@ export class OpenhabService implements CanActivate {
     return this.authenticated()
   }
 
-  getSceneItems() {
-    return this.http.get<Response & { data: Item[] }>(
-      'http://localhost:8081/scene-items',
-      {
+  public scene = {
+    items: () => {
+      return this.http.get<Response & { data: Item[] }>(
+        `${environment.API_URL()}/scene-items`,
+        {
+          headers: {
+            Authorization: `Bearer ${this.bearer}`
+          }
+        }
+      )
+    },
+    triggerItems: () => {
+      return this.http.get<Response & { data: Item[] }>(
+        `${environment.API_URL()}/scene-trigger-items`,
+        {
+          headers: {
+            Authorization: `Bearer ${this.bearer}`
+          }
+        }
+      )
+    }
+  }
+
+  public heating = {
+    modeItems: () => {
+      return this.http.get<
+        Response & {
+          data: Array<
+            Item & { commandMap: { on: any; off: any; power: any; eco: any } }
+          >
+        }
+      >(`${environment.API_URL()}/heating-mode-items`, {
         headers: {
           Authorization: `Bearer ${this.bearer}`
         }
-      }
-    )
-  }
-
-  getSceneTriggerItems() {
-    return this.http.get<Response & { data: Item[] }>(
-      'http://localhost:8081/scene-trigger-items',
-      {
-        headers: {
-          Authorization: `Bearer ${this.bearer}`
+      })
+    },
+    updateModeItems: (
+      item: string,
+      commandMap: { on: any; off: any; power: any; eco: any }
+    ) => {
+      return this.http.post<Response>(
+        `${environment.API_URL()}/heating-mode-item/${item}`,
+        commandMap,
+        {
+          headers: {
+            Authorization: `Bearer ${this.bearer}`
+          }
         }
-      }
-    )
-  }
-
-  getHeatingModeItems() {
-    return this.http.get<
-      Response & {
-        data: Array<
-          Item & { commandMap: { on: any; off: any; power: any; eco: any } }
-        >
-      }
-    >('http://localhost:8081/heating-mode-items', {
-      headers: {
-        Authorization: `Bearer ${this.bearer}`
-      }
-    })
-  }
-
-  updateHeaterModeItem(
-    item: string,
-    commandMap: { on: any; off: any; power: any; eco: any }
-  ) {
-    return this.http.post<Response>(
-      `http://localhost:8081/heating-mode-item/${item}`,
-      commandMap,
-      {
-        headers: {
-          Authorization: `Bearer ${this.bearer}`
-        }
-      }
-    )
+      )
+    }
   }
 }

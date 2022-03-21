@@ -16,16 +16,28 @@ export class HeatingComponent implements OnInit {
   heatingItems: { item: Item; form: FormGroup }[] = []
 
   ngOnInit(): void {
-    this.openhabService.getHeatingModeItems().subscribe({
+    this.openhabService.heating.modeItems().subscribe({
       next: (items) => {
         this.heatingItems = items.data.map((item) => {
           return {
             item,
             form: this.formBuilder.group({
-              off: [item.commandMap?.off || '', Validators.required],
-              on: [item.commandMap?.on || '', Validators.required],
-              eco: [item.commandMap?.eco || '', Validators.required],
-              power: [item.commandMap?.power || '', Validators.required]
+              off: [
+                item.commandMap?.off === undefined || '',
+                Validators.required
+              ],
+              on: [
+                item.commandMap?.on === undefined || '',
+                Validators.required
+              ],
+              eco: [
+                item.commandMap?.eco === undefined || '',
+                Validators.required
+              ],
+              power: [
+                item.commandMap?.power === undefined || '',
+                Validators.required
+              ]
             })
           }
         })
@@ -40,8 +52,8 @@ export class HeatingComponent implements OnInit {
     }
 
     const commandMap = item.form.value
-    this.openhabService
-      .updateHeaterModeItem(item.item.name, commandMap)
+    this.openhabService.heating
+      .updateModeItems(item.item.name, commandMap)
       .subscribe({
         next: (response) => {
           if (!response.success) {

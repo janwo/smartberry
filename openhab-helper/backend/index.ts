@@ -7,11 +7,11 @@ import uiApiPlugin from './plugins/ui-api.js'
 import Joi from 'joi'
 import helpPlugin from './plugins/help.js'
 import authenticationPlugin from './plugins/authentication.js'
-import { plugin as JwtPlugin } from '@hapi/jwt'
+import { plugin as jwtPlugin } from '@hapi/jwt'
 
 const init = async () => {
   const server = Hapi.server({
-    port: 8081,
+    port: 8080,
     host: '0.0.0.0',
     routes: {
       cors: process.env.build !== 'production',
@@ -28,7 +28,7 @@ const init = async () => {
     healthcheckPlugin,
     filesPlugin,
     helpPlugin,
-    JwtPlugin,
+    jwtPlugin,
     authenticationPlugin,
     uiApiPlugin
   ])

@@ -1,28 +1,19 @@
 import { JsonDB } from 'node-json-db'
 import * as Hapi from '@hapi/hapi'
 
-export const LOCALHOST_AUTH_STRATEGY = 'LOCAL'
+declare module '@hapi/hapi' {
+  interface PluginProperties {
+    'app/json-storage': {
+      get(item: string, path: string | undefined): any
+      set(item: string, path: string | undefined, obj: any): void
+      delete(item: string, path: string | undefined): void
+    }
+  }
+}
 
 const jsonStoragePlugin = {
   name: 'app/json-storage',
-  dependencies: ['app/authentication'],
   register: async (server: Hapi.Server) => {
-    // Add localhost scheme
-    server.auth.scheme(LOCALHOST_AUTH_STRATEGY, () => {
-      return {
-        authenticate(request, h) {
-          const { remoteAddress } = request.info
-          if (remoteAddress == '127.0.0.1') {
-            return h.authenticated({ credentials: {} as any })
-          }
-          throw h.unauthenticated(
-            new Error(`${remoteAddress} is not a valid IP.`)
-          )
-        }
-      }
-    })
-    server.auth.strategy(LOCALHOST_AUTH_STRATEGY, LOCALHOST_AUTH_STRATEGY)
-
     const db = new JsonDB(
       process.cwd() + '/data/json-storage.json',
       true,
@@ -30,61 +21,79 @@ const jsonStoragePlugin = {
       '/'
     )
 
-    server.route({
-      method: 'GET',
-      options: { auth: LOCALHOST_AUTH_STRATEGY },
-      path: '/json-storage/{item}/{path*}',
-      handler: (request, h) => {
-        const path =
-          '/' +
-          [request.params.item]
-            .concat(request.params.path?.split('/') || [])
-            .join('/')
-        if (!db.exists(path)) {
-          return { data: undefined }
+    const dbHelper = (() => {
+      const createPath = (item: string, path: string | undefined) =>
+        '/' + [item].concat(path?.split('/') || []).join('/')
+      return {
+        get: (item: string, path: string | undefined) => {
+          const fullPath = createPath(item, path)
+          return db.exists(fullPath) ? db.getData(fullPath) : undefined
+        },
+        delete: (item: string, path: string | undefined) => {
+          const fullPath = createPath(item, path)
+          if (db.exists(fullPath)) {
+            db.delete(fullPath)
+          }
+        },
+        set: (item: string, path: string | undefined, obj: any) => {
+          const fullPath = createPath(item, path)
+          db.push(fullPath, obj, true)
         }
-        return { data: db.getData(path) }
+      }
+    })()
+
+    server.expose('get', dbHelper.get)
+    server.expose('set', dbHelper.set)
+    server.expose('delete', dbHelper.delete)
+
+    // Start server on different port
+    const jsonServer = Hapi.server({
+      port: (server.info.port as number) + 1,
+      host: server.info.host,
+      routes: {
+        cors: process.env.build !== 'production'
       }
     })
 
-    server.route({
+    jsonServer.route({
+      method: 'GET',
+      path: '/json-storage/{item}/{path*}',
+      handler: (request, h) => {
+        return { data: dbHelper.get(request.params.item, request.params.path) }
+      }
+    })
+
+    jsonServer.route({
       method: 'POST',
       path: '/json-storage/{item}/{path*}',
       options: {
-        auth: LOCALHOST_AUTH_STRATEGY,
         payload: { allow: 'application/json' }
       },
       handler: (request, h) => {
-        const path =
-          '/' +
-          [request.params.item]
-            .concat(request.params.path?.split('/') || [])
-            .join('/')
-        db.push(path, request.payload, true)
+        dbHelper.set(request.params.item, request.params.path, request.payload)
         return {
           success: true
         }
       }
     })
 
-    server.route({
+    jsonServer.route({
       method: 'DELETE',
-      options: { auth: LOCALHOST_AUTH_STRATEGY },
       path: '/json-storage/{item}/{path*}',
       handler: (request, h) => {
-        const path =
-          '/' +
-          [request.params.item]
-            .concat(request.params.path?.split('/') || [])
-            .join('/')
-        if (db.exists(path)) {
-          db.delete(path)
-        }
+        dbHelper.delete(request.params.item, request.params.path)
         return {
           success: true
         }
       }
     })
+
+    server.events.on('stop', async () => {
+      await jsonServer.stop({ timeout: 60 * 1000 })
+    })
+
+    await jsonServer.start()
+    console.log('JSON-Server running on %s', jsonServer.info.uri)
   }
 }
 

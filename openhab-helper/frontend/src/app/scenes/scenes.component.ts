@@ -13,7 +13,7 @@ export class ScenesComponent implements OnInit {
   sceneItems: Item[] = []
 
   ngOnInit(): void {
-    this.openhabService.getSceneItems().subscribe({
+    this.openhabService.scene.items().subscribe({
       next: (items) => {
         this.sceneItems = items.data as Item[]
       }
