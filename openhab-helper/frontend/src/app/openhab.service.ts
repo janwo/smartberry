@@ -49,7 +49,7 @@ export class OpenhabService implements CanActivate {
       }>(`${environment.API_URL()}/authenticate`, { bearer })
       .pipe(
         tap((response) => {
-          if (response.success) {
+          if (response?.success) {
             this.bearer = response.bearer || null
           }
         })

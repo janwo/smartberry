@@ -120,7 +120,7 @@ const uiApiPlugin = {
             '3.0': power
           }
         )
-        return h.response().code(200)
+        return h.response({ success: true }).code(200)
       }
     })
   }

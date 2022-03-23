@@ -58,7 +58,7 @@ export class HeatingComponent implements OnInit {
       .updateModeItems(item.item.name, commandMap)
       .subscribe({
         next: (response) => {
-          if (!response.success) {
+          if (!response?.success) {
             item.form.setErrors({
               invalid: true
             })

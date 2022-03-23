@@ -24,7 +24,7 @@ export class SetupComponent {
 
     this.openhabService.register(this.apiTokenForm.value.apiToken).subscribe({
       next: (response) => {
-        if (!response.success) {
+        if (!response?.success) {
           this.apiTokenForm.controls['apiToken'].setErrors({
             invalidToken: true
           })
