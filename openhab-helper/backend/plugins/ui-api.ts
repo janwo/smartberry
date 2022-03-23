@@ -1,6 +1,6 @@
 import * as Hapi from '@hapi/hapi'
 import axios from 'axios'
-import Joi from 'Joi'
+import Joi from 'joi'
 
 interface Item {
   name: string

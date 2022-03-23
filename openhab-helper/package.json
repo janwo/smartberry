@@ -7,7 +7,7 @@
     "backend:start": "npm run backend:build && npm run backend:start:build",
     "backend:start:build": "node dist/backend/index.js",
     "backend:build": "tsc --project backend/tsconfig.json && npm run backend:build:help",
-    "backend:build:help": "npx marked -i ../README.md -o ./dist/backend/help.html",
+    "backend:build:help": "npx marked -i ./HOWTO.md -o ./dist/backend/help.html",
     "backend:serve": "nodemon -e ts --watch backend --exec \"npm run backend:start\""
   },
   "private": true,
@@ -25,6 +25,7 @@
     "@hapi/jwt": "^2.1.0",
     "axios": "^0.26.1",
     "bulma": "^0.9.3",
+    "joi": "^17.6.0",
     "lodash": "^4.17.21",
     "node-json-db": "^1.5.0",
     "rxjs": "^7.5.5",

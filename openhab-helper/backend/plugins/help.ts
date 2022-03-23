@@ -1,20 +1,19 @@
-import inertPlugin from "@hapi/inert";
-import * as Hapi from "@hapi/hapi";
-import * as path from "path";
+import inertPlugin from '@hapi/inert'
+import * as Hapi from '@hapi/hapi'
 
 const helpPlugin = {
-  name: "app/help",
+  name: 'app/help',
   register: async (server: Hapi.Server) => {
-    await server.register(inertPlugin);
+    await server.register(inertPlugin)
     server.route({
       options: { auth: false },
-      method: "GET",
-      path: "/help",
+      method: 'GET',
+      path: '/help',
       handler: {
-        file: "./backend/help.html",
-      },
-    });
-  },
-};
+        file: './backend/help.html'
+      }
+    })
+  }
+}
 
-export default helpPlugin;
+export default helpPlugin

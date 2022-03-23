@@ -1,9 +1,8 @@
 const fs = require('fs')
 const path = require('path')
-const parser = require('fast-xml-parser')
+const { XMLParser, XMLBuilder } = require('fast-xml-parser')
 const parserOptions = {
-  ignoreAttributes: false,
-  arrayMode: true
+  ignoreAttributes: false
 }
 
 const icons = [
@@ -27,20 +26,21 @@ function mergeSVG(svgObj, file, symbol) {
   const newSvgObj = fromXML(fileContents)
   const symbolNode = {
     '@_id': symbol,
-    '@_viewBox': newSvgObj.svg[0]['@_viewBox'],
-    g: newSvgObj.svg[0].g
+    '@_viewBox': newSvgObj.svg['@_viewBox'],
+    g: newSvgObj.svg.g
   }
-  svgObj.svg[0].symbol = svgObj.svg[0]?.symbol || []
-  svgObj.svg[0].symbol.push(symbolNode)
+  svgObj.svg.symbol = svgObj.svg?.symbol || []
+  svgObj.svg.symbol.push(symbolNode)
 }
 
 function fromXML(contents) {
-  return parser.parse(contents, parserOptions)
+  const parser = new XMLParser(parserOptions)
+  return parser.parse(contents)
 }
 
 function toXML(obj) {
-  const toXML = new parser.j2xParser(parserOptions)
-  return toXML.parse(obj)
+  const builder = new XMLBuilder(parserOptions)
+  return builder.build(obj)
 }
 
 icons.forEach((set) => {
