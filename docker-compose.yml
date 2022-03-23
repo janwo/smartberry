@@ -21,6 +21,8 @@ services:
     networks:
       - smartberry
     restart: unless-stopped
+    environment:
+      SAMBA_PASSWORD:
 
   openhab:
     build:
@@ -53,6 +55,8 @@ services:
     restart: unless-stopped
     volumes:
       - openhab-helper-data:/home/node/data
+    environment:
+      JWT_SECRET:
 
   bluetooth-beacon:
     image: dominikth/rpi-docker-ibeacon:latest

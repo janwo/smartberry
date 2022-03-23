@@ -96,7 +96,7 @@ export class OpenhabService implements CanActivate {
       return this.http.get<
         Response & {
           data: Array<
-            Item & { commandMap: { on: any; off: any; power: any; eco: any } }
+            Item & { commandMap?: { on: any; off: any; power: any; eco: any } }
           >
         }
       >(`${environment.API_URL()}/heating-mode-items`, {

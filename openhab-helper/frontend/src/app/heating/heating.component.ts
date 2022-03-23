@@ -23,19 +23,21 @@ export class HeatingComponent implements OnInit {
             item,
             form: this.formBuilder.group({
               off: [
-                item.commandMap?.off === undefined || '',
+                item.commandMap?.off !== undefined ? item.commandMap.off : '',
                 Validators.required
               ],
               on: [
-                item.commandMap?.on === undefined || '',
+                item.commandMap?.on !== undefined ? item.commandMap.on : '',
                 Validators.required
               ],
               eco: [
-                item.commandMap?.eco === undefined || '',
+                item.commandMap?.eco !== undefined ? item.commandMap.eco : '',
                 Validators.required
               ],
               power: [
-                item.commandMap?.power === undefined || '',
+                item.commandMap?.power !== undefined
+                  ? item.commandMap.power
+                  : '',
                 Validators.required
               ]
             })
