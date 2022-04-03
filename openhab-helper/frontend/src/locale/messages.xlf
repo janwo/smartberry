@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="7803402955830827909" datatype="html">
+        <source>Climate Settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/heating/heating.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5378660732740804381" datatype="html">
+        <source>Adjust the way how smartberry handles climate control.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/heating/heating.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3435053421209648212" datatype="html">
+        <source>Radiators</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/heating/heating.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7155232328895933315" datatype="html">
+        <source>You can set the mode of all your radiators at once. Additionally, smartberry turn radiators off, if windows or doors are openend. Current modes are <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>OFF<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>, <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>ON<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>, <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>ECO<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> and <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>POWER<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/heating/heating.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6724299136006982247" datatype="html">
+        <source>In order to let smartberry handle all radiators for you, organize your radiator items as shown below:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/heating/heating.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4096290937286811202" datatype="html">
+        <source>Adjust command maps</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/heating/heating.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4078219443815405784" datatype="html">
+        <source>Adjust the commands sent to the heating mode item for each available state.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/heating/heating.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7640416587392187464" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{countValues(heatingItem.form) | i18nPlural : { &apos;=0&apos; : &apos;No options&apos;, &apos;=1&apos; : &apos;One option&apos;, &apos;other&apos; : &apos;# options&apos;} }}"/> selected</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/heating/heating.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2980581628604105155" datatype="html">
+        <source>Doors- and Windows</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/heating/heating.component.html</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5775663646823119753" datatype="html">
+        <source>You can define contact items that automatically turn off heating in open state.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/heating/heating.component.html</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

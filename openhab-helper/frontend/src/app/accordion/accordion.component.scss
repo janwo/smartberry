@@ -1,0 +1,23 @@
+@import '../../variables.scss';
+
+:host:not(:last-child) {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: $size-small;
+}
+
+header {
+  padding-top: $size-small;
+  padding-bottom: $size-small;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  span {
+    margin-left: auto;
+
+    &.has-text-grey ~ app-svg-icon {
+      fill: $grey;
+    }
+  }
+}

@@ -1,0 +1,64 @@
+@import '../../variables.scss';
+
+:host {
+  display: flex;
+  flex-direction: column;
+
+  &:not(.first) header {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+  }
+
+  &:not(.last) header {
+    border-bottom-right-radius: 0;
+  }
+
+  &.first:not(:last-child) {
+    margin-bottom: $size-large;
+  }
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: $size-small;
+  border-radius: $radius;
+
+  span {
+    margin-right: $size-small * 0.5;
+    margin-left: $size-small * -0.5;
+
+    &:last-of-type {
+      display: none;
+    }
+  }
+
+  .tag {
+    font-weight: $weight-bold;
+    margin-right: $size-small;
+  }
+}
+
+app-item-schema {
+  margin-left: $size-large * 2;
+}
+
+.h5 {
+  margin-bottom: $size-small * 0.5;
+
+  &:not(:first-child) {
+    margin-top: $size-small;
+  }
+}
+
+ul {
+  li {
+    margin-bottom: $size-small * 0.5;
+    margin-right: $size-small * 0.5;
+
+    span:last-child {
+      margin-left: $size-small * 0.5;
+    }
+  }
+}

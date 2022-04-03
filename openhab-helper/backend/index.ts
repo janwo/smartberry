@@ -1,11 +1,12 @@
+import Joi from 'joi'
+import * as path from 'path'
 import * as Hapi from '@hapi/hapi'
 import filesPlugin from './plugins/files.js'
 import healthcheckPlugin from './plugins/healthcheck.js'
 import jsonStoragePlugin from './plugins/json-storage.js'
-import * as path from 'path'
-import uiApiPlugin from './plugins/ui-api.js'
-import Joi from 'joi'
-import helpPlugin from './plugins/help.js'
+import openhabHeatingPlugin from './plugins/openhab-heating.js'
+import openhabScenesPlugin from './plugins/openhab-scenes.js'
+import openhabPlugin from './plugins/openhab.js'
 import authenticationPlugin from './plugins/authentication.js'
 import { plugin as jwtPlugin } from '@hapi/jwt'
 
@@ -14,10 +15,7 @@ const init = async () => {
     port: 8081,
     host: '0.0.0.0',
     routes: {
-      cors: process.env.build !== 'production',
-      files: {
-        relativeTo: path.resolve(process.cwd(), './dist')
-      }
+      cors: process.env.build !== 'production'
     }
   })
 
@@ -27,10 +25,11 @@ const init = async () => {
     jsonStoragePlugin,
     healthcheckPlugin,
     filesPlugin,
-    helpPlugin,
+    openhabPlugin,
+    openhabHeatingPlugin,
     jwtPlugin,
     authenticationPlugin,
-    uiApiPlugin
+    openhabScenesPlugin
   ])
 
   await server.start()

@@ -6,6 +6,10 @@
   opacity: 0.5;
 }
 
+fieldset[disabled] .select:after {
+  border-color: transparent !important;
+}
+
 .has-single-line {
   overflow: hidden;
   white-space: nowrap;
@@ -42,4 +46,8 @@ $heading-font-size: (
     width: 1rem;
     height: 1rem;
   }
+}
+
+.card ~ .card {
+  margin-top: $size-large;
 }

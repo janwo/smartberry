@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute, Route } from '@angular/router'
 import { routes } from '../app-routing.module'
 import { OpenhabService } from '../openhab.service'
 

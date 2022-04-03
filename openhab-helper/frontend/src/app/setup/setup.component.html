@@ -1,14 +1,27 @@
-<div class="card">
-  <div class="card-content">
+<section class="hero">
+  <div class="hero-body">
     <div class="columns is-gapless is-vcentered is-mobile">
       <div class="column is-narrow title-icon">
         <app-svg-icon icon="link-2-outline"></app-svg-icon>
       </div>
       <div class="column">
-        <h2>API-Einstellungen</h2>
+        <p class="title" i18n>Setup</p>
+        <p class="subtitle" i18n>
+          Authenticate to your openHAB-Instance to adjust addional settings.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="card">
+  <div class="card-content">
+    <div class="columns is-gapless is-vcentered is-mobile">
+      <div class="column">
+        <h2 i18n>API-Token</h2>
       </div>
       <div class="column is-narrow">
-        <div
+        <span
           class="tag"
           [ngClass]="{
             'is-success': openhabService.authenticated(),
@@ -25,10 +38,10 @@
               ? 'Authentifiziert'
               : 'Unauthentifiziert'
           }}
-        </div>
+        </span>
       </div>
     </div>
-    <p class="block has-text-gray">
+    <p class="block" i18n>
       Aktualisiere deinen API-Token, um weitere Konfigurationsmöglichkeiten für
       smartberry zu nutzen.
     </p>
@@ -47,7 +60,7 @@
             placeholder="Dein API-Token" />
         </div>
         <div class="control">
-          <button type="submit" class="button is-primary">Speichern</button>
+          <button type="submit" i18n class="button is-primary">Save</button>
         </div>
       </div>
 
@@ -55,10 +68,11 @@
         <div class="field">
           <div class="control">
             <button
+              i18n
               type="submit"
               (click)="openhabService.unregister()"
               class="button is-primary">
-              API-Token löschen
+              Delete API-Token
             </button>
           </div>
         </div>
@@ -69,21 +83,24 @@
         *ngIf="
           apiTokenForm.touched &&
           apiTokenForm.controls['apiToken'].hasError('invalidToken')
-        ">
-        API-Key funktioniert nicht.
+        "
+        i18n>
+        API-Key is invalid.
       </p>
       <p
         class="help is-danger"
         *ngIf="
           apiTokenForm.touched &&
           apiTokenForm.controls['apiToken'].hasError('required')
-        ">
-        API-Key ist notwendig.
+        "
+        i18n>
+        API-Key is required.
       </p>
       <p
+        i18n
         class="help is-danger"
         *ngIf="apiTokenForm.controls['apiToken'].hasError('connection')">
-        Keine Verbindung zur OpenHAB-Instanz.
+        No connection to your openHAB-Instance.
       </p>
     </form>
   </div>

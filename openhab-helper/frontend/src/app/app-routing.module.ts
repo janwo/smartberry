@@ -1,31 +1,52 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { HeatingComponent } from './heating/heating.component'
+import { ClimateComponent } from './climate/climate.component'
 import { DashboardComponent } from './dashboard/dashboard.component'
-import { ScenesComponent } from './scenes/scenes.component'
+import { SceneComponent } from './scene/scene.component'
 import { SetupComponent } from './setup/setup.component'
 import { OpenhabService } from './openhab.service'
+import { LightComponent } from './light/light.component'
+import { SecurityComponent } from './security/security.component'
+import { PresenceComponent } from './presence/presence.component'
 
 export const routes: Routes = [
   {
     path: 'setup',
-    data: { title: 'API-Einstellungen', icon: 'link-2-outline' },
+    data: { title: $localize`Setup`, icon: 'link-2-outline' },
     component: SetupComponent
   },
   {
-    path: 'heating',
+    path: 'climate',
     canActivate: [OpenhabService],
     data: {
-      title: 'Heizthermostate',
+      title: $localize`Climate Settings`,
       icon: 'thermometer-outline'
     },
-    component: HeatingComponent
+    component: ClimateComponent
   },
   {
     path: 'scenes',
     canActivate: [OpenhabService],
-    data: { title: 'Szenen', icon: 'film-outline' },
-    component: ScenesComponent
+    data: { title: $localize`Scene Settings`, icon: 'film-outline' },
+    component: SceneComponent
+  },
+  {
+    path: 'light',
+    canActivate: [OpenhabService],
+    data: { title: $localize`Light Settings`, icon: 'bulb-outline' },
+    component: LightComponent
+  },
+  {
+    path: 'security',
+    canActivate: [OpenhabService],
+    data: { title: $localize`Security Settings`, icon: 'shield-outline' },
+    component: SecurityComponent
+  },
+  {
+    path: 'presence',
+    canActivate: [OpenhabService],
+    data: { title: $localize`Presence Settings`, icon: 'activity-outline' },
+    component: PresenceComponent
   },
   {
     path: '',

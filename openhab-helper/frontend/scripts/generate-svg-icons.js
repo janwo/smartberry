@@ -14,8 +14,12 @@ const icons = [
       'film-outline',
       'alert-circle-outline',
       'link-2-outline',
+      'chevron-down-outline',
+      'chevron-up-outline',
       'checkmark-outline',
       'grid-outline',
+'bulb-outline','activity-outline',
+      'shield-outline',
       'question-mark-circle-outline'
     ]
   }

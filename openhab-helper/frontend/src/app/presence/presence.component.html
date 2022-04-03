@@ -1,0 +1,72 @@
+<section class="hero">
+  <div class="hero-body">
+    <div class="columns is-gapless is-vcentered is-mobile">
+      <div class="column is-narrow title-icon">
+        <app-svg-icon icon="activity-outline"></app-svg-icon>
+      </div>
+      <div class="column">
+        <p class="title" i18n>Presence Settings</p>
+        <p class="subtitle" i18n>
+          Adjust the way how smartberry reacts to presence changes.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="card">
+  <div class="card-content">
+    <div class="columns">
+      <div class="column">
+        <h2 i18n>Scenes</h2>
+      </div>
+    </div>
+    <p i18n class="block">
+      The presence management will automatically adjust the presence state in
+      dependence to the last presence detection events. The following items are
+      scoped. | Role | Needed point tags | | :-------------------- |
+      :------------------------------- | | Presence trigger item | `Presence`
+      **and** `Measurement` | To adjust the presence management configuration,
+      you can adjust the following presence items. | Item name | Description | |
+      :-------------------------------- |
+      :---------------------------------------------------------------------------------
+      | | Core_Presence | The actual presence state. Current choices are `HOME`,
+      `AWAY_SHORT` or `AWAY_LONG` | | Core_Presence_HoursUntilAwayShort | Set
+      hours until presence management sets the presence state to `AWAY_SHORT` |
+      | Core_Presence_HoursUntilAwayLong | Set hours until presence management
+      sets the presence state to `AWAY_LONG` | Presence items can also trigger
+      absence events. To do so, add the desired state values via namespace
+      `core` to the item with the `Presence` tag as shown below. By default, any
+      `ON`-like state will trigger presence. ``` presence: absence-states: "OFF"
+      [optional, states that trigger absence, defaults to empty list]
+      presence-states: "ON, OPEN" [optional, states that trigger presence,
+      defaults to "ON" and "OPEN"] ```
+    </p>
+    <app-item-schema
+      [items]="sceneItems"
+      [schema]="{
+        tags: ['CoreScene'],
+        description: 'Scene Item'
+      }"></app-item-schema>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <div class="columns">
+      <div class="column">
+        <h2 i18n>Scene Trigger Items</h2>
+      </div>
+    </div>
+    <p i18n class="block">
+      You can define contact items that automatically turn off heating in open
+      state.
+    </p>
+    <app-item-schema
+      [items]="sceneTriggerItems"
+      [schema]="{
+        tags: ['CoreSceneTrigger'],
+        description: 'Scene Trigger Item'
+      }"></app-item-schema>
+  </div>
+</div>

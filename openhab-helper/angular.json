@@ -13,6 +13,16 @@
           "strict": true
         }
       },
+      "i18n": {
+        "sourceLocale": {
+          "code": "en"
+        },
+        "locales": {
+          "de": {
+            "translation": "frontend/src/locale/messages.de.xlf"
+          }
+        }
+      },
       "root": "frontend",
       "sourceRoot": "frontend/src",
       "prefix": "app",
@@ -22,6 +32,7 @@
           "options": {
             "outputPath": "dist/frontend",
             "index": "frontend/src/index.html",
+            "localize": true,
             "main": "frontend/src/main.ts",
             "polyfills": "frontend/src/polyfills.ts",
             "tsConfig": "frontend/tsconfig.json",
@@ -66,7 +77,8 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "localize": false
             }
           },
           "defaultConfiguration": "production"
@@ -86,7 +98,8 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "openhab-helper:build"
+            "browserTarget": "openhab-helper:build",
+            "outputPath": "frontend/src/locale"
           }
         }
       }

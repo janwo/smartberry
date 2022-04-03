@@ -91,10 +91,7 @@ const jsonStoragePlugin = {
       }
     })
 
-    server.events.on('stop', async () => {
-      await jsonServer.stop({ timeout: 60 * 1000 })
-    })
-
+    server.events.on('start', () => server.control(jsonServer))
     await jsonServer.start()
     console.log('JSON-Server running on %s', jsonServer.info.uri)
   }

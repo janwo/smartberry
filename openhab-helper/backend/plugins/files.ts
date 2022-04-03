@@ -1,30 +1,39 @@
 import inertPlugin from '@hapi/inert'
+import * as Accept from '@hapi/accept'
+import * as fs from 'fs'
 import * as Hapi from '@hapi/hapi'
 
 const filesPlugin = {
   name: 'app/files',
   register: async (server: Hapi.Server) => {
+    const frontendPath = process.cwd() + '/dist/frontend'
+    const locales = fs.readdirSync(frontendPath)
     await server.register(inertPlugin)
+    for (const locale of locales) {
+      server.route({
+        method: 'GET',
+        options: { auth: false },
+        path: '/' + locale + '/{p*}',
+        handler: {
+          directory: {
+            path: frontendPath + '/' + locale,
+            listing: false
+          }
+        }
+      })
+    }
+
     server.route({
       method: 'GET',
       options: { auth: false },
       path: '/{p*}',
-      handler: {
-        directory: {
-          path: './frontend',
-          index: ['index.html'],
-          listing: false
-        }
+      handler: (request, h) => {
+        const language = Accept.language(
+          request.headers['accept-language'],
+          locales
+        )
+        return h.file(frontendPath + '/' + language + '/index.html').code(200)
       }
-    })
-
-    server.ext('onPreResponse', (request, reply) => {
-      const response = request.response as any
-      if (response.isBoom && response.output.statusCode === 404) {
-        return reply.file('./frontend/index.html').code(200)
-      }
-
-      return reply.continue
     })
   }
 }

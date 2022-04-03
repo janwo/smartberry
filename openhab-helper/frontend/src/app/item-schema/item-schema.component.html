@@ -1,0 +1,26 @@
+<span class="h5 has-text-primary" i18n *ngIf="root">Schema</span>
+<header class="has-background-white-ter">
+  <ng-container *ngFor="let tag of schema?.tags"
+    ><p class="tag has-background-grey-lighter">{{ tag }}</p>
+    <span>{{
+      schema?.tagRelationship != 'or' ? 'and' : 'or'
+    }}</span></ng-container
+  >
+  <p *ngIf="schema?.description">{{ schema?.description }}</p>
+</header>
+<app-item-schema
+  [schema]="child"
+  [root]="false"
+  *ngFor="let child of schema?.childs"></app-item-schema>
+<span class="h5 has-text-primary" *ngIf="items" i18n
+  >The following items comply with the schema</span
+>
+<ul *ngIf="items !== undefined">
+  <li class="tag is-clickable" *ngFor="let item of items" (click)="open(item)">
+    <span>{{ item.label }}:</span>
+    <span class="is-uppercase has-text-weight-bold">{{
+      item | statedescription
+    }}</span>
+  </li>
+  <li *ngIf="items.length == 0" i18n>No items had been found</li>
+</ul>

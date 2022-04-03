@@ -157,21 +157,23 @@ function trigger_scene_items(scene, pokeOnly = false) {
   }
 }
 
-function apply_context(scene, context) {
-  const contextState = json_storage(scene).get(
-    'scenes',
-    'context-states',
-    context
-  )
+function apply_context(context) {
+  for (const scene of items.getItem('gCore_Scenes').members) {
+    const contextState = json_storage(scene).get(
+      'scenes',
+      'context-states',
+      context
+    )
 
-  const sceneStates = get_scene_states(scene)
-  if (
-    Object.values(sceneStates).some((sceneState) => sceneState == contextState)
-  ) {
-    scene.postUpdate(stringifiedFloat(contextState))
-    return true
+    const sceneStates = get_scene_states(scene)
+    if (
+      Object.values(sceneStates).some(
+        (sceneState) => sceneState == contextState
+      )
+    ) {
+      scene.postUpdate(stringifiedFloat(contextState))
+    }
   }
-  return false
 }
 
 function scriptLoaded() {

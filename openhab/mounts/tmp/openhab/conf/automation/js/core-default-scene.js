@@ -10,6 +10,13 @@ const DefaultSceneState = {
   SLEEP: 3
 }
 
+const DefaultSceneContextStates = {
+  HOME: 'home',
+  AWAY_SHORT: 'away-short',
+  AWAY_LONG: 'away-long',
+  SLEEP: 'sleep'
+}
+
 function scriptLoaded() {
   rules.JSRule({
     name: 'default_scene_updated',
@@ -18,14 +25,9 @@ function scriptLoaded() {
     triggers: [triggers.ItemStateUpdateTrigger('Core_DefaultScene')],
     execute: (event) => {
       const item = items.getItem(event.itemName)
-      if (item.state == DefaultSceneState.SLEEP) {
-        for (const scene of items.getItem('gCore_Scenes').members) {
-          const contexts = ['sleep', 'reset']
-          for (const context of contexts) {
-            if (apply_context(scene, context)) {
-              break
-            }
-          }
+      for (const state in DefaultSceneState) {
+        if (item.state == DefaultSceneState[state]) {
+          apply_context(DefaultSceneContextStates[state])
         }
       }
     }
