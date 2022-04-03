@@ -90,7 +90,7 @@ const openhabPlugin = {
           request
         )
         const map = result.reduce((obj: any, item) => {
-          obj[item.name] = item.label
+          obj[item.name] = item.label || item.name
           return obj
         }, {})
         return h.response({ data: map }).code(200)

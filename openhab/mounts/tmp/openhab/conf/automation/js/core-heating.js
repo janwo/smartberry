@@ -19,6 +19,7 @@ const OPEN_CONTACT_EQUIPMENT_TAGS = ['Door', 'Window']
 const OPEN_CONTACT_POINT_TAGS = ['OpenState']
 const HEATING_EQUIPMENT_TAGS = ['RadiatorControl']
 const HEATING_POINT_TAGS = ['Setpoint']
+const TEMPERATURE_MEASUREMENT_POINT_TAGS = [['Measurement', 'Temperature']]
 
 function scriptLoaded() {
   rules.JSRule({
@@ -42,6 +43,13 @@ function scriptLoaded() {
         'gCore_Heating_Thermostat_Mode',
         HEATING_EQUIPMENT_TAGS,
         HEATING_POINT_TAGS
+      )
+
+      // Sync group gCore_Heating_Temperature with temperature items.
+      sync_group_with_semantic_items(
+        'gCore_Heating_Temperature',
+        undefined,
+        TEMPERATURE_MEASUREMENT_POINT_TAGS
       )
     }
   })
@@ -140,5 +148,6 @@ module.exports = {
   OPEN_CONTACT_EQUIPMENT_TAGS,
   OPEN_CONTACT_POINT_TAGS,
   HEATING_EQUIPMENT_TAGS,
-  HEATING_POINT_TAGS
+  HEATING_POINT_TAGS,
+  TEMPERATURE_MEASUREMENT_POINT_TAGS
 }
