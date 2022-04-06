@@ -201,22 +201,6 @@ function scriptLoaded() {
 
       // Check helper items
       for (const sceneMember of sceneMembers) {
-        // check metadata of context states
-        const contextStates = json_storage(sceneMember).get(
-          'scenes',
-          'context-states'
-        )
-
-        const defaultContextStates = {
-          reset: false
-        }
-
-        json_storage(sceneMember).set(
-          'scenes',
-          'context-states',
-          merge(defaultContextStates, contextStates)
-        )
-
         // Create scene store trigger
         const helper = create_helper_item(
           sceneMember,
@@ -368,7 +352,7 @@ function scriptLoaded() {
 
       if (
         !triggerInfo ||
-        !(triggerInfo['states']?.split(',') || [item.state]).some(
+        !(triggerInfo['states'] || [item.state]).some(
           (state) => state == item.state
         )
       ) {

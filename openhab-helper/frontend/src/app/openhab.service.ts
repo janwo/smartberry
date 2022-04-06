@@ -105,12 +105,6 @@ export class OpenhabService implements CanActivate {
         this.getOptions()
       )
     },
-    triggerItems: () => {
-      return this.http.get<GetItemListResponse>(
-        `${environment.API_URL()}/scene-trigger-items`,
-        this.getOptions()
-      )
-    },
     updateCustomMembers: (item: string, customMembers: string[]) => {
       return this.http.post<PostPutDeleteResponse>(
         `${environment.API_URL()}/scene-item/${item}/custom-members`,
@@ -137,6 +131,30 @@ export class OpenhabService implements CanActivate {
     deleteContextStates: (item: string) => {
       return this.http.delete<PostPutDeleteResponse>(
         `${environment.API_URL()}/scene-item/${item}/context-states`,
+        this.getOptions()
+      )
+    },
+    triggerItems: () => {
+      return this.http.get<GetItemListResponse>(
+        `${environment.API_URL()}/scene-trigger-items`,
+        this.getOptions()
+      )
+    },
+    updateTriggerState: (
+      item: string,
+      triggerState: {
+        targetScene: string
+        to: any
+        from?: any
+        states?: any[]
+      }
+    ) => {
+      triggerState.states = triggerState.states?.length
+        ? triggerState.states
+        : undefined
+      return this.http.post<PostPutDeleteResponse>(
+        `${environment.API_URL()}/scene-trigger-item/${item}/trigger-state`,
+        { triggerState },
         this.getOptions()
       )
     }

@@ -17,7 +17,8 @@ const filesPlugin = {
         handler: {
           directory: {
             path: frontendPath + '/' + locale,
-            listing: false
+            listing: false,
+            index: true
           }
         }
       })
@@ -28,11 +29,11 @@ const filesPlugin = {
       options: { auth: false },
       path: '/{p*}',
       handler: (request, h) => {
-        const language = Accept.language(
+        const locale = Accept.language(
           request.headers['accept-language'],
           locales
         )
-        return h.file(frontendPath + '/' + language + '/index.html').code(200)
+        return h.file(frontendPath + '/' + locale + '/index.html').code(200)
       }
     })
   }

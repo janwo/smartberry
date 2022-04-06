@@ -118,28 +118,7 @@
             <button type="submit" class="button is-primary" i18n>Save</button>
           </div>
         </div>
-        <p
-          i18n
-          class="help is-danger"
-          *ngIf="
-            heatingItem.form.touched && heatingItem.form.hasError('required')
-          ">
-          Values are required.
-        </p>
-        <p
-          i18n
-          class="help is-danger"
-          *ngIf="
-            heatingItem.form.touched && heatingItem.form.hasError('invalid')
-          ">
-          Values are invalid.
-        </p>
-        <p
-          i18n
-          class="help is-danger"
-          *ngIf="heatingItem.form.hasError('connection')">
-          No connection to your openHAB-Instance.
-        </p>
+        <app-error [form]="heatingItem.form"></app-error>
       </form>
     </app-accordion>
   </div>

@@ -15,7 +15,15 @@ const init = async () => {
     port: 8081,
     host: '0.0.0.0',
     routes: {
-      cors: process.env.build !== 'production'
+      cors: process.env.build !== 'production',
+      validate: {
+        failAction: async (request, h, err) => {
+          if (process.env.build !== 'production') {
+            console.error(err)
+            throw err
+          }
+        }
+      }
     }
   })
 

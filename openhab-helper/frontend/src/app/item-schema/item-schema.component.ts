@@ -28,12 +28,16 @@ interface ItemSchema {
 export class ItemSchemaComponent {
   @Input() schema?: ItemSchema
   @Input() @HostBinding('class.first') root?: boolean = true
+  @Input() items?: Item[]
   @HostBinding('class.last') get valid() {
     return this.schema?.childs
   }
-  @Input() items?: Item[]
 
   open(item: Item) {
-    window.open(item.link.replace('/rest/', '/settings/'))
+    const link = item.link.replace(
+      /(https?):\/\/.*:(\d+)\/rest\//,
+      `$1://${window.location.hostname}:$2/settings/`
+    )
+    window.open(link)
   }
 }

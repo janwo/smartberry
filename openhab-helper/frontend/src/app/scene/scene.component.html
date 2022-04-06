@@ -46,6 +46,7 @@
       When finished, trigger item
       <em>Core_Scenes_ReloadStates</em> to reinitialize all scene states.
     </p>
+
     <app-item-schema
       [items]="sceneItems | map: 'item'"
       [schema]="{
@@ -61,6 +62,7 @@
       use custom scene members instead. Select <em>Add default members</em> to
       include all light switchables as well.
     </p>
+
     <app-accordion
       [title]="sceneItem.item.label"
       [hintClasses]="
@@ -109,10 +111,7 @@
             </div>
           </div>
           <div
-            class="field"
-            [ngClass]="{
-              'has-addons': sceneItem.item.name != 'Core_DefaultScene'
-            }"
+            class="field has-addons"
             formArrayName="customMembers"
             *ngFor="
               let member of sceneItem.forms.customMembers.controls.customMembers
@@ -120,23 +119,27 @@
               index as i
             ">
             <div class="control">
+              <span class="button is-static" i18n>Member</span>
+            </div>
+            <div class="control">
               <div
                 class="select is-fullwidth"
                 [ngClass]="{ 'is-danger': member.touched && member.errors }">
                 <select [formControlName]="i">
-                  <option disabled [value]="">Select Item</option>
+                  <option disabled value="">Select Item</option>
                   <option
                     *ngFor="let item of itemsMap | keyvalue"
                     [value]="item.key">
-                    {{ item.value }}
+                    {{ item.value }} ({{ item.key }})
                   </option>
                 </select>
               </div>
             </div>
-            <div class="control">
+            <div
+              class="control"
+              *ngIf="sceneItem.item.name != 'Core_DefaultScene'">
               <button
                 type="button"
-                *ngIf="sceneItem.item.name != 'Core_DefaultScene'"
                 (click)="sceneItem.removeCustomMember(i)"
                 class="button is-primary"
                 i18n
@@ -164,32 +167,7 @@
               <button type="submit" class="button is-primary" i18n>Save</button>
             </div>
           </div>
-          <p
-            i18n
-            class="help is-danger"
-            *ngIf="
-              sceneItem.forms.customMembers.form.touched &&
-              sceneItem.forms.customMembers.controls.customMembers.hasError(
-                'required'
-              )
-            ">
-            Values are required.
-          </p>
-          <p
-            i18n
-            class="help is-danger"
-            *ngIf="
-              sceneItem.forms.customMembers.form.touched &&
-              sceneItem.forms.customMembers.form.hasError('invalid')
-            ">
-            Values are invalid.
-          </p>
-          <p
-            i18n
-            class="help is-danger"
-            *ngIf="sceneItem.forms.customMembers.form.hasError('connection')">
-            No connection to your openHAB-Instance.
-          </p>
+          <app-error [form]="sceneItem.forms.customMembers.form"></app-error>
         </form>
       </fieldset>
     </app-accordion>
@@ -232,15 +210,18 @@
               sceneItem.forms.contextStates.form.touched &&
               !sceneItem.forms.contextStates.form.valid
           }">
-          <ng-container formArrayName="contextStates">
-            <div
-              class="field has-addons"
-              *ngFor="
-                let member of sceneItem.forms.contextStates.controls
-                  .contextStates.controls;
-                index as i
-              "
-              [formGroupName]="i">
+          <div
+            formArrayName="contextStates"
+            class="field has-addons"
+            *ngFor="
+              let member of sceneItem.forms.contextStates.controls.contextStates
+                .controls;
+              index as i
+            ">
+            <ng-container [formGroupName]="i">
+              <div class="control">
+                <span class="button is-static" i18n>Context</span>
+              </div>
               <div class="control">
                 <input
                   class="input"
@@ -251,7 +232,7 @@
                   }"
                   formControlName="context"
                   type="text"
-                  placeholder="Context" />
+                  placeholder="Context State" />
               </div>
               <div class="control">
                 <div
@@ -262,7 +243,7 @@
                       member.get('state')?.errors
                   }">
                   <select formControlName="state">
-                    <option i18n disabled [value]="">Select state</option>
+                    <option i18n disabled value="">Select state</option>
                     <option
                       *ngFor="
                         let state of sceneItem.item.stateDescription?.options
@@ -291,8 +272,8 @@
                   Remove
                 </button>
               </div>
-            </div>
-          </ng-container>
+            </ng-container>
+          </div>
           <div class="field is-grouped">
             <div class="control">
               <button
@@ -307,30 +288,7 @@
               <button type="submit" class="button is-primary" i18n>Save</button>
             </div>
           </div>
-          <p
-            i18n
-            class="help is-danger"
-            *ngIf="
-              sceneItem.forms.contextStates.form.touched &&
-              sceneItem.forms.contextStates.form.hasError('required')
-            ">
-            Values are required.
-          </p>
-          <p
-            i18n
-            class="help is-danger"
-            *ngIf="
-              sceneItem.forms.contextStates.form.touched &&
-              sceneItem.forms.contextStates.form.hasError('invalid')
-            ">
-            Values are invalid.
-          </p>
-          <p
-            i18n
-            class="help is-danger"
-            *ngIf="sceneItem.forms.contextStates.form.hasError('connection')">
-            No connection to your openHAB-Instance.
-          </p>
+          <app-error [form]="sceneItem.forms.contextStates.form"></app-error>
         </form>
       </fieldset>
     </app-accordion>
@@ -346,6 +304,8 @@
     </div>
     <p i18n class="block">
       When a scene trigger item is triggered, it changes a given scene state.
+    </p>
+    <p class="block" i18n>
       Each scene creates scene trigger items for every scene state by default.
       However, you can define custom scene trigger items by tagging them with
       <em>CoreSceneTrigger</em>.
@@ -354,6 +314,7 @@
       You may tag a motion sensor to be a custom scene trigger to reset the
       default scene automatically.
     </p>
+
     <app-item-schema
       [items]="sceneTriggerItems | map: 'item'"
       [schema]="{
@@ -363,6 +324,7 @@
 
     <h3 i18n>Adjust trigger items</h3>
     <p class="block" i18n></p>
+
     <app-accordion
       [title]="sceneTriggerItem.item.label"
       [hintClasses]="['has-text-primary', 'has-text-weight-bold']"
@@ -377,111 +339,145 @@
             'has-error':
               sceneTriggerItem.form.touched && !sceneTriggerItem.form.valid
           }">
-          <div class="field">
-            <div
-              class="select"
-              [ngClass]="{
-                'is-danger':
-                  sceneTriggerItem.form.touched &&
-                  sceneTriggerItem.form.controls['targetScene'].errors
-              }">
-              <select formControlName="targetScene">
-                <option i18n disabled [value]="">Select state</option>
-                <option
-                  *ngFor="
-                    let state of sceneTriggerItem.item.stateDescription?.options
-                  "
-                  [value]="state.value">
-                  {{ state.label }}
-                </option>
-              </select>
+          <label class="label" i18n>Trigger States</label>
+          <p
+            class="block"
+            *ngIf="!sceneTriggerItem.controls.states.controls.length">
+            Any state updates will change your scene state.
+          </p>
+          <div
+            class="field has-addons"
+            formArrayName="states"
+            *ngFor="
+              let member of sceneTriggerItem.controls.states.controls;
+              index as i
+            ">
+            <div class="control">
+              <span class="button is-static" i18n>State</span>
             </div>
-          </div>
-          <div class="field is-grouped">
-            <div
-              class="select"
-              [ngClass]="{
-                'is-danger':
-                  sceneTriggerItem.form.touched &&
-                  sceneTriggerItem.form.controls['from'].errors
-              }">
-              <select formControlName="from">
-                <option i18n disabled [value]="">Select state</option>
-                <option
-                  *ngFor="
-                    let state of sceneTriggerItem.item.stateDescription?.options
-                  "
-                  [value]="state.value">
-                  {{ state.label }}
-                </option>
-              </select>
-            </div>
-          </div>
-          <div class="field">
-            <div
-              class="select"
-              [ngClass]="{
-                'is-danger':
-                  sceneTriggerItem.form.touched &&
-                  sceneTriggerItem.form.controls['to'].errors
-              }">
-              <select formControlName="to">
-                <option i18n disabled [value]="">Select state</option>
-                <option
-                  *ngFor="
-                    let state of sceneTriggerItem.item.stateDescription?.options
-                  "
-                  [value]="state.value">
-                  {{ state.label }}
-                </option>
-              </select>
-            </div>
-          </div>
-          <div formArrayName="states" class="field has-addons">
-            <div
-              class="control"
-              *ngFor="
-                let member of sceneTriggerItem.controls.states.controls;
-                index as i
-              "
-              [formGroupName]="i">
+            <div class="control">
               <input
                 class="input"
                 [ngClass]="{
                   'is-danger':
                     sceneTriggerItem.form.touched &&
-                    sceneTriggerItem.form.controls['states'].errors
+                    sceneTriggerItem.form.get('states')?.errors
                 }"
-                [formGroupName]="'i'"
+                [formControlName]="i"
                 type="text"
-                placeholder="" />
+                placeholder="State" />
+            </div>
+            <div class="control">
+              <button
+                type="button"
+                (click)="sceneTriggerItem.removeState(i)"
+                class="button is-primary"
+                i18n
+                [ngClass]="{
+                  'is-light': !(member.touched && member.errors),
+                  'is-danger': member.touched && member.errors
+                }">
+                Remove
+              </button>
             </div>
           </div>
-
-          <p
-            i18n
-            class="help is-danger"
-            *ngIf="
-              sceneTriggerItem.form.touched &&
-              sceneTriggerItem.form.hasError('required')
-            ">
-            Values are required.
-          </p>
-          <p
-            i18n
-            class="help is-danger"
-            *ngIf="
-              sceneTriggerItem.form.touched &&
-              sceneTriggerItem.form.hasError('invalid')
-            ">
-            Values are invalid.
-          </p>
-          <p
-            i18n
-            class="help is-danger"
-            *ngIf="sceneTriggerItem.form.hasError('connection')">
-            No connection to your openHAB-Instance.
-          </p>
+          <div class="field is-grouped">
+            <div class="control">
+              <button
+                type="button"
+                (click)="sceneTriggerItem.addState()"
+                class="button is-light is-primary"
+                i18n>
+                {{
+                  !sceneTriggerItem.controls.states.controls.length
+                    ? 'Restrict States'
+                    : 'Add State'
+                }}
+              </button>
+            </div>
+          </div>
+          <label class="label" i18n>Scene adjustments</label>
+          <div class="field has-addons">
+            <div class="control">
+              <span class="button is-static" i18n>Target Scene</span>
+            </div>
+            <div class="control">
+              <div
+                class="select"
+                [ngClass]="{
+                  'is-danger':
+                    sceneTriggerItem.form.touched &&
+                    sceneTriggerItem.form.get('targetScene')?.errors
+                }">
+                <select formControlName="targetScene">
+                  <option i18n disabled value="">Select scene</option>
+                  <option
+                    *ngFor="let sceneItem of sceneItems"
+                    [value]="sceneItem.item.name">
+                    {{ sceneItem.item.label }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="field has-addons" *ngIf="sceneTriggerItem.getScene()">
+            <div class="control">
+              <span class="button is-static" i18n>New Scene State</span>
+            </div>
+            <div class="control">
+              <div
+                class="select"
+                [ngClass]="{
+                  'is-danger':
+                    sceneTriggerItem.form.touched &&
+                    sceneTriggerItem.form.get('to')?.errors
+                }">
+                <select formControlName="to">
+                  <option i18n disabled value="">Select state</option>
+                  <option
+                    *ngFor="
+                      let state of sceneTriggerItem.getScene()?.stateDescription
+                        ?.options
+                    "
+                    [value]="state.value">
+                    {{ state.label }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="field has-addons" *ngIf="sceneTriggerItem.getScene()">
+            <div class="control">
+              <span class="button is-static" i18n>Only If In State</span>
+            </div>
+            <div class="control">
+              <div
+                class="select"
+                [ngClass]="{
+                  'is-danger':
+                    sceneTriggerItem.form.touched &&
+                    sceneTriggerItem.form.get('from')?.errors
+                }">
+                <select formControlName="from">
+                  <option i18n value="">Any State</option>
+                  <option
+                    *ngFor="
+                      let state of sceneTriggerItem.getScene()?.stateDescription
+                        ?.options
+                    "
+                    [value]="state.value">
+                    {{ state.label }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="field is-grouped">
+            <div class="control">
+              <button type="submit" class="button is-primary" i18n>Save</button>
+            </div>
+          </div>
+          <app-error [form]="sceneTriggerItem.form"></app-error>
         </form>
       </fieldset>
     </app-accordion>

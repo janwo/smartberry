@@ -15,20 +15,18 @@ const openhabHeatingPlugin = {
           true
         )
         const result = (items.members || []).map((item) => {
-          const jsonStorage = server.plugins['app/json-storage'].get(
+          let commandMap = server.plugins['app/json-storage'].get(
             item.name,
             'heating/command-map'
           )
-          if (jsonStorage) {
-            item.jsonStorage = {
-              commandMap: {
-                off: jsonStorage['0.0'],
-                on: jsonStorage['1.0'],
-                eco: jsonStorage['2.0'],
-                power: jsonStorage['3.0']
-              }
-            }
+          commandMap = {
+            off: commandMap['0.0'],
+            on: commandMap['1.0'],
+            eco: commandMap['2.0'],
+            power: commandMap['3.0']
           }
+
+          item.jsonStorage = { commandMap }
           return item
         })
         return h.response({ data: result }).code(200)
@@ -40,7 +38,11 @@ const openhabHeatingPlugin = {
       path: '/api/heating-mode-item/{item}/command-map',
       options: {
         validate: {
-          params: { item: Joi.string().required() },
+          params: {
+            item: Joi.string()
+              .pattern(/[a-zA-Z_0-9]+/)
+              .required()
+          },
           payload: {
             commandMap: Joi.object({
               on: Joi.string().alphanum().required(),
@@ -72,7 +74,11 @@ const openhabHeatingPlugin = {
       path: '/api/heating-mode-item/{item}/command-map',
       options: {
         validate: {
-          params: { item: Joi.string().required() }
+          params: {
+            item: Joi.string()
+              .pattern(/[a-zA-Z_0-9]+/)
+              .required()
+          }
         }
       },
       handler: async (request, h) => {
