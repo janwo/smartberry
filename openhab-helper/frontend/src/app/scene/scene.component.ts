@@ -39,6 +39,8 @@ interface SceneTriggerItemHelper {
     targetScene: FormControl
     to: FormControl
     from: FormControl
+    untilActive: FormControl
+    untilUnit: FormControl
     states: FormArray
   }
   getScene(): Item | undefined
@@ -112,16 +114,13 @@ export class SceneComponent implements OnInit {
     const forms = {
       customMembers: {
         form: customMembersForm,
-        controls: customMembersForm.controls as {
-          defaultMembers: FormControl
-          customMembers: FormArray
-        }
+        controls:
+          customMembersForm.controls as SceneItemHelper['forms']['customMembers']['controls']
       },
       contextStates: {
         form: contextStatesForm,
-        controls: contextStatesForm.controls as {
-          contextStates: FormArray
-        }
+        controls:
+          contextStatesForm.controls as SceneItemHelper['forms']['contextStates']['controls']
       }
     }
 
@@ -165,6 +164,12 @@ export class SceneComponent implements OnInit {
     const triggerStateConfig =
       sceneTriggerItem.jsonStorage?.['triggerState'] || {}
 
+    const until = {
+      hours: triggerStateConfig.hoursUntilActive,
+      seconds: triggerStateConfig.secondsUntilActive,
+      minutes: triggerStateConfig.minutesUntilActive
+    }
+
     const form = this.formBuilder.group({
       from: this.formBuilder.control(triggerStateConfig.from || ''),
       to: this.formBuilder.control(triggerStateConfig.to || '', [
@@ -178,15 +183,18 @@ export class SceneComponent implements OnInit {
       targetScene: this.formBuilder.control(
         triggerStateConfig.targetScene || '',
         [Validators.required]
+      ),
+      untilActive: this.formBuilder.control(
+        Object.values(until).find((value: number) => value > 0) || ''
+      ),
+      untilUnit: this.formBuilder.control(
+        Object.keys(until).find(
+          (key) => until[key as keyof typeof until] > 0
+        ) || 'hours'
       )
     })
 
-    const controls = form.controls as {
-      targetScene: FormControl
-      to: FormControl
-      from: FormControl
-      states: FormArray
-    }
+    const controls = form.controls as SceneTriggerItemHelper['controls']
 
     return {
       item: sceneTriggerItem,
@@ -288,8 +296,24 @@ export class SceneComponent implements OnInit {
     this.openhabService.scene
       .updateTriggerState(item.item.name, {
         targetScene: item.controls.targetScene.value,
-        from: item.controls.from.value ? item.controls.from.value : undefined,
+        from:
+          item.controls.from.value != '' ? item.controls.from.value : undefined,
         to: item.controls.to.value,
+        hoursUntilActive:
+          item.controls.untilUnit.value == 'hours' &&
+          item.controls.untilActive.value != ''
+            ? Number.parseInt(item.controls.untilActive.value)
+            : undefined,
+        minutesUntilActive:
+          item.controls.untilUnit.value == 'minutes' &&
+          item.controls.untilActive.value != ''
+            ? Number.parseInt(item.controls.untilActive.value)
+            : undefined,
+        secondsUntilActive:
+          item.controls.untilUnit.value == 'seconds' &&
+          item.controls.untilActive.value != ''
+            ? Number.parseInt(item.controls.untilActive.value)
+            : undefined,
         states: item.controls.states.value
       })
       .subscribe({

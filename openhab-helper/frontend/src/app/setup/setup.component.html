@@ -42,8 +42,7 @@
       </div>
     </div>
     <p class="block" i18n>
-      Aktualisiere deinen API-Token, um weitere Konfigurationsmöglichkeiten für
-      smartberry zu nutzen.
+      Update your API token to use more configuration options for SmartBerry.
     </p>
     <form
       [formGroup]="apiTokenForm"
@@ -78,30 +77,7 @@
         </div>
       </fieldset>
 
-      <p
-        class="help is-danger"
-        *ngIf="
-          apiTokenForm.touched &&
-          apiTokenForm.controls['apiToken'].hasError('invalidToken')
-        "
-        i18n>
-        API-Key is invalid.
-      </p>
-      <p
-        class="help is-danger"
-        *ngIf="
-          apiTokenForm.touched &&
-          apiTokenForm.controls['apiToken'].hasError('required')
-        "
-        i18n>
-        API-Key is required.
-      </p>
-      <p
-        i18n
-        class="help is-danger"
-        *ngIf="apiTokenForm.controls['apiToken'].hasError('connection')">
-        No connection to your openHAB-Instance.
-      </p>
+      <app-error [form]="apiTokenForm"></app-error>
     </form>
   </div>
 </div>

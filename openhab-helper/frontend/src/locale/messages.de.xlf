@@ -1,7 +1,618 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
     <body>
+      <trans-unit id="6492831808763156510" datatype="html">
+        <source>Setup</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/app-routing.module.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/setup/setup.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7803402955830827909" datatype="html">
+        <source>Climate Settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/app-routing.module.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/climate/climate.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9062157669967713330" datatype="html">
+        <source>Scene Settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/app-routing.module.ts</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5135385837161201446" datatype="html">
+        <source>Light Settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/app-routing.module.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/light/light.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9160455776457856632" datatype="html">
+        <source>Security Settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/app-routing.module.ts</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/security/security.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5774443744107616904" datatype="html">
+        <source>Presence Settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/app-routing.module.ts</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/presence/presence.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6148491700411607071" datatype="html">
+        <source> Adjust the way how SmartBerry handles climate control. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/climate/climate.component.html</context>
+          <context context-type="linenumber">9,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3435053421209648212" datatype="html">
+        <source>Radiators</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/climate/climate.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="429906592579935496" datatype="html">
+        <source> You can set the mode of all your radiators at once. Additionally, SmartBerry turn radiators off, if windows or doors are openend. Current modes are <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>OFF<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>, <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>ON<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>, <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>ECO<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> and <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>POWER<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/climate/climate.component.html</context>
+          <context context-type="linenumber">24,29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2844976128878448430" datatype="html">
+        <source> In order to let SmartBerry handle all radiators for you, organize your radiator items as shown below. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/climate/climate.component.html</context>
+          <context context-type="linenumber">30,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7653717159242500454" datatype="html">
+        <source>Adjust state commands</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/climate/climate.component.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3614116355920335966" datatype="html">
+        <source> Adjust the commands sent to the heating mode item for each available state. Current choices are <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>OFF (0.0)<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>, <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>ON (1.0)<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>, <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>ECO (2.0)<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> or <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>POWER` (3.0)<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/climate/climate.component.html</context>
+          <context context-type="linenumber">43,46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7640416587392187464" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{
+        countValues(heatingItem.form)
+          | i18nPlural
+            : { &apos;=0&apos;: &apos;No options&apos;, &apos;=1&apos;: &apos;One option&apos;, other: &apos;# options&apos; }
+      }}"/> selected</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/climate/climate.component.html</context>
+          <context context-type="linenumber">56,60</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">74,82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3768927257183755959" datatype="html">
+        <source>Save</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/climate/climate.component.html</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">167</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">288</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">512</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/setup/setup.component.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2980581628604105155" datatype="html">
+        <source>Doors- and Windows</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/climate/climate.component.html</context>
+          <context context-type="linenumber">131</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7447768655927242322" datatype="html">
+        <source> You can define contact items that automatically turn off heating in open state. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/climate/climate.component.html</context>
+          <context context-type="linenumber">134,137</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/light/light.component.html</context>
+          <context context-type="linenumber">82,85</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/presence/presence.component.html</context>
+          <context context-type="linenumber">61,64</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/security/security.component.html</context>
+          <context context-type="linenumber">66,69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4190196007208578994" datatype="html">
+        <source> Values are required. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/error/error.component.html</context>
+          <context context-type="linenumber">2,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="850366812744739722" datatype="html">
+        <source> Values are invalid. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/error/error.component.html</context>
+          <context context-type="linenumber">5,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6256089644514043087" datatype="html">
+        <source> No connection to your openHAB-Instance. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/error/error.component.html</context>
+          <context context-type="linenumber">8,10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1721827980245086554" datatype="html">
+        <source>Schema</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/item-schema/item-schema.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4548308453457727363" datatype="html">
+        <source>The following items comply with the schema</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/item-schema/item-schema.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2925959700753727542" datatype="html">
+        <source>No items had been found</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/item-schema/item-schema.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3511240472323882653" datatype="html">
+        <source> Adjust the way how SmartBerry handles your lighting. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/light/light.component.html</context>
+          <context context-type="linenumber">9,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3135285079021085361" datatype="html">
+        <source>Light Items</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/light/light.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6448257404005478859" datatype="html">
+        <source> Lights are triggered automatically in dependence to daylight and presence changes. The following equipments and points are used for a proper lights configuration. | Role | Needed equipment tags | Needed point tags | | :--------------------- | :--------------------------------------------------- | :---------------------------- | | Light switchable | `Lightbulb` **or** `WallSwitch` **or** `PowerOutlet` | `Switch` | | Light measurement item | | `Measurement` **and** `Light` | | Astro Sun State | | `CoreAstroSun` | Each location having &quot;Light switchable&quot; - items will receive the following items in order to adjust light configuration. To adjust the light management configuration, you can adjust the items accordingly. | Item name | Group membership | Description | | :------------ | :------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------- | | Autogenerated | `gCore_Lights_DarkMode` _and corresponding location group_ | Set the lighting mode in _dark_ conditions. Current choices are `OFF`, `ON `, `AUTO_ON` , `UNCHANGED` or `SIMULATE` | | Autogenerated | `gCore_Lights_ObscuredMode` _and corresponding location group_ | Set the lighting mode in _obscured_ conditions. Current choices are `OFF`, `ON `, `AUTO_ON` , `UNCHANGED` or `SIMULATE` | | Autogenerated | `gCore_Lights_BrightMode` _and corresponding location group_ | Set the lighting mode in _bright_ conditions. Current choices are `OFF`, `ON `, `AUTO_ON` , `UNCHANGED` or `SIMULATE` | To adjust general configurations within the lights context, you can modify the following items. | Item name | Description | | :----------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------- | | Core_Lights_AmbientLightCondition | Identified light conditions | | Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured | Upper luminance level for obscured light conditions | | Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark | Upper luminance level for dark light conditions | | Core_Lights_DefaultDuration | Minutes without presence events until lights are turned off in `AUTO_ON ` mode. | | Core_Lights_WelcomeLight_DarkMode | Turn this on to turn on all light switchables in `AUTO_ON` mode during _dark_ light conditions when come back home | | Core_Lights_WelcomeLight_ObscuredMode | Turn this on to turn on all light switchables in `AUTO_ON` mode during _obscured_ light conditions when come back home | | Core_Lights_WelcomeLight_BrightMode | Turn this on to turn on all light switchables in `AUTO_ON` mode during _bright_ light conditions when come back home | </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/light/light.component.html</context>
+          <context context-type="linenumber">24,65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1411699471755040242" datatype="html">
+        <source>Scene Trigger Items</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/light/light.component.html</context>
+          <context context-type="linenumber">79</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/presence/presence.component.html</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">302</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/security/security.component.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4411721389934795400" datatype="html">
+        <source> Adjust the way how SmartBerry reacts to presence changes. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/presence/presence.component.html</context>
+          <context context-type="linenumber">9,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="794120057687191331" datatype="html">
+        <source>Scenes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/presence/presence.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1254681778275214186" datatype="html">
+        <source> The presence management will automatically adjust the presence state in dependence to the last presence detection events. The following items are scoped. | Role | Needed point tags | | :-------------------- | :------------------------------- | | Presence trigger item | `Presence` **and** `Measurement` | To adjust the presence management configuration, you can adjust the following presence items. | Item name | Description | | :-------------------------------- | :--------------------------------------------------------------------------------- | | Core_Presence | The actual presence state. Current choices are `HOME`, `AWAY_SHORT` or `AWAY_LONG` | | Core_Presence_HoursUntilAwayShort | Set hours until presence management sets the presence state to `AWAY_SHORT` | | Core_Presence_HoursUntilAwayLong | Set hours until presence management sets the presence state to `AWAY_LONG` | Presence items can also trigger absence events. To do so, add the desired state values via namespace `core` to the item with the `Presence` tag as shown below. By default, any `ON`-like state will trigger presence. ``` presence: absence-states: &quot;OFF&quot; [optional, states that trigger absence, defaults to empty list] presence-states: &quot;ON, OPEN&quot; [optional, states that trigger presence, defaults to &quot;ON&quot; and &quot;OPEN&quot;] ``` </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/presence/presence.component.html</context>
+          <context context-type="linenumber">24,44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="597000058698760718" datatype="html">
+        <source> Adjust the way how SmartBerry handles scenes. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">9,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4699103867767955510" datatype="html">
+        <source> Scenes allow multiple devices to be controlled with a single command. In SmartBerry <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Core_DefaultScene<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> is the preconfigured default scene and has four states: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">24,28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4039831461930775442" datatype="html">
+        <source> Scene states of user defined scenes can be changed. Edit or add the scene item&apos;s <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>State Description<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> and enter each scene state under <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Options<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> on a separate line, e.g. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">35,40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7267279085244368339" datatype="html">
+        <source> When finished, trigger item <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Core_Scenes_ReloadStates<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> to reinitialize all scene states. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">45,48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7795509311191009906" datatype="html">
+        <source>Adjust scene members</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2407408477355556841" datatype="html">
+        <source> A scene saves the states of <x id="START_LINK" ctype="x-a" equiv-text="&lt;a routerLink=&quot;/light&quot;&gt;"/>all light switchable items<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> within the same location for every single scene state. You can change this behavior and use custom scene members instead. Select <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Add default members<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> to include all light switchables as well. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">58,64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3662906721136140559" datatype="html">
+        <source> You cannot change custom members of the default scene. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">88,90</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7715649858260382862" datatype="html">
+        <source><x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input type=&quot;checkbox&quot; formControlName=&quot;defaultMembers&quot; /&gt;"/> Add default members </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">108,110</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6297950127540572260" datatype="html">
+        <source>Member</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">122</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8212177249756365917" datatype="html">
+        <source> Remove </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">149,151</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">271,273</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">379,381</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2551969061262988981" datatype="html">
+        <source> Add Item </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">162,164</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5696171503649308321" datatype="html">
+        <source>Adjust scene context states</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">175</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="134361461413621352" datatype="html">
+        <source> Scenes can also react to context changes by changing its state value. The following context states are predefined and called by the default scene upon changes: <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>home<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>, <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>away-short<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>, <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>away-long<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>, <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>sleep<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">176,181</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1530904990248686673" datatype="html">
+        <source> By using rules, you can apply a context by calling <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>apply_context(&apos;your custom context&apos;)<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">182,185</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1247052329680276212" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{
+        sceneItem.forms.contextStates.controls.contextStates.length
+          | i18nPlural
+            : {
+                &apos;=0&apos;: &apos;No context states&apos;,
+                &apos;=1&apos;: &apos;One context state&apos;,
+                other: &apos;# context states&apos;
+              }
+      }}"/> defined</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">194,202</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="889581076845216138" datatype="html">
+        <source>Context</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">223</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="109832309325195699" datatype="html">
+        <source>Select state</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">246</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">436</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3804472680899952465" datatype="html">
+        <source> Add Context State </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">283,285</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8444503508780955814" datatype="html">
+        <source> When a scene trigger item is triggered, it changes a given scene state. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">305,307</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7556985207413328487" datatype="html">
+        <source> Each scene creates scene trigger items for every scene state by default. However, you can define custom scene trigger items by tagging them with <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>CoreSceneTrigger<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">308,312</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1561111633677288554" datatype="html">
+        <source> You may tag a motion sensor to be a custom scene trigger to reset the default scene automatically. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">313,316</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6059139293184802773" datatype="html">
+        <source>Adjust trigger items</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">325</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7585826646011739428" datatype="html">
+        <source>Edit</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">332</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4968400128692285528" datatype="html">
+        <source>Trigger States</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">342</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5911214550882917183" datatype="html">
+        <source>State</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">356</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7708270344948043036" datatype="html">
+        <source> <x id="INTERPOLATION" equiv-text="{{
+                  !sceneTriggerItem.controls.states.controls.length
+                    ? &apos;Restrict States&apos;
+                    : &apos;Add State&apos;
+                }}"/> </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">390,396</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2409417248470285967" datatype="html">
+        <source>Scene adjustments</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">399</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1426265761290787329" datatype="html">
+        <source>Target Scene</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">402</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1487702497782674961" datatype="html">
+        <source>Select scene</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">413</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2473421831828817806" datatype="html">
+        <source>New Scene State</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">425</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3304556438235366063" datatype="html">
+        <source>Only if scene conditions are met</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">450</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4206507591474063989" datatype="html">
+        <source>Current State</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">454</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4418226216728715146" datatype="html">
+        <source>Any State</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">465</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="186353368773835876" datatype="html">
+        <source>Unchanged For</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">480</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8874012390997067175" datatype="html">
+        <source>Seconds</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">503</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5531237363767747080" datatype="html">
+        <source>Minutes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">504</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8070396816726827304" datatype="html">
+        <source>Hours</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
+          <context context-type="linenumber">505</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="520933666306003434" datatype="html">
+        <source> Adjust the way how SmartBerry secures your home. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/security/security.component.html</context>
+          <context context-type="linenumber">9,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1163846321853862462" datatype="html">
+        <source>Assault Triggers</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/security/security.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3786036368927472458" datatype="html">
+        <source> The security system protects your home and responds to any unauthorized activity. The following items are scoped. | Role | Needed equipment tags | Needed point tags | Description | | :--------------------- | :------------------------------------------------- | :-------------------------- | :------------------------------------------------------------------------------------- | | Assault trigger items | `Window` **or** `Door` **or** `CoreAssaultTrigger` | `OpenState` **or** `Switch` | Items that trigger the alarm, if assault detection is activated | | Assault Disarmer items | `CoreAssaultDisarmer` | `OpenState` **or** `Switch` | Items that disarm the assault detection, if item state updated to `ON ` or `OPEN` | | Lock closure items | `CoreLockClosure` | `OpenState` **or** `Switch` | Items that close a lock item within the same location, reacts to `OFF ` or `CLOSED` | | Lock items | `Lock` | `OpenState` **or** `Switch` | Lock items that may be closed by a door or window contact | | Sirene items | | `Alarm` | Items that are triggered after an assault detection, if assault detection is activated | To adjust general configurations within the security context, you can modify the following items. | Item name | Description | | :--------------------------- | :---------------------------------------------------------------------------------------------------------- | | Core_Security_OperationState | Set the current assault detection state. Current choices are `OFF`, `SILENTLY` or `ON`. | | Core_Security_SireneAutoOff | Set minutes until the siren will turn off automatically. Set to zero to disable the auto-off functionality. | </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/security/security.component.html</context>
+          <context context-type="linenumber">24,49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5774025790009361149" datatype="html">
+        <source> Authenticate to your openHAB-Instance to adjust addional settings. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/setup/setup.component.html</context>
+          <context context-type="linenumber">9,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2673468326192732915" datatype="html">
+        <source>API-Token</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/setup/setup.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="231203492799911780" datatype="html">
+        <source> Aktualisiere deinen API-Token, um weitere Konfigurationsmöglichkeiten für smartberry zu nutzen. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/setup/setup.component.html</context>
+          <context context-type="linenumber">44,46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3499910076809398582" datatype="html">
+        <source> Delete API-Token </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/setup/setup.component.html</context>
+          <context context-type="linenumber">73,75</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

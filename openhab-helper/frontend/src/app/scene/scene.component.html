@@ -7,7 +7,7 @@
       <div class="column">
         <p class="title" i18n>Scene Settings</p>
         <p class="subtitle" i18n>
-          Adjust the way how smartberry handles scenes.
+          Adjust the way how SmartBerry handles scenes.
         </p>
       </div>
     </div>
@@ -446,9 +446,12 @@
               </div>
             </div>
           </div>
+          <label class="label" i18n *ngIf="sceneTriggerItem.getScene()"
+            >Only if scene conditions are met</label
+          >
           <div class="field has-addons" *ngIf="sceneTriggerItem.getScene()">
             <div class="control">
-              <span class="button is-static" i18n>Only If In State</span>
+              <span class="button is-static" i18n>Current State</span>
             </div>
             <div class="control">
               <div
@@ -468,6 +471,38 @@
                     [value]="state.value">
                     {{ state.label }}
                   </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="field has-addons" *ngIf="sceneTriggerItem.getScene()">
+            <div class="control">
+              <span class="button is-static" i18n>Unchanged For</span>
+            </div>
+            <div class="control">
+              <input
+                class="input"
+                [ngClass]="{
+                  'is-danger':
+                    sceneTriggerItem.form.touched &&
+                    sceneTriggerItem.form.get('untilActive')?.errors
+                }"
+                formControlName="untilActive"
+                type="text"
+                placeholder="Amount of time" />
+            </div>
+            <div class="control">
+              <div
+                class="select"
+                [ngClass]="{
+                  'is-danger':
+                    sceneTriggerItem.form.touched &&
+                    sceneTriggerItem.form.get('untilUnit')?.errors
+                }">
+                <select formControlName="untilUnit">
+                  <option value="seconds" defa i18n>Seconds</option>
+                  <option value="minutes" i18n>Minutes</option>
+                  <option value="hours" i18n>Hours</option>
                 </select>
               </div>
             </div>

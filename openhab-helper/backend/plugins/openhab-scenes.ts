@@ -160,7 +160,10 @@ const openhabScenesPlugin = {
                   from: triggerState['from'],
                   to: triggerState['to'],
                   states: triggerState['states'],
-                  targetScene: triggerState['target-scene']
+                  targetScene: triggerState['target-scene'],
+                  hoursUntilActive: triggerState['hours-until-active'],
+                  minutesUntilActive: triggerState['minutes-until-active'],
+                  secondsUntilActive: triggerState['seconds-until-active']
                 }
               : undefined
 
@@ -195,7 +198,10 @@ const openhabScenesPlugin = {
               states: Joi.array()
                 .items(Joi.string().alphanum().required())
                 .min(1)
-                .optional()
+                .optional(),
+              hoursUntilActive: Joi.number().min(1).optional(),
+              minutesUntilActive: Joi.number().min(1).optional(),
+              secondsUntilActive: Joi.number().min(1).optional()
             })
           }
         }
@@ -209,7 +215,10 @@ const openhabScenesPlugin = {
             from: triggerState.from,
             to: triggerState.to,
             states: triggerState.states,
-            'target-scene': triggerState.targetScene
+            'target-scene': triggerState.targetScene,
+            'hours-until-active': triggerState.hoursUntilActive,
+            'minutes-until-active': triggerState.minutesUntilActive,
+            'seconds-until-active': triggerState.secondsUntilActive
           }
         )
         return h.response({ success: true }).code(200)

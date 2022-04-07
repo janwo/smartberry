@@ -147,6 +147,9 @@ export class OpenhabService implements CanActivate {
         to: any
         from?: any
         states?: any[]
+        hoursUntilActive?: number
+        minutesUntilActive?: number
+        secondsUntilActive?: number
       }
     ) => {
       triggerState.states = triggerState.states?.length
