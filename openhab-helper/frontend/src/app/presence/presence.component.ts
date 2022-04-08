@@ -1,5 +1,25 @@
 import { Component, OnInit } from '@angular/core'
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators
+} from '@angular/forms'
 import { OpenhabService, Item } from '../openhab.service'
+
+interface PresenceItemHelper {
+  item: Item
+  form: FormGroup
+  controls: {
+    absenceStates: FormArray
+    presenceStates: FormArray
+  }
+  addAbsenceState(): void
+  removeAbsenceState(index: number): void
+  addPresenceState(): void
+  removePresenceState(index: number): void
+}
 
 @Component({
   selector: 'app-presence',
@@ -7,20 +27,96 @@ import { OpenhabService, Item } from '../openhab.service'
   styleUrls: ['./presence.component.scss']
 })
 export class PresenceComponent implements OnInit {
-  constructor(private openhabService: OpenhabService) {}
+  constructor(
+    private openhabService: OpenhabService,
+    private formBuilder: FormBuilder
+  ) {}
 
-  sceneItems: Item[] = []
-  sceneTriggerItems: Item[] = []
+  presenceItems: PresenceItemHelper[] = []
 
   ngOnInit(): void {
-    this.openhabService.scene.items().subscribe({
+    this.openhabService.presence.items().subscribe({
       next: (items) => {
-        this.sceneItems = items.data as Item[]
+        this.presenceItems = items.data.map((item) => {
+          const form = this.formBuilder.group({
+            absenceStates: this.formBuilder.array(
+              (item.jsonStorage?.['states']?.absence || []).map(
+                (state: any) => {
+                  return this.formBuilder.control(state, [Validators.required])
+                }
+              )
+            ),
+            presenceStates: this.formBuilder.array(
+              (item.jsonStorage?.['states']?.presence || []).map(
+                (state: any) => {
+                  return this.formBuilder.control(state, [Validators.required])
+                }
+              )
+            )
+          })
+
+          const controls = form.controls as PresenceItemHelper['controls']
+          return {
+            item,
+            controls,
+            form,
+            addAbsenceState: () => {
+              controls.absenceStates.push(
+                new FormControl('', [Validators.required])
+              )
+            },
+            removeAbsenceState: (index: number) => {
+              controls.absenceStates.removeAt(index)
+            },
+            addPresenceState: () => {
+              controls.presenceStates.push(
+                new FormControl('', [Validators.required])
+              )
+            },
+            removePresenceState: (index: number) => {
+              controls.presenceStates.removeAt(index)
+            }
+          }
+        })
       }
     })
-    this.openhabService.scene.triggerItems().subscribe({
-      next: (items) => {
-        this.sceneTriggerItems = items.data as Item[]
+  }
+
+  updateStates(item: PresenceItemHelper) {
+    item.form.markAllAsTouched()
+    if (item.form.invalid) {
+      return
+    }
+
+    const states = {
+      presence:
+        item.form.value.presenceStates.length != 0
+          ? item.form.value.presenceStates
+          : undefined,
+      absence:
+        item.form.value.absenceStates.length != 0
+          ? item.form.value.absenceStates
+          : undefined
+    }
+
+    const observable = Object.values(states).every(
+      (state) => state === undefined
+    )
+      ? this.openhabService.presence.deleteStates(item.item.name)
+      : this.openhabService.presence.updateStates(item.item.name, states)
+    observable.subscribe({
+      next: (response) => {
+        if (!response?.success) {
+          item.form.setErrors({
+            invalid: true
+          })
+          return
+        }
+      },
+      error: (response) => {
+        item.form.setErrors({
+          connection: true
+        })
       }
     })
   }

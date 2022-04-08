@@ -18,55 +18,176 @@
   <div class="card-content">
     <div class="columns">
       <div class="column">
-        <h2 i18n>Scenes</h2>
+        <h2 i18n>Presence</h2>
       </div>
     </div>
     <p i18n class="block">
-      The presence management will automatically adjust the presence state in
-      dependence to the last presence detection events. The following items are
-      scoped. | Role | Needed point tags | | :-------------------- |
-      :------------------------------- | | Presence trigger item | `Presence`
-      **and** `Measurement` | To adjust the presence management configuration,
-      you can adjust the following presence items. | Item name | Description | |
-      :-------------------------------- |
-      :---------------------------------------------------------------------------------
-      | | Core_Presence | The actual presence state. Current choices are `HOME`,
-      `AWAY_SHORT` or `AWAY_LONG` | | Core_Presence_HoursUntilAwayShort | Set
-      hours until presence management sets the presence state to `AWAY_SHORT` |
-      | Core_Presence_HoursUntilAwayLong | Set hours until presence management
-      sets the presence state to `AWAY_LONG` | Presence items can also trigger
-      absence events. To do so, add the desired state values via namespace
-      `core` to the item with the `Presence` tag as shown below. By default, any
-      `ON`-like state will trigger presence. ``` presence: absence-states: "OFF"
-      [optional, states that trigger absence, defaults to empty list]
-      presence-states: "ON, OPEN" [optional, states that trigger presence,
-      defaults to "ON" and "OPEN"] ```
+      The presence management will automatically adjust the presence state of a
+      location and the entire home in dependence to the last presence detection
+      events. In SmartBerry <em>Core_Presence</em> reflects the presence status
+      of your entire home and has three states:
+    </p>
+    <ul class="content">
+      <li>At home (<code>PRESENT</code>)</li>
+      <li>Away for short (<code>AWAY_SHORT</code>)</li>
+      <li>Away for long (<code>AWAY_LONG</code>)</li>
+    </ul>
+    <p i18n class="block">
+      Set the number of hours in
+      <em>Core_Presence_HoursUntilAwayShort</em> until presence management sets
+      the presence state to <code>AWAY_SHORT</code>. Set the number of hours in
+      <em>Core_Presence_HoursUntilAwayLong</em> until presence management sets
+      the presence state to <code>AWAY_LONG</code>.
+    </p>
+    <p i18n class="block">
+      In order to trigger presence, you should define presence items, e.g. by
+      tagging your motion sensors.
     </p>
     <app-item-schema
-      [items]="sceneItems"
+      [items]="presenceItems | map: 'item'"
       [schema]="{
-        tags: ['CoreScene'],
-        description: 'Scene Item'
+        tags: ['Presence', 'Measurement'],
+        description: 'Presence Item'
       }"></app-item-schema>
-  </div>
-</div>
 
-<div class="card">
-  <div class="card-content">
-    <div class="columns">
-      <div class="column">
-        <h2 i18n>Scene Trigger Items</h2>
-      </div>
-    </div>
-    <p i18n class="block">
-      You can define contact items that automatically turn off heating in open
-      state.
+    <h3 i18n>Adjust presence and absence states</h3>
+    <p class="block" i18n>
+      You may restrict the states of a presence item triggering presence - by
+      default these states are <code>ON</code> and <code>OPEN</code>. You can
+      also define states triggering absence.
     </p>
-    <app-item-schema
-      [items]="sceneTriggerItems"
-      [schema]="{
-        tags: ['CoreSceneTrigger'],
-        description: 'Scene Trigger Item'
-      }"></app-item-schema>
+
+    <app-accordion
+      [title]="presenceItem.item.label"
+      [hintClasses]="
+        presenceItem.controls.presenceStates.length +
+        presenceItem.controls.absenceStates.length
+          ? ['has-text-primary', 'has-text-weight-bold']
+          : 'has-text-grey'
+      "
+      i18n-hint
+      hint="{{
+        presenceItem.controls.presenceStates.length +
+          presenceItem.controls.absenceStates.length
+          | i18nPlural
+            : {
+                '=0': 'No custom states',
+                '=1': 'One custom state',
+                other: '# custom states'
+              }
+      }} selected"
+      *ngFor="let presenceItem of presenceItems">
+      <fieldset>
+        <form
+          [formGroup]="presenceItem.form"
+          (ngSubmit)="updateStates(presenceItem)"
+          [ngClass]="{
+            'has-error': presenceItem.form.touched && !presenceItem.form.valid
+          }">
+          <p class="block" *ngIf="!presenceItem.controls.presenceStates.length">
+            Presence states defaults to <code>ON</code> and <code>OPEN</code>.
+          </p>
+          <div
+            class="field has-addons"
+            formArrayName="presenceStates"
+            *ngFor="
+              let member of presenceItem.controls.presenceStates.controls;
+              index as i
+            ">
+            <div class="control">
+              <span class="button is-static" i18n>Presence State</span>
+            </div>
+            <div class="control">
+              <input
+                class="input"
+                [ngClass]="{
+                  'is-danger':
+                    member.get('presenceStates')?.touched &&
+                    member.get('presenceStates')?.errors
+                }"
+                [formControlName]="i"
+                type="text"
+                placeholder="State" />
+            </div>
+            <div class="control">
+              <button
+                type="button"
+                (click)="presenceItem.removePresenceState(i)"
+                class="button is-primary"
+                i18n
+                [ngClass]="{
+                  'is-light': !(member.touched && member.errors),
+                  'is-danger': member.touched && member.errors
+                }">
+                Remove
+              </button>
+            </div>
+          </div>
+          <p class="block" *ngIf="!presenceItem.controls.absenceStates.length">
+            No absence states defined yet.
+          </p>
+          <div
+            class="field has-addons"
+            formArrayName="absenceStates"
+            *ngFor="
+              let member of presenceItem.controls.absenceStates.controls;
+              index as i
+            ">
+            <div class="control">
+              <span class="button is-static" i18n>Absence State</span>
+            </div>
+            <div class="control">
+              <input
+                class="input"
+                [ngClass]="{
+                  'is-danger':
+                    member.get('absenceStates')?.touched &&
+                    member.get('absenceStates')?.errors
+                }"
+                [formControlName]="i"
+                type="text"
+                placeholder="State" />
+            </div>
+            <div class="control">
+              <button
+                type="button"
+                (click)="presenceItem.removeAbsenceState(i)"
+                class="button is-primary"
+                i18n
+                [ngClass]="{
+                  'is-light': !(member.touched && member.errors),
+                  'is-danger': member.touched && member.errors
+                }">
+                Remove
+              </button>
+            </div>
+          </div>
+          <div class="field is-grouped">
+            <div class="control">
+              <button
+                type="button"
+                (click)="presenceItem.addPresenceState()"
+                class="button is-light is-primary"
+                i18n>
+                Add Presence State
+              </button>
+            </div>
+            <div class="control">
+              <button
+                type="button"
+                (click)="presenceItem.addAbsenceState()"
+                class="button is-light is-primary"
+                i18n>
+                Add Absence State
+              </button>
+            </div>
+            <div class="control">
+              <button type="submit" class="button is-primary" i18n>Save</button>
+            </div>
+          </div>
+          <app-error [form]="presenceItem.form"></app-error>
+        </form>
+      </fieldset>
+    </app-accordion>
   </div>
 </div>

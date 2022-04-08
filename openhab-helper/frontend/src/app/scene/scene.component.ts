@@ -171,19 +171,20 @@ export class SceneComponent implements OnInit {
     }
 
     const form = this.formBuilder.group({
-      from: this.formBuilder.control(triggerStateConfig.from || ''),
-      to: this.formBuilder.control(triggerStateConfig.to || '', [
+      from: this.formBuilder.control(
+        triggerStateConfig.from !== undefined ? triggerStateConfig.from : ''
+      ),
+      to: this.formBuilder.control(triggerStateConfig.to, [
         Validators.required
       ]),
       states: this.formBuilder.array(
         (triggerStateConfig.states || []).map(
-          (state: string) => new FormControl(state, [Validators.required])
+          (state: any) => new FormControl(state, [Validators.required])
         )
       ),
-      targetScene: this.formBuilder.control(
-        triggerStateConfig.targetScene || '',
-        [Validators.required]
-      ),
+      targetScene: this.formBuilder.control(triggerStateConfig.targetScene, [
+        Validators.required
+      ]),
       untilActive: this.formBuilder.control(
         Object.values(until).find((value: number) => value > 0) || ''
       ),
@@ -293,43 +294,48 @@ export class SceneComponent implements OnInit {
       return
     }
 
-    this.openhabService.scene
-      .updateTriggerState(item.item.name, {
-        targetScene: item.controls.targetScene.value,
-        from:
-          item.controls.from.value != '' ? item.controls.from.value : undefined,
-        to: item.controls.to.value,
-        hoursUntilActive:
-          item.controls.untilUnit.value == 'hours' &&
-          item.controls.untilActive.value != ''
-            ? Number.parseInt(item.controls.untilActive.value)
-            : undefined,
-        minutesUntilActive:
-          item.controls.untilUnit.value == 'minutes' &&
-          item.controls.untilActive.value != ''
-            ? Number.parseInt(item.controls.untilActive.value)
-            : undefined,
-        secondsUntilActive:
-          item.controls.untilUnit.value == 'seconds' &&
-          item.controls.untilActive.value != ''
-            ? Number.parseInt(item.controls.untilActive.value)
-            : undefined,
-        states: item.controls.states.value
-      })
-      .subscribe({
-        next: (response) => {
-          if (!response?.success) {
-            item.form.setErrors({
-              invalid: true
-            })
-            return
-          }
-        },
-        error: (response) => {
-          item.form.setErrors({
-            connection: true
+    const observable =
+      item.form.controls['targetScene'].value == ''
+        ? this.openhabService.scene.deleteTriggerState(item.item.name)
+        : this.openhabService.scene.updateTriggerState(item.item.name, {
+            targetScene: item.controls.targetScene.value,
+            from:
+              item.controls.from.value != ''
+                ? item.controls.from.value
+                : undefined,
+            to: item.controls.to.value,
+            hoursUntilActive:
+              item.controls.untilUnit.value == 'hours' &&
+              item.controls.untilActive.value != ''
+                ? Number.parseInt(item.controls.untilActive.value)
+                : undefined,
+            minutesUntilActive:
+              item.controls.untilUnit.value == 'minutes' &&
+              item.controls.untilActive.value != ''
+                ? Number.parseInt(item.controls.untilActive.value)
+                : undefined,
+            secondsUntilActive:
+              item.controls.untilUnit.value == 'seconds' &&
+              item.controls.untilActive.value != ''
+                ? Number.parseInt(item.controls.untilActive.value)
+                : undefined,
+            states: item.controls.states.value
           })
+
+    observable.subscribe({
+      next: (response) => {
+        if (!response?.success) {
+          item.form.setErrors({
+            invalid: true
+          })
+          return
         }
-      })
+      },
+      error: (response) => {
+        item.form.setErrors({
+          connection: true
+        })
+      }
+    })
   }
 }

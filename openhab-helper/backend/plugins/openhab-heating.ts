@@ -20,10 +20,10 @@ const openhabHeatingPlugin = {
             'heating/command-map'
           )
           commandMap = {
-            off: commandMap['0.0'],
-            on: commandMap['1.0'],
-            eco: commandMap['2.0'],
-            power: commandMap['3.0']
+            off: commandMap?.['0.0'],
+            on: commandMap?.['1.0'],
+            eco: commandMap?.['2.0'],
+            power: commandMap?.['3.0']
           }
 
           item.jsonStorage = { commandMap }
@@ -39,9 +39,7 @@ const openhabHeatingPlugin = {
       options: {
         validate: {
           params: {
-            item: Joi.string()
-              .pattern(/[a-zA-Z_0-9]+/)
-              .required()
+            item: Joi.string().pattern(/[a-zA-Z_0-9]+/)
           },
           payload: {
             commandMap: Joi.object({
@@ -75,9 +73,7 @@ const openhabHeatingPlugin = {
       options: {
         validate: {
           params: {
-            item: Joi.string()
-              .pattern(/[a-zA-Z_0-9]+/)
-              .required()
+            item: Joi.string().pattern(/[a-zA-Z_0-9]+/)
           }
         }
       },

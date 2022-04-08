@@ -38,9 +38,7 @@ const openhabScenesPlugin = {
       options: {
         validate: {
           params: {
-            item: Joi.string()
-              .pattern(/[a-zA-Z_0-9]+/)
-              .required()
+            item: Joi.string().pattern(/[a-zA-Z_0-9]+/)
           },
           payload: {
             customMembers: Joi.array()
@@ -70,9 +68,7 @@ const openhabScenesPlugin = {
       options: {
         validate: {
           params: {
-            item: Joi.string()
-              .pattern(/[a-zA-Z_0-9]+/)
-              .required()
+            item: Joi.string().pattern(/[a-zA-Z_0-9]+/)
           }
         }
       },
@@ -91,9 +87,7 @@ const openhabScenesPlugin = {
       options: {
         validate: {
           params: {
-            item: Joi.string()
-              .pattern(/[a-zA-Z_0-9]+/)
-              .required()
+            item: Joi.string().pattern(/[a-zA-Z_0-9]+/)
           },
           payload: {
             contextStates: Joi.object()
@@ -124,9 +118,7 @@ const openhabScenesPlugin = {
       options: {
         validate: {
           params: {
-            item: Joi.string()
-              .pattern(/[a-zA-Z_0-9]+/)
-              .required()
+            item: Joi.string().pattern(/[a-zA-Z_0-9]+/)
           }
         }
       },
@@ -159,6 +151,7 @@ const openhabScenesPlugin = {
               ? {
                   from: triggerState['from'],
                   to: triggerState['to'],
+                  generated: triggerState['generated'],
                   states: triggerState['states'],
                   targetScene: triggerState['target-scene'],
                   hoursUntilActive: triggerState['hours-until-active'],
@@ -180,9 +173,7 @@ const openhabScenesPlugin = {
       options: {
         validate: {
           params: {
-            item: Joi.string()
-              .pattern(/[a-zA-Z_0-9]+/)
-              .required()
+            item: Joi.string().pattern(/[a-zA-Z_0-9]+/)
           },
           payload: {
             triggerState: Joi.object({
@@ -208,6 +199,11 @@ const openhabScenesPlugin = {
       },
       handler: async (request, h) => {
         const { triggerState } = request.payload as any
+        const generated = server.plugins['app/json-storage'].get(
+          request.params.item,
+          'scenes/trigger-state/generated'
+        )
+
         server.plugins['app/json-storage'].set(
           request.params.item,
           'scenes/trigger-state',
@@ -215,6 +211,7 @@ const openhabScenesPlugin = {
             from: triggerState.from,
             to: triggerState.to,
             states: triggerState.states,
+            generated,
             'target-scene': triggerState.targetScene,
             'hours-until-active': triggerState.hoursUntilActive,
             'minutes-until-active': triggerState.minutesUntilActive,
@@ -231,9 +228,7 @@ const openhabScenesPlugin = {
       options: {
         validate: {
           params: {
-            item: Joi.string()
-              .pattern(/[a-zA-Z_0-9]+/)
-              .required()
+            item: Joi.string().pattern(/[a-zA-Z_0-9]+/)
           }
         }
       },

@@ -6,6 +6,7 @@ import healthcheckPlugin from './plugins/healthcheck.js'
 import jsonStoragePlugin from './plugins/json-storage.js'
 import openhabHeatingPlugin from './plugins/openhab-heating.js'
 import openhabScenesPlugin from './plugins/openhab-scenes.js'
+import openhabPresencePlugin from './plugins/openhab-presence'
 import openhabPlugin from './plugins/openhab.js'
 import authenticationPlugin from './plugins/authentication.js'
 import { plugin as jwtPlugin } from '@hapi/jwt'
@@ -35,6 +36,7 @@ const init = async () => {
     filesPlugin,
     openhabPlugin,
     openhabHeatingPlugin,
+    openhabPresencePlugin,
     jwtPlugin,
     authenticationPlugin,
     openhabScenesPlugin

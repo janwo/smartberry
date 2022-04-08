@@ -160,6 +160,37 @@ export class OpenhabService implements CanActivate {
         { triggerState },
         this.getOptions()
       )
+    },
+    deleteTriggerState: (item: string) => {
+      return this.http.delete<PostPutDeleteResponse>(
+        `${environment.API_URL()}/scene-trigger-item/${item}/trigger-state`,
+        this.getOptions()
+      )
+    }
+  }
+
+  public presence = {
+    items: () => {
+      return this.http.get<GetItemListResponse>(
+        `${environment.API_URL()}/presence-items`,
+        this.getOptions()
+      )
+    },
+    updateStates: (
+      item: string,
+      states: { absence?: any[]; presence?: any[] }
+    ) => {
+      return this.http.post<PostPutDeleteResponse>(
+        `${environment.API_URL()}/presence-item/${item}/states`,
+        states,
+        this.getOptions()
+      )
+    },
+    deleteStates: (item: string) => {
+      return this.http.delete<PostPutDeleteResponse>(
+        `${environment.API_URL()}/presence-item/${item}/states`,
+        this.getOptions()
+      )
     }
   }
 

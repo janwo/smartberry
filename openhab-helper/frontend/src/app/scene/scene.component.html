@@ -18,7 +18,7 @@
   <div class="card-content">
     <div class="columns">
       <div class="column">
-        <h2 i18n>Scenes</h2>
+        <h2 i18n>Scene</h2>
       </div>
     </div>
     <p i18n class="block">
@@ -331,7 +331,14 @@
       i18n-hint
       hint="Edit"
       *ngFor="let sceneTriggerItem of sceneTriggerItems">
-      <fieldset>
+      <fieldset
+        [disabled]="sceneTriggerItem.item.jsonStorage?.['triggerState']?.['generated']">
+        <p
+          class="block"
+          i18n
+          *ngIf="sceneTriggerItem.item.jsonStorage?.['triggerState']?.['generated']">
+          You cannot adjust generated trigger items.
+        </p>
         <form
           [formGroup]="sceneTriggerItem.form"
           (ngSubmit)="updateTriggerItem(sceneTriggerItem)"

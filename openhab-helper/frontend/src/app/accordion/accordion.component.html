@@ -1,6 +1,8 @@
 <header class="is-clickable" (click)="toggle()">
-  <h2 class="h4 has-single-line">{{ title }}</h2>
-  <span *ngIf="hint" [ngClass]="hintClasses || {}">{{ hint }}</span>
+  <div>
+    <h2 class="h4 has-single-line">{{ title }}</h2>
+    <span *ngIf="hint" [ngClass]="hintClasses || {}">{{ hint }}</span>
+  </div>
   <app-svg-icon
     [icon]="
       !visible ? 'chevron-down-outline' : 'chevron-up-outline'

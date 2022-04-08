@@ -23,3 +23,5 @@ $body-background-color: $white-ter;
 
 $block-spacing: $size-medium;
 $shadow: 0 0.1em 0.5em -0.125em rgba($scheme-invert, 0.1);
+
+@import '../../node_modules/bulma/sass/utilities/mixins.sass';
