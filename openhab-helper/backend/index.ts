@@ -1,5 +1,4 @@
 import Joi from 'joi'
-import * as path from 'path'
 import * as Hapi from '@hapi/hapi'
 import filesPlugin from './plugins/files.js'
 import healthcheckPlugin from './plugins/healthcheck.js'
@@ -10,6 +9,8 @@ import openhabPresencePlugin from './plugins/openhab-presence'
 import openhabPlugin from './plugins/openhab.js'
 import authenticationPlugin from './plugins/authentication.js'
 import { plugin as jwtPlugin } from '@hapi/jwt'
+import openhabSecurityPlugin from './plugins/openhab-security.js'
+import openhabLightPlugin from './plugins/openhab-light.js'
 
 const init = async () => {
   const server = Hapi.server({
@@ -37,6 +38,8 @@ const init = async () => {
     openhabPlugin,
     openhabHeatingPlugin,
     openhabPresencePlugin,
+    openhabSecurityPlugin,
+    openhabLightPlugin,
     jwtPlugin,
     authenticationPlugin,
     openhabScenesPlugin

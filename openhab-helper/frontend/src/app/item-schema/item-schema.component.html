@@ -1,11 +1,10 @@
-<span class="h5 has-text-primary" i18n *ngIf="root">Schema</span>
+<span class="h5 has-text-primary" i18n *ngIf="root" i18n>Schema</span>
 <header class="has-background-white-ter">
-  <ng-container *ngFor="let tag of schema?.tags"
-    ><p class="tag has-background-grey-lighter">{{ tag }}</p>
-    <span>{{
-      schema?.tagRelationship != 'or' ? 'and' : 'or'
-    }}</span></ng-container
-  >
+  <ng-container *ngFor="let tag of schema?.tags">
+    <p class="tag has-background-grey-lighter">{{ tag }}</p>
+    <span *ngIf="schema?.tagRelationship == 'and'" i18n>and</span>
+    <span *ngIf="schema?.tagRelationship != 'and'" i18n>or</span>
+  </ng-container>
   <p *ngIf="schema?.description">{{ schema?.description }}</p>
 </header>
 <app-item-schema

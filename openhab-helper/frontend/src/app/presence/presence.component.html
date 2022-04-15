@@ -24,20 +24,21 @@
     <p i18n class="block">
       The presence management will automatically adjust the presence state of a
       location and the entire home in dependence to the last presence detection
-      events. In SmartBerry <em>Core_Presence</em> reflects the presence status
-      of your entire home and has three states:
+      events. In SmartBerry <span class="tag">Core_Presence</span> reflects the
+      presence status of your entire home and has three states:
     </p>
     <ul class="content">
-      <li>At home (<code>PRESENT</code>)</li>
-      <li>Away for short (<code>AWAY_SHORT</code>)</li>
-      <li>Away for long (<code>AWAY_LONG</code>)</li>
+      <li i18n>At home (<code>PRESENT</code>)</li>
+      <li i18n>Away for short (<code>AWAY_SHORT</code>)</li>
+      <li i18n>Away for long (<code>AWAY_LONG</code>)</li>
     </ul>
     <p i18n class="block">
       Set the number of hours in
-      <em>Core_Presence_HoursUntilAwayShort</em> until presence management sets
-      the presence state to <code>AWAY_SHORT</code>. Set the number of hours in
-      <em>Core_Presence_HoursUntilAwayLong</em> until presence management sets
-      the presence state to <code>AWAY_LONG</code>.
+      <span class="tag">Core_Presence_HoursUntilAwayShort</span> until presence
+      management sets the presence state to <code>AWAY_SHORT</code>. Set the
+      number of hours in
+      <span class="tag">Core_Presence_HoursUntilAwayLong</span> until presence
+      management sets the presence state to <code>AWAY_LONG</code>.
     </p>
     <p i18n class="block">
       In order to trigger presence, you should define presence items, e.g. by
@@ -45,10 +46,7 @@
     </p>
     <app-item-schema
       [items]="presenceItems | map: 'item'"
-      [schema]="{
-        tags: ['Presence', 'Measurement'],
-        description: 'Presence Item'
-      }"></app-item-schema>
+      [schema]="schema.presenceItems"></app-item-schema>
 
     <h3 i18n>Adjust presence and absence states</h3>
     <p class="block" i18n>
@@ -84,7 +82,10 @@
           [ngClass]="{
             'has-error': presenceItem.form.touched && !presenceItem.form.valid
           }">
-          <p class="block" *ngIf="!presenceItem.controls.presenceStates.length">
+          <p
+            i18n
+            class="block"
+            *ngIf="!presenceItem.controls.presenceStates.length">
             Presence states defaults to <code>ON</code> and <code>OPEN</code>.
           </p>
           <div
@@ -107,6 +108,7 @@
                 }"
                 [formControlName]="i"
                 type="text"
+                i18n-placeholder
                 placeholder="State" />
             </div>
             <div class="control">
@@ -123,7 +125,10 @@
               </button>
             </div>
           </div>
-          <p class="block" *ngIf="!presenceItem.controls.absenceStates.length">
+          <p
+            i18n
+            class="block"
+            *ngIf="!presenceItem.controls.absenceStates.length">
             No absence states defined yet.
           </p>
           <div
@@ -146,6 +151,7 @@
                 }"
                 [formControlName]="i"
                 type="text"
+                i18n-placeholder
                 placeholder="State" />
             </div>
             <div class="control">

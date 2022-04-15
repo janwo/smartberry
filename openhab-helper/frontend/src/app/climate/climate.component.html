@@ -33,11 +33,7 @@
     </p>
     <app-item-schema
       [items]="heatingItems | map: 'item'"
-      [schema]="{
-        tags: ['RadiatorControl'],
-        description: 'Thermostat Group',
-        childs: [{ description: 'Thermostat Mode Item', tags: ['SetPoint'] }]
-      }"></app-item-schema>
+      [schema]="schema.heatingItems"></app-item-schema>
 
     <h3 i18n>Adjust state commands</h3>
     <p class="block" i18n>
@@ -137,12 +133,6 @@
     </p>
     <app-item-schema
       [items]="heatingContactSwitchableItems"
-      [schema]="{
-        tags: ['Door', 'Window'],
-        description: 'Door or Window Group',
-        childs: [
-          { description: 'Door or Window Open State', tags: ['OpenState'] }
-        ]
-      }"></app-item-schema>
+      [schema]="schema.heatingContactSwitchableItems"></app-item-schema>
   </div>
 </div>

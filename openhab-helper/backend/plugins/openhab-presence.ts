@@ -3,20 +3,19 @@ import Joi from 'joi'
 
 const openhabPresencePlugin = {
   name: 'app/openhab-presence',
-  dependencies: ['app/authentication', 'app/json-storage'],
+  dependencies: ['app/openhab'],
   register: async (server: Hapi.Server) => {
-    // presence routes
     server.route({
       method: 'GET',
       path: '/api/presence-items',
       handler: async (request, h) => {
-        const items = await request.server.plugins['app/openhab'].getItems(
+        const item = await request.server.plugins['app/openhab'].getItem(
           request,
-          ['Presence', 'Measurement'],
-          false
+          'gCore_Presence_PresenceTrigger',
+          true
         )
 
-        const result = items.map((item) => {
+        const result = (item?.members || []).map((item) => {
           const absence = server.plugins['app/json-storage'].get(
             item.name,
             'presence/absence-states'

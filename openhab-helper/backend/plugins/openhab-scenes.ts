@@ -1,22 +1,20 @@
 import * as Hapi from '@hapi/hapi'
 import Joi from 'joi'
-import { Item } from './openhab'
 
 const openhabScenesPlugin = {
   name: 'app/openhab-scenes',
-  dependencies: ['app/authentication', 'app/json-storage'],
+  dependencies: ['app/openhab'],
   register: async (server: Hapi.Server) => {
-    // scene routes
     server.route({
       method: 'GET',
       path: '/api/scene-items',
       handler: async (request, h) => {
-        const items = await request.server.plugins['app/openhab'].getItems(
+        const item = await request.server.plugins['app/openhab'].getItem(
           request,
-          ['CoreScene'],
-          false
+          'gCore_Scenes',
+          true
         )
-        const result = items.map((item) => {
+        const result = (item?.members || []).map((item) => {
           const customMembers = server.plugins['app/json-storage'].get(
             item.name,
             'scenes/custom-members'
@@ -135,13 +133,13 @@ const openhabScenesPlugin = {
       method: 'GET',
       path: '/api/scene-trigger-items',
       handler: async (request, h) => {
-        const items = await request.server.plugins['app/openhab'].getItems(
+        const item = await request.server.plugins['app/openhab'].getItem(
           request,
-          ['CoreSceneTrigger'],
-          false
+          'gCore_Scenes_StateTriggers',
+          true
         )
 
-        const result = items.map((item) => {
+        const result = (item?.members || []).map((item) => {
           let triggerState = server.plugins['app/json-storage'].get(
             item.name,
             'scenes/trigger-state'

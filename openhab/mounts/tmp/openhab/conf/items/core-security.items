@@ -1,6 +1,8 @@
 Group gCore_Security_SmokeTrigger
 Group gCore_Security_AssaultTrigger
 Group gCore_Security_AssaultDisarmamer
+Group gCore_Security_AssaultAlarms
+Group gCore_Security_Locks
 Group gCore_Security_LockClosureTrigger
 
 Group gCore_Security "Sicherheitssystem" (gCore_Home) ["Equipment"] {
@@ -12,7 +14,7 @@ Group gCore_Security "Sicherheitssystem" (gCore_Home) ["Equipment"] {
   ]
 }
 
-Number Core_Security_SireneAutoOff "Sirene: Auto-Off (Minuten)" (gCore_Security) ["Point"] {
+Number Core_Security_AssaultAlarmAutoOff "Sirene: Auto-Off (Minuten)" (gCore_Security) ["Point"] {
     stateDescription="oh-stepper-item"[
         pattern="%dm",
         min="1",

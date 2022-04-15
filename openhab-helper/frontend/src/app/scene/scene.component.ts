@@ -59,6 +59,17 @@ export class SceneComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {}
 
+  schema = {
+    sceneItems: {
+      tags: ['CoreScene'],
+      description: $localize`Scene Item`
+    },
+    sceneTriggerItems: {
+      tags: ['CoreSceneTrigger'],
+      description: $localize`Scene Trigger Item`
+    }
+  }
+
   itemsMap: { [key: string]: string } = {}
   sceneItems: SceneItemHelper[] = []
   sceneTriggerItems: SceneTriggerItemHelper[] = []

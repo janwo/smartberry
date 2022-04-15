@@ -1,10 +1,6 @@
-import { Injectable, OnInit } from '@angular/core'
-import { HttpClient, HttpHeaders } from '@angular/common/http'
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  RouterStateSnapshot
-} from '@angular/router'
+import { Injectable } from '@angular/core'
+import { HttpClient } from '@angular/common/http'
+import { CanActivate } from '@angular/router'
 import { tap } from 'rxjs'
 import { environment } from 'src/environments/environment'
 
@@ -74,7 +70,7 @@ export class OpenhabService implements CanActivate {
     return !!this.bearer
   }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  canActivate() {
     return this.authenticated()
   }
 
@@ -93,6 +89,66 @@ export class OpenhabService implements CanActivate {
     itemsMap: () => {
       return this.http.get<{ data: { [key: string]: string } }>(
         `${environment.API_URL()}/items-map`,
+        this.getOptions()
+      )
+    }
+  }
+
+  public light = {
+    switchableItems: () => {
+      return this.http.get<GetItemListResponse>(
+        `${environment.API_URL()}/light-switchable-items`,
+        this.getOptions()
+      )
+    },
+    measurementItems: () => {
+      return this.http.get<GetItemListResponse>(
+        `${environment.API_URL()}/light-measurement-items`,
+        this.getOptions()
+      )
+    },
+    astroItems: () => {
+      return this.http.get<GetItemListResponse>(
+        `${environment.API_URL()}/light-astro-items`,
+        this.getOptions()
+      )
+    }
+  }
+
+  public security = {
+    lockItems: () => {
+      return this.http.get<GetItemListResponse>(
+        `${environment.API_URL()}/security-lock-items`,
+        this.getOptions()
+      )
+    },
+    lockClosureItems: () => {
+      return this.http.get<GetItemListResponse>(
+        `${environment.API_URL()}/security-lock-closure-items`,
+        this.getOptions()
+      )
+    },
+    assaultAlarmItems: () => {
+      return this.http.get<GetItemListResponse>(
+        `${environment.API_URL()}/security-assault-alarm-items`,
+        this.getOptions()
+      )
+    },
+    smokeTriggerItems: () => {
+      return this.http.get<GetItemListResponse>(
+        `${environment.API_URL()}/security-smoke-trigger-items`,
+        this.getOptions()
+      )
+    },
+    assaultTriggerItems: () => {
+      return this.http.get<GetItemListResponse>(
+        `${environment.API_URL()}/security-assault-trigger-items`,
+        this.getOptions()
+      )
+    },
+    assaultDisarmerItems: () => {
+      return this.http.get<GetItemListResponse>(
+        `${environment.API_URL()}/security-assault-disarmer-items`,
         this.getOptions()
       )
     }

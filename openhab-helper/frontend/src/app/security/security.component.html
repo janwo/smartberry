@@ -18,60 +18,78 @@
   <div class="card-content">
     <div class="columns">
       <div class="column">
-        <h2 i18n>Assault Triggers</h2>
+        <h2 i18n>Operation State</h2>
       </div>
     </div>
     <p i18n class="block">
       The security system protects your home and responds to any unauthorized
-      activity. The following items are scoped. | Role | Needed equipment tags |
-      Needed point tags | Description | | :--------------------- |
-      :------------------------------------------------- |
-      :-------------------------- |
-      :-------------------------------------------------------------------------------------
-      | | Assault trigger items | `Window` **or** `Door` **or**
-      `CoreAssaultTrigger` | `OpenState` **or** `Switch` | Items that trigger
-      the alarm, if assault detection is activated | | Assault Disarmer items |
-      `CoreAssaultDisarmer` | `OpenState` **or** `Switch` | Items that disarm
-      the assault detection, if item state updated to `ON ` or `OPEN` | | Lock
-      closure items | `CoreLockClosure` | `OpenState` **or** `Switch` | Items
-      that close a lock item within the same location, reacts to `OFF ` or
-      `CLOSED` | | Lock items | `Lock` | `OpenState` **or** `Switch` | Lock
-      items that may be closed by a door or window contact | | Sirene items | |
-      `Alarm` | Items that are triggered after an assault detection, if assault
-      detection is activated | To adjust general configurations within the
-      security context, you can modify the following items. | Item name |
-      Description | | :--------------------------- |
-      :----------------------------------------------------------------------------------------------------------
-      | | Core_Security_OperationState | Set the current assault detection
-      state. Current choices are `OFF`, `SILENTLY` or `ON`. | |
-      Core_Security_SireneAutoOff | Set minutes until the siren will turn off
-      automatically. Set to zero to disable the auto-off functionality. |
+      activity. If openHAB-Cloud and the operation state is set up properly,
+      SmartBerry notifies you as soon as smoke or an assault had been detected.
+      Adjust the operation state by editing
+      <span class="tag">Core_Security_OperationState</span>. Current choices
+      are:
     </p>
-    <app-item-schema
-      [items]="sceneItems"
-      [schema]="{
-        tags: ['CoreScene'],
-        description: 'Scene Item'
-      }"></app-item-schema>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-content">
-    <div class="columns">
-      <div class="column">
-        <h2 i18n>Scene Trigger Items</h2>
-      </div>
-    </div>
+    <ul class="content">
+      <li i18n>No notifications and assault alarms (<code>OFF</code>)</li>
+      <li i18n>Notifications only (<code>SILENTLY</code>)</li>
+      <li i18n>Notifications and assault alarms (<code>ON</code>)</li>
+    </ul>
     <p i18n class="block">
-      You can define contact items that automatically turn off heating in open
-      state.
+      You may let items disable the operation state automatically. Assault
+      disarmer items turn off the operation state, if the item state changed to
+      <code>ON</code> or <code>OPEN</code>.
     </p>
     <app-item-schema
-      [items]="sceneTriggerItems"
-      [schema]="{
-        tags: ['CoreSceneTrigger'],
-        description: 'Scene Trigger Item'
-      }"></app-item-schema>
+      [items]="assaultDisarmerItems"
+      [schema]="schema.assaultDisarmerItems"></app-item-schema>
+
+    <h3 i18n>Assault Detection</h3>
+    <p i18n class="block">
+      Tag your doors or windows as assault trigger items to enable assault
+      detection. Any state change of these items will fire an assault event
+      during an active operation state.
+    </p>
+    <app-item-schema
+      [items]="assaultTriggerItems"
+      [schema]="schema.assaultTriggerItems"></app-item-schema>
+    <p i18n class="block">
+      To enable assault alarms right after an assault detection, tag the
+      corresponding siren or security system as assault alarm item. You can
+      change the duration until the alarm will turn off automatically by editing
+      the <span class="tag">Core_Security_AssaultAlarmAutoOff</span> item. Set
+      to zero to disable the auto-off functionality.
+    </p>
+    <app-item-schema
+      [items]="assaultAlarmItems"
+      [schema]="schema.assaultAlarmItems"></app-item-schema>
+
+    <h3 i18n>Auto-Close Of Lock Items</h3>
+    <p i18n class="block">
+      Lock items may be closed by a closed door or window contact. This way, you
+      do not need to lock it yourself. To get started, tag your locks in order
+      to match with the following schema:
+    </p>
+    <app-item-schema
+      [items]="lockItems"
+      [schema]="schema.lockItems"></app-item-schema>
+
+    <p i18n class="block">
+      Next, tag your window or door contact within the same location as lock
+      closure items. Any lock closure item reacts to <code>OFF</code> and
+      <code>CLOSED</code> and will close a lock item within the same location
+      right away.
+    </p>
+    <app-item-schema
+      [items]="lockClosureItems"
+      [schema]="schema.lockClosureItems"></app-item-schema>
+
+    <h3 i18n>Smoke Detection</h3>
+    <p i18n class="block">
+      Tag your smoke detector items and match the following schema to enable
+      smoke detection upon fire.
+    </p>
+    <app-item-schema
+      [items]="smokeTriggerItems"
+      [schema]="schema.smokeTriggerItems"></app-item-schema>
   </div>
 </div>

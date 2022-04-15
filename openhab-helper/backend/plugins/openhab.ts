@@ -75,6 +75,7 @@ async function getItem(
 
 const openhabPlugin = {
   name: 'app/openhab',
+  dependencies: ['app/authentication', 'app/json-storage'],
   register: async (server: Hapi.Server) => {
     server.app.OPENHAB_URL = `http://${
       process.env.build === 'production' ? 'openhab' : 'smartberry'

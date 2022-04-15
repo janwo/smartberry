@@ -1,11 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core'
-import {
-  AbstractControl,
-  FormArray,
-  FormControl,
-  FormGroup,
-  ValidationErrors
-} from '@angular/forms'
+import { Component, Input } from '@angular/core'
+import { AbstractControl, FormArray, FormGroup } from '@angular/forms'
 
 @Component({
   selector: 'app-error',

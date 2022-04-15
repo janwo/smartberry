@@ -32,12 +32,13 @@
               openhabService.authenticated()
                 ? 'checkmark-outline'
                 : 'alert-circle-outline'
-            "></app-svg-icon
-          >{{
-            openhabService.authenticated()
-              ? 'Authentifiziert'
-              : 'Unauthentifiziert'
-          }}
+            "></app-svg-icon>
+          <ng-container *ngIf="openhabService.authenticated()" i18n
+            >Authenticated</ng-container
+          >
+          <ng-container *ngIf="!openhabService.authenticated()" i18n
+            >Unauthenticated</ng-container
+          >
         </span>
       </div>
     </div>

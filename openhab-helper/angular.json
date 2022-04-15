@@ -15,11 +15,13 @@
       },
       "i18n": {
         "sourceLocale": {
-          "code": "en"
+          "code": "en",
+          "baseHref": "/"
         },
         "locales": {
           "de": {
-            "translation": "frontend/src/locale/messages.de.xlf"
+            "translation": "frontend/src/locale/messages.de.xlf",
+            "baseHref": "/"
           }
         }
       },

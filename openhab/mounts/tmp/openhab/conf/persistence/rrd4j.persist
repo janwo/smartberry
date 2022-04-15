@@ -1,7 +1,7 @@
 Strategies {
-  everyMinute : "0 0/30 * * * ?"
+  everyHalfHour : "0 0/30 * * * ?"
 }
 
 Items {
-  * : strategy = everyChange, everyMinute, restoreOnStartup
+  * : strategy = everyChange, everyHalfHour, restoreOnStartup
 }

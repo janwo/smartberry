@@ -59,6 +59,13 @@ function scriptLoaded() {
         SMOKE_ALARM_POINT_TAGS
       )
 
+      // Sync group gCore_Security_Locks with lock items - it's needed to create triggers on it
+      sync_group_with_semantic_items(
+        'gCore_Security_Locks',
+        LOCK_EQUIPMENT_TAGS,
+        LOCK_POINT_TAGS
+      )
+
       // Sync group gCore_Security_AssaultDisarmamer with disarmer items - it's needed to create triggers on it
       sync_group_with_semantic_items(
         'gCore_Security_AssaultDisarmamer',
@@ -71,6 +78,13 @@ function scriptLoaded() {
         'gCore_Security_LockClosureTrigger',
         LOCK_CLOSURE_EQUIPMENT_TAGS,
         LOCK_CLOSURE_POINT_TAGS
+      )
+
+      // Sync group gCore_Security_AssaultAlarms with assault alarm items - it's needed to create triggers on it
+      sync_group_with_semantic_items(
+        'gCore_Security_AssaultAlarms',
+        ASSAULT_ALARM_EQUIPMENT_TAGS,
+        ASSAULT_ALARM_POINT_TAGS
       )
     }
   })
@@ -236,12 +250,12 @@ function scriptLoaded() {
   })
 
   rules.JSRule({
-    name: 'siren_autooff',
-    description: 'Core (JS) - Turn off siren after X minutes.',
+    name: 'assault_alarm_autooff',
+    description: 'Core (JS) - Turn off assault alarm after X minutes.',
     tags: ['core', 'core-security'],
     triggers: [triggers.GenericCronTrigger('0 * * ? * * *')],
     execute: (event) => {
-      const autoOffTime = items.getItem('Core_Security_SireneAutoOff')
+      const autoOffTime = items.getItem('Core_Security_AssaultAlarmAutoOff')
       const lastAlarmTime = json_storage('Core_Security_OperationState').get(
         'security',
         'last-alarm'

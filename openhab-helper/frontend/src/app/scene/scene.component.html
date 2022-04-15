@@ -23,19 +23,18 @@
     </div>
     <p i18n class="block">
       Scenes allow multiple devices to be controlled with a single command. In
-      SmartBerry <em>Core_DefaultScene</em> is the preconfigured default scene
-      and has four states:
+      SmartBerry <span class="tag">Core_DefaultScene</span> is the preconfigured
+      default scene and has four states:
     </p>
     <ul class="content">
-      <li>At home (<code>PRESENT</code>)</li>
-      <li>Away for short (<code>AWAY_SHORT</code>)</li>
-      <li>Away for long (<code>AWAY_LONG</code>)</li>
-      <li>Sleeping (<code>SLEEP</code>)</li>
+      <li i18n>At home (<code>PRESENT</code>)</li>
+      <li i18n>Away for short (<code>AWAY_SHORT</code>)</li>
+      <li i18n>Away for long (<code>AWAY_LONG</code>)</li>
+      <li i18n>Sleeping (<code>SLEEP</code>)</li>
     </ul>
     <p i18n class="block">
       Scene states of user defined scenes can be changed. Edit or add the scene
-      item's
-      <em>State Description</em> and enter each scene state under
+      item's <em>State Description</em> and enter each scene state under
       <em>Options</em> on a separate line, e.g.
     </p>
     <ul class="content">
@@ -44,15 +43,13 @@
     </ul>
     <p i18n class="block">
       When finished, trigger item
-      <em>Core_Scenes_ReloadStates</em> to reinitialize all scene states.
+      <span class="tag">Core_Scenes_ReloadStates</span> to reinitialize all
+      scene states.
     </p>
 
     <app-item-schema
       [items]="sceneItems | map: 'item'"
-      [schema]="{
-        tags: ['CoreScene'],
-        description: 'Scene Item'
-      }"></app-item-schema>
+      [schema]="schema.sceneItems"></app-item-schema>
 
     <h3 i18n>Adjust scene members</h3>
     <p class="block" i18n>
@@ -126,7 +123,7 @@
                 class="select is-fullwidth"
                 [ngClass]="{ 'is-danger': member.touched && member.errors }">
                 <select [formControlName]="i">
-                  <option disabled value="">Select Item</option>
+                  <option disabled value="" i18n>Select Item</option>
                   <option
                     *ngFor="let item of itemsMap | keyvalue"
                     [value]="item.key">
@@ -232,6 +229,7 @@
                   }"
                   formControlName="context"
                   type="text"
+                  i18n-placeholder
                   placeholder="Context State" />
               </div>
               <div class="control">
@@ -308,7 +306,7 @@
     <p class="block" i18n>
       Each scene creates scene trigger items for every scene state by default.
       However, you can define custom scene trigger items by tagging them with
-      <em>CoreSceneTrigger</em>.
+      <span class="tag">CoreSceneTrigger</span>.
     </p>
     <p class="block" i18n>
       You may tag a motion sensor to be a custom scene trigger to reset the
@@ -317,14 +315,9 @@
 
     <app-item-schema
       [items]="sceneTriggerItems | map: 'item'"
-      [schema]="{
-        tags: ['CoreSceneTrigger'],
-        description: 'Scene Trigger Item'
-      }"></app-item-schema>
+      [schema]="schema.sceneTriggerItems"></app-item-schema>
 
     <h3 i18n>Adjust trigger items</h3>
-    <p class="block" i18n></p>
-
     <app-accordion
       [title]="sceneTriggerItem.item.label"
       [hintClasses]="['has-text-primary', 'has-text-weight-bold']"
@@ -349,6 +342,7 @@
           <label class="label" i18n>Trigger States</label>
           <p
             class="block"
+            i18n
             *ngIf="!sceneTriggerItem.controls.states.controls.length">
             Any state updates will change your scene state.
           </p>
@@ -372,6 +366,7 @@
                 }"
                 [formControlName]="i"
                 type="text"
+                i18n-placeholder
                 placeholder="State" />
             </div>
             <div class="control">
@@ -393,13 +388,17 @@
               <button
                 type="button"
                 (click)="sceneTriggerItem.addState()"
-                class="button is-light is-primary"
-                i18n>
-                {{
-                  !sceneTriggerItem.controls.states.controls.length
-                    ? 'Restrict States'
-                    : 'Add State'
-                }}
+                class="button is-light is-primary">
+                <ng-container
+                  i18n
+                  *ngIf="!sceneTriggerItem.controls.states.controls.length"
+                  >Restrict States</ng-container
+                >
+                <ng-container
+                  i18n
+                  *ngIf="sceneTriggerItem.controls.states.controls.length"
+                  >Add State</ng-container
+                >
               </button>
             </div>
           </div>
@@ -496,6 +495,7 @@
                 }"
                 formControlName="untilActive"
                 type="text"
+                i18n-placeholder
                 placeholder="Amount of time" />
             </div>
             <div class="control">

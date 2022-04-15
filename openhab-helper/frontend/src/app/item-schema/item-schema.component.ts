@@ -1,18 +1,7 @@
-import {
-  AfterContentChecked,
-  AfterContentInit,
-  AfterViewChecked,
-  Component,
-  HostBinding,
-  HostListener,
-  Input,
-  OnInit,
-  ViewChild,
-  ViewChildren
-} from '@angular/core'
+import { Component, HostBinding, Input } from '@angular/core'
 import { Item } from '../openhab.service'
 
-interface ItemSchema {
+export interface ItemSchema {
   tags: string[]
   tagRelationship?: 'and' | 'or'
   root?: boolean

@@ -3,7 +3,7 @@ import Joi from 'joi'
 
 const openhabHeatingPlugin = {
   name: 'app/openhab-heating',
-  dependencies: ['app/openhab', 'app/json-storage'],
+  dependencies: ['app/openhab'],
   register: async (server: Hapi.Server) => {
     server.route({
       method: 'GET',

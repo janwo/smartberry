@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
-import { observable } from 'rxjs'
+import { FormBuilder, FormGroup } from '@angular/forms'
+import { forkJoin } from 'rxjs'
 import { Item, OpenhabService } from '../openhab.service'
 
 @Component({
@@ -17,10 +17,33 @@ export class ClimateComponent implements OnInit {
   heatingItems: { item: Item; form: FormGroup }[] = []
   heatingContactSwitchableItems: Item[] = []
 
+  schema = {
+    heatingItems: {
+      tags: ['RadiatorControl'],
+      description: $localize`Thermostat Group`,
+      childs: [
+        { description: $localize`Thermostat Mode Item`, tags: ['SetPoint'] }
+      ]
+    },
+    heatingContactSwitchableItems: {
+      tags: ['Door', 'Window'],
+      description: $localize`Door or Window Group`,
+      childs: [
+        {
+          tags: ['OpenState']
+        }
+      ]
+    }
+  }
+
   ngOnInit(): void {
-    this.openhabService.climate.modeItems().subscribe({
+    forkJoin([
+      this.openhabService.climate.modeItems(),
+      this.openhabService.climate.contactSwitchableItems()
+    ]).subscribe({
       next: (items) => {
-        this.heatingItems = items.data.map((item) => {
+        this.heatingContactSwitchableItems = items[1].data
+        this.heatingItems = items[0].data.map((item) => {
           return {
             item,
             form: this.formBuilder.group({
@@ -47,12 +70,6 @@ export class ClimateComponent implements OnInit {
             })
           }
         })
-      }
-    })
-
-    this.openhabService.climate.contactSwitchableItems().subscribe({
-      next: (items) => {
-        this.heatingContactSwitchableItems = items.data
       }
     })
   }

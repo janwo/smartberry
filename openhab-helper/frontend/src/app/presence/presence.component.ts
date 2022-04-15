@@ -32,6 +32,13 @@ export class PresenceComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {}
 
+  schema = {
+    presenceItems: {
+      tags: ['Presence', 'Measurement'],
+      description: $localize`Presence Item`
+    }
+  }
+
   presenceItems: PresenceItemHelper[] = []
 
   ngOnInit(): void {

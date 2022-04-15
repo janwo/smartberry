@@ -2,7 +2,6 @@ const { rules, items, triggers, time } = require('openhab')
 const { uniq, uniqBy } = require('lodash')
 const {
   metadata,
-  get_all_semantic_items,
   get_items_of_any_tags,
   create_helper_item,
   get_childs_with_condition,
@@ -298,10 +297,9 @@ function scriptLoaded() {
         LIGHT_MEASUREMENT_POINT_TAGS
       ).filter((sensor) => !Number.isNaN(Number.parseFloat(sensor.state)))
 
-      const activeSwitchables = get_all_semantic_items(
-        LIGHTS_EQUIPMENT_TAGS,
-        LIGHTS_POINT_TAGS
-      ).filter((switchable) => is_on(switchable.state))
+      const activeSwitchables = items
+        .getItem('gCore_Lights_Switchables')
+        .members.filter((switchable) => is_on(switchable.state))
 
       const activeRoomNames = activeSwitchables
         .map((switchable) => get_location(switchable))
@@ -360,10 +358,7 @@ function scriptLoaded() {
         .filter((r) => r)
         .map((r) => r.name)
 
-      for (const point of get_all_semantic_items(
-        LIGHTS_EQUIPMENT_TAGS,
-        LIGHTS_POINT_TAGS
-      )) {
+      for (const point of items.getItem('gCore_Lights_Switchables').members) {
         const location = get_location(point)
         if (location && switchOnRoomNames.includes(location.name)) {
           turn_on_switchable_point(point)
@@ -387,11 +382,9 @@ function scriptLoaded() {
       const item = items.getItem(event.itemName)
       const location = get_location(item)
       const lightModeGroup = get_light_mode_group()
-      const switchOnSwitchableNames = get_all_semantic_items(
-        LIGHTS_EQUIPMENT_TAGS,
-        LIGHTS_POINT_TAGS
-      )
-        .filter((item) => is_on(item.state))
+      const switchOnSwitchableNames = items
+        .getItem('gCore_Lights_Switchables')
+        .members.filter((item) => is_on(item.state))
         .map((s) => s.name)
 
       for (const member of lightModeGroup.members) {
@@ -414,10 +407,8 @@ function scriptLoaded() {
               switchOnSwitchableNames.includes(point.name)
             ).length == 0
           ) {
-            for (const point of get_all_semantic_items(
-              LIGHTS_EQUIPMENT_TAGS,
-              LIGHTS_POINT_TAGS
-            )) {
+            for (const point of items.getItem('gCore_Lights_Switchables')
+              .members) {
               if (has_same_location(point, location)) {
                 turn_on_switchable_point(point)
               }
@@ -457,10 +448,7 @@ function scriptLoaded() {
           .filter((r) => r)
           .map((r) => r.name)
 
-        for (const point of get_all_semantic_items(
-          LIGHTS_EQUIPMENT_TAGS,
-          LIGHTS_POINT_TAGS
-        )) {
+        for (const point of items.getItem('gCore_Lights_Switchables').members) {
           const location = get_location(point)
           if (location && switchOnRoomNames.includes(location.name)) {
             turn_on_switchable_point(point)
@@ -492,10 +480,7 @@ function scriptLoaded() {
           .map((r) => r.name)
       )
 
-      for (const point of get_all_semantic_items(
-        LIGHTS_EQUIPMENT_TAGS,
-        LIGHTS_POINT_TAGS
-      )) {
+      for (const point of items.getItem('gCore_Lights_Switchables').members) {
         const location = get_location(point)
         if (location && switchOffRoomNames.includes(location.name)) {
           turn_off_switchable_point(point)
@@ -520,10 +505,7 @@ function scriptLoaded() {
         (l) => l.name
       )
 
-      for (const point of get_all_semantic_items(
-        LIGHTS_EQUIPMENT_TAGS,
-        LIGHTS_POINT_TAGS
-      )) {
+      for (const point of items.getItem('gCore_Lights_Switchables').members) {
         const location = get_location(point)
         if (location && simulateLocations.includes(location.name)) {
           const historicState = point.history.historicState(historicDateTime)

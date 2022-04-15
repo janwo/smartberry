@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core'
-import { OpenhabService, Item } from '../openhab.service'
+import { forkJoin } from 'rxjs'
+import { ItemSchema } from '../item-schema/item-schema.component'
+import { OpenhabService, Item, GetItemListResponse } from '../openhab.service'
 
 @Component({
   selector: 'app-light',
@@ -9,18 +11,37 @@ import { OpenhabService, Item } from '../openhab.service'
 export class LightComponent implements OnInit {
   constructor(private openhabService: OpenhabService) {}
 
-  sceneItems: Item[] = []
-  sceneTriggerItems: Item[] = []
+  schema = {
+    lightSwitchableItems: {
+      tags: ['Lightbulb', 'WallSwitch', 'PowerOutlet'],
+      description: $localize`Light Switchable Item`,
+      childs: [{ tags: ['Switch'] }]
+    },
+    astroSunItems: {
+      tags: ['CoreAstroSun'],
+      description: $localize`Astro Sun State`
+    },
+    lightMeasurementItems: {
+      tagRelationship: 'and' as ItemSchema['tagRelationship'],
+      tags: ['Light', 'Measurement'],
+      description: $localize`Light measurement item`
+    }
+  }
+
+  lightSwitchableItems: Item[] = []
+  lightMeasurementItems: Item[] = []
+  astroItems: Item[] = []
 
   ngOnInit(): void {
-    this.openhabService.scene.items().subscribe({
-      next: (items) => {
-        this.sceneItems = items.data as Item[]
-      }
-    })
-    this.openhabService.scene.triggerItems().subscribe({
-      next: (items) => {
-        this.sceneTriggerItems = items.data as Item[]
+    forkJoin([
+      this.openhabService.light.switchableItems(),
+      this.openhabService.light.measurementItems(),
+      this.openhabService.light.astroItems()
+    ]).subscribe({
+      next: (items: GetItemListResponse[]) => {
+        this.lightSwitchableItems = items[0].data
+        this.lightMeasurementItems = items[1].data
+        this.astroItems = items[2].data
       }
     })
   }
