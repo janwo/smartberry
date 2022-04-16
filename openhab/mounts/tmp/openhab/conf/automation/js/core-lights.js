@@ -13,8 +13,11 @@ const {
   get_location
 } = require(__dirname + '/core-helpers')
 const { PresenceState } = require(__dirname + '/core-presence')
-const { trigger_scene_items, SceneTriggerStyle } = require(__dirname +
-  '/core-scenes')
+const {
+  trigger_scene_items,
+  get_scene_items,
+  SceneTriggerStyle
+} = require(__dirname + '/core-scenes')
 
 const LightMode = {
   OFF: 0,
