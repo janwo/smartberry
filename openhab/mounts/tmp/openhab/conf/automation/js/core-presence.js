@@ -1,7 +1,6 @@
 const { rules, items, triggers, time } = require('openhab')
 const {
   json_storage,
-  metadata,
   DATETIME_FORMAT,
   stringifiedFloat,
   sync_group_with_semantic_items,

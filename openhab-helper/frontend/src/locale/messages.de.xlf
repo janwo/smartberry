@@ -787,7 +787,7 @@
       </trans-unit>
       <trans-unit id="1247052329680276212" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{         sceneItem.forms.contextStates.controls.contextStates.length           | i18nPlural             : {                 '=0': 'No context states',                 '=1': 'One context state',                 other: '# context states'               }       }}"/> defined</source>
-        <target state="translated">{{ sceneItem.forms.contextStates.controls.contextStates.length | i18nPlural: { '=0': 'Keine Kontextzustände',                 '=1': 'Ein Kontextzustand', other: '# Kontextzustände' } }} definiert</target>
+        <target state="translated">{{ sceneItem.forms.contextStates.controls.contextStates.length | i18nPlural: { '=0': 'Keine Kontextzustände', '=1': 'Ein Kontextzustand', other: '# Kontextzustände' } }} definiert</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
           <context context-type="linenumber">191,199</context>

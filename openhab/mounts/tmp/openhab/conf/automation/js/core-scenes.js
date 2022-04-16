@@ -1,5 +1,5 @@
 const { rules, items, triggers, time } = require('openhab')
-const { uniqBy, merge, isEmpty } = require('lodash')
+const { uniqBy, isEmpty } = require('lodash')
 const {
   metadata,
   create_helper_item,
@@ -21,13 +21,10 @@ const SCENE_TAGS = ['CoreScene']
 const SCENE_TRIGGER_TAGS = ['CoreSceneTrigger']
 
 function get_default_scene_state(scene) {
-  const stateDescription = metadata(scene, 'stateDescription').getConfiguration(
-    'options'
-  )
-
+  const stateDescription = scene?.rawItem?.getStateDescription()?.getOptions()
   if (stateDescription) {
-    const command = stateDescription.split(',')[0].split('=')[0]
-    if (command.length > 0) {
+    const command = stateDescription[0]?.getValue()
+    if (command?.length > 0) {
       return command
     }
   }
@@ -36,24 +33,16 @@ function get_default_scene_state(scene) {
 }
 
 function get_scene_states(scene) {
-  const stateDescription = metadata(scene, 'stateDescription').getConfiguration(
-    'options'
-  )
+  const stateDescription = scene?.rawItem?.getStateDescription()?.getOptions()
 
   if (!stateDescription) {
     return {}
   }
 
-  return stateDescription.split(',').reduce((obj, stateDescription) => {
-    stateDescription = stateDescription.split('=')
-    const command = stateDescription[0]
-    const label = stateDescription[1]
-    if (
-      command !== undefined &&
-      command.length > 0 &&
-      label !== undefined &&
-      label.length > 0
-    ) {
+  return stateDescription.reduce((obj, stateDescription) => {
+    const command = stateDescription.getValue()
+    const label = stateDescription.getLabel()
+    if (command?.length > 0 && label?.length > 0) {
       obj[label] = command
     }
     return obj
@@ -164,6 +153,10 @@ function apply_context(context) {
       'context-states',
       context
     )
+
+    if (scene.state == contextState) {
+      break
+    }
 
     const sceneStates = get_scene_states(scene)
     if (
@@ -316,7 +309,10 @@ function scriptLoaded() {
     name: 'activate_scene',
     description: 'Core (JS) - Activate scene.',
     tags: ['core', 'core-scenes'],
-    triggers: [triggers.GroupStateUpdateTrigger('gCore_Scenes')],
+    triggers: [
+      triggers.GroupStateUpdateTrigger('gCore_Scenes'),
+      triggers.GroupCommandTrigger('gCore_Scenes')
+    ],
     execute: (event) => {
       const scene = items.getItem(event.itemName)
       json_storage(scene).set(
@@ -324,7 +320,7 @@ function scriptLoaded() {
         'last-activation',
         time.ZonedDateTime.now().format(DATETIME_FORMAT)
       )
-      trigger_scene_items(scene)
+      trigger_scene_items(scene, event.triggerType == 'ItemStateUpdateTrigger')
     }
   })
 
