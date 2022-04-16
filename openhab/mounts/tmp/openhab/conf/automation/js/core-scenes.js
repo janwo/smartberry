@@ -14,11 +14,16 @@ const {
   get_location,
   has_same_location
 } = require(__dirname + '/core-helpers')
-const { LIGHTS_EQUIPMENT_TAGS, LIGHTS_POINT_TAGS } = require(__dirname +
+const { LIGHTS_EQUIPMENT_TAGS, LIGHTS_POINT_TAGS, is_on } = require(__dirname +
   '/core-lights')
 
 const SCENE_TAGS = ['CoreScene']
 const SCENE_TRIGGER_TAGS = ['CoreSceneTrigger']
+const SceneTriggerStyle = {
+  AUTO: 0,
+  COMMAND_AND_UPDATE: 1,
+  UPDATE: 2
+}
 
 function get_default_scene_state(scene) {
   const stateDescription = scene?.rawItem?.getStateDescription()?.getOptions()
@@ -127,16 +132,27 @@ function save_scene_item_states(scene, sceneState) {
   }
 }
 
-function trigger_scene_items(scene, pokeOnly = false) {
+function trigger_scene_items(scene, style = SceneTriggerStyle.AUTO) {
   const itemStates = get_scene_item_states(scene)
   for (const itemName in itemStates) {
     try {
       const item = items.getItem(itemName)
-      if (pokeOnly) {
+      switch (style) {
+        case SceneTriggerStyle.UPDATE:
         item.postUpdate(item.state)
-      } else {
+          break
+        case SceneTriggerStyle.COMMAND_AND_UPDATE:
         item.postUpdate(itemStates[itemName])
         item.sendCommand(itemStates[itemName])
+          break
+        default:
+          item.postUpdate(itemStates[itemName])
+          if (
+            item.groupNames.contains('gCore_Lights_Switchables') &&
+            is_on(item.state)
+          ) {
+            item.sendCommand(itemStates[itemName])
+          }
       }
     } catch {
       console.log(
@@ -321,7 +337,12 @@ function scriptLoaded() {
         'last-activation',
         time.ZonedDateTime.now().format(DATETIME_FORMAT)
       )
-      trigger_scene_items(scene, event.triggerType == 'ItemStateUpdateTrigger')
+      trigger_scene_items(
+        scene,
+        event.triggerType == 'ItemStateUpdateTrigger'
+          ? SceneTriggerStyle.AUTO
+          : SceneTriggerStyle.COMMAND_AND_UPDATE
+      )
     }
   })
 
@@ -409,5 +430,6 @@ module.exports = {
   trigger_scene_items,
   apply_context,
   SCENE_TAGS,
-  SCENE_TRIGGER_TAGS
+  SCENE_TRIGGER_TAGS,
+  SceneTriggerStyle
 }

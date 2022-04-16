@@ -13,7 +13,7 @@ const {
   get_location
 } = require(__dirname + '/core-helpers')
 const { PresenceState } = require(__dirname + '/core-presence')
-const { get_scene_items, trigger_scene_items } = require(__dirname +
+const { trigger_scene_items, SceneTriggerStyle } = require(__dirname +
   '/core-scenes')
 
 const LightMode = {
@@ -398,9 +398,11 @@ function scriptLoaded() {
           if (scene) {
             trigger_scene_items(
               scene,
-              !!get_scene_items(scene).find((item) =>
+              !get_scene_items(scene).find((item) =>
                 switchOnSwitchableNames.includes(item.name)
               )
+                ? SceneTriggerStyle.COMMAND_AND_UPDATE
+                : SceneTriggerStyle.UPDATE
             )
           } else if (
             get_childs_with_condition(location, (point) =>

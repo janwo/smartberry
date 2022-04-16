@@ -26,6 +26,7 @@ const BroadcastNotificationMode = {
   ATTENTION_ONLY: 2
 }
 
+const TIMEOUT = 5000
 const HELPER_ITEM_TAG = 'CoreHelperItem'
 const DATETIME_FORMAT = time.DateTimeFormatter.ofPattern(
   "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
@@ -124,11 +125,12 @@ function json_storage(item) {
   return {
     remove: () => {
       const url = getUrl(urlSegments)
-      return JSON.parse(actions.HTTP.sendHttpDeleteRequest(url)).success
+      return JSON.parse(actions.HTTP.sendHttpDeleteRequest(url, TIMEOUT))
+        .success
     },
     get: (...args) => {
       const url = getUrl(urlSegments.concat(args))
-      return JSON.parse(actions.HTTP.sendHttpGetRequest(url)).data
+      return JSON.parse(actions.HTTP.sendHttpGetRequest(url, TIMEOUT)).data
     },
     set: (...args) => {
       if (args.length > 1) {
@@ -137,7 +139,8 @@ function json_storage(item) {
           actions.HTTP.sendHttpPostRequest(
             url,
             'application/json',
-            JSON.stringify(args[args.length - 1])
+            JSON.stringify(args[args.length - 1]),
+            TIMEOUT
           )
         ).success
       }
@@ -284,7 +287,6 @@ function create_helper_item(
     )
 
     json_storage(helperItem).set('helper-item-of', of.name)
-
     json_storage(of).set('helper-items', type, name, helperItem.name)
   }
 
