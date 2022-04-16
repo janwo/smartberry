@@ -34,19 +34,20 @@ function get_default_scene_state(scene) {
 
 function get_scene_states(scene) {
   const stateDescription = scene?.rawItem?.getStateDescription()?.getOptions()
+  let obj = {}
 
-  if (!stateDescription) {
-    return {}
+  if (!stateDescription?.length) {
+    return obj
   }
 
-  return stateDescription.reduce((obj, stateDescription) => {
-    const command = stateDescription.getValue()
-    const label = stateDescription.getLabel()
+  for (const stateOption of stateDescription) {
+    const command = stateOption.getValue()
+    const label = stateOption.getLabel()
     if (command?.length > 0 && label?.length > 0) {
       obj[label] = command
     }
+  }
     return obj
-  }, {})
 }
 
 function get_scene_items(scene) {
