@@ -1,19 +1,5 @@
-const { items, osgi, triggers, actions, time, rules } = require('openhab')
-const {
-  uniq,
-  get,
-  set,
-  intersection,
-  unset,
-  uniqBy,
-  isEmpty
-} = require('lodash')
-
-const Metadata = Java.type('org.openhab.core.items.Metadata')
-const MetadataKey = Java.type('org.openhab.core.items.MetadataKey')
-const MetadataRegistry = osgi.getService(
-  'org.openhab.core.items.MetadataRegistry'
-)
+const { items, triggers, actions, time, rules } = require('openhab')
+const { uniq, intersection, uniqBy } = require('lodash')
 
 const BroadcastType = {
   INFO: 0,
@@ -148,101 +134,6 @@ function json_storage(item) {
   }
 }
 
-function metadata(item, namespace) {
-  if (typeof item != 'string') {
-    item = item.name
-  }
-
-  function copy(obj) {
-    if (!obj) {
-      return obj
-    }
-    var value
-    var objCopy = Array.isArray(obj) ? [] : {}
-    for (let k in obj) {
-      value = obj[k]
-      objCopy[k] = typeof value === 'object' ? copy(value) : value
-    }
-    return objCopy
-  }
-
-  return {
-    remove: () => {
-      const key = new MetadataKey(namespace, item)
-      return MetadataRegistry.remove(key)
-    },
-    getValue: () => {
-      const key = new MetadataKey(namespace, item)
-      const meta = MetadataRegistry.get(key)
-      return meta ? null : meta.getValue()
-    },
-    setValue: (value) => {
-      const key = new MetadataKey(namespace, item)
-      const meta = MetadataRegistry.get(key)
-      const newMetadata = new Metadata(
-        key,
-        value === undefined ? null : value,
-        meta ? copy(meta.configuration) : {}
-      )
-
-      if (meta) {
-        MetadataRegistry.update(newMetadata)
-      } else {
-        MetadataRegistry.add(newMetadata)
-      }
-    },
-    getConfiguration: (...args) => {
-      const key = new MetadataKey(namespace, item)
-      const meta = MetadataRegistry.get(key)
-      if (!meta) {
-        return undefined
-      }
-
-      const configuration = copy(meta.configuration)
-      if (args.length == 0 || isEmpty(configuration)) {
-        return undefined
-      }
-      return get(configuration, args)
-    },
-    setConfiguration: (...args) => {
-      const key = new MetadataKey(namespace, item)
-      const meta = MetadataRegistry.get(key)
-      let configuration = meta ? copy(meta.configuration) : {}
-      switch (args.length) {
-        case 0:
-          configuration = {}
-          break
-
-        case 1:
-          configuration = args[0]
-          break
-
-        default:
-          if (args[args.length - 1] === undefined) {
-            unset(configuration, args.slice(0, -1))
-          } else {
-            configuration = set(
-              configuration,
-              args.slice(0, -1),
-              args[args.length - 1]
-            )
-          }
-      }
-
-      const newMetadata = new Metadata(
-        key,
-        meta ? meta.getValue() : null,
-        configuration
-      )
-      if (meta) {
-        MetadataRegistry.update(newMetadata)
-      } else {
-        MetadataRegistry.add(newMetadata)
-      }
-    }
-  }
-}
-
 function get_helper_item(of, type, name) {
   try {
     const helperItemName = json_storage(of).get('helper-items', type, name)
@@ -268,26 +159,32 @@ function create_helper_item(
   of,
   type,
   name,
-  item_type,
+  type,
   category,
   label,
   groups = [],
-  tags = []
+  tags = [],
+  metadata
 ) {
   let helperItem = get_helper_item(of, type, name)
   if (!helperItem) {
     tags.push(HELPER_ITEM_TAG)
-    helperItem = items.addItem(
-      `Core_HelperItem${Math.floor(Math.random() * 1000000000)}_Of_${of.name}`,
-      item_type,
+    const helperItemName = `Core_HelperItem${Math.floor(
+      Math.random() * 1000000000
+    )}_Of_${of.name}`
+    helperItem = items.addItem({
+      name: helperItemName,
+      type,
       category,
       groups,
       label,
-      tags
-    )
+      tags,
+      metadata:
+        typeof metadata == 'function' ? metadata(helperItemName) : metadata
+    })
 
     json_storage(helperItem).set('helper-item-of', of.name)
-    json_storage(of).set('helper-items', type, name, helperItem.name)
+    json_storage(of).set('helper-items', type, name, helperItemName)
   }
 
   return helperItem
@@ -427,7 +324,7 @@ function remove_invalid_helper_items() {
         } catch {
           console.log(
             'remove_invalid_helper_items',
-            `Remove invalid metadata of item ${item.name}: [${type} => ${itemNames[name]}] is no valid helper item.`
+            `Remove invalid json-storage of item ${item.name}: [${type} => ${itemNames[name]}] is no valid helper item.`
           )
           json_storage(item).remove('helper-items', type, name)
         }
@@ -468,7 +365,6 @@ module.exports = {
   create_helper_item,
   get_helper_item,
   get_item_of_helper_item,
-  metadata,
   sync_group_with_semantic_items,
   get_items_of_any_tags,
   stringifiedFloat,

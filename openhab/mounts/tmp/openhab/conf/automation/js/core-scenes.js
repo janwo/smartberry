@@ -1,7 +1,6 @@
 const { rules, items, triggers, time } = require('openhab')
 const { uniqBy, isEmpty } = require('lodash')
 const {
-  metadata,
   create_helper_item,
   get_all_semantic_items,
   get_items_of_any_tags,
@@ -27,7 +26,7 @@ const SceneTriggerStyle = {
 
 function get_default_scene_state(scene) {
   const stateDescription = scene?.rawItem?.getStateDescription()?.getOptions()
-  if (stateDescription) {
+  if (stateDescription?.length) {
     const command = stateDescription[0]?.getValue()
     if (command?.length > 0) {
       return command
@@ -52,7 +51,7 @@ function get_scene_states(scene) {
       obj[label] = command
     }
   }
-    return obj
+  return obj
 }
 
 function get_scene_items(scene) {
@@ -139,16 +138,16 @@ function trigger_scene_items(scene, style = SceneTriggerStyle.AUTO) {
       const item = items.getItem(itemName)
       switch (style) {
         case SceneTriggerStyle.UPDATE:
-        item.postUpdate(item.state)
+          item.postUpdate(item.state)
           break
         case SceneTriggerStyle.COMMAND_AND_UPDATE:
-        item.postUpdate(itemStates[itemName])
-        item.sendCommand(itemStates[itemName])
+          item.postUpdate(itemStates[itemName])
+          item.sendCommand(itemStates[itemName])
           break
         default:
           item.postUpdate(itemStates[itemName])
           if (
-            item.groupNames.contains('gCore_Lights_Switchables') &&
+            item.groupNames.includes('gCore_Lights_Switchables') &&
             is_on(item.state)
           ) {
             item.sendCommand(itemStates[itemName])
@@ -220,17 +219,41 @@ function scriptLoaded() {
           'settings',
           `${sceneMember.label} überschreiben`,
           ['gCore_Scenes_StoreTriggers'],
-          []
-        )
+          [],
+          (helperItemName) => {
+            let metadata = {}
+            for (const path of ['listWidget', 'cellWidget']) {
+              metadata[path] = {
+                config: {
+                  label: `=items.${sceneMember.name}.title`,
+                  icon: 'f7:gear_alt',
+                  action: 'options',
+                  actionItem: helperItemName
+                }
+              }
+            }
 
-        for (const path of ['listWidget', 'cellWidget']) {
-          metadata(helper, path).setConfiguration({
-            label: `=items.${sceneMember.name}.title`,
-            icon: 'f7:gear_alt',
-            action: 'options',
-            actionItem: helper.name
-          })
-        }
+            const stateDescription = sceneMember.rawItem
+              ?.getStateDescription()
+              ?.getOptions()
+            if (stateDescription?.length) {
+              metadata.stateDescription = {
+                config: {
+                  options: (() => {
+                    let optionArray = []
+                    for (const option of stateDescription) {
+                      optionArray.push(
+                        `${option.getValue()}=${option.getLabel()}`
+                      )
+                    }
+                    return optionArray.join(',')
+                  })(),
+                  pattern: '%d'
+                }
+              }
+            }
+          }
+        )
 
         // Sync (Add) switches for each scene state
         const sceneLocation = get_location(sceneMember)
@@ -245,45 +268,37 @@ function scriptLoaded() {
             'party',
             stateTriggerLabel,
             ['gCore_Scenes_StateTriggers'],
-            SCENE_TRIGGER_TAGS
-          )
+            SCENE_TRIGGER_TAGS,
+            (helperItemName) => {
+              let metadata = {
+                ga: {
+                  value: 'Scene',
+                  config: {
+                    sceneReversible: false,
+                    synonyms: sceneLocation
+                      ? `${stateTriggerLabel} in ${sceneLocation.label}`
+                      : undefined
+                  }
+                }
+              }
 
-          if (stateTrigger.label != stateTriggerLabel) {
-            stateTrigger.rawItem.setLabel(stateTriggerLabel)
-          }
+              for (const path of ['listWidget', 'cellWidget']) {
+                metadata[path] = {
+                  config: {
+                    label: `=items.${helperItemName}.title`,
+                    icon: 'f7:film',
+                    subtitle: `=items.${helperItemName}.displayState`
+                  }
+                }
+              }
+              return metadata
+            }
+          )
 
           json_storage(stateTrigger).set('scenes', 'trigger-state', {
             to: sceneStates[sceneName],
             'target-scene': sceneMember.name,
             generated: true
-          })
-
-          metadata(stateTrigger, 'ga').setValue('Scene')
-
-          metadata(stateTrigger, 'ga').setConfiguration({
-            sceneReversible: false,
-            synonyms: sceneLocation
-              ? `${stateTriggerLabel} in ${sceneLocation.label}`
-              : undefined
-          })
-
-          for (const path of ['listWidget', 'cellWidget']) {
-            metadata(stateTrigger, path).setConfiguration({
-              label: `=items.${stateTrigger.name}.title`,
-              icon: 'f7:film',
-              subtitle: `=items.${stateTrigger.name}.displayState`
-            })
-          }
-        }
-
-        const stateDescription = metadata(
-          sceneMember,
-          'stateDescription'
-        ).getConfiguration('options')
-        if (stateDescription) {
-          metadata(helper, 'stateDescription').setConfiguration({
-            options: stateDescription,
-            pattern: '%d'
           })
         }
 

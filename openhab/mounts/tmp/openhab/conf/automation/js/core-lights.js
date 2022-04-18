@@ -1,7 +1,6 @@
-const { rules, items, triggers, time } = require('openhab')
+const { rules, items, triggers, time, metadata } = require('openhab')
 const { uniq, uniqBy } = require('lodash')
 const {
-  metadata,
   get_items_of_any_tags,
   create_helper_item,
   get_childs_with_condition,
@@ -61,6 +60,7 @@ function convert_to_light_condition(luminance) {
     'Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured'
   )
 
+  luminance = Number.parseFloat(luminance)
   if (luminance < darkTresholdItem.state) {
     return AmbientLightCondition.DARK
   }
@@ -242,27 +242,35 @@ function scriptLoaded() {
             item.icon,
             item.label(location.label),
             item.groups.concat([helperGroupItem.name]),
-            ['Point']
+            ['Point'],
+            (helperItemName) => {
+              let metadata = {
+                stateDescription: {
+                  config: {
+                    pattern: '%d',
+                    options:
+                      '0.0=Aus,1.0=An,2.0=Auto-An,3.0=Unveraendert,4.0=Simulierend'
+                  }
+                }
+              }
+
+              for (const path of ['listWidget', 'cellWidget']) {
+                metadata[path] = {
+                  config: {
+                    label: `=items.${helperItemName}.title`,
+                    icon: item.icon,
+                    action: 'options',
+                    actionItem: helperItemName,
+                    subtitle: `=items.${helperItemName}.displayState`
+                  }
+                }
+              }
+              return metadata
+            }
           )
 
           if (!helperItem.groupNames.includes(helperGroupItem.name)) {
             helperItem.addGroups(helperGroupItem)
-          }
-
-          metadata(helperItem, 'stateDescription').setConfiguration({
-            pattern: '%d',
-            options:
-              '0.0=Aus,1.0=An,2.0=Auto-An,3.0=Unveraendert,4.0=Simulierend'
-          })
-
-          for (const path of ['listWidget', 'cellWidget']) {
-            metadata(helperItem, path).setConfiguration({
-              label: `=items.${helperItem.name}.title`,
-              icon: item.icon,
-              action: 'options',
-              actionItem: helperItem.name,
-              subtitle: `=items.${helperItem.name}.displayState`
-            })
           }
         }
       }
@@ -405,7 +413,7 @@ function scriptLoaded() {
                 switchOnSwitchableNames.includes(item.name)
               )
                 ? SceneTriggerStyle.COMMAND_AND_UPDATE
-                : SceneTriggerStyle.UPDATE
+                : SceneTriggerStyle.POKE
             )
           } else if (
             get_childs_with_condition(location, (point) =>
