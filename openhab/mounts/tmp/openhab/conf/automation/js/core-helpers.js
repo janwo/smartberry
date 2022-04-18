@@ -134,10 +134,10 @@ function json_storage(item) {
   }
 }
 
-function get_helper_item(of, type, name) {
+function get_helper_item(of, name) {
+  name = Array.isArray(name) ? name : [name]
+  const helperItemName = json_storage(of).get('helper-items', ...name)
   try {
-    const helperItemName = json_storage(of).get('helper-items', type, name)
-
     return helperItemName ? items.getItem(helperItemName) : undefined
   } catch {
     return undefined
@@ -145,19 +145,18 @@ function get_helper_item(of, type, name) {
 }
 
 function get_item_of_helper_item(helperItem) {
-  try {
-    const itemName = json_storage(helperItem).get('helper-item-of')
-    if (itemName) {
+  const itemName = json_storage(helperItem).get('helper-item-of')
+  if (itemName) {
+    try {
       return items.getItem(itemName)
+    } catch {
+      return undefined
     }
-  } catch {
-    return undefined
   }
 }
 
 function create_helper_item(
   of,
-  type,
   name,
   type,
   category,
@@ -166,7 +165,8 @@ function create_helper_item(
   tags = [],
   metadata
 ) {
-  let helperItem = get_helper_item(of, type, name)
+  name = Array.isArray(name) ? name : [name]
+  let helperItem = get_helper_item(of, name)
   if (!helperItem) {
     tags.push(HELPER_ITEM_TAG)
     const helperItemName = `Core_HelperItem${Math.floor(
@@ -184,7 +184,7 @@ function create_helper_item(
     })
 
     json_storage(helperItem).set('helper-item-of', of.name)
-    json_storage(of).set('helper-items', type, name, helperItemName)
+    json_storage(of).set('helper-items', ...name, helperItemName)
   }
 
   return helperItem

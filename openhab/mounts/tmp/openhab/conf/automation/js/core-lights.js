@@ -224,8 +224,7 @@ function scriptLoaded() {
       for (const location of locations) {
         const helperGroupItem = create_helper_item(
           location,
-          'lights',
-          'light-mode-group',
+          ['lights', 'light-mode-group'],
           'Group',
           'colorlight',
           `Lichtmodus in ${location.label}`,
@@ -236,8 +235,7 @@ function scriptLoaded() {
         for (const item of helperItems) {
           const helperItem = create_helper_item(
             location,
-            'lights',
-            `light-mode-${item.suffix}`,
+            ['lights', `light-mode-${item.suffix}`],
             'Number',
             item.icon,
             item.label(location.label),

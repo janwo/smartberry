@@ -211,10 +211,9 @@ function scriptLoaded() {
       // Check helper items
       for (const sceneMember of sceneMembers) {
         // Create scene store trigger
-        const helper = create_helper_item(
+        create_helper_item(
           sceneMember,
-          'scenes',
-          'store-trigger',
+          ['scenes', 'store-trigger'],
           'Number',
           'settings',
           `${sceneMember.label} überschreiben`,
@@ -262,8 +261,7 @@ function scriptLoaded() {
           const stateTriggerLabel = `${sceneName}-Szene`
           const stateTrigger = create_helper_item(
             sceneMember,
-            'scenes',
-            `trigger-state-${sceneStates[sceneName]}`,
+            ['scenes', `trigger-state-${sceneStates[sceneName]}`],
             'Switch',
             'party',
             stateTriggerLabel,
