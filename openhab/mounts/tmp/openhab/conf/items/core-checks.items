@@ -5,7 +5,7 @@ Group gCore_Checks "Überprüfungen" (gCore_Home) ["Equipment"] {
   ]
 }
 
-Group gCore_Checks_OfflineThings "Offline-Geräte" (gCore_Checks) ["Point"] {
+Group:Number:COUNT(".*") gCore_Checks_OfflineThings "Offline-Geräte [%d Geräte]" (gCore_Checks) ["Point"] {
     cellWidget=""[
         label="\u003ditems.gCore_Checks_OfflineThings.title",
         icon="f7:battery_0"

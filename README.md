@@ -51,4 +51,4 @@ In order to adjust general settings of your SmartBerry instance, you may add the
 
 After starting up, SmartBerry is available on port `8080`. To make SmartBerry manage your home in its full potential, access the helper application on port `8081`. Please also refer to the documentation of [openHAB](https://www.openhab.org/docs/).
 
-If you have any questions, just let them know in the _Issues_.
+If you have any questions, join our [Discord server](https://discord.gg/xYypJZYYPY) or just let us know in the _Issues_.

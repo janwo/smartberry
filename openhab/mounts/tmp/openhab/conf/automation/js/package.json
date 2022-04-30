@@ -1,6 +1,6 @@
 {
   "dependencies": {
     "lodash": "^4.17.21",
-    "openhab": "https://github.com/florian-h05/openhab-js/tree/fix-createitem-metadata"
+    "openhab": "https://github.com/openhab/openhab-js"
   }
 }

@@ -186,6 +186,13 @@ function scriptLoaded() {
       triggers.SystemStartlevelTrigger(100)
     ],
     execute: (event) => {
+      // Sync group gCore_Lights_Measurements with measurement items - it's needed to create triggers on it
+      sync_group_with_semantic_items(
+        'gCore_Lights_Measurements',
+        undefined,
+        LIGHT_MEASUREMENT_POINT_TAGS
+      )
+
       // Sync group gCore_Lights_Switchables with switchable items - it's needed to create triggers on it
       const members = sync_group_with_semantic_items(
         'gCore_Lights_Switchables',
@@ -302,9 +309,11 @@ function scriptLoaded() {
       triggers.GenericCronTrigger('0 0/30 * ? * * *')
     ],
     execute: (event) => {
-      const sensors = get_items_of_any_tags(
-        LIGHT_MEASUREMENT_POINT_TAGS
-      ).filter((sensor) => !Number.isNaN(Number.parseFloat(sensor.state)))
+      const sensors = items
+        .getItem('gCore_Lights_Measurements')
+        .members.filter(
+          (sensor) => !Number.isNaN(Number.parseFloat(sensor.state))
+        )
 
       const activeSwitchables = items
         .getItem('gCore_Lights_Switchables')

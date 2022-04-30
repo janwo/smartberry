@@ -1,4 +1,4 @@
-Group gCore_Presence_PresenceTrigger
+Group:Number:COUNT("ON") gCore_Presence_PresenceTrigger
 
 Group gCore_Presence "Anwesenheit" (gCore_Home) ["Equipment"]
 
