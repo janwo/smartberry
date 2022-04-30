@@ -1,5 +1,5 @@
 Group gCore_Lights_Switchables
-Group:Number:AVG() gCore_Lights_Measurements
+Group:Number:AVG gCore_Lights_Measurements
 Group gCore_Lights_DarkMode
 Group gCore_Lights_BrightMode
 Group gCore_Lights_ObscuredMode
