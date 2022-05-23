@@ -1,7 +1,7 @@
-FROM openhab/openhab:milestone
+FROM openhab/openhab:milestone-alpine
 
-# RUN apk add --no-cache \
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apk add --no-cache \
+#RUN apt-get update && apt-get install -y --no-install-recommends \
     rsync \
     grep \
     jq \

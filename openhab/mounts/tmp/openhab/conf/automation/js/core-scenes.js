@@ -211,6 +211,7 @@ function scriptLoaded() {
       // Check helper items
       for (const sceneMember of sceneMembers) {
         // Create scene store trigger
+        //TODO language
         create_helper_item(
           sceneMember,
           ['scenes', 'store-trigger'],
@@ -258,6 +259,7 @@ function scriptLoaded() {
         const sceneLocation = get_location(sceneMember)
         const sceneStates = get_scene_states(sceneMember)
         for (const sceneName in sceneStates) {
+          //TODO language
           const stateTriggerLabel = `${sceneName}-Szene`
           const stateTrigger = create_helper_item(
             sceneMember,

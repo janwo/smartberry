@@ -1,4 +1,4 @@
-const { rules, items, triggers, time, metadata } = require('openhab')
+const { rules, items, triggers, time } = require('openhab')
 const { uniq, uniqBy } = require('lodash')
 const {
   get_items_of_any_tags,
@@ -207,6 +207,7 @@ function scriptLoaded() {
       )
 
       // Create helper items for each location
+      //TODO language
       const helperItems = [
         {
           suffix: 'dark',
@@ -229,6 +230,7 @@ function scriptLoaded() {
       ]
 
       for (const location of locations) {
+        //TODO language
         const helperGroupItem = create_helper_item(
           location,
           ['lights', 'light-mode-group'],

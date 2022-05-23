@@ -15,7 +15,7 @@
               "config": {
                 "iconColor": "=(items.Core_Presence.state == 1.0 ? undefined : 'gray')",
                 "icon": "=(items.Core_Presence.state == 2.0 ? 'f7:airplane' : (items.Core_Presence.state == 1.0 ? 'f7:house_alt' : 'f7:hourglass'))",
-                "title": "Anwesenheit",
+                "title": "=items.Core_Presence.title",
                 "item": "Core_Presence",
                 "action": "options",
                 "actionItem": "Core_Presence",
@@ -29,7 +29,7 @@
               "component": "oh-label-cell",
               "config": {
                 "icon": "=(items.Core_DefaultScene.state == 2.0 ? 'f7:airplane' : (items.Core_DefaultScene.state == 1.0 ? 'f7:hourglass' :  (items.Core_DefaultScene.state == 3.0 ? 'f7:bed_double' : 'f7:house_alt')))",
-                "title": "Hauptszene",
+                "title": "=items.Core_DefaultScene.title",
                 "item": "Core_DefaultScene",
                 "action": "options",
                 "actionItem": "Core_DefaultScene",
@@ -40,7 +40,7 @@
             {
               "component": "oh-label-cell",
               "config": {
-                "title": "Angrifferkennung",
+                "title": "=items.Core_Security_OperationState.title",
                 "item": "Core_Security_OperationState",
                 "action": "options",
                 "actionItem": "Core_Security_OperationState",
@@ -55,7 +55,7 @@
               "config": {
                 "icon": "=(items.Core_Heating_Thermostat_ModeDefault.state == 2.0 ? 'f7:leaf_arrow_circlepath' : (items.Core_Heating_Thermostat_ModeDefault.state == 1.0 ? 'f7:thermometer' :  (items.Core_Heating_Thermostat_ModeDefault.state == 3.0 ? 'f7:thermometer' : 'f7:thermometer_snowflake')))",
                 "iconColor": "=(items.Core_Heating_Thermostat_ModeDefault.state == 2.0 ? 'lightblue' : (items.Core_Heating_Thermostat_ModeDefault.state == 1.0 ? 'yellow' : (items.Core_Heating_Thermostat_ModeDefault.state == 3.0 ? 'red' : 'gray')))",
-                "title": "Klima",
+                "title": "=items.Core_Heating_Thermostat_ModeDefault.title",
                 "item": "Core_Heating_Thermostat_ModeDefault",
                 "action": "options",
                 "actionItem": "Core_Heating_Thermostat_ModeDefault",

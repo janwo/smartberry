@@ -107,7 +107,7 @@ function scriptLoaded() {
         'last-alarm',
         time.ZonedDateTime.now().format(DATETIME_FORMAT)
       )
-
+      //TODO language
       let message = `Silent alarm was triggered by ${item.label}!`
       if (is_security_state(OperationState.ON)) {
         message = `Striking alarm was triggered by ${item.label}!`
@@ -135,7 +135,7 @@ function scriptLoaded() {
         'last-alarm',
         time.ZonedDateTime.now().format(DATETIME_FORMAT)
       )
-
+      //TODO language
       const location = get_location(item)
       let message = `Smoke was detected ${
         location ? `in ${location.label}` : `by ${item.label}`
@@ -177,7 +177,7 @@ function scriptLoaded() {
         'blocking-assault-triggers',
         blockingAssaultTriggers.map((trigger) => trigger.name).join(',')
       )
-
+      //TODO language
       if (blockingAssaultTriggers.length > 0) {
         items
           .getItem('Core_Security_OperationState')
@@ -278,6 +278,7 @@ function scriptLoaded() {
       )) {
         if (alarm.state != 'OFF') {
           alarm.sendCommand('OFF')
+          //TODO language
           broadcast(
             `Alarm item ${alarm.label} was automatically disabled after ${autoOffTime.state} minutes.`,
             BroadcastType.ATTENTION

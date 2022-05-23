@@ -11,6 +11,7 @@ import authenticationPlugin from './plugins/authentication.js'
 import { plugin as jwtPlugin } from '@hapi/jwt'
 import openhabSecurityPlugin from './plugins/openhab-security.js'
 import openhabLightPlugin from './plugins/openhab-light.js'
+import openhabIrrigationPlugin from './plugins/openhab-irrigation.js'
 
 const init = async () => {
   const server = Hapi.server({
@@ -40,6 +41,7 @@ const init = async () => {
     openhabPresencePlugin,
     openhabSecurityPlugin,
     openhabLightPlugin,
+    openhabIrrigationPlugin,
     jwtPlugin,
     authenticationPlugin,
     openhabScenesPlugin
