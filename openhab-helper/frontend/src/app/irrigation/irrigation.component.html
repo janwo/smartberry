@@ -1,0 +1,346 @@
+<section class="hero">
+  <div class="hero-body">
+    <div class="columns is-gapless is-vcentered is-mobile">
+      <div class="column is-narrow title-icon">
+        <app-svg-icon icon="umbrella-outline"></app-svg-icon>
+      </div>
+      <div class="column">
+        <p class="title" i18n>Irrigation Settings</p>
+        <p class="subtitle" i18n>
+          Adjust the way how SmartBerry handles the irrigation of your garden.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="card">
+  <div class="card-content">
+    <div class="columns is-gapless is-vcentered is-mobile">
+      <div class="column">
+        <h2 i18n>OpenWeather API Token</h2>
+      </div>
+      <div class="column is-narrow">
+        <span
+          class="tag"
+          [ngClass]="{
+            'is-success': settings?.apiKey,
+            'is-danger': !settings?.apiKey
+          }">
+          <app-svg-icon
+            [icon]="
+              settings?.apiKey ? 'checkmark-outline' : 'alert-circle-outline'
+            "></app-svg-icon>
+          <ng-container *ngIf="settings?.apiKey" i18n
+            >Authenticated</ng-container
+          >
+          <ng-container *ngIf="!settings?.apiKey" i18n
+            >Unauthenticated</ng-container
+          >
+        </span>
+      </div>
+    </div>
+    <p class="block" i18n>
+      Start to manage the irrigation of your garden! Set the
+      <a href="https://openweathermap.org/api" target="_blank"
+        >OpenWeather API token</a
+      >
+      and make sure to subscribe to the <strong>One Call API 3.0</strong>.
+    </p>
+    <article class="message is-light">
+      <div class="message-header">
+        <p>Limit your call quota</p>
+      </div>
+      <div class="message-body">
+        Although smartBerry reduces the number of API calls to a minimum, you
+        may
+        <a target="_blank" href="https://home.openweathermap.org/subscriptions"
+          >limit your calls to the free quota</a
+        >.
+      </div>
+    </article>
+    <form
+      [formGroup]="apiTokenForm"
+      (ngSubmit)="submitAPIToken()"
+      [ngClass]="{
+        'has-error': apiTokenForm.touched && !apiTokenForm.valid
+      }">
+      <div class="field has-addons">
+        <div class="control is-expanded">
+          <input
+            i18n-placeholder
+            class="input"
+            formControlName="apiToken"
+            type="text"
+            placeholder="Your API Token" />
+        </div>
+        <div class="control">
+          <button type="submit" i18n class="button is-primary">Save</button>
+        </div>
+      </div>
+
+      <fieldset [attr.disabled]="settings?.apiKey ? null : true">
+        <div class="field">
+          <div class="control">
+            <button
+              i18n
+              type="submit"
+              (click)="deleteAPIToken()"
+              class="button is-primary">
+              Delete API Token
+            </button>
+          </div>
+        </div>
+      </fieldset>
+
+      <app-error
+        [form]="apiTokenForm"
+        [errors]="{ unauthenticated: 'API Token is invalid' }"
+        i18n-errors></app-error>
+    </form>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <div class="columns">
+      <div class="column">
+        <h2 i18n>Irrigation Valve Items</h2>
+      </div>
+    </div>
+    <p class="block" i18n>
+      In order to let SmartBerry handle all irrigation valves for you, organize
+      your valve items as shown below.
+    </p>
+    <app-item-schema
+      [items]="irrigationValveItems | map: 'item'"
+      [schema]="schema.irrigationValveItems"></app-item-schema>
+
+    <h3 i18n>Adjust irrigation variables</h3>
+    <p class="block" i18n>
+      In order to achieve an optimal irrigation, adjust the following values to
+      your satisfaction.
+    </p>
+    <p class="block" i18n>
+      <strong>Irrigation Level Per Minute (mm):</strong> How much water will be
+      irrigated by the valve upon your plants? 1.0 liter per square meter is
+      equal to 1.0 millimeter.
+    </p>
+    <p class="block" i18n>
+      <em
+        >Example: You have an area of 10 m² and your valve pours 10 l per
+        minute. Consequently, you have a irrigation level of
+        <strong>1.0 mm</strong> per minute (<code
+          >10 l / 10 m² = 1.0 l/m² ≙ 1.0 mm</code
+        >).
+      </em>
+    </p>
+    <p class="block" i18n>
+      <strong>Aimed Precipitation Level (mm):</strong>How much water should be
+      irrigated on your plants per day?
+    </p>
+    <p class="block" i18n>
+      <em
+        >Example: Your plants need 0.5 l per square meter and day. Consequently,
+        you have a aimed precipitation level of <strong>1.0 mm</strong> per
+        minute (<code>0.5 l / 1.0 m² = 0.5 l/m² ≙ 0.5 mm</code>).
+      </em>
+    </p>
+    <p class="block" i18n>
+      <strong>Observed precipitation period (days):</strong> Defines the range
+      of days SmartBerry monitors the precipitation rate.
+    </p>
+    <p class="block" i18n>
+      <strong>Overshoot upon rainfall (days):</strong> Maximum number of days
+      SmartBerry will postpone irrigation on upcoming rain, although
+      precipitation cannot be maintained.
+    </p>
+    <app-accordion
+      [title]="irrigationValveItem.item.label"
+      [hintClasses]="
+        countValues(irrigationValveItem.form)
+          ? ['has-text-primary', 'has-text-weight-bold']
+          : 'has-text-grey'
+      "
+      i18n-hint
+      hint="{{
+        countValues(irrigationValveItem.form)
+          | i18nPlural
+            : { '=0': 'No options', '=1': 'One option', other: '# options' }
+      }} selected"
+      *ngFor="let irrigationValveItem of irrigationValveItems">
+      <fieldset>
+        <form
+          [formGroup]="irrigationValveItem.form"
+          (ngSubmit)="updateItem(irrigationValveItem)"
+          [ngClass]="{
+            'has-error':
+              irrigationValveItem.form.touched &&
+              !irrigationValveItem.form.valid
+          }">
+          <div class="field has-addons">
+            <div class="control">
+              <span class="button is-static" i18n
+                >Irrigation Level Per Minute (mm)</span
+              >
+            </div>
+            <div class="control">
+              <input
+                i18n-placeholder
+                min="0"
+                step="0.1"
+                class="input"
+                [ngClass]="{
+                  'is-danger':
+                    irrigationValveItem.form.touched &&
+                    irrigationValveItem.form.controls[
+                      'irrigationLevelPerMinute'
+                    ].errors
+                }"
+                formControlName="irrigationLevelPerMinute"
+                type="number"
+                placeholder="Irrigation Level Per Minute (mm)" />
+            </div>
+          </div>
+          <div class="field has-addons">
+            <div class="control">
+              <span class="button is-static" i18n
+                >Aimed Precipitation Level (mm)</span
+              >
+            </div>
+            <div class="control">
+              <input
+                min="0"
+                step="0.1"
+                i18n-placeholder
+                class="input"
+                [ngClass]="{
+                  'is-danger':
+                    irrigationValveItem.form.touched &&
+                    irrigationValveItem.form.controls['aimedPrecipitationLevel']
+                      .errors
+                }"
+                formControlName="aimedPrecipitationLevel"
+                type="number"
+                placeholder="Aimed Precipitation Level (mm)" />
+            </div>
+          </div>
+          <div class="field has-addons">
+            <div class="control">
+              <span class="button is-static" i18n
+                >Observed precipitation period (days)</span
+              >
+            </div>
+            <div class="control">
+              <input
+                i18n-placeholder
+                min="1"
+                step="1"
+                class="input"
+                [ngClass]="{
+                  'is-danger':
+                    irrigationValveItem.form.touched &&
+                    irrigationValveItem.form.controls['observedDays'].errors
+                }"
+                formControlName="observedDays"
+                type="number"
+                placeholder="Observed precipitation period (days)" />
+            </div>
+          </div>
+          <div class="field has-addons">
+            <div class="control">
+              <span class="button is-static" i18n
+                >Overshoot upon rainfall (days)</span
+              >
+            </div>
+            <div class="control">
+              <input
+                i18n-placeholder
+                min="0"
+                step="1"
+                class="input"
+                [ngClass]="{
+                  'is-danger':
+                    irrigationValveItem.form.touched &&
+                    irrigationValveItem.form.controls['overshootDays'].errors
+                }"
+                formControlName="overshootDays"
+                type="number"
+                placeholder="Overshoot upon rainfall (days)" />
+            </div>
+          </div>
+          <p class="block">
+            <em
+              i18n
+              *ngIf="
+                !this.irrigationValveItem.form.value.irrigationLevelPerMinute ||
+                  !this.irrigationValveItem.form.value
+                    .aimedPrecipitationLevel ||
+                  !this.irrigationValveItem.form.value.observedDays;
+                else calculationExample
+              ">
+              Enter all variables to receive a calculation example.
+            </em>
+            <ng-template #calculationExample>
+              <strong>Calculation Example:</strong>
+              <em
+                >Your plants need
+                {{
+                  this.irrigationValveItem.form.value.aimedPrecipitationLevel
+                    | number: '1.1-1'
+                }}
+                mm ({{
+                  this.irrigationValveItem.form.value.aimedPrecipitationLevel
+                    | number: '1.1-1'
+                }}
+                l/m²) per day. Your valve irrigates
+                {{
+                  this.irrigationValveItem.form.value.irrigationLevelPerMinute
+                    | number: '1.1-1'
+                }}
+                mm ({{
+                  this.irrigationValveItem.form.value.irrigationLevelPerMinute
+                    | number: '1.1-1'
+                }}
+                l/m²) per minute. Consequently the valve will irrigate for
+                {{
+                  calculatedMinutes(this.irrigationValveItem.form)
+                    | i18nPlural
+                      : { '=0': 'minute', '=1': '1 minute', other: '# minutes' }
+                }}
+                , if there was no rain for
+                {{
+                  this.irrigationValveItem.form.value.observedDays
+                    | i18nPlural
+                      : { '=0': 'day', '=1': '1 day', other: '# days' }
+                }}.
+              </em>
+            </ng-template>
+          </p>
+          <div class="control">
+            <button type="submit" class="button is-primary" i18n>Save</button>
+          </div>
+          <app-error [form]="irrigationValveItem.form"></app-error>
+        </form>
+      </fieldset>
+    </app-accordion>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <div class="columns">
+      <div class="column">
+        <h2 i18n>Irrigation Triggers</h2>
+      </div>
+    </div>
+    <p i18n class="block">
+      You can define irrigation trigger items that automatically start the
+      irrigation check. Any state change of these items will fire an irrigation
+      event.
+    </p>
+    <app-item-schema
+      [items]="irrigationTriggerItems"
+      [schema]="schema.irrigationTriggerItems"></app-item-schema>
+  </div>
+</div>

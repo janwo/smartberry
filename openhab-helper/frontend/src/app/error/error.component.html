@@ -1,11 +1,16 @@
-<p *ngIf="form && findError(form) as error" class="help is-danger">
-  <ng-container *ngIf="error['required']" i18n>
+<p *ngIf="form && findError(form) as foundError" class="help is-danger">
+  <ng-container *ngIf="foundError['required']" i18n>
     Values are required.
   </ng-container>
-  <ng-container *ngIf="error['invalid']" i18n>
+  <ng-container *ngIf="foundError['invalid']" i18n>
     Values are invalid.
   </ng-container>
-  <ng-container *ngIf="error['connection']" i18n>
+  <ng-container *ngIf="foundError['connection']" i18n>
     No connection to your openHAB-Instance.
+  </ng-container>
+  <ng-container *ngFor="let error of errors | keyvalue">
+    <ng-container *ngIf="foundError[error.key]">
+      {{ error.value }}
+    </ng-container>
   </ng-container>
 </p>

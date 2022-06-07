@@ -61,7 +61,10 @@
         [ngClass]="{
           'has-error': heatingItem.form.touched && !heatingItem.form.valid
         }">
-        <div class="field is-grouped is-grouped-multiline">
+        <div class="field has-addons">
+          <div class="control">
+            <span class="button is-static">ON</span>
+          </div>
           <div class="control">
             <input
               class="input"
@@ -73,6 +76,11 @@
               formControlName="on"
               type="text"
               placeholder="ON" />
+          </div>
+        </div>
+        <div class="field has-addons">
+          <div class="control">
+            <span class="button is-static">OFF</span>
           </div>
           <div class="control">
             <input
@@ -86,6 +94,11 @@
               type="text"
               placeholder="OFF" />
           </div>
+        </div>
+        <div class="field has-addons">
+          <div class="control">
+            <span class="button is-static" >POWER</span>
+          </div>
           <div class="control">
             <input
               class="input"
@@ -97,6 +110,11 @@
               formControlName="power"
               type="text"
               placeholder="POWER" />
+          </div>
+        </div>
+        <div class="field has-addons">
+          <div class="control">
+            <span class="button is-static" >ECO</span>
           </div>
           <div class="control">
             <input
@@ -110,6 +128,8 @@
               type="text"
               placeholder="ECO" />
           </div>
+        </div>
+        <div class="field has-addons">
           <div class="control">
             <button type="submit" class="button is-primary" i18n>Save</button>
           </div>

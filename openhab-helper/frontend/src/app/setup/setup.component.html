@@ -18,7 +18,7 @@
   <div class="card-content">
     <div class="columns is-gapless is-vcentered is-mobile">
       <div class="column">
-        <h2 i18n>API-Token</h2>
+        <h2 i18n>openHAB API Token</h2>
       </div>
       <div class="column is-narrow">
         <span
@@ -43,7 +43,8 @@
       </div>
     </div>
     <p class="block" i18n>
-      Update your API token to use more configuration options for SmartBerry.
+      Set your openHAB API token to use more configuration options for
+      SmartBerry.
     </p>
     <form
       [formGroup]="apiTokenForm"
@@ -54,10 +55,11 @@
       <div class="field has-addons">
         <div class="control is-expanded">
           <input
+                i18n-placeholder
             class="input"
             formControlName="apiToken"
             type="text"
-            placeholder="Dein API-Token" />
+            placeholder="Your API Token" />
         </div>
         <div class="control">
           <button type="submit" i18n class="button is-primary">Save</button>
@@ -72,7 +74,7 @@
               type="submit"
               (click)="openhabService.unregister()"
               class="button is-primary">
-              Delete API-Token
+              Delete API Token
             </button>
           </div>
         </div>

@@ -1,0 +1,20 @@
+Group gCore_Irrigation "Bewässerung" (gCore_Home) ["Equipment"] {
+  cellWidget="oh-label-cell"[
+    icon="f7:cloud_rain",
+    title="\u003ditems.gCore_Irrigation.title"
+  ]
+}
+
+Group gCore_Irrigation_Triggers "Bewässerungsauslöser" (gCore_Irrigation) ["Point"] {
+  cellWidget="oh-label-cell"[
+    icon="f7:radiowaves_right",
+    title="\u003ditems.gCore_Irrigation_Triggers.title"
+  ]
+}
+
+Group gCore_Irrigation_Valves "Bewässerungsventile" (gCore_Irrigation) ["Point"] {
+  cellWidget="oh-label-cell"[
+    icon="f7:cloud_rain",
+    title="\u003ditems.gCore_Irrigation_Triggers.title"
+  ]
+}

@@ -39,7 +39,7 @@ const openhabHeatingPlugin = {
       options: {
         validate: {
           params: {
-            item: Joi.string().pattern(/[a-zA-Z_0-9]+/)
+            item: Joi.string().pattern(/^[a-zA-Z_0-9]+$/)
           },
           payload: {
             commandMap: Joi.object({
@@ -73,7 +73,7 @@ const openhabHeatingPlugin = {
       options: {
         validate: {
           params: {
-            item: Joi.string().pattern(/[a-zA-Z_0-9]+/)
+            item: Joi.string().pattern(/^[a-zA-Z_0-9]+$/)
           }
         }
       },

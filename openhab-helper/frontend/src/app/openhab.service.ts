@@ -20,6 +20,7 @@ export interface AuthResponse {
 
 export interface PostPutDeleteResponse {
   success: boolean
+  error?: string
 }
 
 export interface Item {
@@ -110,6 +111,64 @@ export class OpenhabService implements CanActivate {
     astroItems: () => {
       return this.http.get<GetItemListResponse>(
         `${environment.API_URL()}/light-astro-items`,
+        this.getOptions()
+      )
+    }
+  }
+
+  public irrigation = {
+    settings: () => {
+      return this.http.get<{
+        data: {
+          latitude: number
+          longitude: number
+          apiKey: boolean
+        }
+      }>(`${environment.API_URL()}/irrigation-settings`, this.getOptions())
+    },
+    updateAPIKey: (key: string) => {
+      return this.http.post<PostPutDeleteResponse>(
+        `${environment.API_URL()}/irrigation-api`,
+        { key },
+        this.getOptions()
+      )
+    },
+    deleteAPIKey: () => {
+      return this.http.delete<PostPutDeleteResponse>(
+        `${environment.API_URL()}/irrigation-api`,
+        this.getOptions()
+      )
+    },
+    triggerItems: () => {
+      return this.http.get<GetItemListResponse>(
+        `${environment.API_URL()}/irrigation-trigger-items`,
+        this.getOptions()
+      )
+    },
+    valveItems: () => {
+      return this.http.get<GetItemListResponse>(
+        `${environment.API_URL()}/irrigation-valve-items`,
+        this.getOptions()
+      )
+    },
+    updateValveItems: (
+      item: string,
+      irrigationValues: {
+        waterVolumePerMinute: number
+        overshootDays: number
+        aimedPrecipitationLevel: number
+        observedDays: number
+      }
+    ) => {
+      return this.http.post<PostPutDeleteResponse>(
+        `${environment.API_URL()}/irrigation-valve-items/${item}`,
+        { irrigationValues },
+        this.getOptions()
+      )
+    },
+    deleteValveItems: (item: string) => {
+      return this.http.delete<PostPutDeleteResponse>(
+        `${environment.API_URL()}/irrigation-valve-items/${item}`,
         this.getOptions()
       )
     }

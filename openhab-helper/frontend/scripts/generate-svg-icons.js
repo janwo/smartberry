@@ -15,10 +15,12 @@ const icons = [
       'alert-circle-outline',
       'link-2-outline',
       'chevron-down-outline',
+      'umbrella-outline',
       'chevron-up-outline',
       'checkmark-outline',
       'grid-outline',
-'bulb-outline','activity-outline',
+      'bulb-outline',
+      'activity-outline',
       'shield-outline',
       'question-mark-circle-outline'
     ]

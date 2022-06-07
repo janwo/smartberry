@@ -17,8 +17,9 @@ import { MapPipe } from './map.pipe'
 import { StateDescriptionPipe } from './state-description.pipe'
 import { LightComponent } from './light/light.component'
 import { PresenceComponent } from './presence/presence.component'
-import { SecurityComponent } from './security/security.component';
+import { SecurityComponent } from './security/security.component'
 import { ErrorComponent } from './error/error.component'
+import { IrrigationComponent } from './irrigation/irrigation.component'
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ErrorComponent } from './error/error.component'
     LightComponent,
     PresenceComponent,
     SecurityComponent,
-    ErrorComponent
+    ErrorComponent,
+    IrrigationComponent
   ],
   imports: [
     BrowserModule,

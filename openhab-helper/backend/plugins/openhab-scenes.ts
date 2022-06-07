@@ -36,13 +36,13 @@ const openhabScenesPlugin = {
       options: {
         validate: {
           params: {
-            item: Joi.string().pattern(/[a-zA-Z_0-9]+/)
+            item: Joi.string().pattern(/^[a-zA-Z_0-9]+$/)
           },
           payload: {
             customMembers: Joi.array()
               .items(
                 Joi.string()
-                  .pattern(/[a-zA-Z_0-9]+/)
+                  .pattern(/^[a-zA-Z_0-9]+$/)
                   .required()
               )
               .required()
@@ -66,7 +66,7 @@ const openhabScenesPlugin = {
       options: {
         validate: {
           params: {
-            item: Joi.string().pattern(/[a-zA-Z_0-9]+/)
+            item: Joi.string().pattern(/^[a-zA-Z_0-9]+$/)
           }
         }
       },
@@ -85,7 +85,7 @@ const openhabScenesPlugin = {
       options: {
         validate: {
           params: {
-            item: Joi.string().pattern(/[a-zA-Z_0-9]+/)
+            item: Joi.string().pattern(/^[a-zA-Z_0-9]+$/)
           },
           payload: {
             contextStates: Joi.object()
@@ -116,7 +116,7 @@ const openhabScenesPlugin = {
       options: {
         validate: {
           params: {
-            item: Joi.string().pattern(/[a-zA-Z_0-9]+/)
+            item: Joi.string().pattern(/^[a-zA-Z_0-9]+$/)
           }
         }
       },
@@ -171,7 +171,7 @@ const openhabScenesPlugin = {
       options: {
         validate: {
           params: {
-            item: Joi.string().pattern(/[a-zA-Z_0-9]+/)
+            item: Joi.string().pattern(/^[a-zA-Z_0-9]+$/)
           },
           payload: {
             triggerState: Joi.object({
@@ -182,7 +182,7 @@ const openhabScenesPlugin = {
                 .pattern(/\d+\.\d+/)
                 .optional(),
               targetScene: Joi.string()
-                .pattern(/[a-zA-Z_0-9]+/)
+                .pattern(/^[a-zA-Z_0-9]+$/)
                 .required(),
               states: Joi.array()
                 .items(Joi.string().alphanum().required())
@@ -226,7 +226,7 @@ const openhabScenesPlugin = {
       options: {
         validate: {
           params: {
-            item: Joi.string().pattern(/[a-zA-Z_0-9]+/)
+            item: Joi.string().pattern(/^[a-zA-Z_0-9]+$/)
           }
         }
       },

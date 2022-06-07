@@ -48,6 +48,10 @@ function get_location(item) {
     }
   }
 
+  if (actions.Semantics.isLocation(item.rawItem)) {
+    return item
+  }
+
   item = actions.Semantics.getLocation(item.rawItem)
   return item ? items.getItem(item.name) : undefined
 }

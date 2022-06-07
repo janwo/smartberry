@@ -39,7 +39,7 @@ const openhabPresencePlugin = {
       options: {
         validate: {
           params: {
-            item: Joi.string().pattern(/[a-zA-Z_0-9]+/)
+            item: Joi.string().pattern(/^[a-zA-Z_0-9]+$/)
           },
           payload: Joi.object({
             presence: Joi.array()
@@ -76,7 +76,7 @@ const openhabPresencePlugin = {
       options: {
         validate: {
           params: {
-            item: Joi.string().pattern(/[a-zA-Z_0-9]+/)
+            item: Joi.string().pattern(/^[a-zA-Z_0-9]+$/)
           }
         }
       },

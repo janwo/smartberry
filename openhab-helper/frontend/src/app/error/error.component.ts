@@ -8,6 +8,7 @@ import { AbstractControl, FormArray, FormGroup } from '@angular/forms'
 })
 export class ErrorComponent {
   @Input() form?: FormGroup
+  @Input() errors?: { [key: string]: string }
 
   public findError(
     control: AbstractControl

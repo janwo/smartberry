@@ -75,15 +75,7 @@ export class ClimateComponent implements OnInit {
   }
 
   countValues(form: FormGroup) {
-    let count = 0
-    Object.values(form.controls)
-      .map((control) => control.value)
-      .forEach((value) => {
-        if (value !== '') {
-          count++
-        }
-      })
-    return count
+    return Object.values(form.value).filter((value) => value !== '').length
   }
 
   updateItem(item: { item: Item; form: FormGroup }) {

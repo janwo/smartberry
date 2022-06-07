@@ -14,6 +14,7 @@ declare module '@hapi/hapi' {
         item: string,
         recursive?: boolean
       ) => Promise<Item>
+      getLocale: (request: Hapi.Request) => Promise<Locale>
     }
   }
 
@@ -31,6 +32,15 @@ export interface Item {
   stateDescription?: { options: [{ [key: string]: string }] }
 }
 
+export interface Locale {
+  language: string
+  latitude: number
+  longitude: number
+  region: string
+  measurementSystem: string
+  timezone: string
+}
+
 function getOptions(bearer: string) {
   if (!bearer) {
     return {}
@@ -40,6 +50,29 @@ function getOptions(bearer: string) {
       Authorization: `Bearer ${bearer}`
     }
   }
+}
+
+async function getLocale(request: Hapi.Request): Promise<Locale> {
+  const url =
+    request.server.app.OPENHAB_URL + '/services/org.openhab.i18n/config'
+
+  return axios
+    .get(url, getOptions(request.auth.credentials?.openhab?.bearer))
+    .then((response) => {
+      const { language, region, measurementSystem, timezone, location } =
+        response.data
+      const latitude = location?.split(',')[0]
+      const longitude = location?.split(',')[1]
+
+      return {
+        language,
+        longitude,
+        latitude,
+        region,
+        measurementSystem,
+        timezone
+      }
+    })
 }
 
 async function getItems(
@@ -82,6 +115,7 @@ const openhabPlugin = {
     }:8080/rest`
     server.expose('getItem', getItem)
     server.expose('getItems', getItems)
+    server.expose('getLocale', getLocale)
 
     server.route({
       method: 'GET',

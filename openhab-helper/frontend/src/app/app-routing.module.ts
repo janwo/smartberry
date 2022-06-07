@@ -8,6 +8,7 @@ import { OpenhabService } from './openhab.service'
 import { LightComponent } from './light/light.component'
 import { SecurityComponent } from './security/security.component'
 import { PresenceComponent } from './presence/presence.component'
+import { IrrigationComponent } from './irrigation/irrigation.component'
 
 export const routes: Routes = [
   {
@@ -47,6 +48,12 @@ export const routes: Routes = [
     canActivate: [OpenhabService],
     data: { title: $localize`Presence Settings`, icon: 'activity-outline' },
     component: PresenceComponent
+  },
+  {
+    path: 'irrigation',
+    canActivate: [OpenhabService],
+    data: { title: $localize`Irrigation Settings`, icon: 'umbrella-outline' },
+    component: IrrigationComponent
   },
   {
     path: '',

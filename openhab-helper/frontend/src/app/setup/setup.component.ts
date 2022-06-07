@@ -22,22 +22,24 @@ export class SetupComponent {
       return
     }
 
-    this.openhabService.register(this.apiTokenForm.value.apiToken).subscribe({
-      next: (response) => {
-        if (!response?.success) {
-          this.apiTokenForm.controls['apiToken'].setErrors({
-            invalidToken: true
-          })
-          return
-        }
+    this.openhabService
+      .register(this.apiTokenForm.controls['apiToken'].value || '')
+      .subscribe({
+        next: (response) => {
+          if (!response?.success) {
+            this.apiTokenForm.controls['apiToken'].setErrors({
+              invalidToken: true
+            })
+            return
+          }
 
-        this.apiTokenForm.reset()
-      },
-      error: (response) => {
-        this.apiTokenForm.controls['apiToken'].setErrors({
-          connection: true
-        })
-      }
-    })
+          this.apiTokenForm.reset()
+        },
+        error: (response) => {
+          this.apiTokenForm.controls['apiToken'].setErrors({
+            connection: true
+          })
+        }
+      })
   }
 }
