@@ -96,7 +96,7 @@
       </trans-unit>
       <trans-unit id="6148491700411607071" datatype="html">
         <source> Adjust the way how SmartBerry handles climate control. </source>
-        <target state="translated">Passe die Klimatisierung durch SmartBerry an.</target>
+        <target state="translated">Passe die Klimatisierung durch SmartBerry an. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/climate/climate.component.html</context>
           <context context-type="linenumber">9,11</context>
@@ -111,8 +111,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="5973109080420432543" datatype="html">
-        <source> You can set the mode of all your radiators at once. Additionally, SmartBerry turn radiators off, if windows or doors are openend. Current modes are <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>OFF<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>, <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>, <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>ECO<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> and <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>POWER<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>. </source>
-        <target state="translated">Du kannst den Modus aller Heizkörper gleichzeitig einstellen. Darüber hinaus schaltet SmartBerry Heizkörper aus, wenn Fenster oder Türen geöffnet sind. Aktuelle Zustände sind <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>OFF<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>, <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>, <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>ECO<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> und <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>POWER<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>.</target>
+        <source> You can set the mode of all your radiators at once. Additionally, SmartBerry turn radiators off, if windows or doors are openend. Current modes are <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>OFF<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>, <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>, <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>ECO<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> and <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>POWER<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>. </source>
+        <target state="translated">Du kannst den Modus aller Heizkörper gleichzeitig einstellen. Darüber hinaus schaltet SmartBerry Heizkörper aus, wenn Fenster oder Türen geöffnet sind. Aktuelle Zustände sind <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>OFF<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>, <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>, <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>ECO<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> und <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>POWER<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/climate/climate.component.html</context>
           <context context-type="linenumber">24,29</context>
@@ -120,7 +120,7 @@
       </trans-unit>
       <trans-unit id="2844976128878448430" datatype="html">
         <source> In order to let SmartBerry handle all radiators for you, organize your radiator items as shown below. </source>
-        <target state="translated">Damit SmartBerry alle Heizkörper für Dich verwalten kann, organisiere die Heizkörper wie unten gezeigt:</target>
+        <target state="translated">Damit SmartBerry alle Heizkörper für Dich verwalten kann, organisiere die Heizkörper wie unten gezeigt: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/climate/climate.component.html</context>
           <context context-type="linenumber">30,33</context>
@@ -135,16 +135,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="3614116355920335966" datatype="html">
-        <source> Adjust the commands sent to the heating mode item for each available state. Current choices are <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>OFF (0.0)<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>, <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>ON (1.0)<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>, <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>ECO (2.0)<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> or <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>POWER` (3.0)<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/></source>
-        <target state="translated">Stelle den Zustand ein, der für den entsprechenden Heizmodus an das Heizkörper-Item gesendet werden soll. Derzeitige Auswahlmöglichkeiten sind <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>OFF (0.0)<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>, <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>ON (1.0)<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>, <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>ECO (2.0)<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> or <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>POWER` (3.0)<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/></target>
+        <source> Adjust the commands sent to the heating mode item for each available state. Current choices are <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>OFF (0.0)<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>, <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>ON (1.0)<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>, <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>ECO (2.0)<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> or <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>POWER` (3.0)<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/></source>
+        <target state="translated"> Stelle den Zustand ein, der für den entsprechenden Heizmodus an das Heizkörper-Item gesendet werden soll. Derzeitige Auswahlmöglichkeiten sind <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>OFF (0.0)<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>, <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>ON (1.0)<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>, <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>ECO (2.0)<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> or <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>POWER` (3.0)<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/climate/climate.component.html</context>
           <context context-type="linenumber">39,42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7640416587392187464" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{&#xA;        countValues(heatingItem.form)&#xA;          | i18nPlural&#xA;            : { '=0': 'No options', '=1': 'One option', other: '# options' }&#xA;      }}"/> selected</source>
-        <target state="needs-adaptation">{{ countValues(heatingItem.form) | i18nPlural: { '=0': ‚Keine Optionen', '=1': 'Eine Option', other: '# Optionen' } }} ausgewählt</target>
+        <source><x id="INTERPOLATION" equiv-text="{{&#10;        countValues(heatingItem.form)&#10;          | i18nPlural&#10;            : { '=0': 'No options', '=1': 'One option', other: '# options' }&#10;      }}"/> selected</source>
+        <target state="translated">{{ countValues(heatingItem.form) | i18nPlural: { '=0': 'Keine Optionen', '=1': 'Eine Option', other: '# Optionen' } }} ausgewählt</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/climate/climate.component.html</context>
           <context context-type="linenumber">52,56</context>
@@ -208,7 +208,7 @@
       </trans-unit>
       <trans-unit id="7447768655927242322" datatype="html">
         <source> You can define contact items that automatically turn off heating in open state. </source>
-        <target state="translated">Du kannst Kontaktschalter definieren, die die Heizung im geöffneten Zustand automatisch ausschalten.</target>
+        <target state="translated">Du kannst Kontaktschalter definieren, die die Heizung im geöffneten Zustand automatisch ausschalten. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/climate/climate.component.html</context>
           <context context-type="linenumber">150,153</context>
@@ -252,7 +252,7 @@
       </trans-unit>
       <trans-unit id="4190196007208578994" datatype="html">
         <source> Values are required. </source>
-        <target state="translated">Die Werte sind erforderlich.</target>
+        <target state="translated">Die Werte sind erforderlich. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/error/error.component.html</context>
           <context context-type="linenumber">2,4</context>
@@ -260,7 +260,7 @@
       </trans-unit>
       <trans-unit id="850366812744739722" datatype="html">
         <source> Values are invalid. </source>
-        <target state="translated">Die Werte sind ungültig.</target>
+        <target state="translated">Die Werte sind ungültig. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/error/error.component.html</context>
           <context context-type="linenumber">5,7</context>
@@ -268,7 +268,7 @@
       </trans-unit>
       <trans-unit id="6256089644514043087" datatype="html">
         <source> No connection to your openHAB-Instance. </source>
-        <target state="translated">Keine Verbindung zu deiner openHAB-Instanz.</target>
+        <target state="translated">Keine Verbindung zu deiner openHAB-Instanz. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/error/error.component.html</context>
           <context context-type="linenumber">8,10</context>
@@ -315,8 +315,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="7496780628120712271" datatype="html">
-        <source> Start to manage the irrigation of your garden! Set the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;https://openweathermap.org/api&quot; target=&quot;_blank&quot;&#xA;        &gt;"/>OpenWeather API token<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&#xA;      &gt;"/> and make sure to subscribe to the <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>One Call API 3.0<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/>. </source>
-        <target state="translated"> Fange mit der Bewässerung deines Gartens an! Lege den <a href="https://openweathermap.org/api" target="_blank">OpenWeather API token</a> fest und stelle sicher, dass du die <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>One Call API 3.0<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> abonniert hast.</target>
+        <source> Start to manage the irrigation of your garden! Set the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;https://openweathermap.org/api&quot; target=&quot;_blank&quot;&#10;        >"/>OpenWeather API token<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&#10;      >"/> and make sure to subscribe to the <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>One Call API 3.0<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/>. </source>
+        <target state="translated"> Fange mit der Bewässerung deines Gartens an! Lege den <a href="https://openweathermap.org/api" target="_blank">OpenWeather API token</a> fest und stelle sicher, dass du die <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>One Call API 3.0<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> abonniert hast. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
           <context context-type="linenumber">43,49</context>
@@ -336,7 +336,7 @@
       </trans-unit>
       <trans-unit id="6366273303957908657" datatype="html">
         <source> Delete API Token </source>
-        <target state="translated">API Token löschen</target>
+        <target state="translated"> API Token löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
           <context context-type="linenumber">89,91</context>
@@ -356,7 +356,7 @@
       </trans-unit>
       <trans-unit id="3932827075013533934" datatype="html">
         <source> In order to let SmartBerry handle all irrigation valves for you, organize your valve items as shown below. </source>
-        <target state="translated">Damit SmartBerry alle Bewässerungsventile verwalten kann, konfiguriere deine Bewässerungsventile wie unten gezeigt. </target>
+        <target state="translated"> Damit SmartBerry alle Bewässerungsventile verwalten kann, konfiguriere deine Bewässerungsventile wie unten gezeigt. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
           <context context-type="linenumber">111,114</context>
@@ -372,55 +372,55 @@
       </trans-unit>
       <trans-unit id="747262057446848263" datatype="html">
         <source> In order to achieve an optimal irrigation, adjust the following values to your satisfaction. </source>
-        <target state="translated">Um eine optimale Bewässerung zu erreichen, stelle die folgenden Werte nach deinen Wünschen ein. </target>
+        <target state="translated"> Um eine optimale Bewässerung zu erreichen, stelle die folgenden Werte nach deinen Wünschen ein. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
           <context context-type="linenumber">120,123</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7363197680789340232" datatype="html">
-        <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Irrigation Level Per Minute (mm):<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> How much water will be irrigated by the valve upon your plants? 1.0 liter per square meter is equal to 1.0 millimeter. </source>
-        <target state="translated"><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Bewässerungsmenge pro Minute (mm):<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> Wie viel Wasser wird durch das Ventil auf Ihre Pflanzen bewässert? 1,0 Liter pro Quadratmeter entspricht 1,0 Millimeter. </target>
+        <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>Irrigation Level Per Minute (mm):<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> How much water will be irrigated by the valve upon your plants? 1.0 liter per square meter is equal to 1.0 millimeter. </source>
+        <target state="translated"><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>Bewässerungsmenge pro Minute (mm):<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> Wie viel Wasser wird durch das Ventil auf Ihre Pflanzen bewässert? 1,0 Liter pro Quadratmeter entspricht 1,0 Millimeter. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
           <context context-type="linenumber">125,128</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2881330272949676960" datatype="html">
-        <source><x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&#xA;        &gt;"/>Example: You have an area of 10 m² and your valve pours 10 l per minute. Consequently, you have a irrigation level of <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>1.0 mm<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> per minute (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&#xA;          &gt;"/>10 l / 10 m² = 1.0 l/m² ≙ 1.0 mm<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&#xA;        &gt;"/>). <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/></source>
-        <target state="translated"><x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&#xA;        &gt;"/>Beispiel: Du hast einen Bereich von 10 m² und dein Ventil bewässert 10 l pro Minute. Somit hast du eine Bewässerungsmenge von <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>1.0 mm<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> pro Minute (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&#xA;          &gt;"/>10 l / 10 m² = 1.0 l/m² ≙ 1.0 mm<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&#xA;        &gt;"/>). <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/></target>
+        <source><x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&#10;        >"/>Example: You have an area of 10 m² and your valve pours 10 l per minute. Consequently, you have a irrigation level of <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>1.0 mm<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> per minute (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&#10;          >"/>10 l / 10 m² = 1.0 l/m² ≙ 1.0 mm<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&#10;        >"/>). <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/></source>
+        <target state="translated"><x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&#10;        >"/>Beispiel: Du hast einen Bereich von 10 m² und dein Ventil bewässert 10 l pro Minute. Somit hast du eine Bewässerungsmenge von <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>1.0 mm<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> pro Minute (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&#10;          >"/>10 l / 10 m² = 1.0 l/m² ≙ 1.0 mm<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&#10;        >"/>). <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
           <context context-type="linenumber">130,136</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6606352429580858096" datatype="html">
-        <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Aimed Precipitation Level (mm):<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/>How much water should be irrigated on your plants per day? </source>
-        <target state="translated"><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Angestrebte Niederschlagsmenge (mm):<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/>Wie viel Wasser sollen deine Pflanzen pro Tag erhalten? </target>
+        <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>Aimed Precipitation Level (mm):<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/>How much water should be irrigated on your plants per day? </source>
+        <target state="translated"><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>Angestrebte Niederschlagsmenge (mm):<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/>Wie viel Wasser sollen deine Pflanzen pro Tag erhalten? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
           <context context-type="linenumber">139,141</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5516474054260107487" datatype="html">
-        <source><x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&#xA;        &gt;"/>Example: Your plants need 0.5 l per square meter and day. Consequently, you have a aimed precipitation level of <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>1.0 mm<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> per minute (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>0.5 l / 1.0 m² = 0.5 l/m² ≙ 0.5 mm<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>). <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/></source>
-        <target state="translated"><em>Beispiel: Deine Pflanzen brauchen 0,5 l pro Quadratmeter und Tag. Somit ergibt sich eine angestrebte Niederschlagsmenge von <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>1.0 mm<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> pro Minute (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>0.5 l / 1.0 m² = 0.5 l/m² ≙ 0.5 mm<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>).<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/></em></target>
+        <source><x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&#10;        >"/>Example: Your plants need 0.5 l per square meter and day. Consequently, you have a aimed precipitation level of <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>1.0 mm<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> per minute (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>0.5 l / 1.0 m² = 0.5 l/m² ≙ 0.5 mm<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>). <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/></source>
+        <target state="translated"><em>Beispiel: Deine Pflanzen brauchen 0,5 l pro Quadratmeter und Tag. Somit ergibt sich eine angestrebte Niederschlagsmenge von <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>1.0 mm<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> pro Minute (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>0.5 l / 1.0 m² = 0.5 l/m² ≙ 0.5 mm<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>).<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/></em></target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
           <context context-type="linenumber">143,147</context>
         </context-group>
       </trans-unit>
       <trans-unit id="124396169163555625" datatype="html">
-        <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Observed precipitation period (days):<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> Defines the range of days SmartBerry monitors the precipitation rate. </source>
-        <target state="translated"><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Beobachtungszeitraum des Niederschlags (Tage):<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> Definiert den Zeitraum an Tagen, an dem SmartBerry die Niederschlagsmenge überwacht. </target>
+        <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>Observed precipitation period (days):<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> Defines the range of days SmartBerry monitors the precipitation rate. </source>
+        <target state="translated"><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>Beobachtungszeitraum des Niederschlags (Tage):<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> Definiert den Zeitraum an Tagen, an dem SmartBerry die Niederschlagsmenge überwacht. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
           <context context-type="linenumber">150,152</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7548167821257527012" datatype="html">
-        <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Overshoot upon rainfall (days):<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> Maximum number of days SmartBerry will postpone irrigation on upcoming rain, although precipitation cannot be maintained. </source>
-        <target state="translated"><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Verzug bei Regenfällen (Tage):<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> Maximale Verzögerung der Bewässerung an Tagen mit bevorstehendem Regen, obwohl die Niederschlagsmenge nicht eingehalten werden kann. </target>
+        <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>Overshoot upon rainfall (days):<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> Maximum number of days SmartBerry will postpone irrigation on upcoming rain, although precipitation cannot be maintained. </source>
+        <target state="translated"><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>Verzug bei Regenfällen (Tage):<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> Maximale Verzögerung der Bewässerung an Tagen mit bevorstehendem Regen, obwohl die Niederschlagsmenge nicht eingehalten werden kann. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
           <context context-type="linenumber">154,157</context>
@@ -492,7 +492,7 @@
       </trans-unit>
       <trans-unit id="8225534030455111255" datatype="html">
         <source> You can define irrigation trigger items that automatically start the irrigation check. Any state change of these items will fire an irrigation event. </source>
-        <target state="translated">Sie können Bewässerungsauslöser definieren, die automatisch die Bewässerungskontrolle starten. Jede Zustandsänderung dieser Items löst die Bewässerung aus. </target>
+        <target state="translated"> Sie können Bewässerungsauslöser definieren, die automatisch die Bewässerungskontrolle starten. Jede Zustandsänderung dieser Items löst die Bewässerung aus. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
           <context context-type="linenumber">337,341</context>
@@ -556,7 +556,7 @@
       </trans-unit>
       <trans-unit id="3511240472323882653" datatype="html">
         <source> Adjust the way how SmartBerry handles your lighting. </source>
-        <target state="translated">Passe die Steuerung der Beleuchtung durch SmartBerry an.</target>
+        <target state="translated">Passe die Steuerung der Beleuchtung durch SmartBerry an. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/light/light.component.html</context>
           <context context-type="linenumber">9,11</context>
@@ -572,63 +572,63 @@
       </trans-unit>
       <trans-unit id="3382987254977392546" datatype="html">
         <source> Lights are triggered automatically in dependence to daylight and presence changes. Get started with a proper lights configuration by tagging your light items as light switchables. </source>
-        <target state="translated">Die Lichter werden automatisch in Abhängigkeit von Tageslicht- und Anwesenheitsveränderungen ein- und ausgeschaltet. Beginne mit der Einrichtung deiner Beleuchtung, indem du deine Lichter als lichtschaltende Items kennzeichnest.</target>
+        <target state="translated">Die Lichter werden automatisch in Abhängigkeit von Tageslicht- und Anwesenheitsveränderungen ein- und ausgeschaltet. Beginne mit der Einrichtung deiner Beleuchtung, indem du deine Lichter als lichtschaltende Items kennzeichnest. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/light/light.component.html</context>
           <context context-type="linenumber">24,28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8218993883201605956" datatype="html">
-        <source> SmartBerry will add manageable items to each location having light switchable items to let you adjust it's particular light configuration. Set the lighting mode in each location for <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>dark<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>, <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>obscured<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> and <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>bright<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> conditions. To do so, edit the generated members of <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>gCore_Lights_DarkMode<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>, <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>gCore_Lights_ObscuredMode<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> and <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>gCore_Lights_BrightMode<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>. Current choices are: </source>
-        <target state="translated">SmartBerry fügt jedem Bereich (Location) mit lichtschaltenden Items zusätzlich verwaltbare Items hinzu, damit Du die jeweilige Lichtkonfiguration anpassen kannst. Stelle den Lichtmodus in jedem Bereich für <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>dunkle<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>, <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>verdunkelte<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>helle<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> Bedingungen ein. Bearbeite dazu die erzeugten Items in den entsprechenden Gruppen <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>gCore_Lights_DarkMode<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>, <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>gCore_Lights_ObscuredMode<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> und <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>gCore_Lights_BrightMode<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>. Die Auswahlmöglichkeiten sind:</target>
+        <source> SmartBerry will add manageable items to each location having light switchable items to let you adjust it's particular light configuration. Set the lighting mode in each location for <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>dark<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>, <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>obscured<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> and <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>bright<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> conditions. To do so, edit the generated members of <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>gCore_Lights_DarkMode<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>, <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>gCore_Lights_ObscuredMode<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> and <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>gCore_Lights_BrightMode<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>. Current choices are: </source>
+        <target state="translated">SmartBerry fügt jedem Bereich (Location) mit lichtschaltenden Items zusätzlich verwaltbare Items hinzu, damit Du die jeweilige Lichtkonfiguration anpassen kannst. Stelle den Lichtmodus in jedem Bereich für <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>dunkle<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>, <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>verdunkelte<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>helle<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> Bedingungen ein. Bearbeite dazu die erzeugten Items in den entsprechenden Gruppen <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>gCore_Lights_DarkMode<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>, <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>gCore_Lights_ObscuredMode<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> und <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>gCore_Lights_BrightMode<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>. Die Auswahlmöglichkeiten sind: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/light/light.component.html</context>
           <context context-type="linenumber">32,41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1920817612058294789" datatype="html">
-        <source>Turn lights off (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>OFF<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>)</source>
-        <target state="translated">Licht ausschalten (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>OFF<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>)</target>
+        <source>Turn lights off (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>OFF<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>)</source>
+        <target state="translated">Licht ausschalten (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>OFF<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/light/light.component.html</context>
           <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4341592235567568868" datatype="html">
-        <source>Turn lights on (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>)</source>
-        <target state="translated">Licht einschalten (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>)</target>
+        <source>Turn lights on (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>)</source>
+        <target state="translated">Licht einschalten (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/light/light.component.html</context>
           <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3746801222084643610" datatype="html">
-        <source>Turn lights on presence (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>AUTO_ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>)</source>
-        <target state="translated">Licht einschalten bei Anwesenheit (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>AUTO_ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>)</target>
+        <source>Turn lights on presence (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>AUTO_ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>)</source>
+        <target state="translated">Licht einschalten bei Anwesenheit (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>AUTO_ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/light/light.component.html</context>
           <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2784415951473870426" datatype="html">
-        <source>Disable light changes (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>UNCHANGED<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>)</source>
-        <target state="translated">Lichtwechsel deaktivieren (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>UNCHANGED<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>)</target>
+        <source>Disable light changes (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>UNCHANGED<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>)</source>
+        <target state="translated">Lichtwechsel deaktivieren (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>UNCHANGED<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/light/light.component.html</context>
           <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4360284479341830425" datatype="html">
-        <source>Use lights to simulate presence (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>SIMULATE<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>)</source>
-        <target state="translated">Lichter verwenden, um Anwesenheit zu simulieren (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>SIMULATE<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>)</target>
+        <source>Use lights to simulate presence (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>SIMULATE<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>)</source>
+        <target state="translated">Lichter verwenden, um Anwesenheit zu simulieren (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>SIMULATE<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/light/light.component.html</context>
           <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6231649972368066576" datatype="html">
-        <source> Light switchable items in locations with a lighting mode of <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>AUTO_ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> will turn off after a given time without presence events. Change <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>Core_Lights_DefaultDuration<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> to adjust the number of minutes until lights are turned off automatically. </source>
-        <target state="translated">Lichtschaltende Items in Bereichen mit einem Lichtmodus in <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>AUTO_ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> werden nach einer bestimmten Zeit ohne Anwesenheitsereignisse ausgeschaltet. Ändere <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>Core_Lights_DefaultDuration<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>, um die Anzahl der Minuten einzustellen, bis die Beleuchtung automatisch ausgeschaltet wird.</target>
+        <source> Light switchable items in locations with a lighting mode of <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>AUTO_ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> will turn off after a given time without presence events. Change <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>Core_Lights_DefaultDuration<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> to adjust the number of minutes until lights are turned off automatically. </source>
+        <target state="translated">Lichtschaltende Items in Bereichen mit einem Lichtmodus in <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>AUTO_ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> werden nach einer bestimmten Zeit ohne Anwesenheitsereignisse ausgeschaltet. Ändere <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>Core_Lights_DefaultDuration<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>, um die Anzahl der Minuten einzustellen, bis die Beleuchtung automatisch ausgeschaltet wird. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/light/light.component.html</context>
           <context context-type="linenumber">49,54</context>
@@ -643,32 +643,32 @@
         </context-group>
       </trans-unit>
       <trans-unit id="4439893374806026623" datatype="html">
-        <source> If presence changes from <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>AWAY_SHORT<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> or <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>AWAY_LONG<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> to <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>HOME<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>, you can turn on all light switchable items in locations having the lighting mode set to <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>AUTO_ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> automatically. To do so, enable the corresponding welcome light item: </source>
-        <target state="translated">Wenn die Anwesenheit auf <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>HOME<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wechselt, kannst du alle lichtschaltenden Items in Bereichen mit einem Lichtmodus in <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>AUTO_ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> automatisch einschalten lassen. Dazu aktiviere das entsprechende Begrüßungslicht-Item:</target>
+        <source> If presence changes from <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>AWAY_SHORT<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> or <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>AWAY_LONG<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> to <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>HOME<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>, you can turn on all light switchable items in locations having the lighting mode set to <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>AUTO_ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> automatically. To do so, enable the corresponding welcome light item: </source>
+        <target state="translated">Wenn die Anwesenheit auf <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>HOME<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> wechselt, kannst du alle lichtschaltenden Items in Bereichen mit einem Lichtmodus in <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>AUTO_ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> automatisch einschalten lassen. Dazu aktiviere das entsprechende Begrüßungslicht-Item: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/light/light.component.html</context>
           <context context-type="linenumber">56,62</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6864253144103667937" datatype="html">
-        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>Core_Lights_WelcomeLight_DarkMode<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> to enable welcome lights during <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>dark<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> light conditions. </source>
-        <target state="translated"><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>Core_Lights_WelcomeLight_DarkMode<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>, um das Begrüßungslicht bei <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>dunklen<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> Lichtverhältnissen zu aktivieren.</target>
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>Core_Lights_WelcomeLight_DarkMode<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> to enable welcome lights during <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>dark<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> light conditions. </source>
+        <target state="translated"><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>Core_Lights_WelcomeLight_DarkMode<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>, um das Begrüßungslicht bei <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>dunklen<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> Lichtverhältnissen zu aktivieren. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/light/light.component.html</context>
           <context context-type="linenumber">65,67</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7121958823591725738" datatype="html">
-        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>Core_Lights_WelcomeLight_ObscuredMode<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> to enable welcome lights during <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>obscured<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> light conditions. </source>
-        <target state="translated"><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>Core_Lights_WelcomeLight_ObscuredMode<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>, um das Begrüßungslicht bei <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>verdunkelten<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> Lichtverhältnissen zu aktivieren.</target>
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>Core_Lights_WelcomeLight_ObscuredMode<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> to enable welcome lights during <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>obscured<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> light conditions. </source>
+        <target state="translated"><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>Core_Lights_WelcomeLight_ObscuredMode<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>, um das Begrüßungslicht bei <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>verdunkelten<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> Lichtverhältnissen zu aktivieren. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/light/light.component.html</context>
           <context context-type="linenumber">69,71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5955556139084948748" datatype="html">
-        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>Core_Lights_WelcomeLight_BrightMode<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> to enable welcome lights during <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>bright<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> light conditions. </source>
-        <target state="translated"><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>Core_Lights_WelcomeLight_BrightMode<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>, um das Begrüßungslicht bei <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>hellen<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> Lichtverhältnissen zu aktivieren.</target>
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>Core_Lights_WelcomeLight_BrightMode<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> to enable welcome lights during <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>bright<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> light conditions. </source>
+        <target state="translated"><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>Core_Lights_WelcomeLight_BrightMode<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>, um das Begrüßungslicht bei <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>hellen<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> Lichtverhältnissen zu aktivieren. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/light/light.component.html</context>
           <context context-type="linenumber">73,75</context>
@@ -683,8 +683,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="5362207082079989159" datatype="html">
-        <source> SmartBerry analyzes light measurement items to identify the actual light conditions and change the state of <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>Core_Lights_AmbientLightCondition<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> accordingly. Note that light measurement items of locations with at least one active light switchable item are not put into consideration. </source>
-        <target state="translated">SmartBerry analysiert die Lichtmesswerte, um die derzeitigen Lichtverhältnisse zu ermitteln und den Zustand von <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>Core_Lights_AmbientLightCondition<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> zu aktualisieren. Bitte beachte, dass Lichtmesswerte in Bereichen mit mindestens einem aktiven, lichtschaltenden Item nicht einbezogen werden.</target>
+        <source> SmartBerry analyzes light measurement items to identify the actual light conditions and change the state of <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>Core_Lights_AmbientLightCondition<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> accordingly. Note that light measurement items of locations with at least one active light switchable item are not put into consideration. </source>
+        <target state="translated">SmartBerry analysiert die Lichtmesswerte, um die derzeitigen Lichtverhältnisse zu ermitteln und den Zustand von <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>Core_Lights_AmbientLightCondition<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> zu aktualisieren. Bitte beachte, dass Lichtmesswerte in Bereichen mit mindestens einem aktiven, lichtschaltenden Item nicht einbezogen werden. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/light/light.component.html</context>
           <context context-type="linenumber">87,93</context>
@@ -692,15 +692,15 @@
       </trans-unit>
       <trans-unit id="291769257871789333" datatype="html">
         <source> If no considerable light measurement items are available, SmartBerry can also use the sun state of an astro item to determine the actual light conditions. </source>
-        <target state="translated">Stehen keine relevanten Lichtmesswerte zur Verfügung, kann SmartBerry auch den Sonnenstand eines Astro-Items verwenden, um die gegenwärtigen Lichtverhältnisse zu ermitteln.</target>
+        <target state="translated">Stehen keine relevanten Lichtmesswerte zur Verfügung, kann SmartBerry auch den Sonnenstand eines Astro-Items verwenden, um die gegenwärtigen Lichtverhältnisse zu ermitteln. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/light/light.component.html</context>
           <context context-type="linenumber">97,101</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7128476101319021874" datatype="html">
-        <source> Adjust the tresholds of <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&#xA;        &gt;"/>Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&#xA;      &gt;"/> and <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&#xA;        &gt;"/>Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&#xA;      &gt;"/> to change the upper luminance level for obscured and dark light conditions. </source>
-        <target state="needs-adaptation">Passe die Schwellenwerte von <span class="tag">Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured</span> und <span class="tag">Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark</span> an, um die Lichtwertobergrenze für die verdunkelten und dunklen Lichtverhältnisse zu ändern.</target>
+        <source> Adjust the tresholds of <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&#10;        >"/>Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&#10;      >"/> and <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&#10;        >"/>Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&#10;      >"/> to change the upper luminance level for obscured and dark light conditions. </source>
+        <target state="translated">Passe die Schwellenwerte von <span class="tag">Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured</span> und <span class="tag">Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark</span> an, um die Lichtwertobergrenze für die verdunkelten und dunklen Lichtverhältnisse zu ändern. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/light/light.component.html</context>
           <context context-type="linenumber">105,116</context>
@@ -732,7 +732,7 @@
       </trans-unit>
       <trans-unit id="4411721389934795400" datatype="html">
         <source> Adjust the way how SmartBerry reacts to presence changes. </source>
-        <target state="translated">Passe das Verhalten von SmartBerry bei Anwesenheitsänderungen an.</target>
+        <target state="translated">Passe das Verhalten von SmartBerry bei Anwesenheitsänderungen an. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/presence/presence.component.html</context>
           <context context-type="linenumber">9,11</context>
@@ -747,16 +747,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="8810881551232841578" datatype="html">
-        <source> The presence management will automatically adjust the presence state of a location and the entire home in dependence to the last presence detection events. In SmartBerry <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>Core_Presence<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> reflects the presence status of your entire home and has three states: </source>
-        <target state="translated">Das Anwesenheitsmanagement passt den Anwesenheitsstatus eines Bereiches und des gesamten Hauses automatisch anhand der letzten Anwesenheitsereignisse an. In SmartBerry spiegelt <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>Core_Presence<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> den Anwesenheitsstatus deines gesamten Hauses wider und verfügt über drei Zustände:</target>
+        <source> The presence management will automatically adjust the presence state of a location and the entire home in dependence to the last presence detection events. In SmartBerry <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>Core_Presence<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> reflects the presence status of your entire home and has three states: </source>
+        <target state="translated">Das Anwesenheitsmanagement passt den Anwesenheitsstatus eines Bereiches und des gesamten Hauses automatisch anhand der letzten Anwesenheitsereignisse an. In SmartBerry spiegelt <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>Core_Presence<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> den Anwesenheitsstatus deines gesamten Hauses wider und verfügt über drei Zustände: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/presence/presence.component.html</context>
           <context context-type="linenumber">24,29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="83939423205363040" datatype="html">
-        <source>At home (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>PRESENT<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>)</source>
-        <target state="translated">Zuhause (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>PRESENT<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>)</target>
+        <source>At home (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>PRESENT<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>)</source>
+        <target state="translated">Zuhause (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>PRESENT<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/presence/presence.component.html</context>
           <context context-type="linenumber">31</context>
@@ -767,8 +767,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="6863197760618319469" datatype="html">
-        <source>Away for short (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>AWAY_SHORT<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>)</source>
-        <target state="translated">Kurz abwesend (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>AWAY_SHORT<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>)</target>
+        <source>Away for short (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>AWAY_SHORT<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>)</source>
+        <target state="translated">Kurz abwesend (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>AWAY_SHORT<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/presence/presence.component.html</context>
           <context context-type="linenumber">32</context>
@@ -779,8 +779,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="1481241190402891937" datatype="html">
-        <source>Away for long (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>AWAY_LONG<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>)</source>
-        <target state="translated">Lange abwesend (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>AWAY_LONG<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>)</target>
+        <source>Away for long (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>AWAY_LONG<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>)</source>
+        <target state="translated">Lange abwesend (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>AWAY_LONG<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/presence/presence.component.html</context>
           <context context-type="linenumber">33</context>
@@ -791,8 +791,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="1672818690264266718" datatype="html">
-        <source> Set the number of hours in <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>Core_Presence_HoursUntilAwayShort<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> until presence management sets the presence state to <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>AWAY_SHORT<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>. Set the number of hours in <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>Core_Presence_HoursUntilAwayLong<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> until presence management sets the presence state to <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>AWAY_LONG<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>. </source>
-        <target state="translated">Stelle die Anzahl der Stunden in <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>Core_Presence_HoursUntilAwayShort<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> ein, bis der Anwesenheitsstatus auf <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>AWAY_SHORT<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> gesetzt wird. Stelle die Anzahl der Stunden in <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>Core_Presence_HoursUntilAwayLong<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> ein, bis der Anwesenheitsstatus auf <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>AWAY_LONG<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> gesetzt wird.</target>
+        <source> Set the number of hours in <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>Core_Presence_HoursUntilAwayShort<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> until presence management sets the presence state to <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>AWAY_SHORT<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>. Set the number of hours in <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>Core_Presence_HoursUntilAwayLong<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> until presence management sets the presence state to <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>AWAY_LONG<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>. </source>
+        <target state="translated">Stelle die Anzahl der Stunden in <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>Core_Presence_HoursUntilAwayShort<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> ein, bis der Anwesenheitsstatus auf <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>AWAY_SHORT<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> gesetzt wird. Stelle die Anzahl der Stunden in <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>Core_Presence_HoursUntilAwayLong<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> ein, bis der Anwesenheitsstatus auf <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>AWAY_LONG<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> gesetzt wird. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/presence/presence.component.html</context>
           <context context-type="linenumber">35,42</context>
@@ -800,7 +800,7 @@
       </trans-unit>
       <trans-unit id="531948767826173333" datatype="html">
         <source> In order to trigger presence, you should define presence items, e.g. by tagging your motion sensors. </source>
-        <target state="translated">Um Anwesenheit auszulösen, solltest du Anwesenheit-Items festlegen, z.B. indem du deine Bewegungsmelder markierst.</target>
+        <target state="translated">Um Anwesenheit auszulösen, solltest du Anwesenheit-Items festlegen, z.B. indem du deine Bewegungsmelder markierst. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/presence/presence.component.html</context>
           <context context-type="linenumber">43,46</context>
@@ -815,16 +815,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="695088688437812245" datatype="html">
-        <source> You may restrict the states of a presence item triggering presence - by default these states are <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> and <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>OPEN<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>. You can also define states triggering absence. </source>
-        <target state="translated">Schränke die Zustände eines Anwesenheit-Items ein, die eine Anwesenheit auslösen - standardmäßig sind es <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> und <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>OPEN<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>. Außerdem kannst du auch Zustände definieren, die Abwesenheit auslösen.</target>
+        <source> You may restrict the states of a presence item triggering presence - by default these states are <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> and <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>OPEN<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>. You can also define states triggering absence. </source>
+        <target state="translated">Schränke die Zustände eines Anwesenheit-Items ein, die eine Anwesenheit auslösen - standardmäßig sind es <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> und <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>OPEN<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>. Außerdem kannst du auch Zustände definieren, die Abwesenheit auslösen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/presence/presence.component.html</context>
           <context context-type="linenumber">52,56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7373233818160939359" datatype="html">
-        <source> Presence states defaults to <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> and <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>OPEN<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>. </source>
-        <target state="translated">Zustände für Anwesenheit sind standardmäßig <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> und <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>OPEN<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>.</target>
+        <source> Presence states defaults to <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> and <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>OPEN<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>. </source>
+        <target state="translated">Zustände für Anwesenheit sind standardmäßig <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> und <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>OPEN<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/presence/presence.component.html</context>
           <context context-type="linenumber">88,90</context>
@@ -860,7 +860,7 @@
       </trans-unit>
       <trans-unit id="8212177249756365917" datatype="html">
         <source> Remove </source>
-        <target state="translated">Entfernen</target>
+        <target state="translated"> Entfernen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/presence/presence.component.html</context>
           <context context-type="linenumber">123,125</context>
@@ -884,7 +884,7 @@
       </trans-unit>
       <trans-unit id="4161684285417158581" datatype="html">
         <source> No absence states defined yet. </source>
-        <target state="translated">Es sind noch keine Abwesenheitszustände definiert.</target>
+        <target state="translated">Es sind noch keine Abwesenheitszustände definiert. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/presence/presence.component.html</context>
           <context context-type="linenumber">131,133</context>
@@ -900,7 +900,7 @@
       </trans-unit>
       <trans-unit id="7073468534728110135" datatype="html">
         <source> Add Presence State </source>
-        <target state="translated">Anwesenheitsstatus hinzufügen</target>
+        <target state="translated"> Anwesenheitsstatus hinzufügen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/presence/presence.component.html</context>
           <context context-type="linenumber">177,179</context>
@@ -908,7 +908,7 @@
       </trans-unit>
       <trans-unit id="6142602047343613033" datatype="html">
         <source> Add Absence State </source>
-        <target state="translated">Abwesenheitsstatus hinzufügen</target>
+        <target state="translated"> Abwesenheitsstatus hinzufügen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/presence/presence.component.html</context>
           <context context-type="linenumber">186,188</context>
@@ -924,7 +924,7 @@
       </trans-unit>
       <trans-unit id="597000058698760718" datatype="html">
         <source> Adjust the way how SmartBerry handles scenes. </source>
-        <target state="translated">Passe die Szenenverwaltung von SmartBerry an.</target>
+        <target state="translated">Passe die Szenenverwaltung von SmartBerry an. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
           <context context-type="linenumber">9,11</context>
@@ -939,32 +939,32 @@
         </context-group>
       </trans-unit>
       <trans-unit id="4969503142349391434" datatype="html">
-        <source> Scenes allow multiple devices to be controlled with a single command. In SmartBerry <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>Core_DefaultScene<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> is the preconfigured default scene and has four states: </source>
-        <target state="translated">Mit Szenen können mehrere Geräte mit einem einzigen Befehl gesteuert werden. In SmartBerry ist <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>Core_DefaultScene<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> die vorkonfigurierte Standardszene und hat vier Zustände:</target>
+        <source> Scenes allow multiple devices to be controlled with a single command. In SmartBerry <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>Core_DefaultScene<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> is the preconfigured default scene and has four states: </source>
+        <target state="translated">Mit Szenen können mehrere Geräte mit einem einzigen Befehl gesteuert werden. In SmartBerry ist <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>Core_DefaultScene<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> die vorkonfigurierte Standardszene und hat vier Zustände: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
           <context context-type="linenumber">24,28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1654457632160912215" datatype="html">
-        <source>Sleeping (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>SLEEP<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>)</source>
-        <target state="translated">Schlafen (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>SLEEP<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>)</target>
+        <source>Sleeping (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>SLEEP<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>)</source>
+        <target state="translated">Schlafen (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>SLEEP<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
           <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4039831461930775442" datatype="html">
-        <source> Scene states of user defined scenes can be changed. Edit or add the scene item's <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>State Description<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> and enter each scene state under <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Options<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> on a separate line, e.g. </source>
-        <target state="translated">Die Zustände einer benutzerdefinierten Szene können angepasst werden. Editiere oder füge der Szene eine <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>State Description<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> hinzu und trage jeden Szenenzustand unter <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Options<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> in einer eigenen Zeile ein, z.B.</target>
+        <source> Scene states of user defined scenes can be changed. Edit or add the scene item's <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>State Description<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> and enter each scene state under <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Options<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> on a separate line, e.g. </source>
+        <target state="translated">Die Zustände einer benutzerdefinierten Szene können angepasst werden. Editiere oder füge der Szene eine <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>State Description<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> hinzu und trage jeden Szenenzustand unter <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Options<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> in einer eigenen Zeile ein, z.B. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
           <context context-type="linenumber">35,39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7299701447938041870" datatype="html">
-        <source> When finished, trigger item <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>Core_Scenes_ReloadStates<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> to reinitialize all scene states. </source>
-        <target state="translated">Sobald Du fertig bist, löse das Element <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>Core_Scenes_ReloadStates<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> aus, um alle Szenenzustände neu zu initialisieren.</target>
+        <source> When finished, trigger item <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>Core_Scenes_ReloadStates<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> to reinitialize all scene states. </source>
+        <target state="translated">Sobald Du fertig bist, löse das Element <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>Core_Scenes_ReloadStates<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> aus, um alle Szenenzustände neu zu initialisieren. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
           <context context-type="linenumber">44,48</context>
@@ -979,8 +979,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="2407408477355556841" datatype="html">
-        <source> A scene saves the states of <x id="START_LINK" ctype="x-a" equiv-text="&lt;a routerLink=&quot;/light&quot;&gt;"/>all light switchable items<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> within the same location for every single scene state. You can change this behavior and use custom scene members instead. Select <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Add default members<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> to include all light switchables as well. </source>
-        <target state="translated">Eine Szene je Option speichert die Zustände aller <x id="START_LINK" ctype="x-a" equiv-text="&lt;a routerLink=&quot;/light&quot;&gt;"/>lichtschaltenden Items<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> innerhalb eines Bereiches. Du kannst alternativ auch benutzerdefinierte Items für die Szene auswählen. Um alle lichtschaltenden Items mit einzubeziehen, aktiviere die Option <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Standardmitglieder hinzufügen<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>.</target>
+        <source> A scene saves the states of <x id="START_LINK" ctype="x-a" equiv-text="&lt;a routerLink=&quot;/light&quot;>"/>all light switchable items<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> within the same location for every single scene state. You can change this behavior and use custom scene members instead. Select <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Add default members<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> to include all light switchables as well. </source>
+        <target state="translated">Eine Szene je Option speichert die Zustände aller <x id="START_LINK" ctype="x-a" equiv-text="&lt;a routerLink=&quot;/light&quot;>"/>lichtschaltenden Items<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> innerhalb eines Bereiches. Du kannst alternativ auch benutzerdefinierte Items für die Szene auswählen. Um alle lichtschaltenden Items mit einzubeziehen, aktiviere die Option <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Standardmitglieder hinzufügen<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
           <context context-type="linenumber">55,61</context>
@@ -988,15 +988,15 @@
       </trans-unit>
       <trans-unit id="3662906721136140559" datatype="html">
         <source> You cannot change custom members of the default scene. </source>
-        <target state="translated">Du kannst die benutzerdefinierten Items der Standardszene nicht ändern.</target>
+        <target state="translated">Du kannst die benutzerdefinierten Items der Standardszene nicht ändern. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
           <context context-type="linenumber">85,87</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7715649858260382862" datatype="html">
-        <source><x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input type=&quot;checkbox&quot; formControlName=&quot;defaultMembers&quot; /&gt;"/> Add default members </source>
-        <target state="translated"><x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input type=&quot;checkbox&quot; formControlName=&quot;defaultMembers&quot; /&gt;"/> Standardmitglieder hinzufügen</target>
+        <source><x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input type=&quot;checkbox&quot; formControlName=&quot;defaultMembers&quot; />"/> Add default members </source>
+        <target state="translated"><x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input type=&quot;checkbox&quot; formControlName=&quot;defaultMembers&quot; />"/> Standardmitglieder hinzufügen </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
           <context context-type="linenumber">105,107</context>
@@ -1020,7 +1020,7 @@
       </trans-unit>
       <trans-unit id="2551969061262988981" datatype="html">
         <source> Add Item </source>
-        <target state="translated">Item hinzufügen</target>
+        <target state="translated"> Item hinzufügen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
           <context context-type="linenumber">159,161</context>
@@ -1035,24 +1035,24 @@
         </context-group>
       </trans-unit>
       <trans-unit id="134361461413621352" datatype="html">
-        <source> Scenes can also react to context changes by changing its state value. The following context states are predefined and called by the default scene upon changes: <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>home<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>, <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>away-short<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>, <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>away-long<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>, <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>sleep<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>. </source>
-        <target state="translated">Szenen können auch auf äußere Veränderungen reagieren und ihren Zustand anpassen. Die folgenden Kontextzustände sind vordefiniert und werden von der Standardszene bei Änderungen aufgerufen: <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>home<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>, <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>away-short<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>, <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>away-long<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>, <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>sleep<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>.</target>
+        <source> Scenes can also react to context changes by changing its state value. The following context states are predefined and called by the default scene upon changes: <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>home<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>, <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>away-short<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>, <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>away-long<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>, <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>sleep<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>. </source>
+        <target state="translated">Szenen können auch auf äußere Veränderungen reagieren und ihren Zustand anpassen. Die folgenden Kontextzustände sind vordefiniert und werden von der Standardszene bei Änderungen aufgerufen: <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>home<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>, <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>away-short<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>, <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>away-long<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>, <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>sleep<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
           <context context-type="linenumber">173,178</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1530904990248686673" datatype="html">
-        <source> By using rules, you can apply a context by calling <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>apply_context('your custom context')<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>. </source>
-        <target state="translated">In Regeln kannst du einen bestimmten Kontext einstellen, indem du die Methode <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>apply_context('your custom context')<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> aufrufst.</target>
+        <source> By using rules, you can apply a context by calling <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>apply_context('your custom context')<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>. </source>
+        <target state="translated">In Regeln kannst du einen bestimmten Kontext einstellen, indem du die Methode <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>apply_context('your custom context')<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> aufrufst. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
           <context context-type="linenumber">179,182</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1247052329680276212" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{&#xA;        sceneItem.forms.contextStates.controls.contextStates.length&#xA;          | i18nPlural&#xA;            : {&#xA;                '=0': 'No context states',&#xA;                '=1': 'One context state',&#xA;                other: '# context states'&#xA;              }&#xA;      }}"/> defined</source>
-        <target state="needs-adaptation">{{ sceneItem.forms.contextStates.controls.contextStates.length | i18nPlural: { '=0': 'Keine Kontextzustände', '=1': 'Ein Kontextzustand', other: '# Kontextzustände' } }} definiert</target>
+        <source><x id="INTERPOLATION" equiv-text="{{&#10;        sceneItem.forms.contextStates.controls.contextStates.length&#10;          | i18nPlural&#10;            : {&#10;                '=0': 'No context states',&#10;                '=1': 'One context state',&#10;                other: '# context states'&#10;              }&#10;      }}"/> defined</source>
+        <target state="translated">{{ sceneItem.forms.contextStates.controls.contextStates.length | i18nPlural: { '=0': 'Keine Kontextzustände', '=1': 'Ein Kontextzustand', other: '# Kontextzustände' } }} definiert</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
           <context context-type="linenumber">191,199</context>
@@ -1088,7 +1088,7 @@
       </trans-unit>
       <trans-unit id="3804472680899952465" datatype="html">
         <source> Add Context State </source>
-        <target state="translated">Kontext hinzufügen</target>
+        <target state="translated"> Kontext hinzufügen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
           <context context-type="linenumber">281,283</context>
@@ -1104,15 +1104,15 @@
       </trans-unit>
       <trans-unit id="8444503508780955814" datatype="html">
         <source> When a scene trigger item is triggered, it changes a given scene state. </source>
-        <target state="translated">Wenn ein szenenauslösendes Item getriggert wird, ändert es den Zustand einer bestimmten Szene.</target>
+        <target state="translated">Wenn ein szenenauslösendes Item getriggert wird, ändert es den Zustand einer bestimmten Szene. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
           <context context-type="linenumber">303,305</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6648583363660973979" datatype="html">
-        <source> Each scene creates scene trigger items for every scene state by default. However, you can define custom scene trigger items by tagging them with <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>CoreSceneTrigger<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>. </source>
-        <target state="translated">Jede Szene erzeugt standardmäßig szenenauslösende Items für jeden Szenenzustand. Du kannst auch eigene szenenauslösende Items definieren, indem du sie als <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>CoreSceneTrigger<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> markierst.</target>
+        <source> Each scene creates scene trigger items for every scene state by default. However, you can define custom scene trigger items by tagging them with <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>CoreSceneTrigger<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>. </source>
+        <target state="translated">Jede Szene erzeugt standardmäßig szenenauslösende Items für jeden Szenenzustand. Du kannst auch eigene szenenauslösende Items definieren, indem du sie als <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>CoreSceneTrigger<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> markierst. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
           <context context-type="linenumber">306,310</context>
@@ -1120,7 +1120,7 @@
       </trans-unit>
       <trans-unit id="1561111633677288554" datatype="html">
         <source> You may tag a motion sensor to be a custom scene trigger to reset the default scene automatically. </source>
-        <target state="translated">Markiere bspw. einen Bewegungssensor als szenenauslösendes Item, um die Standardszene automatisch zurückzusetzen.</target>
+        <target state="translated">Markiere bspw. einen Bewegungssensor als szenenauslösendes Item, um die Standardszene automatisch zurückzusetzen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
           <context context-type="linenumber">311,314</context>
@@ -1136,7 +1136,7 @@
       </trans-unit>
       <trans-unit id="3985967159111736533" datatype="html">
         <source> You cannot adjust generated trigger items. </source>
-        <target state="translated">Du kannst generierte szenenauslösende Items nicht anpassen.</target>
+        <target state="translated">Du kannst generierte szenenauslösende Items nicht anpassen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
           <context context-type="linenumber">332,334</context>
@@ -1152,7 +1152,7 @@
       </trans-unit>
       <trans-unit id="6387393860975479754" datatype="html">
         <source> Any state updates will change your scene state. </source>
-        <target state="translated">Jede Zustandsänderung verändert die aktuelle Szenenauswahl.</target>
+        <target state="translated">Jede Zustandsänderung verändert die aktuelle Szenenauswahl. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/scene/scene.component.html</context>
           <context context-type="linenumber">346,348</context>
@@ -1288,7 +1288,7 @@
       </trans-unit>
       <trans-unit id="520933666306003434" datatype="html">
         <source> Adjust the way how SmartBerry secures your home. </source>
-        <target state="translated">Bestimme, wie SmartBerry dein Zuhause absichert.</target>
+        <target state="translated">Bestimme, wie SmartBerry dein Zuhause absichert. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/security/security.component.html</context>
           <context context-type="linenumber">9,11</context>
@@ -1303,40 +1303,40 @@
         </context-group>
       </trans-unit>
       <trans-unit id="1286661777832809043" datatype="html">
-        <source> The security system protects your home and responds to any unauthorized activity. If openHAB-Cloud and the operation state is set up properly, SmartBerry notifies you as soon as smoke or an assault had been detected. Adjust the operation state by editing <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>Core_Security_OperationState<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>. Current choices are: </source>
-        <target state="translated">Das Sicherheitssystem schützt dein Zuhause und reagiert auf jede unzulässige Aktivität. Wenn du die OpenHAB-Cloud und den aktiven Betriebszustand konfiguriert hast, benachrichtigt dich SmartBerry, sobald Rauch oder ein Einbruch festgestellt wurde. Passe den Betriebszustand über <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>Core_Security_OperationState<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> an. Folgende Zustände sind verfügbar:</target>
+        <source> The security system protects your home and responds to any unauthorized activity. If openHAB-Cloud and the operation state is set up properly, SmartBerry notifies you as soon as smoke or an assault had been detected. Adjust the operation state by editing <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>Core_Security_OperationState<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>. Current choices are: </source>
+        <target state="translated">Das Sicherheitssystem schützt dein Zuhause und reagiert auf jede unzulässige Aktivität. Wenn du die OpenHAB-Cloud und den aktiven Betriebszustand konfiguriert hast, benachrichtigt dich SmartBerry, sobald Rauch oder ein Einbruch festgestellt wurde. Passe den Betriebszustand über <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>Core_Security_OperationState<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> an. Folgende Zustände sind verfügbar: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/security/security.component.html</context>
           <context context-type="linenumber">24,31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5201568217319826378" datatype="html">
-        <source>No notifications and assault alarms (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>OFF<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>)</source>
-        <target state="translated">Keine Benachrichtigungen und Überfallalarme (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>OFF<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>)</target>
+        <source>No notifications and assault alarms (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>OFF<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>)</source>
+        <target state="translated">Keine Benachrichtigungen und Überfallalarme (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>OFF<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/security/security.component.html</context>
           <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8001957737831326410" datatype="html">
-        <source>Notifications only (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>SILENTLY<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>)</source>
-        <target state="translated">Nur Benachrichtigungen (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>SILENTLY<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>)</target>
+        <source>Notifications only (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>SILENTLY<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>)</source>
+        <target state="translated">Nur Benachrichtigungen (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>SILENTLY<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/security/security.component.html</context>
           <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6324059714356516540" datatype="html">
-        <source>Notifications and assault alarms (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>)</source>
-        <target state="translated">Benachrichtigungen und Überfallalarme (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>EIN<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>)</target>
+        <source>Notifications and assault alarms (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>)</source>
+        <target state="translated">Benachrichtigungen und Überfallalarme (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>EIN<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/security/security.component.html</context>
           <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2662821255036036194" datatype="html">
-        <source> You may let items disable the operation state automatically. Assault disarmer items turn off the operation state, if the item state changed to <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> or <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>OPEN<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>. </source>
-        <target state="translated">Du kannst den Betriebszustand von Items automatisch deaktivieren lassen. Angriffsentschärfende Items schalten den Betriebszustand aus, wenn sich der Item-Zustand in <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> oder <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>OPEN<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> ändert.</target>
+        <source> You may let items disable the operation state automatically. Assault disarmer items turn off the operation state, if the item state changed to <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> or <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>OPEN<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>. </source>
+        <target state="translated">Du kannst den Betriebszustand von Items automatisch deaktivieren lassen. Angriffsentschärfende Items schalten den Betriebszustand aus, wenn sich der Item-Zustand in <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>ON<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> oder <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>OPEN<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> ändert. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/security/security.component.html</context>
           <context context-type="linenumber">37,41</context>
@@ -1352,15 +1352,15 @@
       </trans-unit>
       <trans-unit id="6078494402890356123" datatype="html">
         <source> Tag your doors or windows as assault trigger items to enable assault detection. Any state change of these items will fire an assault event during an active operation state. </source>
-        <target state="translated">Markiere deine Türen oder Fenster als angriffsauslösende Items, um eine Angriffserkennung zu ermöglichen. Jede Zustandsänderung dieser Items löst während des aktiven Betriebszustands ein Angriffsevent aus.</target>
+        <target state="translated">Markiere deine Türen oder Fenster als angriffsauslösende Items, um eine Angriffserkennung zu ermöglichen. Jede Zustandsänderung dieser Items löst während des aktiven Betriebszustands ein Angriffsevent aus. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/security/security.component.html</context>
           <context context-type="linenumber">47,51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="873821052851236144" datatype="html">
-        <source> To enable assault alarms right after an assault detection, tag the corresponding siren or security system as assault alarm item. You can change the duration until the alarm will turn off automatically by editing the <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>Core_Security_AssaultAlarmAutoOff<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> item. Set to zero to disable the auto-off functionality. </source>
-        <target state="translated">Um Angriffsalarme direkt nach einer Angriffserkennung zu aktivieren, markiere die zugehörige Sirene oder das Sicherheitssystem als Angriffsalarm-Item. Du kannst den Alarm automatisch ausschalten lassen, indem du <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&gt;"/>Core_Security_AssaultAlarmAutoOff<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> anpasst. Setze den Wert auf null, um die automatische Abschaltfunktion zu deaktivieren.</target>
+        <source> To enable assault alarms right after an assault detection, tag the corresponding siren or security system as assault alarm item. You can change the duration until the alarm will turn off automatically by editing the <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>Core_Security_AssaultAlarmAutoOff<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> item. Set to zero to disable the auto-off functionality. </source>
+        <target state="translated">Um Angriffsalarme direkt nach einer Angriffserkennung zu aktivieren, markiere die zugehörige Sirene oder das Sicherheitssystem als Angriffsalarm-Item. Du kannst den Alarm automatisch ausschalten lassen, indem du <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;>"/>Core_Security_AssaultAlarmAutoOff<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> anpasst. Setze den Wert auf null, um die automatische Abschaltfunktion zu deaktivieren. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/security/security.component.html</context>
           <context context-type="linenumber">55,61</context>
@@ -1376,15 +1376,15 @@
       </trans-unit>
       <trans-unit id="6460618165327785072" datatype="html">
         <source> Lock items may be closed by a closed door or window contact. This way, you do not need to lock it yourself. To get started, tag your locks in order to match with the following schema: </source>
-        <target state="translated">Schloss-Items können bei geschlossenen Tür- oder Fensterkontakt direkt verschlossen werden. So musst du sie nicht selbst abschließen. Um loszulegen, markiere deine Schlösser gemäß dem folgenden Schema:</target>
+        <target state="translated">Schloss-Items können bei geschlossenen Tür- oder Fensterkontakt direkt verschlossen werden. So musst du sie nicht selbst abschließen. Um loszulegen, markiere deine Schlösser gemäß dem folgenden Schema: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/security/security.component.html</context>
           <context context-type="linenumber">67,71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4475588090104398195" datatype="html">
-        <source> Next, tag your window or door contact within the same location as lock closure items. Any lock closure item reacts to <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>OFF<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> and <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>CLOSED<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> and will close a lock item within the same location right away. </source>
-        <target state="translated">Als Nächstes markiere deine Fenster- oder Türkontakte eines Bereiches als schlossschließende Items. Jedes schlossschließende Item reagiert auf <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>OFF<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> und <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>CLOSED<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> und schließt dann alle Schlösser des entsprechenden Bereiches.</target>
+        <source> Next, tag your window or door contact within the same location as lock closure items. Any lock closure item reacts to <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>OFF<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> and <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>CLOSED<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> and will close a lock item within the same location right away. </source>
+        <target state="translated">Als Nächstes markiere deine Fenster- oder Türkontakte eines Bereiches als schlossschließende Items. Jedes schlossschließende Item reagiert auf <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>OFF<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> und <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>CLOSED<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/> und schließt dann alle Schlösser des entsprechenden Bereiches. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/security/security.component.html</context>
           <context context-type="linenumber">76,81</context>
@@ -1400,7 +1400,7 @@
       </trans-unit>
       <trans-unit id="2974359425342983865" datatype="html">
         <source> Tag your smoke detector items and match the following schema to enable smoke detection upon fire. </source>
-        <target state="translated"> Kennzeichne deine Rauchmelder und übernimm das folgende Schema, um die Raucherkennung bei Feuer zu aktivieren.</target>
+        <target state="translated"> Kennzeichne deine Rauchmelder und übernimm das folgende Schema, um die Raucherkennung bei Feuer zu aktivieren. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/security/security.component.html</context>
           <context context-type="linenumber">87,90</context>
@@ -1456,7 +1456,7 @@
       </trans-unit>
       <trans-unit id="5774025790009361149" datatype="html">
         <source> Authenticate to your openHAB-Instance to adjust addional settings. </source>
-        <target state="translated">Authentifiziere dich mit deiner openHAB-Instanz, um weitere Einstellungen vorzunehmen.</target>
+        <target state="translated">Authentifiziere dich mit deiner openHAB-Instanz, um weitere Einstellungen vorzunehmen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/setup/setup.component.html</context>
           <context context-type="linenumber">9,11</context>
@@ -1472,7 +1472,7 @@
       </trans-unit>
       <trans-unit id="1316225114032640096" datatype="html">
         <source> Set your openHAB API token to use more configuration options for SmartBerry. </source>
-        <target state="translated">Aktualisiere dein openHAB API Token, um mehr Konfigurationsoptionen für SmartBerry zu verwenden.</target>
+        <target state="translated">Aktualisiere dein openHAB API Token, um mehr Konfigurationsoptionen für SmartBerry zu verwenden. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/setup/setup.component.html</context>
           <context context-type="linenumber">45,48</context>

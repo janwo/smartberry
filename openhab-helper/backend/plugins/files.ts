@@ -20,7 +20,6 @@ const filesPlugin = {
   register: async (server: Hapi.Server) => {
     const locales = fileTree(process.cwd() + '/dist/frontend')
     await server.register(inertPlugin)
-    console.log(locales)
     server.route({
       method: 'GET',
       options: { auth: false },

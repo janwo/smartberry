@@ -131,6 +131,17 @@ const openhabPlugin = {
         return h.response({ data: map }).code(200)
       }
     })
+
+    server.route({
+      method: 'GET',
+      path: '/api/info',
+      handler: async (request, h) => {
+        const result = await request.server.plugins['app/openhab'].getLocale(
+          request
+        )
+        return h.response({ data: result }).code(200)
+      }
+    })
   }
 }
 
