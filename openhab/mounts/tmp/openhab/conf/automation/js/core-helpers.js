@@ -31,11 +31,11 @@ function broadcast(text, broadcastType = BroadcastType.INFO) {
   ) {
     actions.NotificationAction.sendBroadcastNotification(text)
     console.log(
-      'Broadcast message',
+      'broadcast',
       `Following message was broadcasted to all users: ${text}`
     )
   } else {
-    console.log('Broadcast message', `Following message was muted: ${text}`)
+    console.log('broadcast', `Following message was muted: ${text}`)
   }
 }
 
