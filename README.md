@@ -27,6 +27,9 @@ Make use of the following features:
   - Smoke and assault detection
   - Supports alarm and siren items
   - Close lock items automatically by window or door sensors
+- Irrigation Management 🏡
+  - Automatically irrigate an unlimited number of irrigation valves
+  - Takes the weather forecast into account
 
 All features are easily configurable without using a single line of code! SmartBerry comes with an additonal configuration dashboard.
 

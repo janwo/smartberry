@@ -1,4 +1,12 @@
-const { rules, items, things, triggers, osgi, time, actions } = require('openhab')
+const {
+  rules,
+  items,
+  things,
+  triggers,
+  osgi,
+  time,
+  actions
+} = require('openhab')
 
 const ItemChannelLinkRegistry = osgi.getService(
   'org.openhab.core.thing.link.ItemChannelLinkRegistry'
