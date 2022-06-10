@@ -8,6 +8,7 @@ const {
 let timers = {}
 const IRRIGATION_TRIGGER_TAGS = ['CoreIrrigationTrigger']
 const IRRIGATION_VALVE_TAGS = ['CoreIrrigationValve']
+const TIMEOUT = 5000
 
 function scriptLoaded() {
   rules.JSRule({
