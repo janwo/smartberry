@@ -138,11 +138,6 @@ function json_storage(item) {
   }
 }
 
-function info() {
-  const url = `http://openhab-helper:8081/api/info`
-  return JSON.parse(actions.HTTP.sendHttpGetRequest(url, TIMEOUT)).data
-}
-
 function get_helper_item(of, name) {
   name = Array.isArray(name) ? name : [name]
   const helperItemName = json_storage(of).get('helper-items', ...name)
@@ -379,7 +374,6 @@ module.exports = {
   stringifiedFloat,
   has_same_location,
   get_location,
-  info,
   json_storage,
   broadcast,
   BroadcastType,

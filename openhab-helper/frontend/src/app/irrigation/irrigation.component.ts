@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
+import { DomSanitizer } from '@angular/platform-browser'
 import { forkJoin } from 'rxjs'
 import { GetItemListResponse, Item, OpenhabService } from '../openhab.service'
 
@@ -11,7 +12,8 @@ import { GetItemListResponse, Item, OpenhabService } from '../openhab.service'
 export class IrrigationComponent {
   constructor(
     public openhabService: OpenhabService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private sanitizer: DomSanitizer
   ) {}
 
   schema = {
@@ -25,20 +27,21 @@ export class IrrigationComponent {
     }
   }
 
-  settings: any
+  apiSettings?: {
+    syncedLocation: boolean
+    hasApiKey: boolean
+    longitude?: number
+    latitude?: number
+  }
   irrigationTriggerItems: Item[] = []
   irrigationValveItems: { item: Item; form: FormGroup }[] = []
 
-  private retrieveSettings() {
-    this.openhabService.irrigation.settings().subscribe({
-      next: (settings) => {
-        this.settings = settings.data
+  ngOnInit(): void {
+    this.openhabService.irrigation.apiSettings().subscribe({
+      next: (apiSettings) => {
+        this.apiSettings = apiSettings.data
       }
     })
-  }
-
-  ngOnInit(): void {
-    this.retrieveSettings()
 
     forkJoin([
       this.openhabService.irrigation.triggerItems(),
@@ -95,46 +98,65 @@ export class IrrigationComponent {
     )
   }
 
-  submitAPIToken() {
+  get locationSettingsLink() {
+    return this.sanitizer.bypassSecurityTrustUrl(
+      `${window.location.hostname}:8080/settings/services/org.openhab.i18n`
+    )
+  }
+
+  submitAPISettings(apiSettings: { syncLocation?: boolean; apiKey?: string }) {
     this.apiTokenForm.markAllAsTouched()
     if (this.apiTokenForm.invalid) {
       return
     }
 
-    this.openhabService.irrigation
-      .updateAPIKey(this.apiTokenForm.controls['apiToken'].value || '')
-      .subscribe({
-        next: (response) => {
-          if (!response?.success) {
-            switch (response.error) {
-              case 'unauthenticated':
-                this.apiTokenForm.controls['apiToken'].setErrors({
-                  unauthenticated: true
-                })
-                break
+    this.openhabService.irrigation.updateApiSettings(apiSettings).subscribe({
+      next: (response) => {
+        if (!response?.success) {
+          switch (response.error) {
+            case 'unauthenticated':
+              this.apiTokenForm.controls['apiToken'].setErrors({
+                unauthenticated: true
+              })
+              break
 
-              default:
-                this.apiTokenForm.controls['apiToken'].setErrors({
-                  invalid: true
-                })
-            }
-            return
+            case 'nolocation':
+              this.apiTokenForm.controls['apiToken'].setErrors({
+                nolocation: true
+              })
+              break
+
+            default:
+              this.apiTokenForm.controls['apiToken'].setErrors({
+                invalid: true
+              })
           }
-
-          this.retrieveSettings()
-        },
-        error: (response) => {
-          this.apiTokenForm.controls['apiToken'].setErrors({
-            connection: true
-          })
+          return
         }
-      })
+
+        if (!this.apiSettings?.syncedLocation && apiSettings.syncLocation) {
+          this.apiSettings!.syncedLocation = true
+        }
+
+        if (!this.apiSettings?.hasApiKey && apiSettings.apiKey) {
+          this.apiSettings!.hasApiKey = true
+        }
+      },
+      error: (response) => {
+        this.apiTokenForm.controls['apiToken'].setErrors({
+          connection: true
+        })
+      }
+    })
   }
 
-  deleteAPIToken() {
-    this.openhabService.irrigation.deleteAPIKey().subscribe({
+  deleteAPISettings() {
+    this.openhabService.irrigation.deleteApiSettings().subscribe({
       next: () => {
-        this.retrieveSettings()
+        this.apiSettings = {
+          hasApiKey: false,
+          syncedLocation: false
+        }
       }
     })
   }

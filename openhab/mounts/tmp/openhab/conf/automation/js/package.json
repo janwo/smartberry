@@ -1,6 +1,6 @@
 {
   "dependencies": {
     "lodash": "^4.17.21",
-    "openhab": "^1.2.3"
+    "openhab": "https://github.com/openhab/openhab-js/tree/main"
   }
 }

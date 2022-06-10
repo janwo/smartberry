@@ -24,17 +24,19 @@
         <span
           class="tag"
           [ngClass]="{
-            'is-success': settings?.apiKey,
-            'is-danger': !settings?.apiKey
+            'is-success': apiSettings?.hasApiKey,
+            'is-danger': !apiSettings?.hasApiKey
           }">
           <app-svg-icon
             [icon]="
-              settings?.apiKey ? 'checkmark-outline' : 'alert-circle-outline'
+              apiSettings?.hasApiKey
+                ? 'checkmark-outline'
+                : 'alert-circle-outline'
             "></app-svg-icon>
-          <ng-container *ngIf="settings?.apiKey" i18n
+          <ng-container *ngIf="apiSettings?.hasApiKey" i18n
             >Authenticated</ng-container
           >
-          <ng-container *ngIf="!settings?.apiKey" i18n
+          <ng-container *ngIf="!apiSettings?.hasApiKey" i18n
             >Unauthenticated</ng-container
           >
         </span>
@@ -45,7 +47,11 @@
       <a href="https://openweathermap.org/api" target="_blank"
         >OpenWeather API token</a
       >
-      and make sure to subscribe to the <strong>One Call API 3.0</strong>.
+      and make sure to subscribe to the <strong>One Call API 3.0</strong> and to
+      set your location in your
+      <a [href]="locationSettingsLink" target="_blank"
+        >openHAB location settings</a
+      >.
     </p>
     <article class="message is-light">
       <div class="message-header">
@@ -59,9 +65,24 @@
         >.
       </div>
     </article>
+    <p
+      class="block"
+      i18n
+      *ngIf="this.apiSettings?.latitude && this.apiSettings?.longitude">
+      The location of the weather forecast (<strong
+        >{{ this.apiSettings?.longitude }},
+        {{ this.apiSettings?.latitude }}</strong
+      >) is
+      <strong>{{
+        this.apiSettings?.syncedLocation ? 'synced' : 'unsynced'
+      }}</strong>
+      with your openHAB location settings.
+    </p>
     <form
       [formGroup]="apiTokenForm"
-      (ngSubmit)="submitAPIToken()"
+      (ngSubmit)="
+        submitAPISettings({ apiKey: apiTokenForm.value.apiToken || '' })
+      "
       [ngClass]="{
         'has-error': apiTokenForm.touched && !apiTokenForm.valid
       }">
@@ -79,24 +100,38 @@
         </div>
       </div>
 
-      <fieldset [attr.disabled]="settings?.apiKey ? null : true">
-        <div class="field">
+      <div class="field is-grouped">
+        <div class="control">
+          <button
+            i18n
+            type="submit"
+            (click)="submitAPISettings({ syncLocation: true })"
+            class="button is-primary">
+            Sync Location
+          </button>
+        </div>
+
+        <fieldset [attr.disabled]="apiSettings?.hasApiKey ? null : true">
           <div class="control">
             <button
               i18n
-              type="submit"
-              (click)="deleteAPIToken()"
+              type="button"
+              (click)="deleteAPISettings()"
               class="button is-primary">
               Delete API Token
             </button>
           </div>
-        </div>
-      </fieldset>
+        </fieldset>
+      </div>
 
       <app-error
+        i18n-errors
         [form]="apiTokenForm"
-        [errors]="{ unauthenticated: 'API Token is invalid' }"
-        i18n-errors></app-error>
+        [errors]="{
+          unauthenticated: 'API Token is invalid',
+          nolocation:
+            'Please set your location in your openHAB location settings first.'
+        }"></app-error>
     </form>
   </div>
 </div>

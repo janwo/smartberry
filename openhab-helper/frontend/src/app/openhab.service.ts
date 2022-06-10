@@ -117,23 +117,27 @@ export class OpenhabService implements CanActivate {
   }
 
   public irrigation = {
-    settings: () => {
+    apiSettings: () => {
       return this.http.get<{
         data: {
           latitude: number
           longitude: number
-          apiKey: boolean
+          syncedLocation: boolean
+          hasApiKey: boolean
         }
-      }>(`${environment.API_URL()}/irrigation-settings`, this.getOptions())
+      }>(`${environment.API_URL()}/irrigation-api`, this.getOptions())
     },
-    updateAPIKey: (key: string) => {
+    updateApiSettings: (apiSettings: {
+      api?: string
+      syncLocation?: boolean
+    }) => {
       return this.http.post<PostPutDeleteResponse>(
         `${environment.API_URL()}/irrigation-api`,
-        { key },
+        { apiSettings },
         this.getOptions()
       )
     },
-    deleteAPIKey: () => {
+    deleteApiSettings: () => {
       return this.http.delete<PostPutDeleteResponse>(
         `${environment.API_URL()}/irrigation-api`,
         this.getOptions()

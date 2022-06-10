@@ -1,7 +1,5 @@
-const { rules, items, triggers, osgi, time, actions } = require('openhab')
+const { rules, items, things, triggers, osgi, time, actions } = require('openhab')
 
-const ThingRegistry = osgi.getService('org.openhab.core.thing.ThingRegistry')
-const ThingStatus = Java.type('org.openhab.core.thing.ThingStatus')
 const ItemChannelLinkRegistry = osgi.getService(
   'org.openhab.core.thing.link.ItemChannelLinkRegistry'
 )
@@ -22,19 +20,19 @@ function scriptLoaded() {
       for (const member of group.members) {
         member.removeGroups(group)
       }
-      const allThings = ThingRegistry.getAll()
+      const allThings = things.getThings()
       for (const thing of allThings) {
         if (
-          thing.getStatus() != ThingStatus.ONLINE ||
-          (thing.getProperties() &&
-            thing.getProperties().get('zwave_lastheal') &&
+          thing.status != 'ONLINE' ||
+          (thing.rawThing.getProperties() &&
+            thing.rawThing.getProperties().get('zwave_lastheal') &&
             time.ZonedDateTime.parse(
-              thing.getProperties().get('zwave_lastheal'),
+              thing.rawThing.getProperties().get('zwave_lastheal'),
               ZWAVE_DATETIME_FORMAT
             ).until(time.ZonedDateTime.now(), time.ChronoUnit.DAYS)) >
             ELAPSED_DAYS
         ) {
-          for (const channel of thing.getChannels()) {
+          for (const channel of thing.rawThing.getChannels()) {
             for (let item of ItemChannelLinkRegistry.getLinkedItems(
               channel.getUID()
             )) {

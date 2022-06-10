@@ -8,20 +8,34 @@ const openhabIrrigationPlugin = {
   register: async (server: Hapi.Server) => {
     server.route({
       method: 'GET',
-      path: '/api/irrigation-settings',
+      path: '/api/irrigation-api',
       handler: async (request, h) => {
-        const locale = await server.plugins['app/openhab'].getLocale(request)
-        const latitude = locale.latitude
-        const longitude = locale.longitude
-
-        const apiKey = !!server.plugins['app/json-storage'].get(
+        const hasApiKey = !!server.plugins['app/json-storage'].get(
           'gCore_Irrigation',
           'irrigation/api-key'
         )
 
+        const latitude = server.plugins['app/json-storage'].get(
+          'gCore_Irrigation',
+          'irrigation/latitude'
+        )
+
+        const longitude = server.plugins['app/json-storage'].get(
+          'gCore_Irrigation',
+          'irrigation/longitude'
+        )
+
+        const locale = await server.plugins['app/openhab'].getLocale(request)
+
         return h
           .response({
-            data: { apiKey, latitude, longitude }
+            data: {
+              hasApiKey,
+              latitude,
+              longitude,
+              syncedLocation:
+                latitude == locale.latitude && longitude == locale.longitude
+            }
           })
           .code(200)
       }
@@ -33,36 +47,67 @@ const openhabIrrigationPlugin = {
       options: {
         validate: {
           payload: {
-            key: Joi.string()
-              .pattern(/^[a-zA-Z_0-9]+$/)
-              .required()
+            apiSettings: Joi.object({
+              syncLocation: Joi.boolean().optional(),
+              apiKey: Joi.string()
+                .pattern(/^[a-zA-Z_0-9]+$/)
+                .optional()
+            }).min(1)
           }
         }
       },
       handler: async (request, h) => {
-        const { key } = request.payload as any
+        const { apiSettings } = request.payload as any
         const locale = await server.plugins['app/openhab'].getLocale(request)
-        const latitude = locale.latitude
-        const longitude = locale.longitude
 
-        const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely,current,alerts&appid=${key}`
-        const authenticated = await axios
-          .get(url)
-          .then(() => true)
-          .catch(() => false)
+        if (apiSettings.syncLocation === true) {
+          server.plugins['app/json-storage'].set(
+            'gCore_Irrigation',
+            'irrigation/latitude',
+            locale.latitude
+          )
+          server.plugins['app/json-storage'].set(
+            'gCore_Irrigation',
+            'irrigation/longitude',
+            locale.longitude
+          )
+        }
 
-        if (authenticated) {
+        if (apiSettings.apiKey) {
+          const latitude = server.plugins['app/json-storage'].get(
+            'gCore_Irrigation',
+            'irrigation/latitude'
+          )
+          const longitude =
+            server.plugins['app/json-storage'].get(
+              'gCore_Irrigation',
+              'irrigation/longitude'
+            ) || locale.longitude
+
+          if (latitude === undefined || longitude === undefined) {
+            return h.response({ success: false, error: 'nolocation' }).code(200)
+          }
+
+          const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely,current,alerts&appid=${apiSettings.apiKey}`
+          const authenticated = await axios
+            .get(url)
+            .then(() => true)
+            .catch(() => false)
+
+          if (!authenticated) {
+            return h
+              .response({ success: false, error: 'unauthenticated' })
+              .code(200)
+          }
+
           server.plugins['app/json-storage'].set(
             'gCore_Irrigation',
             'irrigation/api-key',
-            key
+            apiSettings.apiKey
           )
-          return h.response({ success: true }).code(200)
         }
 
-        return h
-          .response({ success: false, error: 'unauthenticated' })
-          .code(200)
+        return h.response({ success: true }).code(200)
       }
     })
 
@@ -73,6 +118,16 @@ const openhabIrrigationPlugin = {
         server.plugins['app/json-storage'].delete(
           'gCore_Irrigation',
           'irrigation/api-key'
+        )
+
+        server.plugins['app/json-storage'].delete(
+          'gCore_Irrigation',
+          'irrigation/longitude'
+        )
+
+        server.plugins['app/json-storage'].delete(
+          'gCore_Irrigation',
+          'irrigation/latitude'
         )
         return h.response({ success: true }).code(200)
       }
