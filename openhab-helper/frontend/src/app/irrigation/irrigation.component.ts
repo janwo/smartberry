@@ -105,9 +105,11 @@ export class IrrigationComponent {
   }
 
   submitAPISettings(apiSettings: { syncLocation?: boolean; apiKey?: string }) {
-    this.apiTokenForm.markAllAsTouched()
-    if (this.apiTokenForm.invalid) {
-      return
+    if (apiSettings.apiKey) {
+      this.apiTokenForm.markAllAsTouched()
+      if (this.apiTokenForm.invalid) {
+        return
+      }
     }
 
     this.openhabService.irrigation.updateApiSettings(apiSettings).subscribe({

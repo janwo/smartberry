@@ -5,7 +5,7 @@ const {
   sync_group_with_semantic_items
 } = require(__dirname + '/core-helpers')
 
-let timers = []
+let timers = {}
 const IRRIGATION_TRIGGER_TAGS = ['CoreIrrigationTrigger']
 const IRRIGATION_VALVE_TAGS = ['CoreIrrigationValve']
 
@@ -80,7 +80,7 @@ function scriptLoaded() {
         return
       }
 
-      json_storage(event.itemName).set(
+      json_storage('gCore_Irrigation').set(
         'irrigation',
         'last-check',
         now.format(DATETIME_FORMAT)
@@ -92,26 +92,42 @@ function scriptLoaded() {
       ).daily.map((data) => data.rain || 0)
 
       for (let valve of items.getItem('gCore_Irrigation_Valves').members) {
-        const observedDays = json_storage(event.itemName).get(
+        const observedDays = json_storage(valve.name).get(
           'irrigation',
           'observed-days'
         )
 
-        const overshootDays = json_storage(event.itemName).get(
+        const overshootDays = json_storage(valve.name).get(
           'irrigation',
           'overshoot-days'
         )
 
-        const aimedPrecipitationLevel = json_storage(event.itemName).get(
+        const aimedPrecipitationLevel = json_storage(valve.name).get(
           'irrigation',
           'aimed-precipitation-level'
         )
 
+        const waterVolumePerMinute = json_storage(valve.name).get(
+          'irrigation',
+          'irrigation-level-per-minute'
+        )
+
+        if (
+          [overshootDays, aimedPrecipitationLevel, waterVolumePerMinute].some(
+            value === undefined
+          )
+        ) {
+          console.log(
+            `Some irrigation values of item ${valve.name} are missing.`
+          )
+          continue
+        }
+
         let historicPrecipitation =
-          json_storage(event.itemName).get('irrigation', 'history') || []
+          json_storage(valve.name).get('irrigation', 'history') || []
         historicPrecipitation.push(precipitations[0])
         historicPrecipitation = historicPrecipitation.slice(-observedDays)
-        json_storage(event.itemName).set(
+        json_storage(valve.name).set(
           'irrigation',
           'history',
           historicPrecipitation
@@ -141,23 +157,17 @@ function scriptLoaded() {
             estimatedPrecipitationLevel
         )
 
-        const lastActivation = json_storage(event.itemName).get(
+        const lastActivation = json_storage(valve.name).get(
           'irrigation',
           'last-activation'
         )
 
         if (
           (!lastActivation ||
-            lastActivation.until(now, time.ChronoUnit.DAYS) == 0) &&
+            lastActivation.until(now, time.ChronoUnit.DAYS) > 0) &&
           historicPrecipitationLevel <= aimedPrecipitationLevel &&
           estimatedPrecipitationLevel <= aimedPrecipitationLevel
         ) {
-          const waterVolumePerMinute =
-            json_storage(event.itemName).get(
-              'irrigation',
-              'irrigation-level-per-minute'
-            ) || 0.05
-
           const irrigationAmount =
             aimedPrecipitationLevel -
             Math.max(historicPrecipitationLevel, estimatedPrecipitationLevel)
@@ -168,7 +178,7 @@ function scriptLoaded() {
             } minutes)`
           )
 
-          json_storage(event.itemName).set(
+          json_storage(valve.name).set(
             'irrigation',
             'last-activation',
             now.format(DATETIME_FORMAT)
@@ -176,33 +186,30 @@ function scriptLoaded() {
 
           historicPrecipitation[historicPrecipitation.length - 1] +=
             irrigationAmount
-          json_storage(event.itemName).set(
+          json_storage(valve.name).set(
             'irrigation',
             'history',
             historicPrecipitation
           )
 
-          items.getItem(itemName).sendCommand('ON')
+          valve.sendCommand('ON')
 
-          timers.push(
-            (function (itemName) {
-              const func = () => {
-                // STOP IRRIGATING
-                console.log(`Stop irrigating of valve ${itemName}`)
-                items.getItem(itemName).sendCommand('OFF')
+          timers[valve.name] = (function (itemName) {
+            const func = () => {
+              console.log(`Stop irrigating of valve ${itemName}`)
+              items.getItem(itemName).sendCommand('OFF')
+            }
+            const timer = setTimeout(
+              func,
+              (irrigationAmount / waterVolumePerMinute) * 60 * 1000
+            )
+            return {
+              clear: () => {
+                func()
+                clearTimeout(timer)
               }
-              const timer = setTimeout(
-                func,
-                (irrigationAmount / waterVolumePerMinute) * 60 * 1000
-              )
-              return {
-                clear: () => {
-                  func()
-                  clearTimeout(timer)
-                }
-              }
-            })(event.itemName)
-          )
+            }
+          })(valve.name)
         }
       }
     }

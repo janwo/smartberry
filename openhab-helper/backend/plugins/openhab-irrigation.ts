@@ -59,8 +59,24 @@ const openhabIrrigationPlugin = {
       handler: async (request, h) => {
         const { apiSettings } = request.payload as any
         const locale = await server.plugins['app/openhab'].getLocale(request)
+        const latitude = server.plugins['app/json-storage'].get(
+          'gCore_Irrigation',
+          'irrigation/latitude'
+        )
+        const longitude = server.plugins['app/json-storage'].get(
+          'gCore_Irrigation',
+          'irrigation/longitude'
+        )
 
-        if (apiSettings.syncLocation === true) {
+        if (
+          latitude == undefined ||
+          longitude === undefined ||
+          apiSettings.syncLocation === true
+        ) {
+          if (locale.latitude === undefined || locale.longitude === undefined) {
+            return h.response({ success: false, error: 'nolocation' }).code(200)
+          }
+
           server.plugins['app/json-storage'].set(
             'gCore_Irrigation',
             'irrigation/latitude',
@@ -74,20 +90,6 @@ const openhabIrrigationPlugin = {
         }
 
         if (apiSettings.apiKey) {
-          const latitude = server.plugins['app/json-storage'].get(
-            'gCore_Irrigation',
-            'irrigation/latitude'
-          )
-          const longitude =
-            server.plugins['app/json-storage'].get(
-              'gCore_Irrigation',
-              'irrigation/longitude'
-            ) || locale.longitude
-
-          if (latitude === undefined || longitude === undefined) {
-            return h.response({ success: false, error: 'nolocation' }).code(200)
-          }
-
           const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely,current,alerts&appid=${apiSettings.apiKey}`
           const authenticated = await axios
             .get(url)
