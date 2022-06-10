@@ -184,7 +184,10 @@ function scriptLoaded() {
 
         if (
           (!lastActivation ||
-            lastActivation.until(now, time.ChronoUnit.DAYS) > 0) &&
+            time.ZonedDateTime.parse(lastActivation, DATETIME_FORMAT).until(
+              now,
+              time.ChronoUnit.DAYS
+            ) > 0) &&
           historicPrecipitationLevel <= aimedPrecipitationLevel &&
           estimatedPrecipitationLevel <= aimedPrecipitationLevel
         ) {
