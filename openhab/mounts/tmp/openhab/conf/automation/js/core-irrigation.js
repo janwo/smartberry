@@ -37,8 +37,8 @@ function scriptLoaded() {
   })
 
   rules.JSRule({
-    name: 'check_irrigation',
-    description: 'Core (JS) - Check for irrigation',
+    name: 'check_irrigation_valves',
+    description: 'Core (JS) - Check for irrigation values',
     tags: ['core', 'core-irrigation'],
     triggers: [
       triggers.GroupStateUpdateTrigger('gCore_Irrigation_Triggers'),
@@ -46,63 +46,9 @@ function scriptLoaded() {
     ],
     execute: (event) => {
       const now = time.ZonedDateTime.now()
-      const lastCheck = json_storage('gCore_Irrigation').get(
-        'irrigation',
-        'last-forecast-check'
-      )
-
-      let precipitations = json_storage('gCore_Irrigation').get(
-        'irrigation',
-        'last-forecast'
-      )
-
-      const apiKey = json_storage('gCore_Irrigation').get(
-        'irrigation',
-        'api-key'
-      )
-
-      const latitude = json_storage('gCore_Irrigation').get(
-        'irrigation',
-        'latitude'
-      )
-
-      const longitude = json_storage('gCore_Irrigation').get(
-        'irrigation',
-        'longitude'
-      )
-
-      if (!apiKey || longitude === undefined || latitude === undefined) {
-        console.log(
-          'check_irrigation',
-          `No API Token or location coordinates set.`
-        )
-        return
-      }
-
-      if (
-        !lastCheck ||
-        time.ZonedDateTime.parse(lastCheck, DATETIME_FORMAT).until(
-          now,
-          time.ChronoUnit.DAYS
-        ) > 0
-      ) {
-        const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely,current,alerts&appid=${apiKey}`
-        precipitations = JSON.parse(
-          actions.HTTP.sendHttpGetRequest(url, TIMEOUT)
-        ).daily.map((data) => data.rain || 0)
-
-        json_storage('gCore_Irrigation').set(
-          'irrigation',
-          'last-forecast',
-          precipitations
-        )
-
-        json_storage('gCore_Irrigation').set(
-          'irrigation',
-          'last-forecast-check',
-          now.format(DATETIME_FORMAT)
-        )
-      }
+      let precipitations =
+        json_storage('gCore_Irrigation').get('irrigation', 'last-forecast') ||
+        []
 
       const valves = items.getItem('gCore_Irrigation_Valves').members
       if (valves.some((valve) => valve.state == 'ON')) {
@@ -131,9 +77,12 @@ function scriptLoaded() {
         )
 
         if (
-          [overshootDays, aimedPrecipitationLevel, waterVolumePerMinute].some(
-            (value) => value === undefined
-          )
+          [
+            overshootDays,
+            observedDays,
+            aimedPrecipitationLevel,
+            waterVolumePerMinute
+          ].some((value) => value === undefined)
         ) {
           console.log(
             'check_irrigation',
@@ -144,31 +93,22 @@ function scriptLoaded() {
 
         let historicPrecipitation =
           json_storage(valve.name).get('irrigation', 'history') || []
-        historicPrecipitation.push(precipitations[0])
-        historicPrecipitation = historicPrecipitation.slice(-observedDays)
-        json_storage(valve.name).set(
-          'irrigation',
-          'history',
-          historicPrecipitation
+
+        const historicPrecipitationLevel = historicPrecipitation.reduce(
+          (a, b) => a + b,
+          0
         )
-
-        const historicPrecipitationLevel =
-          historicPrecipitation.reduce((a, b) => a + b) /
-          historicPrecipitation.length
-
-        const futurePrecipitation = precipitations.slice(1)
-
-        const estimatedPrecipitation = historicPrecipitation.concat(
-          futurePrecipitation.slice(0, overshootDays)
+        const futurePrecipitation = precipitations.slice(1, overshootDays)
+        const estimatedPrecipitation =
+          historicPrecipitation.concat(futurePrecipitation)
+        const estimatedPrecipitationLevel = estimatedPrecipitation.reduce(
+          (a, b) => a + b,
+          0
         )
-
-        const estimatedPrecipitationLevel =
-          estimatedPrecipitation.reduce((a, b) => a + b) /
-          estimatedPrecipitation.length
 
         console.log(
           'check_irrigation',
-          'Aimed: ' + aimedPrecipitationLevel,
+          'Aimed: ' + aimedPrecipitationLevel * observedDays,
           ' Current: ' +
             historicPrecipitationLevel +
             ' Estimated in ' +
@@ -177,29 +117,23 @@ function scriptLoaded() {
             estimatedPrecipitationLevel
         )
 
-        const lastActivation = json_storage(valve.name).get(
-          'irrigation',
-          'last-activation'
-        )
-
         if (
-          (!lastActivation ||
-            time.ZonedDateTime.parse(lastActivation, DATETIME_FORMAT).until(
-              now,
-              time.ChronoUnit.DAYS
-            ) > 0) &&
-          historicPrecipitationLevel <= aimedPrecipitationLevel &&
-          estimatedPrecipitationLevel <= aimedPrecipitationLevel
+          historicPrecipitationLevel <=
+            aimedPrecipitationLevel * observedDays &&
+          estimatedPrecipitationLevel <= aimedPrecipitationLevel * observedDays
         ) {
           const irrigationAmount =
-            aimedPrecipitationLevel -
+            aimedPrecipitationLevel * observedDays -
             Math.max(historicPrecipitationLevel, estimatedPrecipitationLevel)
+          const irrigationMillis =
+            (irrigationAmount / waterVolumePerMinute) * 60 * 1000
+          historicPrecipitation[(historicPrecipitation.length || 1) - 1] +=
+            irrigationAmount
 
-          console.log(
-            'check_irrigation',
-            `Irrigating for ${irrigationAmount} (${
-              irrigationAmount / waterVolumePerMinute
-            } minutes)`
+          json_storage(valve.name).set(
+            'irrigation',
+            'history',
+            historicPrecipitation
           )
 
           json_storage(valve.name).set(
@@ -208,35 +142,143 @@ function scriptLoaded() {
             now.format(DATETIME_FORMAT)
           )
 
-          historicPrecipitation[historicPrecipitation.length - 1] +=
-            irrigationAmount
-          json_storage(valve.name).set(
-            'irrigation',
-            'history',
-            historicPrecipitation
-          )
+          if (timers[valve.name]) {
+            timers[valve.name].clear()
+          }
 
-          valve.sendCommand('ON')
-
-          timers[valve.name] = (function (itemName) {
+          timers[valve.name] = (function (itemName, millis) {
             const func = () => {
+              //  items.getItem(itemName).sendCommand('OFF')
               console.log(
-                'check_irrigation',
-                `Stop irrigating of valve ${itemName}`
+                'check_irrigation_valves',
+                `Stopped irrigation via valve ${itemName}.`
               )
-              items.getItem(itemName).sendCommand('OFF')
             }
-            const timer = setTimeout(
-              func,
-              (irrigationAmount / waterVolumePerMinute) * 60 * 1000
+
+            //   items.getItem(itemName).sendCommand('ON')
+            console.log(
+              'check_irrigation_valves',
+              `Start irrigation via valve ${itemName} for ${millis} ms...`
             )
+
+            const timer = setTimeout(func, millis)
             return {
               clear: () => {
                 func()
                 clearTimeout(timer)
               }
             }
-          })(valve.name)
+          })(valve.name, Number.parseInt(irrigationMillis))
+
+          break
+        }
+      }
+    }
+  })
+
+  rules.JSRule({
+    name: 'check_irrigation_forecast',
+    description: 'Core (JS) - Check for irrigation forecast',
+    tags: ['core', 'core-irrigation'],
+    triggers: [triggers.TimeOfDayTrigger('3:00')],
+    execute: (event) => {
+      const now = time.ZonedDateTime.now()
+      let precipitations =
+        json_storage('gCore_Irrigation').get('irrigation', 'last-forecast') ||
+        []
+
+      const lastForecastCheck = json_storage('gCore_Irrigation').get(
+        'irrigation',
+        'last-forecast-check'
+      )
+
+      const apiKey = json_storage('gCore_Irrigation').get(
+        'irrigation',
+        'api-key'
+      )
+
+      const latitude = json_storage('gCore_Irrigation').get(
+        'irrigation',
+        'latitude'
+      )
+
+      const longitude = json_storage('gCore_Irrigation').get(
+        'irrigation',
+        'longitude'
+      )
+
+      if (!apiKey || longitude === undefined || latitude === undefined) {
+        console.log(
+          'check_irrigation',
+          `No API Token or location coordinates set.`
+        )
+        return
+      }
+
+      if (
+        !lastForecastCheck ||
+        time.ZonedDateTime.parse(lastForecastCheck, DATETIME_FORMAT).until(
+          now,
+          time.ChronoUnit.DAYS
+        ) > 0
+      ) {
+        const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely,current,alerts&appid=${apiKey}`
+        precipitations = JSON.parse(
+          actions.HTTP.sendHttpGetRequest(url, TIMEOUT)
+        ).daily.map((data) => data.rain || 0)
+
+        json_storage('gCore_Irrigation').set(
+          'irrigation',
+          'last-forecast',
+          precipitations
+        )
+
+        json_storage('gCore_Irrigation').set(
+          'irrigation',
+          'last-forecast-check',
+          now.format(DATETIME_FORMAT)
+        )
+      }
+
+      const valves = items.getItem('gCore_Irrigation_Valves').members
+      for (let valve of valves) {
+        const lastCheck = json_storage(valve.name).get(
+          'irrigation',
+          'last-history-update'
+        )
+
+        const observedDays = json_storage(valve.name).get(
+          'irrigation',
+          'observed-days'
+        )
+
+        let historicPrecipitation =
+          json_storage(valve.name).get('irrigation', 'history') || []
+
+        if (
+          (!lastCheck ||
+            time.ZonedDateTime.parse(lastCheck, DATETIME_FORMAT).until(
+              now,
+              time.ChronoUnit.DAYS
+            ) > 0) &&
+          precipitations.length
+        ) {
+          historicPrecipitation.push(precipitations[0])
+          historicPrecipitation = historicPrecipitation.slice(
+            -observedDays || -precipitations.length
+          )
+
+          json_storage(valve.name).set(
+            'irrigation',
+            'history',
+            historicPrecipitation
+          )
+
+          json_storage(valve.name).set(
+            'irrigation',
+            'last-history-check',
+            now.format(DATETIME_FORMAT)
+          )
         }
       }
     }
@@ -245,7 +287,7 @@ function scriptLoaded() {
 
 function scriptUnloaded() {
   // Close valves
-  for (const timer of timers) {
-    timer.clear()
+  for (const timer in timers) {
+    timers[timer].clear()
   }
 }
