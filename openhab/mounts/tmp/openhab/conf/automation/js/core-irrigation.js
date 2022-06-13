@@ -85,7 +85,7 @@ function scriptLoaded() {
           ].some((value) => value === undefined)
         ) {
           console.log(
-            'check_irrigation',
+            'check_irrigation_valves',
             `Some irrigation values of item ${valve.name} are missing.`
           )
           continue
@@ -107,14 +107,10 @@ function scriptLoaded() {
         )
 
         console.log(
-          'check_irrigation',
-          'Aimed: ' + aimedPrecipitationLevel * observedDays,
-          ' Current: ' +
-            historicPrecipitationLevel +
-            ' Estimated in ' +
-            overshootDays +
-            ' days: ' +
-            estimatedPrecipitationLevel
+          'check_irrigation_valves',
+          `Aimed: ${aimedPrecipitationLevel * observedDays}`,
+          `Current: ${historicPrecipitationLevel}`,
+          `Estimated in ${overshootDays} days: ${estimatedPrecipitationLevel}`
         )
 
         if (
@@ -148,14 +144,14 @@ function scriptLoaded() {
 
           timers[valve.name] = (function (itemName, millis) {
             const func = () => {
-              //  items.getItem(itemName).sendCommand('OFF')
+              items.getItem(itemName).sendCommand('OFF')
               console.log(
                 'check_irrigation_valves',
                 `Stopped irrigation via valve ${itemName}.`
               )
             }
 
-            //   items.getItem(itemName).sendCommand('ON')
+            items.getItem(itemName).sendCommand('ON')
             console.log(
               'check_irrigation_valves',
               `Start irrigation via valve ${itemName} for ${millis} ms...`
@@ -180,7 +176,10 @@ function scriptLoaded() {
     name: 'check_irrigation_forecast',
     description: 'Core (JS) - Check for irrigation forecast',
     tags: ['core', 'core-irrigation'],
-    triggers: [triggers.TimeOfDayTrigger('3:00')],
+    triggers: [
+      triggers.TimeOfDayTrigger('3:00'),
+      triggers.SystemStartlevelTrigger(100)
+    ],
     execute: (event) => {
       const now = time.ZonedDateTime.now()
       let precipitations =
@@ -209,7 +208,7 @@ function scriptLoaded() {
 
       if (!apiKey || longitude === undefined || latitude === undefined) {
         console.log(
-          'check_irrigation',
+          'check_irrigation_forecast',
           `No API Token or location coordinates set.`
         )
         return
