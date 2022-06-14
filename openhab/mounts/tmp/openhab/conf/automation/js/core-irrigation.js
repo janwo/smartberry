@@ -117,9 +117,11 @@ function scriptLoaded() {
           historicPrecipitationLevel < aimedPrecipitationLevel * observedDays &&
           estimatedPrecipitationLevel < aimedPrecipitationLevel * observedDays
         ) {
-          const irrigationAmount =
+          const irrigationAmount = Math.max(
             aimedPrecipitationLevel * observedDays -
-            Math.max(historicPrecipitationLevel, estimatedPrecipitationLevel)
+              Math.max(historicPrecipitationLevel, estimatedPrecipitationLevel),
+            aimedPrecipitationLevel
+          )
           const irrigationMillis =
             (irrigationAmount / waterVolumePerMinute) * 60 * 1000
           historicPrecipitation[(historicPrecipitation.length || 1) - 1] +=
