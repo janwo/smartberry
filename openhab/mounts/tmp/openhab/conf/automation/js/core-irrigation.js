@@ -114,9 +114,8 @@ function scriptLoaded() {
         )
 
         if (
-          historicPrecipitationLevel <=
-            aimedPrecipitationLevel * observedDays &&
-          estimatedPrecipitationLevel <= aimedPrecipitationLevel * observedDays
+          historicPrecipitationLevel < aimedPrecipitationLevel * observedDays &&
+          estimatedPrecipitationLevel < aimedPrecipitationLevel * observedDays
         ) {
           const irrigationAmount =
             aimedPrecipitationLevel * observedDays -

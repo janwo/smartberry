@@ -276,7 +276,11 @@ function scriptLoaded() {
                   config: {
                     sceneReversible: false,
                     synonyms: sceneLocation
-                      ? `${stateTriggerLabel} in ${sceneLocation.label}`
+                      ? [
+                          `${stateTriggerLabel} in ${sceneLocation.label}`,
+                          sceneMember,
+                          `${sceneMember}-Modus in ${sceneLocation.label}`
+                        ].join(',')
                       : undefined
                   }
                 }
