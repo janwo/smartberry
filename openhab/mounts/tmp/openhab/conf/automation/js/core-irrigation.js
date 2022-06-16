@@ -42,7 +42,7 @@ function scriptLoaded() {
     tags: ['core', 'core-irrigation'],
     triggers: [
       triggers.GroupStateUpdateTrigger('gCore_Irrigation_Triggers'),
-      triggers.GroupStateUpdateTrigger('gCore_Irrigation_Valves', 'OFF')
+      triggers.GroupStateChangeTrigger('gCore_Irrigation_Valves', 'ON', 'OFF')
     ],
     execute: (event) => {
       const now = time.ZonedDateTime.now()
@@ -110,10 +110,12 @@ function scriptLoaded() {
           'check_irrigation_valves',
           `Aimed: ${aimedPrecipitationLevel * observedDays}`,
           `Current: ${historicPrecipitationLevel}`,
-          `Estimated in ${overshootDays} days: ${estimatedPrecipitationLevel}`
+          `Estimated in ${overshootDays} days: ${estimatedPrecipitationLevel}`,
+          `Observed days passed: (${historicPrecipitation.length}/${observedDays})`
         )
 
         if (
+          historicPrecipitation.length >= observedDays &&
           historicPrecipitationLevel < aimedPrecipitationLevel * observedDays &&
           estimatedPrecipitationLevel < aimedPrecipitationLevel * observedDays
         ) {
@@ -167,7 +169,7 @@ function scriptLoaded() {
             }
           })(valve.name, Number.parseInt(irrigationMillis))
 
-          break
+          return
         }
       }
     }
