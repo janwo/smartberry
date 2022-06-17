@@ -91,7 +91,7 @@ export class IrrigationComponent {
   calculatedMinutes(form: FormGroup) {
     return (
       Math.round(
-        (form.value.aimedPrecipitationLevel /
+        ((form.value.aimedPrecipitationLevel * form.value.observedDays) /
           form.value.irrigationLevelPerMinute) *
           10
       ) / 10

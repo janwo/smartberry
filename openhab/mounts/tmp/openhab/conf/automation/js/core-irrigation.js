@@ -10,6 +10,157 @@ const IRRIGATION_TRIGGER_TAGS = ['CoreIrrigationTrigger']
 const IRRIGATION_VALVE_TAGS = ['CoreIrrigationValve']
 const TIMEOUT = 5000
 
+function set_as_activated(item) {
+  const now = time.ZonedDateTime.now()
+  json_storage(typeof item == 'string' ? item : items.getItem(item).name).set(
+    'irrigation',
+    'last-activation',
+    now.format(DATETIME_FORMAT)
+  )
+}
+
+function set_as_completed(item) {
+  item = typeof item == 'string' ? item : items.getItem(item).name
+  const now = time.ZonedDateTime.now()
+  json_storage(item).set(
+    'irrigation',
+    'last-activation-completed',
+    now.format(DATETIME_FORMAT)
+  )
+
+  const lastActivation = json_storage(item).get('irrigation', 'last-activation')
+  const waterVolumePerMinute = json_storage(item).get(
+    'irrigation',
+    'irrigation-level-per-minute'
+  )
+
+  if (lastActivation && waterVolumePerMinute) {
+    let historicPrecipitation =
+      json_storage(item).get('irrigation', 'history') || []
+
+    const irrigationMillis = time.ZonedDateTime.parse(
+      lastActivation,
+      DATETIME_FORMAT
+    ).until(now, time.ChronoUnit.MILLIS)
+    const irrigationAmount =
+      (irrigationMillis / 60 / 1000) * waterVolumePerMinute
+    historicPrecipitation[(historicPrecipitation.length || 1) - 1] +=
+      irrigationAmount
+
+    json_storage(item).set('irrigation', 'history', historicPrecipitation)
+  }
+}
+
+function may_irrigate(valve) {
+  valve = typeof valve == 'string' ? items.getItem(valve) : valve
+  const precipitations =
+    json_storage('gCore_Irrigation').get('irrigation', 'last-forecast') || []
+
+  const observedDays = json_storage(valve.name).get(
+    'irrigation',
+    'observed-days'
+  )
+
+  const overshootDays = json_storage(valve.name).get(
+    'irrigation',
+    'overshoot-days'
+  )
+
+  const aimedPrecipitationLevel = json_storage(valve.name).get(
+    'irrigation',
+    'aimed-precipitation-level'
+  )
+
+  const waterVolumePerMinute = json_storage(valve.name).get(
+    'irrigation',
+    'irrigation-level-per-minute'
+  )
+
+  if (
+    [
+      overshootDays,
+      observedDays,
+      aimedPrecipitationLevel,
+      waterVolumePerMinute
+    ].some((value) => value === undefined)
+  ) {
+    console.log(
+      'check_irrigation_valves',
+      `Some irrigation values of item ${valve.name} are missing.`
+    )
+    return false
+  }
+
+  const historicPrecipitation =
+    json_storage(valve.name).get('irrigation', 'history') || []
+  const historicPrecipitationLevel = historicPrecipitation.reduce(
+    (a, b) => a + b,
+    0
+  )
+  const futurePrecipitation = precipitations.slice(1, overshootDays)
+  const estimatedPrecipitation =
+    historicPrecipitation.concat(futurePrecipitation)
+  const estimatedPrecipitationLevel = estimatedPrecipitation.reduce(
+    (a, b) => a + b,
+    0
+  )
+
+  console.log(
+    'check_irrigation_valves',
+    `Aimed: ${aimedPrecipitationLevel * observedDays}`,
+    `Current: ${historicPrecipitationLevel}`,
+    `Estimated in ${overshootDays} days: ${estimatedPrecipitationLevel}`,
+    `Observed days passed: (${historicPrecipitation.length}/${observedDays})`
+  )
+
+  if (
+    historicPrecipitation.length >= observedDays &&
+    historicPrecipitationLevel < aimedPrecipitationLevel * observedDays &&
+    estimatedPrecipitationLevel < aimedPrecipitationLevel * observedDays
+  ) {
+    const irrigationAmount = Math.max(
+      aimedPrecipitationLevel * observedDays -
+        Math.max(historicPrecipitationLevel, estimatedPrecipitationLevel),
+      aimedPrecipitationLevel
+    )
+    const irrigationMillis =
+      (irrigationAmount / waterVolumePerMinute) * 60 * 1000
+
+    if (timers[valve.name]) {
+      timers[valve.name].clear()
+      delete timers[valve.name]
+    }
+
+    timers[valve.name] = (function (itemName, millis) {
+      const func = () => {
+        items.getItem(itemName).sendCommand('OFF')
+        console.log(
+          'check_irrigation_valves',
+          `Stopped irrigation via valve ${itemName}.`
+        )
+      }
+
+      items.getItem(itemName).sendCommand('ON')
+      console.log(
+        'check_irrigation_valves',
+        `Start irrigation via valve ${itemName} for ${millis} ms...`
+      )
+
+      const timer = setTimeout(func, millis)
+      return {
+        clear: () => {
+          func()
+          clearTimeout(timer)
+        }
+      }
+    })(valve.name, Number.parseInt(irrigationMillis))
+
+    return true
+  }
+
+  return false
+}
+
 function scriptLoaded() {
   rules.JSRule({
     name: 'sync_irrigation_helpers',
@@ -42,13 +193,26 @@ function scriptLoaded() {
     tags: ['core', 'core-irrigation'],
     triggers: [
       triggers.GroupStateUpdateTrigger('gCore_Irrigation_Triggers'),
-      triggers.GroupStateChangeTrigger('gCore_Irrigation_Valves', 'ON', 'OFF')
+      triggers.GroupStateChangeTrigger('gCore_Irrigation_Valves')
     ],
     execute: (event) => {
       const now = time.ZonedDateTime.now()
-      let precipitations =
-        json_storage('gCore_Irrigation').get('irrigation', 'last-forecast') ||
-        []
+
+      if (
+        event.triggerType == 'ItemStateChangeTrigger' &&
+        event.oldState == 'OFF' &&
+        event.newState == 'ON'
+      ) {
+        set_as_activated(event.itemName)
+      }
+
+      if (
+        event.triggerType == 'ItemStateChangeTrigger' &&
+        event.oldState == 'ON' &&
+        event.newState == 'OFF'
+      ) {
+        set_as_completed(event.itemName)
+      }
 
       const valves = items.getItem('gCore_Irrigation_Valves').members
       if (valves.some((valve) => valve.state == 'ON')) {
@@ -56,120 +220,8 @@ function scriptLoaded() {
       }
 
       for (let valve of valves) {
-        const observedDays = json_storage(valve.name).get(
-          'irrigation',
-          'observed-days'
-        )
-
-        const overshootDays = json_storage(valve.name).get(
-          'irrigation',
-          'overshoot-days'
-        )
-
-        const aimedPrecipitationLevel = json_storage(valve.name).get(
-          'irrigation',
-          'aimed-precipitation-level'
-        )
-
-        const waterVolumePerMinute = json_storage(valve.name).get(
-          'irrigation',
-          'irrigation-level-per-minute'
-        )
-
-        if (
-          [
-            overshootDays,
-            observedDays,
-            aimedPrecipitationLevel,
-            waterVolumePerMinute
-          ].some((value) => value === undefined)
-        ) {
-          console.log(
-            'check_irrigation_valves',
-            `Some irrigation values of item ${valve.name} are missing.`
-          )
-          continue
-        }
-
-        let historicPrecipitation =
-          json_storage(valve.name).get('irrigation', 'history') || []
-
-        const historicPrecipitationLevel = historicPrecipitation.reduce(
-          (a, b) => a + b,
-          0
-        )
-        const futurePrecipitation = precipitations.slice(1, overshootDays)
-        const estimatedPrecipitation =
-          historicPrecipitation.concat(futurePrecipitation)
-        const estimatedPrecipitationLevel = estimatedPrecipitation.reduce(
-          (a, b) => a + b,
-          0
-        )
-
-        console.log(
-          'check_irrigation_valves',
-          `Aimed: ${aimedPrecipitationLevel * observedDays}`,
-          `Current: ${historicPrecipitationLevel}`,
-          `Estimated in ${overshootDays} days: ${estimatedPrecipitationLevel}`,
-          `Observed days passed: (${historicPrecipitation.length}/${observedDays})`
-        )
-
-        if (
-          historicPrecipitation.length >= observedDays &&
-          historicPrecipitationLevel < aimedPrecipitationLevel * observedDays &&
-          estimatedPrecipitationLevel < aimedPrecipitationLevel * observedDays
-        ) {
-          const irrigationAmount = Math.max(
-            aimedPrecipitationLevel * observedDays -
-              Math.max(historicPrecipitationLevel, estimatedPrecipitationLevel),
-            aimedPrecipitationLevel
-          )
-          const irrigationMillis =
-            (irrigationAmount / waterVolumePerMinute) * 60 * 1000
-          historicPrecipitation[(historicPrecipitation.length || 1) - 1] +=
-            irrigationAmount
-
-          json_storage(valve.name).set(
-            'irrigation',
-            'history',
-            historicPrecipitation
-          )
-
-          json_storage(valve.name).set(
-            'irrigation',
-            'last-activation',
-            now.format(DATETIME_FORMAT)
-          )
-
-          if (timers[valve.name]) {
-            timers[valve.name].clear()
-          }
-
-          timers[valve.name] = (function (itemName, millis) {
-            const func = () => {
-              items.getItem(itemName).sendCommand('OFF')
-              console.log(
-                'check_irrigation_valves',
-                `Stopped irrigation via valve ${itemName}.`
-              )
-            }
-
-            items.getItem(itemName).sendCommand('ON')
-            console.log(
-              'check_irrigation_valves',
-              `Start irrigation via valve ${itemName} for ${millis} ms...`
-            )
-
-            const timer = setTimeout(func, millis)
-            return {
-              clear: () => {
-                func()
-                clearTimeout(timer)
-              }
-            }
-          })(valve.name, Number.parseInt(irrigationMillis))
-
-          return
+        if (may_irrigate(valve)) {
+          break
         }
       }
     }
