@@ -177,11 +177,35 @@ const openhabIrrigationPlugin = {
             'app/json-storage'
           ].get(item.name, 'irrigation/aimed-precipitation-level')
 
+          const history =
+            server.plugins['app/json-storage'].get(
+              item.name,
+              'irrigation/history'
+            ) || []
+
+          const lastActivation = server.plugins['app/json-storage'].get(
+            item.name,
+            'irrigation/last-activation'
+          )
+
+          const lastActivationCompleted = server.plugins[
+            'app/json-storage'
+          ].get(item.name, 'irrigation/last-activation-completed')
+
           item.jsonStorage = {
             irrigationLevelPerMinute,
             overshootDays,
             aimedPrecipitationLevel,
-            observedDays
+            observedDays,
+            statistics: {
+              observedPrecipitation: history.reduce(
+                (x: number, y: number) => x + y,
+                0
+              ),
+              observedDays: history.length,
+              lastActivation,
+              lastActivationCompleted
+            }
           }
           return item
         })

@@ -305,6 +305,7 @@
             </div>
           </div>
           <p class="block">
+            <strong i18n>Calculation Example:</strong>
             <em
               i18n
               *ngIf="
@@ -314,12 +315,11 @@
                   !this.irrigationValveItem.form.value.observedDays;
                 else calculationExample
               ">
-              Enter all variables to receive a calculation example.
+              Enter all required variables first
             </em>
             <ng-template #calculationExample>
-              <strong>Calculation Example:</strong>
-              <em
-                >Your plants need
+              <em i18n>
+                Your plants need
                 {{
                   this.irrigationValveItem.form.value.aimedPrecipitationLevel
                     | number: '1.1-1'
@@ -348,6 +348,50 @@
                   this.irrigationValveItem.form.value.observedDays
                     | i18nPlural
                       : { '=0': 'day', '=1': '1 day', other: '# days' }
+                }}.
+              </em>
+            </ng-template>
+          </p>
+          <p class="block">
+            <strong i18n>Irrigation Events:</strong>
+            <em
+              i18n
+              *ngIf="
+                !this.irrigationValveItem.item.jsonStorage!['statistics'][
+                  'lastActivation'
+                ] ||
+                  !this.irrigationValveItem.item.jsonStorage!['statistics'][
+                    'lastActivationCompleted'
+                  ];
+                else irrigationHistory
+              ">
+              No events yet
+            </em>
+            <ng-template #irrigationHistory>
+              <em i18n>
+                For the last
+                {{
+                  this.irrigationValveItem.item.jsonStorage!['statistics'][
+                    'observedDays'
+                  ] | i18nPlural: { '=0': 'day', '=1': 'day', other: '# days' }
+                }}
+                a total amount of
+                {{
+                  this.irrigationValveItem.item.jsonStorage!['statistics'][
+                    'observedPrecipitation'
+                  ] | number: '1.1-1'
+                }}
+                mm irrigated. The last irrigation of your valve started
+                {{
+                  this.irrigationValveItem.item.jsonStorage!['statistics'][
+                    'lastActivation'
+                  ] | date: 'medium'
+                }}
+                and completed
+                {{
+                  this.irrigationValveItem.item.jsonStorage!['statistics'][
+                    'lastActivationCompleted'
+                  ] | date: 'medium'
                 }}.
               </em>
             </ng-template>

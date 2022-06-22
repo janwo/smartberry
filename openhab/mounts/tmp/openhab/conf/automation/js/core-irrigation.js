@@ -126,39 +126,40 @@ function may_irrigate(valve) {
     const irrigationMillis =
       (irrigationAmount / waterVolumePerMinute) * 60 * 1000
 
-    if (timers[valve.name]) {
-      timers[valve.name].clear()
-      delete timers[valve.name]
-    }
-
-    timers[valve.name] = (function (itemName, millis) {
-      const func = () => {
-        items.getItem(itemName).sendCommand('OFF')
-        console.log(
-          'check_irrigation_valves',
-          `Stopped irrigation via valve ${itemName}.`
-        )
-      }
-
-      items.getItem(itemName).sendCommand('ON')
-      console.log(
-        'check_irrigation_valves',
-        `Start irrigation via valve ${itemName} for ${millis} ms...`
-      )
-
-      const timer = setTimeout(func, millis)
-      return {
-        clear: () => {
-          func()
-          clearTimeout(timer)
-        }
-      }
-    })(valve.name, Number.parseInt(irrigationMillis))
-
+    add_timer(valve.name, irrigationMillis)
     return true
   }
 
   return false
+}
+
+function add_timer(itemName, millis) {
+  clear_timer(itemName)
+
+  items.getItem(itemName).sendCommand('ON')
+  console.log(
+    'check_irrigation_valves',
+    `Start irrigation via valve ${itemName} for ${millis} ms...`
+  )
+
+  timers[itemName] = setTimeout(
+    (itemName) => {
+      items.getItem(itemName).sendCommand('OFF')
+      console.log(
+        'check_irrigation_valves',
+        `Stopped irrigation via valve ${itemName}.`
+      )
+    },
+    Number.parseInt(millis),
+    itemName
+  )
+}
+
+function clear_timer(itemName) {
+  if (timers[itemName] !== undefined) {
+    clearTimeout(timers[itemName])
+    delete timers[itemName]
+  }
 }
 
 function scriptLoaded() {
@@ -196,8 +197,6 @@ function scriptLoaded() {
       triggers.GroupStateChangeTrigger('gCore_Irrigation_Valves')
     ],
     execute: (event) => {
-      const now = time.ZonedDateTime.now()
-
       if (
         event.triggerType == 'ItemStateChangeTrigger' &&
         event.oldState == 'OFF' &&
@@ -342,6 +341,6 @@ function scriptLoaded() {
 function scriptUnloaded() {
   // Close valves
   for (const timer in timers) {
-    timers[timer].clear()
+    clear_timer(timer)
   }
 }

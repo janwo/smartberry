@@ -163,7 +163,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">356</context>
+          <context context-type="linenumber">400</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/presence/presence.component.html</context>
@@ -456,25 +456,96 @@
           <context context-type="linenumber">304</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1159495846346012394" datatype="html">
-        <source> Enter all variables to receive a calculation example. </source>
+      <trans-unit id="3498058130455223243" datatype="html">
+        <source>Calculation Example:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">316,318</context>
+          <context context-type="linenumber">308</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6045710461371167091" datatype="html">
+        <source> Enter all required variables first </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
+          <context context-type="linenumber">317,319</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2847382199014254051" datatype="html">
+        <source> Your plants need <x id="INTERPOLATION" equiv-text="{{
+                  this.irrigationValveItem.form.value.aimedPrecipitationLevel
+                    | number: &apos;1.1-1&apos;
+                }}"/> mm (<x id="INTERPOLATION" equiv-text="{{
+                  this.irrigationValveItem.form.value.aimedPrecipitationLevel
+                    | number: &apos;1.1-1&apos;
+                }}"/> l/m²) per day. Your valve irrigates <x id="INTERPOLATION_1" equiv-text="{{
+                  this.irrigationValveItem.form.value.irrigationLevelPerMinute
+                    | number: &apos;1.1-1&apos;
+                }}"/> mm (<x id="INTERPOLATION_1" equiv-text="{{
+                  this.irrigationValveItem.form.value.irrigationLevelPerMinute
+                    | number: &apos;1.1-1&apos;
+                }}"/> l/m²) per minute. Consequently the valve will irrigate for <x id="INTERPOLATION_2" equiv-text="{{
+                  calculatedMinutes(this.irrigationValveItem.form)
+                    | i18nPlural
+                      : { &apos;=0&apos;: &apos;minute&apos;, &apos;=1&apos;: &apos;1 minute&apos;, other: &apos;# minutes&apos; }
+                }}"/> , if there was no rain for <x id="INTERPOLATION_3" equiv-text="{{
+                  this.irrigationValveItem.form.value.observedDays
+                    | i18nPlural
+                      : { &apos;=0&apos;: &apos;day&apos;, &apos;=1&apos;: &apos;1 day&apos;, other: &apos;# days&apos; }
+                }}"/>. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
+          <context context-type="linenumber">321,352</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="929477457334545737" datatype="html">
+        <source>Irrigation Events:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
+          <context context-type="linenumber">356</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7931438885394705158" datatype="html">
+        <source> No events yet </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
+          <context context-type="linenumber">367,369</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4094301303308231543" datatype="html">
+        <source> For the last <x id="INTERPOLATION" equiv-text="{{
+                  this.irrigationValveItem.item.jsonStorage![&apos;statistics&apos;][
+                    &apos;observedDays&apos;
+                  ] | i18nPlural: { &apos;=0&apos;: &apos;day&apos;, &apos;=1&apos;: &apos;day&apos;, other: &apos;# days&apos; }
+                }}"/> a total amount of <x id="INTERPOLATION_1" equiv-text="{{
+                  this.irrigationValveItem.item.jsonStorage![&apos;statistics&apos;][
+                    &apos;observedPrecipitation&apos;
+                  ] | number: &apos;1.1-1&apos;
+                }}"/> mm irrigated. The last irrigation of your valve started <x id="INTERPOLATION_2" equiv-text="{{
+                  this.irrigationValveItem.item.jsonStorage![&apos;statistics&apos;][
+                    &apos;lastActivation&apos;
+                  ] | date: &apos;medium&apos;
+                }}"/> and completed <x id="INTERPOLATION_3" equiv-text="{{
+                  this.irrigationValveItem.item.jsonStorage![&apos;statistics&apos;][
+                    &apos;lastActivationCompleted&apos;
+                  ] | date: &apos;medium&apos;
+                }}"/>. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
+          <context context-type="linenumber">371,396</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4606687446860017368" datatype="html">
         <source>Irrigation Triggers</source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">369</context>
+          <context context-type="linenumber">413</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8225534030455111255" datatype="html">
         <source> You can define irrigation trigger items that automatically start the irrigation check. Any state change of these items will fire an irrigation event. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">372,376</context>
+          <context context-type="linenumber">416,420</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8816278659593304860" datatype="html">
