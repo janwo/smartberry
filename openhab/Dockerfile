@@ -1,4 +1,4 @@
-FROM openhab/openhab:alpine
+FROM openhab/openhab:3.3.0-alpine
 
 RUN apk add --no-cache \
     rsync \
