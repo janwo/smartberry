@@ -1,4 +1,4 @@
-FROM openhab/openhab:milestone-alpine
+FROM openhab/openhab:alpine
 
 RUN apk add --no-cache \
     rsync \
