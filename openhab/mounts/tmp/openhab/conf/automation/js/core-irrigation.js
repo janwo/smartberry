@@ -10,6 +10,21 @@ const IRRIGATION_TRIGGER_TAGS = ['CoreIrrigationTrigger']
 const IRRIGATION_VALVE_TAGS = ['CoreIrrigationValve']
 const TIMEOUT = 5000
 
+function irrigated_today(item) {
+  const now = time.ZonedDateTime.now()
+  const lastActivationCompleted = json_storage(
+    typeof item == 'string' ? item : items.getItem(item).name
+  ).get('irrigation', 'last-activation-completed')
+
+  return (
+    lastActivationCompleted &&
+    time.ZonedDateTime.parse(lastActivationCompleted, DATETIME_FORMAT).until(
+      now,
+      time.ChronoUnit.DAYS
+    ) <= 0
+  )
+}
+
 function set_as_activated(item) {
   const now = time.ZonedDateTime.now()
   json_storage(typeof item == 'string' ? item : items.getItem(item).name).set(
@@ -103,14 +118,6 @@ function may_irrigate(valve) {
   const estimatedPrecipitationLevel = estimatedPrecipitation.reduce(
     (a, b) => a + b,
     0
-  )
-
-  console.log(
-    'check_irrigation_valves',
-    `Aimed: ${aimedPrecipitationLevel * observedDays}`,
-    `Current: ${historicPrecipitationLevel}`,
-    `Estimated in ${overshootDays} days: ${estimatedPrecipitationLevel}`,
-    `Observed days passed: (${historicPrecipitation.length}/${observedDays})`
   )
 
   if (
@@ -219,7 +226,7 @@ function scriptLoaded() {
       }
 
       for (let valve of valves) {
-        if (may_irrigate(valve)) {
+        if (!irrigated_today(valve) && may_irrigate(valve)) {
           break
         }
       }
