@@ -90,7 +90,8 @@ export class IrrigationChartComponent {
           yAxisID: 'temperature',
           tension: 0.25,
           borderColor: 'rgba(255, 130, 169, 1)',
-          backgroundColor: 'rgba(255, 130, 169, .5)',
+          backgroundColor: 'rgba(0,0,0,0)',
+          pointBackgroundColor: 'rgba(255, 130, 169, .5)',
           data: seriesPeriod.map((s: any) =>
             this.temperature(s.temperature.max)
           )
@@ -101,9 +102,29 @@ export class IrrigationChartComponent {
           yAxisID: 'temperature',
           tension: 0.25,
           borderColor: 'rgba(90, 118, 196, 1)',
-          backgroundColor: 'rgba(90, 118, 196, .5)',
+          backgroundColor: 'rgba(0,0,0,0)',
+          pointBackgroundColor: 'rgba(90, 118, 196, .5)',
           data: seriesPeriod.map((s: any) =>
             this.temperature(s.temperature.min)
+          )
+        },
+        {
+          label: 'Precipitation Level',
+          type: 'line',
+          borderColor: 'rgba(0, 0, 0, 1)',
+          backgroundColor: 'rgba(0,0,0,0)',
+          pointBackgroundColor: 'rgba(0, 0, 0, .5)',
+          yAxisID: 'length',
+          tension: 0.25,
+          data: seriesPeriod.reduce(
+            (data: number[], s) => [
+              ...data,
+              (data[data.length - 1] || 0) +
+                s.rain +
+                (s.irrigation || 0) -
+                s.eto * evaporationFactor
+            ],
+            []
           )
         },
 
@@ -120,25 +141,7 @@ export class IrrigationChartComponent {
               : 'rgba(90, 118, 196, .5)'
           )
         },
-        {
-          label: 'Precipitation Level',
-          type: 'line',
-          borderColor: '#f0f',
-          backgroundColor: '#ffffff',
-          yAxisID: 'length',
-          borderWith: 10,
-          tension: 0.25,
-          data: seriesPeriod.reduce(
-            (data: number[], s) => [
-              ...data,
-              (data[data.length - 1] || 0) +
-                s.rain +
-                (s.irrigation || 0) -
-                s.eto * evaporationFactor
-            ],
-            []
-          )
-        },
+
         {
           label: 'Irrigation',
           type: 'bar',
