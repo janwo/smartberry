@@ -58,9 +58,9 @@ function set_as_completed(item) {
     const irrigationAmount =
       (irrigationMillis / 60 / 1000) * waterVolumePerMinute
 
-    const irrigationHistory =
+    let irrigationHistory =
       json_storage(item).get('irrigation', 'history') || {}
-    const today = time.LocalDate.now().toString()
+    const today = time.LocalDate.now()
     irrigationHistory = Object.keys(irrigationHistory)
       .filter(
         (date) =>
@@ -69,8 +69,9 @@ function set_as_completed(item) {
       .reduce((newHistory, date) => {
         newHistory[date] = irrigationHistory[date]
       }, {})
-    irrigationHistory[today] =
-      (irrigationHistory[today] || 0) + irrigationAmount
+    const todayKey = today.toString()
+    irrigationHistory[todayKey] =
+      (irrigationHistory[todayKey] || 0) + irrigationAmount
     json_storage(item).set('irrigation', 'history', irrigationHistory)
   }
 }
