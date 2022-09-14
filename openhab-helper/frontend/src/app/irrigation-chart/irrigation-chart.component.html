@@ -31,20 +31,7 @@
       </em>
     </ng-template>
 
-    <em
-      i18n
-      *ngIf="
-        this.calculatePrecipitationLevel(
-          this.irrigationValveItem.jsonStorage!['series'],
-          irrigationValveItemSettings
-        ) < 0 &&
-          this.calculatePrecipitationLevel(
-            this.irrigationValveItem.jsonStorage!['series'],
-            irrigationValveItemSettings,
-            true
-          ) < 0;
-        else irrigationPlanned
-      ">
+    <em i18n *ngIf="this.isIrrigationDay(); else irrigationPlanned">
       An irrigation is planned for today.
     </em>
     <ng-template #irrigationPlanned>

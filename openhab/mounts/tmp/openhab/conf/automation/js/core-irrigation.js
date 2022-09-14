@@ -1,5 +1,4 @@
 const { rules, items, triggers, time, actions } = require('openhab')
-const { LocalDate } = require('openhab/types/time')
 const {
   json_storage,
   DATETIME_FORMAT,
@@ -61,10 +60,11 @@ function set_as_completed(item) {
 
     const irrigationHistory =
       json_storage(item).get('irrigation', 'history') || {}
-    const today = LocalDate.now().toString()
+    const today = time.LocalDate.now().toString()
     irrigationHistory = Object.keys(irrigationHistory)
       .filter(
-        (date) => LocalDate.parse(date).until(today, time.ChronoUnit.DAYS) <= 30
+        (date) =>
+          time.LocalDate.parse(date).until(today, time.ChronoUnit.DAYS) <= 30
       )
       .reduce((newHistory, date) => {
         newHistory[date] = irrigationHistory[date]
@@ -105,16 +105,24 @@ function may_irrigate(valve) {
     return false
   }
 
-  const minimalTemperature = json_storage(valve.name).get(
-    'irrigation',
-    'minimal-temperature'
-  )
+  const minimalKelvin = (() => {
+    const storage =
+      json_storage(valve.name).get('irrigation', 'minimal-temperature') || 'C'
+
+    const value = storage.substring(0, storage.length - 1)
+    if (!value.length) {
+      return undefined
+    }
+
+    const unit = storage.substring(storage.length - 1).toUpperCase()
+    return unit == 'C' ? value + 273.15 : 1.8 * (value + 273.15) + 32
+  })()
 
   const weatherForecast =
-    json_storage('gCore_Irrigation').get('irrigation', 'forecast') || []
+    json_storage('gCore_Irrigation').get('irrigation', 'weather-forecast') || []
 
   const weatherHistory =
-    json_storage('gCore_Irrigation').get('irrigation', 'history') || []
+    json_storage('gCore_Irrigation').get('irrigation', 'weather-history') || []
 
   const irrigationHistory =
     json_storage(valve.name).get('irrigation', 'history') || {}
@@ -122,18 +130,21 @@ function may_irrigate(valve) {
   const evaporationFactor =
     json_storage(valve.name).get('irrigation', 'evaporation-factor') || 1
 
-  for (
-    const i = Math.max(0, weatherHistory.length - 7);
-    i < weatherHistory.length;
-    i++
-  ) {
-    if (weatherHistory[i].temp.min < minimalTemperature) {
-      console.log(
-        'check_irrigation_valves',
-        `Minimal temperature was missed on ${weatherHistory[i].date}.`
-      )
-      return false
-    }
+  const series = [
+    ...weatherHistory,
+    ...weatherForecast.slice(0, Math.min(weatherForecast.length, 7))
+  ]
+
+  const minimalTemperatureSeriesIndex = series.findIndex(
+    (s) => s.temp.min < minimalKelvin
+  )
+
+  if (minimalTemperatureSeriesIndex >= 0) {
+    console.log(
+      'check_irrigation_valves',
+      `Minimal temperature was missed on ${series[minimalTemperatureSeriesIndex].date}.`
+    )
+    return false
   }
 
   const pastPrecipitationLevels = weatherHistory
@@ -279,7 +290,9 @@ function scriptLoaded() {
      * Valiantzas, J. D. (2018). Modification of the Hargreaves–Samani model for estimating solar radiation from temperature and humidity data. Journal of Irrigation and Drainage Engineering, 144(1), 06017014.
      */
 
-    const julianDate = Math.floor(date.toEpochSecond() / 86400 + 2440587.5)
+    const julianDate = Math.floor(
+      date.atStartOfDay(time.ZoneId.SYSTEM).toEpochSecond() / 86400 + 2440587.5
+    )
     const radians = latitude * (Math.PI / 180)
 
     // See equation 4.4.3
@@ -331,7 +344,7 @@ function scriptLoaded() {
         ) || []
       ).map((f) => ({
         ...f,
-        date: LocalDate.parse(f.date)
+        date: time.LocalDate.parse(f.date)
       }))
 
       let weatherHistory = (
@@ -339,7 +352,7 @@ function scriptLoaded() {
         []
       ).map((f) => ({
         ...f,
-        date: LocalDate.parse(f.date)
+        date: time.LocalDate.parse(f.date)
       }))
 
       const apiKey = json_storage('gCore_Irrigation').get(
@@ -365,7 +378,7 @@ function scriptLoaded() {
         return
       }
 
-      const today = LocalDate.now()
+      const today = time.LocalDate.now()
       const lastWeatherForecast = weatherHistory.slice(-1)?.date
       if (lastWeatherForecast) {
         const pastForecasts = weatherForecast.filter(
@@ -386,7 +399,7 @@ function scriptLoaded() {
           actions.HTTP.sendHttpGetRequest(url, TIMEOUT)
         ).daily.map((data) => {
           const date = time.LocalDate.ofInstant(
-            Instant.ofEpochSecond(data.dt),
+            time.Instant.ofEpochSecond(data.dt),
             time.ZoneId.SYSTEM
           )
 
@@ -413,48 +426,6 @@ function scriptLoaded() {
           'weather-forecast',
           weatherForecast
         )
-      }
-
-      const valves = items.getItem('gCore_Irrigation_Valves').members
-      for (let valve of valves) {
-        const lastCheck = json_storage(valve.name).get(
-          'irrigation',
-          'history-check'
-        )
-
-        const observedDays = json_storage(valve.name).get(
-          'irrigation',
-          'observed-days'
-        )
-
-        let historicConditions =
-          json_storage(valve.name).get('irrigation', 'history') || []
-
-        if (
-          (!lastCheck ||
-            time.ZonedDateTime.parse(lastCheck, DATETIME_FORMAT).until(
-              now,
-              time.ChronoUnit.DAYS
-            ) > 0) &&
-          forecast.length
-        ) {
-          historicConditions.push(forecast[0])
-          historicConditions = historicConditions.slice(
-            -observedDays || -forecast.length
-          )
-
-          json_storage(valve.name).set(
-            'irrigation',
-            'history',
-            historicConditions
-          )
-
-          json_storage(valve.name).set(
-            'irrigation',
-            'history-check',
-            now.format(DATETIME_FORMAT)
-          )
-        }
       }
     }
   })

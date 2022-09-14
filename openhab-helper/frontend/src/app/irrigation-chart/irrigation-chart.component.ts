@@ -5,6 +5,8 @@ type IrrigationValveItemSettings = {
   observedDays: number
   overshootDays: number
   evaporationFactor: number
+  minimalTemperature: string
+  temperatureUnit: string
 }
 
 type Series = {
@@ -36,6 +38,44 @@ export class IrrigationChartComponent {
     return series.slice(
       Math.max(0, seriesTodaysIndex - observedDays),
       Math.min(seriesTodaysIndex + overshootDays, series.length - 1)
+    )
+  }
+
+  isIrrigationDay() {
+    const { series } = this.irrigationValveItem!.jsonStorage!
+    const { minimalTemperature, temperatureUnit, observedDays } =
+      this.irrigationValveItemSettings!
+
+    const minimalKelvin = (() => {
+      const value = Number.parseInt(minimalTemperature)
+      if (Number.isNaN(value)) {
+        return undefined
+      }
+
+      return temperatureUnit == 'C'
+        ? value + 273.15
+        : 1.8 * (value + 273.15) + 32
+    })()
+
+    if (
+      series.some(
+        (s: Series) => minimalKelvin && s.temperature.min < minimalKelvin
+      ) ||
+      series.filter((s: Series) => !s.forecast).length <= observedDays
+    ) {
+      return false
+    }
+
+    return (
+      this.calculatePrecipitationLevel(
+        this.irrigationValveItem!.jsonStorage!['series'],
+        this.irrigationValveItemSettings!
+      ) < 0 &&
+      this.calculatePrecipitationLevel(
+        this.irrigationValveItem!.jsonStorage!['series'],
+        this.irrigationValveItemSettings!,
+        true
+      ) < 0
     )
   }
 
@@ -135,11 +175,12 @@ export class IrrigationChartComponent {
           stack: 'watering',
           data: seriesPeriod.map((s: any) => this.length(s.rain || 0)),
           borderColor: 'rgba(90, 118, 196, 1)',
-          backgroundColor: seriesPeriod.map((s, index) =>
-            index >= seriesTodaysIndex
-              ? 'rgba(90, 118, 196, .25)'
-              : 'rgba(90, 118, 196, .5)'
-          )
+          backgroundColor:
+            seriesPeriod.map((s, index) =>
+              index >= seriesTodaysIndex
+                ? 'rgba(90, 118, 196, .25)'
+                : 'rgba(90, 118, 196, .5)'
+            ) || 'rgba(90, 118, 196, .5)'
         },
 
         {
@@ -161,11 +202,12 @@ export class IrrigationChartComponent {
           ),
           fill: true,
           borderColor: 'rgba(255, 235, 231, 1)',
-          backgroundColor: seriesPeriod.map((s, index) =>
-            index >= seriesTodaysIndex
-              ? 'rgba(202, 137, 95, .25)'
-              : 'rgba(202, 137, 95, .5)'
-          )
+          backgroundColor:
+            seriesPeriod.map((s, index) =>
+              index >= seriesTodaysIndex
+                ? 'rgba(202, 137, 95, .25)'
+                : 'rgba(202, 137, 95, .5)'
+            ) || 'rgba(202, 137, 95, .5)'
         }
       ]
     }

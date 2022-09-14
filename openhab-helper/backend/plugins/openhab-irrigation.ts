@@ -217,7 +217,9 @@ const openhabIrrigationPlugin = {
             observedDays,
             series: [
               ...weatherHistory,
-              ...weatherForecast.map((wf: any) => ({ ...wf, forecast: true }))
+              ...weatherForecast
+                .slice(0, Math.min(7, weatherForecast.length))
+                .map((wf: any) => ({ ...wf, forecast: true }))
             ].map((s) => {
               const irrigation = irrigationHistory[s.date]
               return irrigation ? { ...s, irrigation } : s
