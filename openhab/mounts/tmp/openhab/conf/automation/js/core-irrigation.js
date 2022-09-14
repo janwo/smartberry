@@ -68,6 +68,7 @@ function set_as_completed(item) {
       )
       .reduce((newHistory, date) => {
         newHistory[date] = irrigationHistory[date]
+        return newHistory
       }, {})
     const todayKey = today.toString()
     irrigationHistory[todayKey] =
