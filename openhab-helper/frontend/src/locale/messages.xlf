@@ -140,7 +140,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">201,205</context>
+          <context context-type="linenumber">206,210</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/presence/presence.component.html</context>
@@ -159,11 +159,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">97</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">400</context>
+          <context context-type="linenumber">405</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/presence/presence.component.html</context>
@@ -253,6 +253,51 @@
           <context context-type="linenumber">8,10</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="929477457334545737" datatype="html">
+        <source>Irrigation Events:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/irrigation-chart/irrigation-chart.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7057429995339877418" datatype="html">
+        <source> No irrigations yet. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/irrigation-chart/irrigation-chart.component.html</context>
+          <context context-type="linenumber">10,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1211658265872270207" datatype="html">
+        <source> The last irrigation of your valve started at <x id="INTERPOLATION" equiv-text="{{
+          this.irrigationValveItem.jsonStorage![&apos;lastActivation&apos;]
+            | date: &apos;medium&apos;
+        }}"/> and completed at <x id="INTERPOLATION_1" equiv-text="{{
+          this.irrigationValveItem.jsonStorage![&apos;lastActivationCompleted&apos;]
+            | date: &apos;medium&apos;
+        }}"/>. For the last 30 days a total amount of <x id="INTERPOLATION_2" equiv-text="{{
+          this.length(
+            this.irrigationValveItem.jsonStorage![&apos;totalMonthlyIrrigation&apos;]
+          ) + (unit == &apos;metric&apos; ? &apos; mm&apos; : &apos; in&apos;)
+        }}"/> had been irrigated. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/irrigation-chart/irrigation-chart.component.html</context>
+          <context context-type="linenumber">14,31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4976113204352805222" datatype="html">
+        <source> An irrigation is planned for today. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/irrigation-chart/irrigation-chart.component.html</context>
+          <context context-type="linenumber">47,49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="854222443102800877" datatype="html">
+        <source>No irrigation planned today.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/irrigation-chart/irrigation-chart.component.html</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="61201008500295936" datatype="html">
         <source> Adjust the way how SmartBerry handles the irrigation of your garden. </source>
         <context-group purpose="location">
@@ -313,7 +358,7 @@
         <source>Your API Token</source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">94</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/setup/setup.component.html</context>
@@ -324,14 +369,14 @@
         <source> Sync Location </source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">109,111</context>
+          <context context-type="linenumber">107,109</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6366273303957908657" datatype="html">
         <source> Delete API Token </source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">120,122</context>
+          <context context-type="linenumber">118,120</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/setup/setup.component.html</context>
@@ -342,40 +387,39 @@
         <source>Irrigation Valve Items</source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">143</context>
+          <context context-type="linenumber">141</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3932827075013533934" datatype="html">
         <source> In order to let SmartBerry handle all irrigation valves for you, organize your valve items as shown below. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">146,149</context>
+          <context context-type="linenumber">144,147</context>
         </context-group>
       </trans-unit>
       <trans-unit id="113069793252909340" datatype="html">
         <source>Adjust irrigation variables</source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">154</context>
+          <context context-type="linenumber">152</context>
         </context-group>
       </trans-unit>
       <trans-unit id="747262057446848263" datatype="html">
         <source> In order to achieve an optimal irrigation, adjust the following values to your satisfaction. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">155,158</context>
+          <context context-type="linenumber">153,156</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7363197680789340232" datatype="html">
         <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Irrigation Level Per Minute (mm):<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> How much water will be irrigated by the valve upon your plants? 1.0 liter per square meter is equal to 1.0 millimeter. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">160,163</context>
+          <context context-type="linenumber">159,162</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="2881330272949676960" datatype="html">
-        <source><x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em
-        &gt;"/>Example: You have an area of 10 m² and your valve pours 10 l per minute. Consequently, you have a irrigation level of <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>1.0 mm<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> per minute (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code
+      <trans-unit id="9219669754114067519" datatype="html">
+        <source><x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> Example: You have an area of 10 m² and your valve pours 10 l per minute. Consequently, you have a irrigation level of <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>1.0 mm<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> per minute (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code
           &gt;"/>10 l / 10 m² = 1.0 l/m² ≙ 1.0 mm<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code
         &gt;"/>). <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/></source>
         <context-group purpose="location">
@@ -383,99 +427,115 @@
           <context context-type="linenumber">165,171</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6606352429580858096" datatype="html">
-        <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Aimed Precipitation Level (mm):<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/>How much water should be irrigated on your plants per day? </source>
+      <trans-unit id="7711680650177069208" datatype="html">
+        <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Evaporation Factor:<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> Increase or decrease the evaporation per day that is based on the <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Hargreaves–Samani model<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>. Set it above <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>1<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> to increase evaporation, set it below <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>1<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> to decrease evaporation. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">174,176</context>
+          <context context-type="linenumber">175,179</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5516474054260107487" datatype="html">
-        <source><x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em
-        &gt;"/>Example: Your plants need 0.5 l per square meter and day. Consequently, you have a aimed precipitation level of <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>1.0 mm<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> per minute (<x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>0.5 l / 1.0 m² = 0.5 l/m² ≙ 0.5 mm<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>). <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/></source>
+      <trans-unit id="3981144242626583409" datatype="html">
+        <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Minimal Temperature:<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> Skips any irrigation triggers, if the temperature of the last seven days has gone below the minimal temperature. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">178,182</context>
+          <context context-type="linenumber">182,185</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="124396169163555625" datatype="html">
-        <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Observed precipitation period (days):<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> Defines the range of days SmartBerry monitors the precipitation rate. </source>
+      <trans-unit id="1393478404225235439" datatype="html">
+        <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Bucket Size (days):<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> Defines the range of days SmartBerry monitors the precipitation rate and decides to trigger irrigation. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">185,187</context>
+          <context context-type="linenumber">188,190</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7548167821257527012" datatype="html">
-        <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Overshoot upon rainfall (days):<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> Maximum number of days SmartBerry will postpone irrigation on upcoming rain, although precipitation cannot be maintained. </source>
+      <trans-unit id="1430671567537643622" datatype="html">
+        <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Extend Bucket upon Future Rainfalls (days):<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> Maximum number of days SmartBerry will postpone irrigation on upcoming rain, although precipitation level cannot be maintained. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">189,192</context>
+          <context context-type="linenumber">193,196</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3965023632698512270" datatype="html">
+        <source>Evaporation Factor</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
+          <context context-type="linenumber">223</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
+          <context context-type="linenumber">233</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1345566024991291229" datatype="html">
         <source>Irrigation Level Per Minute (mm)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">219</context>
+          <context context-type="linenumber">239</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">237</context>
+          <context context-type="linenumber">257</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4251085039773153981" datatype="html">
-        <source>Aimed Precipitation Level (mm)</source>
+      <trans-unit id="4316511385291917446" datatype="html">
+        <source>Minimal Temperature</source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">243</context>
+          <context context-type="linenumber">262</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">260</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2680482850561046456" datatype="html">
-        <source>Observed precipitation period (days)</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">266</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">282</context>
+          <context context-type="linenumber">277</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5008275501197461263" datatype="html">
-        <source>Overshoot upon rainfall (days)</source>
+      <trans-unit id="2936057948596507296" datatype="html">
+        <source>°C</source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
           <context context-type="linenumber">288</context>
         </context-group>
+      </trans-unit>
+      <trans-unit id="2474331731830341287" datatype="html">
+        <source>°F</source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">304</context>
+          <context context-type="linenumber">289</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6659216693002851737" datatype="html">
+        <source>Bucket Size</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
+          <context context-type="linenumber">296</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3430833172621796059" datatype="html">
+        <source>Extend Bucket upon Future Rainfalls</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
+          <context context-type="linenumber">321</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3498058130455223243" datatype="html">
         <source>Calculation Example:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">308</context>
+          <context context-type="linenumber">345</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6045710461371167091" datatype="html">
         <source> Enter all required variables first </source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">317,319</context>
+          <context context-type="linenumber">353,355</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="2847382199014254051" datatype="html">
-        <source> Your plants need <x id="INTERPOLATION" equiv-text="{{
-                  this.irrigationValveItem.form.value.aimedPrecipitationLevel
+      <trans-unit id="7104894549050266344" datatype="html">
+        <source> Assuming no rain and an evaporation of 1.0 mm a day, your plants need <x id="INTERPOLATION" equiv-text="{{
+                  this.irrigationValveItem.form.value.evaporationFactor
                     | number: &apos;1.1-1&apos;
-                }}"/> mm (<x id="INTERPOLATION" equiv-text="{{
-                  this.irrigationValveItem.form.value.aimedPrecipitationLevel
+                }}"/> mm ( <x id="INTERPOLATION" equiv-text="{{
+                  this.irrigationValveItem.form.value.evaporationFactor
                     | number: &apos;1.1-1&apos;
                 }}"/> l/m²) per day. Your valve irrigates <x id="INTERPOLATION_1" equiv-text="{{
                   this.irrigationValveItem.form.value.irrigationLevelPerMinute
@@ -494,58 +554,21 @@
                 }}"/>. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">321,352</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="929477457334545737" datatype="html">
-        <source>Irrigation Events:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">356</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7931438885394705158" datatype="html">
-        <source> No events yet </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">367,369</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4094301303308231543" datatype="html">
-        <source> For the last <x id="INTERPOLATION" equiv-text="{{
-                  this.irrigationValveItem.item.jsonStorage![&apos;statistics&apos;][
-                    &apos;observedDays&apos;
-                  ] | i18nPlural: { &apos;=0&apos;: &apos;day&apos;, &apos;=1&apos;: &apos;day&apos;, other: &apos;# days&apos; }
-                }}"/> a total amount of <x id="INTERPOLATION_1" equiv-text="{{
-                  this.irrigationValveItem.item.jsonStorage![&apos;statistics&apos;][
-                    &apos;observedPrecipitation&apos;
-                  ] | number: &apos;1.1-1&apos;
-                }}"/> mm irrigated. The last irrigation of your valve started <x id="INTERPOLATION_2" equiv-text="{{
-                  this.irrigationValveItem.item.jsonStorage![&apos;statistics&apos;][
-                    &apos;lastActivation&apos;
-                  ] | date: &apos;medium&apos;
-                }}"/> and completed <x id="INTERPOLATION_3" equiv-text="{{
-                  this.irrigationValveItem.item.jsonStorage![&apos;statistics&apos;][
-                    &apos;lastActivationCompleted&apos;
-                  ] | date: &apos;medium&apos;
-                }}"/>. </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">371,396</context>
+          <context context-type="linenumber">357,390</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4606687446860017368" datatype="html">
         <source>Irrigation Triggers</source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">413</context>
+          <context context-type="linenumber">418</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8225534030455111255" datatype="html">
         <source> You can define irrigation trigger items that automatically start the irrigation check. Any state change of these items will fire an irrigation event. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">416,420</context>
+          <context context-type="linenumber">421,425</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8816278659593304860" datatype="html">

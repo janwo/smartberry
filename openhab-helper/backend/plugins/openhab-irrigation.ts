@@ -10,17 +10,17 @@ const openhabIrrigationPlugin = {
       method: 'GET',
       path: '/api/irrigation-api',
       handler: async (request, h) => {
-        const hasApiKey = !!server.plugins['app/json-storage'].get(
+        const apiKey = await server.plugins['app/json-storage'].get(
           'gCore_Irrigation',
           'irrigation/api-key'
         )
 
-        const latitude = server.plugins['app/json-storage'].get(
+        const latitude = await server.plugins['app/json-storage'].get(
           'gCore_Irrigation',
           'irrigation/latitude'
         )
 
-        const longitude = server.plugins['app/json-storage'].get(
+        const longitude = await server.plugins['app/json-storage'].get(
           'gCore_Irrigation',
           'irrigation/longitude'
         )
@@ -30,7 +30,7 @@ const openhabIrrigationPlugin = {
         return h
           .response({
             data: {
-              hasApiKey,
+              hasApiKey: !!apiKey,
               latitude,
               longitude,
               syncedLocation:
@@ -59,11 +59,11 @@ const openhabIrrigationPlugin = {
       handler: async (request, h) => {
         const { apiSettings } = request.payload as any
         const locale = await server.plugins['app/openhab'].getLocale(request)
-        const latitude = server.plugins['app/json-storage'].get(
+        const latitude = await server.plugins['app/json-storage'].get(
           'gCore_Irrigation',
           'irrigation/latitude'
         )
-        const longitude = server.plugins['app/json-storage'].get(
+        const longitude = await server.plugins['app/json-storage'].get(
           'gCore_Irrigation',
           'irrigation/longitude'
         )
@@ -77,12 +77,12 @@ const openhabIrrigationPlugin = {
             return h.response({ success: false, error: 'nolocation' }).code(200)
           }
 
-          server.plugins['app/json-storage'].set(
+          await server.plugins['app/json-storage'].set(
             'gCore_Irrigation',
             'irrigation/latitude',
             locale.latitude
           )
-          server.plugins['app/json-storage'].set(
+          await server.plugins['app/json-storage'].set(
             'gCore_Irrigation',
             'irrigation/longitude',
             locale.longitude
@@ -102,7 +102,7 @@ const openhabIrrigationPlugin = {
               .code(200)
           }
 
-          server.plugins['app/json-storage'].set(
+          await server.plugins['app/json-storage'].set(
             'gCore_Irrigation',
             'irrigation/api-key',
             apiSettings.apiKey
@@ -117,17 +117,17 @@ const openhabIrrigationPlugin = {
       method: 'DELETE',
       path: '/api/irrigation-api',
       handler: async (request, h) => {
-        server.plugins['app/json-storage'].delete(
+        await server.plugins['app/json-storage'].delete(
           'gCore_Irrigation',
           'irrigation/api-key'
         )
 
-        server.plugins['app/json-storage'].delete(
+        await server.plugins['app/json-storage'].delete(
           'gCore_Irrigation',
           'irrigation/longitude'
         )
 
-        server.plugins['app/json-storage'].delete(
+        await server.plugins['app/json-storage'].delete(
           'gCore_Irrigation',
           'irrigation/latitude'
         )
@@ -153,63 +153,86 @@ const openhabIrrigationPlugin = {
       method: 'GET',
       path: '/api/irrigation-valve-items',
       handler: async (request, h) => {
-        let items = await request.server.plugins['app/openhab'].getItem(
+        const weatherHistory =
+          (await server.plugins['app/json-storage'].get(
+            'gCore_Irrigation',
+            'irrigation/weather-history'
+          )) || []
+
+        const weatherForecast =
+          (await server.plugins['app/json-storage'].get(
+            'gCore_Irrigation',
+            'irrigation/weather-forecast'
+          )) || []
+
+        const items = await request.server.plugins['app/openhab'].getItem(
           request,
           'gCore_Irrigation_Valves',
           true
         )
-        const result = (items.members || []).map((item) => {
-          const irrigationLevelPerMinute = server.plugins[
+
+        const result = (items.members || []).map(async (item) => {
+          const irrigationLevelPerMinute = await server.plugins[
             'app/json-storage'
           ].get(item.name, 'irrigation/irrigation-level-per-minute')
 
-          const observedDays = server.plugins['app/json-storage'].get(
+          const observedDays = await server.plugins['app/json-storage'].get(
             item.name,
             'irrigation/observed-days'
           )
 
-          const overshootDays = server.plugins['app/json-storage'].get(
+          const overshootDays = await server.plugins['app/json-storage'].get(
             item.name,
             'irrigation/overshoot-days'
           )
 
-          const aimedPrecipitationLevel = server.plugins[
+          const evaporationFactor = await server.plugins[
             'app/json-storage'
-          ].get(item.name, 'irrigation/aimed-precipitation-level')
+          ].get(item.name, 'irrigation/evaporation-factor')
 
-          const history =
-            server.plugins['app/json-storage'].get(
+          const minimalTemperature = await server.plugins[
+            'app/json-storage'
+          ].get(item.name, 'irrigation/minimal-temperature')
+
+          const irrigationHistory =
+            (await server.plugins['app/json-storage'].get(
               item.name,
               'irrigation/history'
-            ) || []
+            )) || {}
 
-          const lastActivation = server.plugins['app/json-storage'].get(
+          const lastActivation = await server.plugins['app/json-storage'].get(
             item.name,
             'irrigation/last-activation'
           )
 
-          const lastActivationCompleted = server.plugins[
+          const lastActivationCompleted = await server.plugins[
             'app/json-storage'
           ].get(item.name, 'irrigation/last-activation-completed')
 
           item.jsonStorage = {
             irrigationLevelPerMinute,
             overshootDays,
-            aimedPrecipitationLevel,
+            evaporationFactor,
+            minimalTemperature,
             observedDays,
-            statistics: {
-              observedPrecipitation: history.reduce(
-                (x: number, y: number) => x + y,
-                0
-              ),
-              observedDays: history.length,
-              lastActivation,
-              lastActivationCompleted
-            }
+            series: [
+              ...weatherHistory,
+              ...weatherForecast.map((wf: any) => ({ ...wf, forecast: true }))
+            ].map((s) => {
+              const irrigation = irrigationHistory[s.date]
+              return irrigation ? { ...s, irrigation } : s
+            }),
+            totalMonthlyIrrigation: Object.keys(irrigationHistory).reduce(
+              (amount, date) => amount + irrigationHistory[date],
+              0
+            ),
+            lastActivation,
+            lastActivationCompleted
           }
+
           return item
         })
-        return h.response({ data: result }).code(200)
+        return h.response({ data: await Promise.all(result) }).code(200)
       }
     })
 
@@ -225,7 +248,10 @@ const openhabIrrigationPlugin = {
             irrigationValues: Joi.object({
               irrigationLevelPerMinute: Joi.number().min(0).required(),
               overshootDays: Joi.number().min(0).required(),
-              aimedPrecipitationLevel: Joi.number().min(0).required(),
+              evaporationFactor: Joi.number().min(0).required(),
+              minimalTemperature: Joi.string()
+                .regex(/\d*[FC]/)
+                .optional(),
               observedDays: Joi.number().min(0).required()
             }).required()
           }
@@ -236,29 +262,36 @@ const openhabIrrigationPlugin = {
         const {
           irrigationLevelPerMinute,
           overshootDays,
-          aimedPrecipitationLevel,
+          minimalTemperature,
+          evaporationFactor,
           observedDays
         } = irrigationValues
 
-        server.plugins['app/json-storage'].set(
+        await server.plugins['app/json-storage'].set(
           request.params.item,
           'irrigation/irrigation-level-per-minute',
           irrigationLevelPerMinute
         )
 
-        server.plugins['app/json-storage'].set(
+        await server.plugins['app/json-storage'].set(
           request.params.item,
           'irrigation/observed-days',
           observedDays
         )
 
-        server.plugins['app/json-storage'].set(
+        await server.plugins['app/json-storage'].set(
           request.params.item,
-          'irrigation/aimed-precipitation-level',
-          aimedPrecipitationLevel
+          'irrigation/evaporation-factor',
+          evaporationFactor
         )
 
-        server.plugins['app/json-storage'].set(
+        await server.plugins['app/json-storage'].set(
+          request.params.item,
+          'irrigation/minimal-temperature',
+          minimalTemperature
+        )
+
+        await server.plugins['app/json-storage'].set(
           request.params.item,
           'irrigation/overshoot-days',
           overshootDays
@@ -271,7 +304,7 @@ const openhabIrrigationPlugin = {
       method: 'DELETE',
       path: '/api/irrigation-valve-items/{item}',
       handler: async (request, h) => {
-        server.plugins['app/json-storage'].delete(
+        await server.plugins['app/json-storage'].delete(
           'gCore_Irrigation',
           'irrigation'
         )

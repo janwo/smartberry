@@ -14,19 +14,19 @@ const openhabScenesPlugin = {
           'gCore_Scenes',
           true
         )
-        const result = (item?.members || []).map((item) => {
-          const customMembers = server.plugins['app/json-storage'].get(
+        const result = (item?.members || []).map(async (item) => {
+          const customMembers = await server.plugins['app/json-storage'].get(
             item.name,
             'scenes/custom-members'
           )
-          const contextStates = server.plugins['app/json-storage'].get(
+          const contextStates = await server.plugins['app/json-storage'].get(
             item.name,
             'scenes/context-states'
           )
           item.jsonStorage = { customMembers, contextStates }
           return item
         })
-        return h.response({ data: result }).code(200)
+        return h.response({ data: await Promise.all(result) }).code(200)
       }
     })
 
@@ -51,7 +51,7 @@ const openhabScenesPlugin = {
       },
       handler: async (request, h) => {
         const { customMembers } = request.payload as any
-        server.plugins['app/json-storage'].set(
+        await server.plugins['app/json-storage'].set(
           request.params.item,
           'scenes/custom-members',
           customMembers
@@ -71,7 +71,7 @@ const openhabScenesPlugin = {
         }
       },
       handler: async (request, h) => {
-        server.plugins['app/json-storage'].delete(
+        await server.plugins['app/json-storage'].delete(
           request.params.item,
           'scenes/custom-members'
         )
@@ -101,7 +101,7 @@ const openhabScenesPlugin = {
       },
       handler: async (request, h) => {
         const { contextStates } = request.payload as any
-        server.plugins['app/json-storage'].set(
+        await server.plugins['app/json-storage'].set(
           request.params.item,
           'scenes/context-states',
           contextStates
@@ -121,7 +121,7 @@ const openhabScenesPlugin = {
         }
       },
       handler: async (request, h) => {
-        server.plugins['app/json-storage'].delete(
+        await server.plugins['app/json-storage'].delete(
           request.params.item,
           'scenes/context-states'
         )
@@ -139,8 +139,8 @@ const openhabScenesPlugin = {
           true
         )
 
-        const result = (item?.members || []).map((item) => {
-          let triggerState = server.plugins['app/json-storage'].get(
+        const result = (item?.members || []).map(async (item) => {
+          let triggerState = await server.plugins['app/json-storage'].get(
             item.name,
             'scenes/trigger-state'
           )
@@ -161,7 +161,7 @@ const openhabScenesPlugin = {
           item.jsonStorage = { triggerState }
           return item
         })
-        return h.response({ data: result }).code(200)
+        return h.response({ data: await Promise.all(result) }).code(200)
       }
     })
 
@@ -197,12 +197,12 @@ const openhabScenesPlugin = {
       },
       handler: async (request, h) => {
         const { triggerState } = request.payload as any
-        const generated = server.plugins['app/json-storage'].get(
+        const generated = await server.plugins['app/json-storage'].get(
           request.params.item,
           'scenes/trigger-state/generated'
         )
 
-        server.plugins['app/json-storage'].set(
+        await server.plugins['app/json-storage'].set(
           request.params.item,
           'scenes/trigger-state',
           {
@@ -231,7 +231,7 @@ const openhabScenesPlugin = {
         }
       },
       handler: async (request, h) => {
-        server.plugins['app/json-storage'].delete(
+        await server.plugins['app/json-storage'].delete(
           request.params.item,
           'scenes/trigger-state'
         )

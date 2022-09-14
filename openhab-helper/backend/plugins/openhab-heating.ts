@@ -9,13 +9,13 @@ const openhabHeatingPlugin = {
       method: 'GET',
       path: '/api/heating-mode-items',
       handler: async (request, h) => {
-        let items = await request.server.plugins['app/openhab'].getItem(
+        const items = await request.server.plugins['app/openhab'].getItem(
           request,
           'gCore_Heating_Thermostat_Mode',
           true
         )
-        const result = (items.members || []).map((item) => {
-          let commandMap = server.plugins['app/json-storage'].get(
+        const result = (items.members || []).map(async (item) => {
+          let commandMap = await server.plugins['app/json-storage'].get(
             item.name,
             'heating/command-map'
           )
@@ -29,7 +29,7 @@ const openhabHeatingPlugin = {
           item.jsonStorage = { commandMap }
           return item
         })
-        return h.response({ data: result }).code(200)
+        return h.response({ data: await Promise.all(result) }).code(200)
       }
     })
 
@@ -53,7 +53,7 @@ const openhabHeatingPlugin = {
       },
       handler: async (request, h) => {
         const { commandMap } = request.payload as any
-        server.plugins['app/json-storage'].set(
+        await server.plugins['app/json-storage'].set(
           request.params.item,
           'heating/command-map',
           {
@@ -78,7 +78,7 @@ const openhabHeatingPlugin = {
         }
       },
       handler: async (request, h) => {
-        server.plugins['app/json-storage'].delete(
+        await server.plugins['app/json-storage'].delete(
           request.params.item,
           'heating/command-map'
         )

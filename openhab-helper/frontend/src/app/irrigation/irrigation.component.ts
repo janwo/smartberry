@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core'
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
+import { Component } from '@angular/core'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { DomSanitizer } from '@angular/platform-browser'
 import { forkJoin } from 'rxjs'
-import { GetItemListResponse, Item, OpenhabService } from '../openhab.service'
+import { Item, OpenhabService } from '../openhab.service'
 
 @Component({
   selector: 'app-irrigation',
@@ -47,51 +47,66 @@ export class IrrigationComponent {
       this.openhabService.irrigation.triggerItems(),
       this.openhabService.irrigation.valveItems()
     ]).subscribe({
-      next: (items: GetItemListResponse[]) => {
+      next: (items) => {
         this.irrigationTriggerItems = items[0].data
-        this.irrigationValveItems = items[1].data.map((item) => {
-          return {
-            item,
-            form: this.formBuilder.group({
-              irrigationLevelPerMinute: [
-                item.jsonStorage?.['irrigationLevelPerMinute'] !== undefined
-                  ? item.jsonStorage['irrigationLevelPerMinute']
-                  : ''
-              ],
-              aimedPrecipitationLevel: [
-                item.jsonStorage?.['aimedPrecipitationLevel'] !== undefined
-                  ? item.jsonStorage['aimedPrecipitationLevel']
-                  : ''
-              ],
-              observedDays: [
-                item.jsonStorage?.['observedDays'] !== undefined
-                  ? item.jsonStorage['observedDays']
-                  : ''
-              ],
-              overshootDays: [
-                item.jsonStorage?.['overshootDays'] !== undefined
-                  ? item.jsonStorage['overshootDays']
-                  : ''
-              ]
-            })
-          }
-        })
+        this.irrigationValveItems = items[1].data.map((item) => ({
+          item,
+          form: this.formBuilder.group({
+            irrigationLevelPerMinute: [
+              item.jsonStorage?.['irrigationLevelPerMinute'] !== undefined
+                ? item.jsonStorage['irrigationLevelPerMinute']
+                : null
+            ],
+            temperatureUnit: [
+              item.jsonStorage?.['minimalTemperature'] !== undefined
+                ? item.jsonStorage['minimalTemperature']
+                    .substring(
+                      item.jsonStorage['minimalTemperature'].length - 1
+                    )
+                    .toUpperCase()
+                : 'C'
+            ],
+            evaporationFactor: [
+              item.jsonStorage?.['evaporationFactor'] !== undefined
+                ? item.jsonStorage['evaporationFactor']
+                : 1
+            ],
+            minimalTemperature: [
+              item.jsonStorage?.['minimalTemperature'] !== undefined
+                ? item.jsonStorage['minimalTemperature'].substring(
+                    0,
+                    item.jsonStorage['minimalTemperature'].length - 1
+                  )
+                : null
+            ],
+            observedDays: [
+              item.jsonStorage?.['observedDays'] !== undefined
+                ? item.jsonStorage['observedDays']
+                : 3
+            ],
+            overshootDays: [
+              item.jsonStorage?.['overshootDays'] !== undefined
+                ? item.jsonStorage['overshootDays']
+                : 1
+            ]
+          })
+        }))
       }
     })
   }
 
   apiTokenForm = this.formBuilder.group({
-    apiToken: ['', Validators.required]
+    apiToken: [null, Validators.required]
   })
 
   countValues(form: FormGroup) {
-    return Object.values(form.value).filter((value) => value !== '').length
+    return Object.values(form.value).filter((value) => value !== null).length
   }
 
   calculatedMinutes(form: FormGroup) {
     return (
       Math.round(
-        ((form.value.aimedPrecipitationLevel * form.value.observedDays) /
+        ((form.value.evaporationFactor * form.value.observedDays) /
           form.value.irrigationLevelPerMinute) *
           10
       ) / 10
@@ -165,10 +180,12 @@ export class IrrigationComponent {
 
   updateItem(item: { item: Item; form: FormGroup }) {
     item.form.markAllAsTouched()
-    const irrigationValues = item.form.value
-    let deleteIrrigationValues = Object.values(irrigationValues).every(
-      (value: any) => value?.length == 0
-    )
+    const { temperatureUnit, ...irrigationValues } = item.form.value
+    irrigationValues.minimalTemperature += temperatureUnit
+
+    let deleteIrrigationValues =
+      !irrigationValues.evaporationFactor &&
+      !irrigationValues.irrigationLevelPerMinute
 
     for (const control in item.form.controls) {
       if (deleteIrrigationValues) {
@@ -176,7 +193,10 @@ export class IrrigationComponent {
         continue
       }
 
-      if (item.form.controls[control].value?.length == 0) {
+      if (
+        item.form.controls[control].value == null &&
+        control != 'minimalTemperature'
+      ) {
         item.form.controls[control].setErrors({ required: true })
         item.form.setErrors({ required: true })
       }

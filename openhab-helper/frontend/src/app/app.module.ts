@@ -20,6 +20,8 @@ import { PresenceComponent } from './presence/presence.component'
 import { SecurityComponent } from './security/security.component'
 import { ErrorComponent } from './error/error.component'
 import { IrrigationComponent } from './irrigation/irrigation.component'
+import { IrrigationChartComponent } from './irrigation-chart/irrigation-chart.component'
+import { NgChartsModule } from 'ng2-charts'
 
 @NgModule({
   declarations: [
@@ -31,16 +33,18 @@ import { IrrigationComponent } from './irrigation/irrigation.component'
     SetupComponent,
     AccordionComponent,
     ItemSchemaComponent,
+    IrrigationComponent,
     MapPipe,
     StateDescriptionPipe,
     LightComponent,
     PresenceComponent,
     SecurityComponent,
     ErrorComponent,
-    IrrigationComponent
+    IrrigationChartComponent
   ],
   imports: [
     BrowserModule,
+    NgChartsModule,
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,

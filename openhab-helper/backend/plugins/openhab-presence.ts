@@ -15,12 +15,12 @@ const openhabPresencePlugin = {
           true
         )
 
-        const result = (item?.members || []).map((item) => {
-          const absence = server.plugins['app/json-storage'].get(
+        const result = (item?.members || []).map(async (item) => {
+          const absence = await server.plugins['app/json-storage'].get(
             item.name,
             'presence/absence-states'
           )
-          const presence = server.plugins['app/json-storage'].get(
+          const presence = await server.plugins['app/json-storage'].get(
             item.name,
             'presence/presence-states'
           )
@@ -29,7 +29,7 @@ const openhabPresencePlugin = {
           item.jsonStorage = { states }
           return item
         })
-        return h.response({ data: result }).code(200)
+        return h.response({ data: await Promise.all(result) }).code(200)
       }
     })
 
@@ -55,13 +55,13 @@ const openhabPresencePlugin = {
       },
       handler: async (request, h) => {
         const { presence, absence } = request.payload as any
-        server.plugins['app/json-storage'].set(
+        await server.plugins['app/json-storage'].set(
           request.params.item,
           `presence/absence-states`,
           absence
         )
 
-        server.plugins['app/json-storage'].set(
+        await server.plugins['app/json-storage'].set(
           request.params.item,
           `presence/presence-states`,
           presence
@@ -81,11 +81,11 @@ const openhabPresencePlugin = {
         }
       },
       handler: async (request, h) => {
-        server.plugins['app/json-storage'].delete(
+        await server.plugins['app/json-storage'].delete(
           request.params.item,
           `presence/absence-states`
         )
-        server.plugins['app/json-storage'].delete(
+        await server.plugins['app/json-storage'].delete(
           request.params.item,
           `presence/presence-states`
         )

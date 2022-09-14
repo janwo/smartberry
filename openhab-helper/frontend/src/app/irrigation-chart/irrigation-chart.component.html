@@ -1,0 +1,86 @@
+<ng-container *ngIf="irrigationValveItem && irrigationValveItemSettings">
+  <p class="block">
+    <strong i18n>Irrigation Events:</strong>
+    <em
+      i18n
+      *ngIf="
+        !this.irrigationValveItem.jsonStorage!['lastActivation'] ||
+          !this.irrigationValveItem.jsonStorage!['lastActivationCompleted'];
+        else irrigationHistory
+      ">
+      No irrigations yet.
+    </em>
+    <ng-template #irrigationHistory>
+      <em i18n>
+        The last irrigation of your valve started at
+        {{
+          this.irrigationValveItem.jsonStorage!['lastActivation']
+            | date: 'medium'
+        }}
+        and completed at
+        {{
+          this.irrigationValveItem.jsonStorage!['lastActivationCompleted']
+            | date: 'medium'
+        }}. For the last 30 days a total amount of
+        {{
+          this.length(
+            this.irrigationValveItem.jsonStorage!['totalMonthlyIrrigation']
+          ) + (unit == 'metric' ? ' mm' : ' in')
+        }}
+        had been irrigated.
+      </em>
+    </ng-template>
+
+    <em
+      i18n
+      *ngIf="
+        this.calculatePrecipitationLevel(
+          this.irrigationValveItem.jsonStorage!['series'],
+          irrigationValveItemSettings
+        ) < 0 &&
+          this.calculatePrecipitationLevel(
+            this.irrigationValveItem.jsonStorage!['series'],
+            irrigationValveItemSettings,
+            true
+          ) < 0;
+        else irrigationPlanned
+      ">
+      An irrigation is planned for today.
+    </em>
+    <ng-template #irrigationPlanned>
+      <em i18n>No irrigation planned today.</em>
+    </ng-template>
+  </p>
+  <canvas
+    baseChart
+    [data]="
+      this.data(
+        irrigationValveItem.jsonStorage!['series'],
+        irrigationValveItemSettings
+      )
+    "
+    [options]="{
+      animation: false,
+      spanGaps: true,
+      plugins: {
+        hover: { mode: null },
+        tooltip: {
+          enabled: false
+        }
+      },
+      scales: {
+        temperature: {
+          type: 'linear',
+          display: true,
+          position: 'right',
+          title: { display: true, text: unit == 'metric' ? '°C' : '°F' }
+        },
+        length: {
+          type: 'linear',
+          display: true,
+          position: 'left',
+          title: { display: true, text: unit == 'metric' ? 'mm' : 'in' }
+        }
+      }
+    }"></canvas>
+</ng-container>

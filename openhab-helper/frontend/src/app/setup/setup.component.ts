@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core'
-import { FormBuilder, FormControl, Validators } from '@angular/forms'
+import { Component } from '@angular/core'
+import { FormBuilder, Validators } from '@angular/forms'
 import { OpenhabService } from '../openhab.service'
 @Component({
   selector: 'app-setup',
@@ -13,7 +13,7 @@ export class SetupComponent {
   ) {}
 
   apiTokenForm = this.formBuilder.group({
-    apiToken: ['', Validators.required]
+    apiToken: [null, Validators.required]
   })
 
   submitAPIToken() {
@@ -22,24 +22,22 @@ export class SetupComponent {
       return
     }
 
-    this.openhabService
-      .register(this.apiTokenForm.controls['apiToken'].value || '')
-      .subscribe({
-        next: (response) => {
-          if (!response?.success) {
-            this.apiTokenForm.controls['apiToken'].setErrors({
-              invalidToken: true
-            })
-            return
-          }
-
-          this.apiTokenForm.reset()
-        },
-        error: (response) => {
+    this.openhabService.register(this.apiTokenForm.value.apiToken!).subscribe({
+      next: (response) => {
+        if (!response?.success) {
           this.apiTokenForm.controls['apiToken'].setErrors({
-            connection: true
+            invalidToken: true
           })
+          return
         }
-      })
+
+        this.apiTokenForm.reset()
+      },
+      error: (response) => {
+        this.apiTokenForm.controls['apiToken'].setErrors({
+          connection: true
+        })
+      }
+    })
   }
 }

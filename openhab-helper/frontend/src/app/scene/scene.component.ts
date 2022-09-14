@@ -146,7 +146,7 @@ export class SceneComponent implements OnInit {
       addCustomMember: () => {
         forms.customMembers.controls.defaultMembers.enable()
         forms.customMembers.controls.customMembers.push(
-          new FormControl('', [Validators.required])
+          new FormControl(null, [Validators.required])
         )
       },
       removeCustomMember: (index: number) => {
@@ -158,8 +158,8 @@ export class SceneComponent implements OnInit {
       addContextState: () => {
         forms.contextStates.controls.contextStates.push(
           new FormGroup({
-            context: new FormControl('', [Validators.required]),
-            state: new FormControl('', [Validators.required])
+            context: new FormControl(null, [Validators.required]),
+            state: new FormControl(null, [Validators.required])
           })
         )
       },
@@ -183,7 +183,7 @@ export class SceneComponent implements OnInit {
 
     const form = this.formBuilder.group({
       from: this.formBuilder.control(
-        triggerStateConfig.from !== undefined ? triggerStateConfig.from : ''
+        triggerStateConfig.from !== undefined ? triggerStateConfig.from : null
       ),
       to: this.formBuilder.control(triggerStateConfig.to, [
         Validators.required
@@ -197,7 +197,7 @@ export class SceneComponent implements OnInit {
         Validators.required
       ]),
       untilActive: this.formBuilder.control(
-        Object.values(until).find((value: number) => value > 0) || ''
+        Object.values(until).find((value: number) => value > 0) || null
       ),
       untilUnit: this.formBuilder.control(
         Object.keys(until).find(
@@ -218,7 +218,7 @@ export class SceneComponent implements OnInit {
         )?.item
       },
       addState: () => {
-        controls.states.push(new FormControl('', [Validators.required]))
+        controls.states.push(new FormControl(null, [Validators.required]))
       },
       removeState: (index: number) => {
         controls.states.removeAt(index)
@@ -306,28 +306,28 @@ export class SceneComponent implements OnInit {
     }
 
     const observable =
-      item.form.controls['targetScene'].value == ''
+      item.form.controls['targetScene'].value == null
         ? this.openhabService.scene.deleteTriggerState(item.item.name)
         : this.openhabService.scene.updateTriggerState(item.item.name, {
             targetScene: item.controls.targetScene.value,
             from:
-              item.controls.from.value != ''
+              item.controls.from.value != null
                 ? item.controls.from.value
                 : undefined,
             to: item.controls.to.value,
             hoursUntilActive:
               item.controls.untilUnit.value == 'hours' &&
-              item.controls.untilActive.value != ''
+              item.controls.untilActive.value != null
                 ? Number.parseInt(item.controls.untilActive.value)
                 : undefined,
             minutesUntilActive:
               item.controls.untilUnit.value == 'minutes' &&
-              item.controls.untilActive.value != ''
+              item.controls.untilActive.value != null
                 ? Number.parseInt(item.controls.untilActive.value)
                 : undefined,
             secondsUntilActive:
               item.controls.untilUnit.value == 'seconds' &&
-              item.controls.untilActive.value != ''
+              item.controls.untilActive.value != null
                 ? Number.parseInt(item.controls.untilActive.value)
                 : undefined,
             states: item.controls.states.value

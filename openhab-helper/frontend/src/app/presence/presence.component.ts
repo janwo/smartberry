@@ -69,7 +69,7 @@ export class PresenceComponent implements OnInit {
             form,
             addAbsenceState: () => {
               controls.absenceStates.push(
-                new FormControl('', [Validators.required])
+                new FormControl(null, [Validators.required])
               )
             },
             removeAbsenceState: (index: number) => {
@@ -77,7 +77,7 @@ export class PresenceComponent implements OnInit {
             },
             addPresenceState: () => {
               controls.presenceStates.push(
-                new FormControl('', [Validators.required])
+                new FormControl(null, [Validators.required])
               )
             },
             removePresenceState: (index: number) => {

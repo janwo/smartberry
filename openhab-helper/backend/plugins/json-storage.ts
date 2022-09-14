@@ -1,12 +1,12 @@
-import { JsonDB } from 'node-json-db'
+import { Config, JsonDB } from 'node-json-db'
 import * as Hapi from '@hapi/hapi'
 
 declare module '@hapi/hapi' {
   interface PluginProperties {
     'app/json-storage': {
-      get(item: string, path: string | undefined): any
-      set(item: string, path: string | undefined, obj: any): void
-      delete(item: string, path: string | undefined): void
+      get(item: string, path: string | undefined): Promise<any>
+      set(item: string, path: string | undefined, obj: any): Promise<void>
+      delete(item: string, path: string | undefined): Promise<void>
     }
   }
 }
@@ -15,29 +15,26 @@ const jsonStoragePlugin = {
   name: 'app/json-storage',
   register: async (server: Hapi.Server, options: { port?: number }) => {
     const db = new JsonDB(
-      process.cwd() + '/data/json-storage.json',
-      true,
-      true,
-      '/'
+      new Config(process.cwd() + '/data/json-storage.json', true, true, '/')
     )
 
     const dbHelper = (() => {
       const createPath = (item: string, path: string | undefined) =>
         '/' + [item].concat(path?.split('/') || []).join('/')
       return {
-        get: (item: string, path: string | undefined) => {
+        get: async (item: string, path: string | undefined) => {
           const fullPath = createPath(item, path)
-          return db.exists(fullPath) ? db.getData(fullPath) : undefined
+          return (await db.exists(fullPath)) ? db.getData(fullPath) : undefined
         },
-        delete: (item: string, path: string | undefined) => {
+        delete: async (item: string, path: string | undefined) => {
           const fullPath = createPath(item, path)
-          if (db.exists(fullPath)) {
-            db.delete(fullPath)
+          if (await db.exists(fullPath)) {
+            return db.delete(fullPath)
           }
         },
-        set: (item: string, path: string | undefined, obj: any) => {
+        set: async (item: string, path: string | undefined, obj: any) => {
           const fullPath = createPath(item, path)
-          db.push(fullPath, obj, true)
+          return db.push(fullPath, obj, true)
         }
       }
     })()
@@ -61,8 +58,10 @@ const jsonStoragePlugin = {
     jsonServer.route({
       method: 'GET',
       path: '/json-storage/{item}/{path*}',
-      handler: (request, h) => {
-        return { data: dbHelper.get(request.params.item, request.params.path) }
+      handler: async (request, h) => {
+        return {
+          data: await dbHelper.get(request.params.item, request.params.path)
+        }
       }
     })
 
@@ -72,8 +71,12 @@ const jsonStoragePlugin = {
       options: {
         payload: { allow: 'application/json' }
       },
-      handler: (request, h) => {
-        dbHelper.set(request.params.item, request.params.path, request.payload)
+      handler: async (request, h) => {
+        await dbHelper.set(
+          request.params.item,
+          request.params.path,
+          request.payload
+        )
         return {
           success: true
         }
@@ -83,8 +86,8 @@ const jsonStoragePlugin = {
     jsonServer.route({
       method: 'DELETE',
       path: '/json-storage/{item}/{path*}',
-      handler: (request, h) => {
-        dbHelper.delete(request.params.item, request.params.path)
+      handler: async (request, h) => {
+        await dbHelper.delete(request.params.item, request.params.path)
         return {
           success: true
         }

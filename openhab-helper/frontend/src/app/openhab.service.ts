@@ -160,7 +160,8 @@ export class OpenhabService implements CanActivate {
       irrigationValues: {
         waterVolumePerMinute: number
         overshootDays: number
-        aimedPrecipitationLevel: number
+        evaporationFactor: number
+        minimalTemperature?: string
         observedDays: number
       }
     ) => {

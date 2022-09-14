@@ -50,22 +50,22 @@ export class ClimateComponent implements OnInit {
               off: [
                 item.jsonStorage?.['commandMap']?.off !== undefined
                   ? item.jsonStorage['commandMap'].off
-                  : ''
+                  : null
               ],
               on: [
                 item.jsonStorage?.['commandMap']?.on !== undefined
                   ? item.jsonStorage['commandMap'].on
-                  : ''
+                  : null
               ],
               eco: [
                 item.jsonStorage?.['commandMap']?.eco !== undefined
                   ? item.jsonStorage['commandMap'].eco
-                  : ''
+                  : null
               ],
               power: [
                 item.jsonStorage?.['commandMap']?.power !== undefined
                   ? item.jsonStorage['commandMap'].power
-                  : ''
+                  : null
               ]
             })
           }
@@ -75,7 +75,7 @@ export class ClimateComponent implements OnInit {
   }
 
   countValues(form: FormGroup) {
-    return Object.values(form.value).filter((value) => value !== '').length
+    return Object.values(form.value).filter((value) => value !== null).length
   }
 
   updateItem(item: { item: Item; form: FormGroup }) {
@@ -91,7 +91,7 @@ export class ClimateComponent implements OnInit {
         continue
       }
 
-      if (item.form.controls[control].value?.length == 0) {
+      if (item.form.controls[control].value == null) {
         item.form.controls[control].setErrors({ required: true })
         item.form.setErrors({ required: true })
       }
