@@ -13,7 +13,7 @@ const TIMEOUT = 5000
 function irrigated_today(item) {
   const now = time.ZonedDateTime.now()
   const lastActivationCompleted = json_storage(
-    typeof item == 'string' ? item : items.getItem(item).name
+    typeof item == 'string' ? item : item.name
   ).get('irrigation', 'last-activation-completed')
 
   return (
@@ -27,7 +27,7 @@ function irrigated_today(item) {
 
 function set_as_activated(item) {
   const now = time.ZonedDateTime.now()
-  json_storage(typeof item == 'string' ? item : items.getItem(item).name).set(
+  json_storage(typeof item == 'string' ? item : item.name).set(
     'irrigation',
     'last-activation',
     now.format(DATETIME_FORMAT)
@@ -35,7 +35,7 @@ function set_as_activated(item) {
 }
 
 function set_as_completed(item) {
-  item = typeof item == 'string' ? item : items.getItem(item).name
+  item = typeof item == 'string' ? item : item.name
 
   const lastActivation = json_storage(item).get('irrigation', 'last-activation')
   const waterVolumePerMinute = json_storage(item).get(
@@ -75,20 +75,14 @@ function set_as_completed(item) {
   }
 }
 
-function may_irrigate(valve) {
-  valve = typeof valve == 'string' ? items.getItem(valve) : valve
+function may_irrigate(item) {
+  item = typeof item == 'string' ? item : item.name
 
-  const observedDays = json_storage(valve.name).get(
-    'irrigation',
-    'observed-days'
-  )
+  const observedDays = json_storage(item).get('irrigation', 'observed-days')
 
-  const overshootDays = json_storage(valve.name).get(
-    'irrigation',
-    'overshoot-days'
-  )
+  const overshootDays = json_storage(item).get('irrigation', 'overshoot-days')
 
-  const waterVolumePerMinute = json_storage(valve.name).get(
+  const waterVolumePerMinute = json_storage(item).get(
     'irrigation',
     'irrigation-level-per-minute'
   )
@@ -100,22 +94,22 @@ function may_irrigate(valve) {
   ) {
     console.log(
       'check_irrigation_valves',
-      `Some irrigation values of item ${valve.name} are missing.`
+      `Some irrigation values of item ${item} are missing.`
     )
     return false
   }
 
   const minimalKelvin = (() => {
     const storage =
-      json_storage(valve.name).get('irrigation', 'minimal-temperature') || 'C'
+      json_storage(item).get('irrigation', 'minimal-temperature') || 'C'
 
-    const value = storage.substring(0, storage.length - 1)
-    if (!value.length) {
+    const value = Number.parseInt(storage.substring(0, storage.length - 1))
+    if (Number.isNaN(value)) {
       return undefined
     }
 
     const unit = storage.substring(storage.length - 1).toUpperCase()
-    return unit == 'C' ? value + 273.15 : 1.8 * (value + 273.15) + 32
+    return unit == 'C' ? value + 273.15 : () => 1.8 * (value + 273.15) + 32
   })()
 
   const weatherForecast =
@@ -125,10 +119,10 @@ function may_irrigate(valve) {
     json_storage('gCore_Irrigation').get('irrigation', 'weather-history') || []
 
   const irrigationHistory =
-    json_storage(valve.name).get('irrigation', 'history') || {}
+    json_storage(item).get('irrigation', 'history') || {}
 
   const evaporationFactor =
-    json_storage(valve.name).get('irrigation', 'evaporation-factor') || 1
+    json_storage(item).get('irrigation', 'evaporation-factor') || 1
 
   const series = [
     ...weatherHistory,
@@ -136,7 +130,7 @@ function may_irrigate(valve) {
   ]
 
   const minimalTemperatureSeriesIndex = series.findIndex(
-    (s) => s.temp.min < minimalKelvin
+    (s) => s.temperature.min < minimalKelvin
   )
 
   if (minimalTemperatureSeriesIndex >= 0) {
@@ -177,7 +171,7 @@ function may_irrigate(valve) {
     const irrigationMillis =
       (irrigationAmount / waterVolumePerMinute) * 60 * 1000
 
-    add_timer(valve.name, irrigationMillis)
+    add_timer(item, irrigationMillis)
     return true
   }
 

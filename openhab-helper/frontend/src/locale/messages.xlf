@@ -288,14 +288,14 @@
         <source> An irrigation is planned for today. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation-chart/irrigation-chart.component.html</context>
-          <context context-type="linenumber">47,49</context>
+          <context context-type="linenumber">34,36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="854222443102800877" datatype="html">
         <source>No irrigation planned today.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation-chart/irrigation-chart.component.html</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="61201008500295936" datatype="html">

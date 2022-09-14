@@ -51,7 +51,6 @@ export class IrrigationChartComponent {
       if (Number.isNaN(value)) {
         return undefined
       }
-
       return temperatureUnit == 'C'
         ? value + 273.15
         : 1.8 * (value + 273.15) + 32
