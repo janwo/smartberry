@@ -15,7 +15,7 @@ const BroadcastNotificationMode = {
 const TIMEOUT = 5000
 const HELPER_ITEM_TAG = 'CoreHelperItem'
 const DATETIME_FORMAT = time.DateTimeFormatter.ofPattern(
-  "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+  "yyyy-MM-dd'T'HH:mm:ss.SSSX"
 )
 
 function broadcast(text, broadcastType = BroadcastType.INFO) {
