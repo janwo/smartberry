@@ -458,9 +458,9 @@
           <context context-type="linenumber">175,179</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3981144242626583409" datatype="html">
-        <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>Minimal Temperature:<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> Skips any irrigation triggers, if the temperature of the last seven days has gone below the minimal temperature. </source>
-        <target state="translated"><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>Mindesttemperatur:<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> Überspringt alle Bewässerungsauslösungen, wenn die Temperatur in den letzten sieben Tagen unter die Mindesttemperatur gefallen ist. </target>
+      <trans-unit id="5879384592377590707" datatype="html">
+        <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>Minimal Temperature:<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> Skips any irrigation triggers, if the temperature of the upcoming or last seven days has gone below the minimal temperature. </source>
+        <target state="translated"><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>Mindesttemperatur:<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> Überspringt alle Bewässerungsauslösungen, wenn die Temperatur in den kommenden oder bisherigen sieben Tagen unter die Mindesttemperatur gefallen ist. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
           <context context-type="linenumber">182,185</context>

@@ -166,7 +166,6 @@ export class IrrigationChartComponent {
             []
           )
         },
-
         {
           label: 'Rain',
           type: 'bar',
@@ -181,7 +180,6 @@ export class IrrigationChartComponent {
                 : 'rgba(90, 118, 196, .5)'
             ) || 'rgba(90, 118, 196, .5)'
         },
-
         {
           label: 'Irrigation',
           type: 'bar',
