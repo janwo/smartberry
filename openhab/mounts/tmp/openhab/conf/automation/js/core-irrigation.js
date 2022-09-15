@@ -375,19 +375,24 @@ function scriptLoaded() {
       }
 
       const today = time.LocalDate.now()
-      const lastWeatherForecast = weatherHistory.slice(-1)?.date
+      const lastWeatherForecast =
+        weatherHistory[weatherHistory.length - 1]?.date
       const pastForecasts = weatherForecast.filter(
         (f) =>
-          (!lastWeatherForecast || f.isAfter(lastWeatherForecast)) &&
-          f.isBefore(today)
+          (!lastWeatherForecast || f.date.isAfter(lastWeatherForecast)) &&
+          f.date.isBefore(today)
       )
 
-      json_storage('gCore_Irrigation').set('irrigation', 'weather-history', [
-        weatherHistory.slice(
-          Math.max(0, weatherHistory.length + pastForecasts.length - 7)
-        ),
-        ...pastForecasts
-      ])
+      json_storage('gCore_Irrigation').set(
+        'irrigation',
+        'weather-history',
+        [
+          ...weatherHistory.slice(
+            Math.max(0, weatherHistory.length + pastForecasts.length - 7)
+          ),
+          ...pastForecasts
+        ].map((f) => ({ ...f, date: f.date.toString() }))
+      )
 
       if (!weatherForecast[0] || weatherForecast[0].date.isBefore(today)) {
         const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely,current,alerts&appid=${apiKey}&units=standard`
