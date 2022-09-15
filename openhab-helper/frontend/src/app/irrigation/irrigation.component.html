@@ -285,8 +285,8 @@
                     irrigationValveItem.form.controls['temperatureUnit'].errors
                 }">
                 <select formControlName="temperatureUnit">
-                  <option i18n value="C">°C</option>
-                  <option i18n value="F">°F</option>
+                  <option value="C">°C</option>
+                  <option value="F">°F</option>
                 </select>
               </div>
             </div>
@@ -306,7 +306,7 @@
                 <select formControlName="observedDays">
                   <option
                     *ngFor="let factor of [1, 2, 3, 4, 5, 6, 7]"
-                    [value]="factor">
+                    [ngValue]="factor">
                     {{
                       factor | i18nPlural: { '=1': '1 day', other: '# days' }
                     }}
@@ -332,7 +332,7 @@
                 <select formControlName="overshootDays">
                   <option
                     *ngFor="let factor of [0, 1, 2, 3, 4, 5, 6, 7]"
-                    [value]="factor">
+                    [ngValue]="factor">
                     {{
                       factor | i18nPlural: { '=1': '1 day', other: '# days' }
                     }}
@@ -379,13 +379,16 @@
                 {{
                   calculatedMinutes(this.irrigationValveItem.form)
                     | i18nPlural
-                      : { '=0': 'minute', '=1': '1 minute', other: '# minutes' }
+                      : {
+                          '=0': '0 minutes',
+                          '=1': '1 minute',
+                          other: '# minutes'
+                        }
                 }}
                 , if there was no rain for
                 {{
                   this.irrigationValveItem.form.value.observedDays
-                    | i18nPlural
-                      : { '=0': 'day', '=1': '1 day', other: '# days' }
+                    | i18nPlural: { '=1': '1 day', other: '# days' }
                 }}.
               </em>
             </ng-template>

@@ -124,7 +124,7 @@ export class IrrigationChartComponent {
       labels: seriesPeriod.map((d) => new Date(d.date).toLocaleDateString()),
       datasets: [
         {
-          label: 'Maximal Temperature',
+          label: $localize`Maximal Temperature`,
           type: 'line',
           yAxisID: 'temperature',
           tension: 0.25,
@@ -136,7 +136,7 @@ export class IrrigationChartComponent {
           )
         },
         {
-          label: 'Minimal Temperature',
+          label: $localize`Minimal Temperature`,
           type: 'line',
           yAxisID: 'temperature',
           tension: 0.25,
@@ -148,7 +148,7 @@ export class IrrigationChartComponent {
           )
         },
         {
-          label: 'Precipitation Level',
+          label: $localize`Irrigation Indicator`,
           type: 'line',
           borderColor: 'rgba(0, 0, 0, 1)',
           backgroundColor: 'rgba(0,0,0,0)',
@@ -167,7 +167,7 @@ export class IrrigationChartComponent {
           )
         },
         {
-          label: 'Rain',
+          label: $localize`Rain`,
           type: 'bar',
           yAxisID: 'length',
           stack: 'watering',
@@ -181,7 +181,7 @@ export class IrrigationChartComponent {
             ) || 'rgba(90, 118, 196, .5)'
         },
         {
-          label: 'Irrigation',
+          label: $localize`Irrigation`,
           type: 'bar',
           yAxisID: 'length',
           stack: 'watering',
@@ -190,7 +190,7 @@ export class IrrigationChartComponent {
           data: seriesPeriod.map((s: any) => this.length(s.irrigation || 0))
         },
         {
-          label: 'Evaporation',
+          label: $localize`Evaporation`,
           type: 'bar',
           yAxisID: 'length',
           stack: 'watering',
