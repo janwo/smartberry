@@ -305,13 +305,12 @@
                 }">
                 <select formControlName="observedDays">
                   <option
-                    i18n
+                    i18n-label
                     *ngFor="let factor of [1, 2, 3, 4, 5, 6, 7]"
-                    [ngValue]="factor">
-                    {{
-                      factor | i18nPlural: { '=1': '1 day', other: '# days' }
-                    }}
-                  </option>
+                    [ngValue]="factor"
+                    [label]="
+                      factor | i18nPlural: this.i18nPluralMapping
+                    "></option>
                 </select>
               </div>
             </div>
@@ -332,13 +331,12 @@
                 }">
                 <select formControlName="overshootDays">
                   <option
-                    i18n
+                    i18n-label
                     *ngFor="let factor of [0, 1, 2, 3, 4, 5, 6, 7]"
-                    [ngValue]="factor">
-                    {{
-                      factor | i18nPlural: { '=1': '1 day', other: '# days' }
-                    }}
-                  </option>
+                    [ngValue]="factor"
+                    [label]="
+                      factor | i18nPlural: this.i18nPluralMapping
+                    "></option>
                 </select>
               </div>
             </div>
@@ -390,7 +388,7 @@
                 , if there was no rain for
                 {{
                   this.irrigationValveItem.form.value.observedDays
-                    | i18nPlural: { '=1': '1 day', other: '# days' }
+                    | i18nPlural: this.i18nPluralMapping
                 }}.
               </em>
             </ng-template>

@@ -175,7 +175,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">410</context>
+          <context context-type="linenumber">404</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/presence/presence.component.html</context>
@@ -412,7 +412,7 @@
       </trans-unit>
       <trans-unit id="7876441665545802330" datatype="html">
         <source> Start to manage the irrigation of your garden! Set the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;https://openweathermap.org/api&quot; target=&quot;_blank&quot;&#10;        >"/>OpenWeather API token<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&#10;      >"/> and make sure to subscribe to the <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>One Call API 3.0<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> and to set your location in your <x id="START_LINK_1" equiv-text="&lt;a [href]=&quot;locationSettingsLink&quot; target=&quot;_blank&quot;&#10;        >"/>openHAB location settings<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&#10;      >"/>. </source>
-        <target state="translated"> Beginne mit der Steuerung deiner Gartenbewässerung! Lege den <a href="https://openweathermap.org/api" target="_blank">OpenWeather API token</a> an und vergewissere dich, dass du die <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>One Call API 3.0<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> abonniert und deinen Standort in deinen <a/> </target>
+        <target state="translated"> Beginne mit der Steuerung deiner Gartenbewässerung! Lege den <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;https://openweathermap.org/api&quot; target=&quot;_blank&quot;&#10;        >"/>OpenWeather API token<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&#10;      >"/> an und vergewissere dich, dass du die <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>One Call API 3.0<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> abonniert und deinen Standort in deinen <x id="START_LINK_1" equiv-text="&lt;a [href]=&quot;locationSettingsLink&quot; target=&quot;_blank&quot;&#10;        >"/>openHAB Regionale Einstellungen<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&#10;      >"/> gesetzt hast. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
           <context context-type="linenumber">45,55</context>
@@ -570,24 +570,12 @@
           <context context-type="linenumber">296</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7708270344948043036" datatype="html">
-        <source> <x id="INTERPOLATION" equiv-text="{{&#10;                      factor | i18nPlural: { '=1': '1 day', other: '# days' }&#10;                    }}"/> </source>
-        <target state="translated"> <x id="INTERPOLATION" equiv-text="{{&#10;                      factor | i18nPlural: { '=1': '1 Tag', other: '# Tage' }&#10;                    }}"/> </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">310,314</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">337,341</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="3430833172621796059" datatype="html">
         <source>Extend Bucket upon Future Rainfalls</source>
         <target state="translated">Erhöhe die Eimergröße bei kommenden Regenfällen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">322</context>
+          <context context-type="linenumber">319</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3498058130455223243" datatype="html">
@@ -595,7 +583,7 @@
         <target state="translated">Rechenbeispiel:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">347</context>
+          <context context-type="linenumber">341</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6045710461371167091" datatype="html">
@@ -603,15 +591,15 @@
         <target state="translated"> Gebe zunächst alle erforderlichen Variablen ein </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">355,357</context>
+          <context context-type="linenumber">349,351</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7104894549050266344" datatype="html">
-        <source> Assuming no rain and an evaporation of 1.0 mm a day, your plants need <x id="INTERPOLATION" equiv-text="{{&#10;                  this.irrigationValveItem.form.value.evaporationFactor&#10;                    | number: '1.1-1'&#10;                }}"/> mm ( <x id="INTERPOLATION" equiv-text="{{&#10;                  this.irrigationValveItem.form.value.evaporationFactor&#10;                    | number: '1.1-1'&#10;                }}"/> l/m²) per day. Your valve irrigates <x id="INTERPOLATION_1" equiv-text="{{&#10;                  this.irrigationValveItem.form.value.irrigationLevelPerMinute&#10;                    | number: '1.1-1'&#10;                }}"/> mm (<x id="INTERPOLATION_1" equiv-text="{{&#10;                  this.irrigationValveItem.form.value.irrigationLevelPerMinute&#10;                    | number: '1.1-1'&#10;                }}"/> l/m²) per minute. Consequently the valve will irrigate for <x id="INTERPOLATION_2" equiv-text="{{&#10;                  calculatedMinutes(this.irrigationValveItem.form)&#10;                    | i18nPlural&#10;                      : {&#10;                          '=0': '0 minutes',&#10;                          '=1': '1 minute',&#10;                          other: '# minutes'&#10;                        }&#10;                }}"/> , if there was no rain for <x id="INTERPOLATION_3" equiv-text="{{&#10;                  this.irrigationValveItem.form.value.observedDays&#10;                    | i18nPlural: { '=1': '1 day', other: '# days' }&#10;                }}"/>. </source>
+        <source> Assuming no rain and an evaporation of 1.0 mm a day, your plants need <x id="INTERPOLATION" equiv-text="{{&#10;                  this.irrigationValveItem.form.value.evaporationFactor&#10;                    | number: '1.1-1'&#10;                }}"/> mm ( <x id="INTERPOLATION" equiv-text="{{&#10;                  this.irrigationValveItem.form.value.evaporationFactor&#10;                    | number: '1.1-1'&#10;                }}"/> l/m²) per day. Your valve irrigates <x id="INTERPOLATION_1" equiv-text="{{&#10;                  this.irrigationValveItem.form.value.irrigationLevelPerMinute&#10;                    | number: '1.1-1'&#10;                }}"/> mm (<x id="INTERPOLATION_1" equiv-text="{{&#10;                  this.irrigationValveItem.form.value.irrigationLevelPerMinute&#10;                    | number: '1.1-1'&#10;                }}"/> l/m²) per minute. Consequently the valve will irrigate for <x id="INTERPOLATION_2" equiv-text="{{&#10;                  calculatedMinutes(this.irrigationValveItem.form)&#10;                    | i18nPlural&#10;                      : {&#10;                          '=0': '0 minutes',&#10;                          '=1': '1 minute',&#10;                          other: '# minutes'&#10;                        }&#10;                }}"/> , if there was no rain for <x id="INTERPOLATION_3" equiv-text="{{&#10;                  this.irrigationValveItem.form.value.observedDays&#10;                    | i18nPlural: messagesMapping&#10;                }}"/>. </source>
         <target state="translated"> Unter der Annahme, dass es nicht regnet und die Verdunstung 1.0 mm pro Tag beträgt, benötigen deine Pflanzen <x id="INTERPOLATION" equiv-text="{{&#10;                  this.irrigationValveItem.form.value.evaporationFactor&#10;                    | number: '1.1-1'&#10;                }}"/> mm ( <x id="INTERPOLATION" equiv-text="{{&#10;                  this.irrigationValveItem.form.value.evaporationFactor&#10;                    | number: '1.1-1'&#10;                }}"/> l/m²) pro Tag. Das Ventil bewässert <x id="INTERPOLATION_1" equiv-text="{{&#10;                  this.irrigationValveItem.form.value.irrigationLevelPerMinute&#10;                    | number: '1.1-1'&#10;                }}"/> mm (<x id="INTERPOLATION_1" equiv-text="{{&#10;                  this.irrigationValveItem.form.value.irrigationLevelPerMinute&#10;                    | number: '1.1-1'&#10;                }}"/> l/m²) pro Minute. Somit wird die Bewässerung <x id="INTERPOLATION_2" equiv-text="{{&#10;  calculatedMinutes(this.irrigationValveItem.form)&#10; | i18nPlural&#10;   : { '=0': '0 Minuten', '=1': '1 Minute', other: '# Minuten' }&#10; }}"/> dauern, sofern es seit <x id="INTERPOLATION_3" equiv-text="{{&#10;    this.irrigationValveItem.form.value.observedDays&#10;   | i18nPlural&#10;                       : { '=0': '0 Tagen', '=1': '1 Tag', other: '# Tagen' }&#10;               }}"/> keinen Regen gab. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">359,395</context>
+          <context context-type="linenumber">353,389</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4606687446860017368" datatype="html">
@@ -619,7 +607,7 @@
         <target state="translated">Bewässerungsauslöser</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">423</context>
+          <context context-type="linenumber">417</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8225534030455111255" datatype="html">
@@ -627,7 +615,7 @@
         <target state="translated"> Sie können Bewässerungsauslöser definieren, die automatisch die Bewässerungskontrolle starten. Jede Zustandsänderung dieser Items löst die Bewässerung aus. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">426,430</context>
+          <context context-type="linenumber">420,424</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8816278659593304860" datatype="html">
@@ -644,6 +632,30 @@
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.ts</context>
           <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9178394960272263692" datatype="html">
+        <source>0 days</source>
+        <target state="translated">0 Tage</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4776429682428363094" datatype="html">
+        <source>1 day</source>
+        <target state="translated">1 Tag</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6352305596084685225" datatype="html">
+        <source># Tage</source>
+        <target state="translated"># Tage</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.ts</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1721827980245086554" datatype="html">
@@ -832,7 +844,7 @@
       </trans-unit>
       <trans-unit id="7128476101319021874" datatype="html">
         <source> Adjust the tresholds of <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&#10;        >"/>Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&#10;      >"/> and <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&#10;        >"/>Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&#10;      >"/> to change the upper luminance level for obscured and dark light conditions. </source>
-        <target state="translated"> Passe die Schwellenwerte von <span class="tag">Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured</span> und <span class="tag">Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark</span> an, um die Lichtwertobergrenze für die verdunkelten und dunklen Lichtverhältnisse zu ändern. </target>
+        <target state="translated"> Passe die Schwellenwerte von  <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&#10;        >"/>Core_Lights_AmbientLightCondition_LuminanceTreshold_Obscured<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&#10;      >"/> und <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;tag&quot;&#10;        >"/>Core_Lights_AmbientLightCondition_LuminanceTreshold_Dark<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&#10;      >"/> an, um die Lichtwertobergrenze für die verdunkelten und dunklen Lichtverhältnisse zu ändern. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/light/light.component.html</context>
           <context context-type="linenumber">105,116</context>

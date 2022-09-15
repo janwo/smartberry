@@ -163,7 +163,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">410</context>
+          <context context-type="linenumber">404</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/presence/presence.component.html</context>
@@ -534,38 +534,25 @@
           <context context-type="linenumber">296</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7708270344948043036" datatype="html">
-        <source> <x id="INTERPOLATION" equiv-text="{{
-                      factor | i18nPlural: { &apos;=1&apos;: &apos;1 day&apos;, other: &apos;# days&apos; }
-                    }}"/> </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">310,314</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">337,341</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="3430833172621796059" datatype="html">
         <source>Extend Bucket upon Future Rainfalls</source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">322</context>
+          <context context-type="linenumber">319</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3498058130455223243" datatype="html">
         <source>Calculation Example:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">347</context>
+          <context context-type="linenumber">341</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6045710461371167091" datatype="html">
         <source> Enter all required variables first </source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">355,357</context>
+          <context context-type="linenumber">349,351</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7104894549050266344" datatype="html">
@@ -591,25 +578,25 @@
                         }
                 }}"/> , if there was no rain for <x id="INTERPOLATION_3" equiv-text="{{
                   this.irrigationValveItem.form.value.observedDays
-                    | i18nPlural: { &apos;=1&apos;: &apos;1 day&apos;, other: &apos;# days&apos; }
+                    | i18nPlural: messagesMapping
                 }}"/>. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">359,395</context>
+          <context context-type="linenumber">353,389</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4606687446860017368" datatype="html">
         <source>Irrigation Triggers</source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">423</context>
+          <context context-type="linenumber">417</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8225534030455111255" datatype="html">
         <source> You can define irrigation trigger items that automatically start the irrigation check. Any state change of these items will fire an irrigation event. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.html</context>
-          <context context-type="linenumber">426,430</context>
+          <context context-type="linenumber">420,424</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8816278659593304860" datatype="html">
@@ -624,6 +611,27 @@
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.ts</context>
           <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9178394960272263692" datatype="html">
+        <source>0 days</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4776429682428363094" datatype="html">
+        <source>1 day</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6352305596084685225" datatype="html">
+        <source># Tage</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">frontend/src/app/irrigation/irrigation.component.ts</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1721827980245086554" datatype="html">

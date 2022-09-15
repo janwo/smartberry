@@ -27,6 +27,12 @@ export class IrrigationComponent {
     }
   }
 
+  i18nPluralMapping = {
+    '=0': $localize`0 days`,
+    '=1': $localize`1 day`,
+    other: $localize`# Tage`
+  }
+
   apiSettings?: {
     syncedLocation: boolean
     hasApiKey: boolean
