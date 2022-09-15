@@ -280,6 +280,11 @@ function scriptLoaded() {
     humidity,
     latitude
   ) => {
+    tempMin = Number.parseFloat(tempMin)
+    tempMax = Number.parseFloat(tempMax)
+    humidity = Number.parseFloat(humidity)
+    latitude = Number.parseFloat(tempMax)
+
     /**
      * Equations taken from:
      * Shuttleworth, W. J. Evaporation. In: Handbook of hydrology, D. R. Maidment, ed., McGraw-Hill, New York, 1993.
@@ -383,16 +388,18 @@ function scriptLoaded() {
           f.date.isBefore(today)
       )
 
-      json_storage('gCore_Irrigation').set(
-        'irrigation',
-        'weather-history',
-        [
-          ...weatherHistory.slice(
-            Math.max(0, weatherHistory.length + pastForecasts.length - 7)
-          ),
-          ...pastForecasts
-        ].map((f) => ({ ...f, date: f.date.toString() }))
-      )
+      if (pastForecasts.length > 0) {
+        json_storage('gCore_Irrigation').set(
+          'irrigation',
+          'weather-history',
+          [
+            ...weatherHistory.slice(
+              Math.max(0, weatherHistory.length + pastForecasts.length - 7)
+            ),
+            ...pastForecasts
+          ].map((f) => ({ ...f, date: f.date.toString() }))
+        )
+      }
 
       if (!weatherForecast[0] || weatherForecast[0].date.isBefore(today)) {
         const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely,current,alerts&appid=${apiKey}&units=standard`

@@ -305,6 +305,7 @@
                 }">
                 <select formControlName="observedDays">
                   <option
+                    i18n
                     *ngFor="let factor of [1, 2, 3, 4, 5, 6, 7]"
                     [ngValue]="factor">
                     {{
@@ -331,6 +332,7 @@
                 }">
                 <select formControlName="overshootDays">
                   <option
+                    i18n
                     *ngFor="let factor of [0, 1, 2, 3, 4, 5, 6, 7]"
                     [ngValue]="factor">
                     {{
