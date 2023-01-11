@@ -120,22 +120,29 @@ function scriptLoaded() {
         .members) {
         const location = get_location(modeItem)
         if (location) {
-          let state = stringifiedFloat(heaterModeItem.state)
+          let newState = undefined
+
+          if (event.triggerType != 'GenericCronTrigger') {
+            newState = stringifiedFloat(heaterModeItem.state)
+          }
+
           if (shutdownHeating || openContactLocations.includes(location.name)) {
-            state = stringifiedFloat(HeatingState.OFF)
+            newState = stringifiedFloat(HeatingState.OFF)
           }
 
-          const pointCommandMap = json_storage(modeItem).get(
-            'heating',
-            'command-map'
-          )
+          if (newState !== undefined) {
+            const pointCommandMap = json_storage(modeItem).get(
+              'heating',
+              'command-map'
+            )
 
-          if (pointCommandMap?.[state] !== undefined) {
-            state = pointCommandMap[state]
-          }
+            if (pointCommandMap?.[newState] !== undefined) {
+              newState = pointCommandMap[newState]
+            }
 
-          if (modeItem.state != state) {
-            modeItem.sendCommand(state)
+            if (modeItem.state != newState) {
+              modeItem.sendCommand(newState)
+            }
           }
         }
       }
