@@ -1,4 +1,4 @@
-FROM openhab/openhab:4.0.0.M3-alpine
+FROM openhab/openhab:4.0.0.M3-debian
 
 # RUN apk add --no-cache \
 RUN apt-get install \
