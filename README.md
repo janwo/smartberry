@@ -1,5 +1,5 @@
 
-> __⚠️ This repository is no longer maintained__. I had migrated my setup to Home Assistant, check (Smart Blueberry)[https://github.com/janwo/smartblueberry]. You like to maintain this repository, just let me know :)
+> __⚠️ This repository is no longer maintained__. I had migrated my setup to Home Assistant, check [Smart Blueberry](https://github.com/janwo/smartblueberry). You like to maintain this repository? Just let me know 🎉
 
 
 # <center>SmartBerry 🍓 - Smart Home 🏡</center>
