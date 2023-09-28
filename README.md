@@ -1,3 +1,7 @@
+
+> __⚠️ This repository is no longer maintained__. I had migrated my setup to Home Assistant, check (Smart Blueberry)[https://github.com/janwo/smartblueberry]. You like to maintain this repository, just let me know :)
+
+
 # <center>SmartBerry 🍓 - Smart Home 🏡</center>
 
 _<center>SmartBerry is an openHAB environment providing multiple extensions to simplify the configuration of scenes, climate and security management.</center>_
